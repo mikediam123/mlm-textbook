@@ -117,6 +117,16 @@ Logged as chapters are executed for the first time. Each entry is a place where 
 
 **Also added:** A callout on the general hazard. `tibble()` accepting a `NULL` column silently means a variable can go missing far from where the error appears. The habit worth teaching is to look upstream at where the object was created, and to run `str()` on unfamiliar objects before building data frames from them.
 
+### SETUP.md corrections around git
+
+**Changed:** The remote URL in step 4 now uses the SSH form, `git@github.com:USER/repo.git`, rather than HTTPS. The original HTTPS instruction is a dead end for anyone authenticating with an SSH key, because an HTTPS remote ignores SSH keys and prompts for credentials instead.
+
+**Added:** An authentication section covering 1Password as the SSH agent (enabling it, the `IdentityAgent` line for `~/.ssh/config`, registering the public key on GitHub), the `ssh -T git@github.com` test, and a personal access token fallback.
+
+**Added earlier in step 4:** A folder-verification step before `git init`, since running it in the wrong directory creates a repository that tries to track everything beneath it. Includes the `git status` sanity check and how to back out with `rm -rf .git`. Also notes that the project folder name contains spaces, so manual `cd` requires quoting.
+
+**Added:** A pointer to RStudio's Git pane, which appears after the project is reopened post-`init` and removes the need for the command line in normal use.
+
 ### Automated the .nojekyll file and the CDN check
 
 **Added:** `_postrender.R`, registered under `project: post-render` in `_quarto.yml`. It runs after every render and does two things.

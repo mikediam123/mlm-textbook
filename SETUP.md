@@ -125,11 +125,75 @@ When it looks right:
 ```bash
 git commit -m "Initial commit of MLM textbook"
 git branch -M main
-git remote add origin https://github.com/YOURUSERNAME/mlm-textbook.git
+git remote add origin git@github.com:YOURUSERNAME/mlm-textbook.git
 git push -u origin main
 ```
 
-Replace `YOURUSERNAME` with your GitHub username.
+Replace `YOURUSERNAME` with your GitHub username. Note the SSH form of the address: `git@github.com:user/repo.git`, with a colon after the domain rather than a slash. See the authentication section below for why.
+
+### Authentication: SSH keys with 1Password
+
+GitHub stopped accepting account passwords for git operations years ago, so the first push needs either an SSH key or a personal access token. If you keep an SSH key in 1Password, that is the smoother path once configured.
+
+**The mistake that wastes the most time** is having an SSH key set up correctly while the remote URL is still HTTPS. An HTTPS remote ignores SSH keys entirely and prompts for credentials instead. Check which you have:
+
+```bash
+git remote -v
+```
+
+If that shows `https://github.com/...`, switch it:
+
+```bash
+git remote set-url origin git@github.com:YOURUSERNAME/mlm-textbook.git
+git remote -v
+```
+
+**If this machine already has an SSH key registered with GitHub**, which is common if you have used git here before, there is nothing further to configure. Confirm with `ssh -T git@github.com`, set the remote to the SSH form, and push. Skip the 1Password steps below.
+
+**If you are prompted for a passphrase**, as in `Enter passphrase for key '/Users/you/.ssh/id_ed25519':`, the key is working and git simply needs to unlock it. Type the passphrase and press Enter. Nothing appears on screen as you type, which regularly convinces people the prompt has frozen. It has not.
+
+To avoid being asked on every push, store the passphrase in the macOS Keychain once:
+
+```bash
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+```
+
+and add this to `~/.ssh/config` so the key is loaded automatically after a restart:
+
+```
+Host github.com
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+```
+
+If the passphrase is genuinely lost, generate a new key with `ssh-keygen -t ed25519` and add the new public key to GitHub. Nothing in the repository is affected.
+
+**Configuring 1Password as the SSH agent**, if you do not already have a working key:
+
+1. In 1Password, go to **Settings → Developer** and turn on **Use the SSH Agent**.
+2. Create or edit `~/.ssh/config` (`mkdir -p ~/.ssh` then `open -e ~/.ssh/config`) and add:
+
+   ```
+   Host *
+     IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+   ```
+
+3. Add the **public** key to GitHub: your avatar → **Settings** → **SSH and GPG keys** → **New SSH key**. 1Password will usually offer to autofill this.
+
+::: {.callout-warning}
+The `Host *` line routes every SSH connection on this machine through 1Password's agent. If you already have a working key on disk, this will hide it and connections that used to succeed will start failing with `Permission denied (publickey)`. Either narrow the rule to `Host github.com`, or remove the block and use the existing key.
+:::
+
+**Test it before involving your repository:**
+
+```bash
+ssh -T git@github.com
+```
+
+1Password prompts for approval, then GitHub answers `Hi YOURUSERNAME! You've successfully authenticated, but GitHub does not provide shell access.` That second clause is expected and not an error. If you instead get `Permission denied (publickey)`, the key is not registered on GitHub or the agent is not running.
+
+**If SSH proves fussy**, HTTPS with a personal access token also works: generate one under GitHub **Settings → Developer settings → Personal access tokens**, give it `repo` scope, and use it in place of a password at the prompt. Store it in 1Password, since it is shown only once. This is a fine fallback, though you will re-enter it more often than SSH asks for approval.
 
 ### After the first push: use the Git pane
 

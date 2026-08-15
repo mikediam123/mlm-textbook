@@ -117,6 +117,28 @@ Logged as chapters are executed for the first time. Each entry is a place where 
 
 **Also added:** A callout on the general hazard. `tibble()` accepting a `NULL` column silently means a variable can go missing far from where the error appears. The habit worth teaching is to look upstream at where the object was created, and to run `str()` on unfamiliar objects before building data frames from them.
 
+### Chapter 2 — reworked the clustering section
+
+**Problem:** The chapter used `industry` in `nlsw88` as its example of a clustering variable. With fewer than a dozen industries, this taught the wrong lesson, and it reinforced a misconception students arrive with: that any categorical variable is a candidate for `(1 | group)`.
+
+**Changed:** The section now uses `industry` as a worked example of a variable that is *not* suitable, and explains how to recognize the difference.
+
+The new sequence: count the units, note that a random intercept estimates a variance from as many observations as there are groups, fit the bad model anyway to show that R produces normal-looking output with no warning, then use `confint()` on the variance component to expose how wide the uncertainty actually is.
+
+**Added a callout** with three questions to ask before writing `(1 | something)`:
+
+1. How many units? Under 20, not estimable; 20 to 50, proceed with caution; above 50, solid.
+2. Are these units a sample from a population you want to generalize to? Nine industries are the complete set of survey categories, not a sample. The 160 schools in Chapter 3 are a sample.
+3. Do you want group-specific effects (fixed) or the variation among groups (random)?
+
+It closes by naming the cases students most often get wrong: sex, treatment condition, region, program type.
+
+**Added:** The correct handling for few categories, `factor(industry)` as a fixed effect, plus a pointer to cluster-robust standard errors as the other route to fixing the inference without estimating a group-level variance.
+
+**Reframed the bridge to Chapter 3.** The chapter now says plainly that `nlsw88` is a single-level dataset for our purposes, and that seeing clustering modeled properly requires data with many level-2 units. This is more honest than the previous version, which implied the wage data supported a multilevel analysis it cannot.
+
+**Removed:** the industry mean-wage bar chart, which visually implied industry was the clustering variable to use.
+
 ### SETUP.md corrections around git
 
 **Changed:** The remote URL in step 4 now uses the SSH form, `git@github.com:USER/repo.git`, rather than HTTPS. The original HTTPS instruction is a dead end for anyone authenticating with an SSH key, because an HTTPS remote ignores SSH keys and prompts for credentials instead.

@@ -20,3 +20,4 @@
 # NOTE: the docs/ folder is intentionally NOT ignored.
 # GitHub Pages serves the site from there, so the rendered
 # output must be committed.
+.positai

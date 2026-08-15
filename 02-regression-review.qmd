@@ -169,51 +169,95 @@ The residuals-versus-fitted plot checks linearity and constant variance. With ri
 
 Here is the assumption that does not appear on any of those diagnostic plots: independence of observations. Every standard error above was computed as though these 2,246 women were 2,246 independent pieces of information.
 
-Look at the industry variable.
+That assumption is often wrong. Women are not scattered randomly across the labor market. They work in particular industries and occupations, which differ in pay scales, unionization, and credential requirements. If two women in the same industry are more alike than two women drawn at random, the independence assumption fails and the standard errors above are too small.
+
+So the natural next question is whether we should be fitting a multilevel model to account for it. Working through that question carefully is the point of this section, and the answer for these data is no.
+
+## Is `industry` a clustering variable?
+
+The mistake to avoid is treating any categorical variable as a potential clustering variable. Grouping structure is necessary but nowhere near sufficient. Start by counting.
 
 ```{r}
 nlsw |>
   filter(!is.na(industry)) |>
   count(industry, name = "n_women") |>
-  arrange(desc(n_women)) |>
-  head(10)
+  arrange(desc(n_women))
 ```
 
 ```{r}
-industry_summary <- nlsw |>
-  filter(!is.na(industry), !is.na(wage)) |>
-  group_by(industry) |>
-  summarize(
-    n_women = n(),
-    mean_wage = mean(wage),
-    .groups = "drop"
-  ) |>
-  filter(n_women >= 20)
+n_industries <- n_distinct(nlsw$industry, na.rm = TRUE)
+n_occupations <- n_distinct(nlsw$occupation, na.rm = TRUE)
 
-industry_summary |> arrange(desc(mean_wage))
+c(industries = n_industries, occupations = n_occupations)
 ```
+
+That count is the whole problem. A random intercept does not estimate a set of group means. It estimates a **variance** describing how group means are spread around the overall average, and it does so from as many observations as there are groups. Estimating a variance from a handful of numbers is exactly as unreliable as it sounds. You would not report a standard deviation computed from nine cases and treat it as precise; the variance component here rests on no more information than that.
+
+Common guidance puts the minimum somewhere around 30 to 50 level-2 units for a variance component to be estimated with reasonable precision, with roughly 20 as an absolute floor below which the estimate should not be trusted at all. These data are well below any of those thresholds.
+
+### R will not stop you
+
+The trap is that fitting it anyway produces output that looks completely normal.
 
 ```{r}
-#| label: fig-industry
-#| fig-cap: "Average hourly wage varies substantially across industries."
+#| message: false
 
-ggplot(industry_summary, aes(x = reorder(factor(industry), mean_wage), y = mean_wage)) +
-  geom_col(fill = "#1a7a6e") +
-  coord_flip() +
-  labs(title = "Mean Hourly Wage by Industry",
-       subtitle = "Industries with at least 20 respondents",
-       x = "Industry code", y = "Mean hourly wage") +
-  theme_minimal()
+library(lme4)
+
+# This runs. It should not be trusted.
+m_bad <- lmer(wage ~ ttl_exp + collgrad_f + (1 | industry),
+              data = nlsw, REML = FALSE)
+
+summary(m_bad)
 ```
 
-Women are not scattered randomly across the labor market. They are grouped into industries and occupations, and those groups differ in pay scales, unionization, credential requirements, and much else. Two women in the same industry are more similar to each other than two women drawn at random from the whole sample.
+There is a variance component. There are standard errors. Nothing is flagged. You could paste this into a manuscript and no software would object.
 
-That similarity has two consequences, and both are the subject of the rest of this book.
+But that industry-level variance was estimated from a single-digit number of industries, and the uncertainty around it is enormous. Confidence intervals make the situation visible:
 
-The first is statistical. Treating clustered observations as independent produces standard errors that are too small, confidence intervals that are too narrow, and p-values that are too optimistic. We are claiming more precision than the data support, because we counted 2,246 correlated observations as 2,246 independent ones.
+```{r}
+#| warning: false
+#| message: false
 
-The second is conceptual, and it is the more interesting of the two. A regression of wages on education using all 2,246 women blends two different comparisons: the difference between two women working in the same industry, and the difference between two industries that employ differently educated workforces. Those are distinct questions with potentially different answers. Ordinary regression returns a single number that is neither one cleanly.
+confint(m_bad, parm = "theta_", method = "profile")
+```
 
-Multilevel modeling addresses both. It corrects the standard errors by modeling the clustering explicitly, and it separates within-group from between-group associations rather than averaging over them.
+The interval on the group-level standard deviation is wide, and often runs nearly to zero. That is the model telling you it cannot pin this quantity down. Reporting the point estimate without that interval would imply a precision the data cannot support.
 
-The next chapter starts that work with the simplest possible multilevel model, using students nested within schools, where the clustering is even more pronounced than it is here.
+::: {.callout-important}
+## The question is not "are there groups?"
+
+Almost every dataset has categorical variables. Sex, treatment condition, region, program type, marital status. None of those are clustering variables for multilevel modeling, and treating them as such is the single most common error students make when first choosing a model.
+
+Before writing `(1 | something)`, ask three questions:
+
+1. **How many units are there?** Fewer than about 20 and the variance component is not estimable with any precision. Between 20 and 50, proceed but report uncertainty honestly. Above 50 you are on solid ground.
+
+2. **Are these units a sample from a larger population you want to generalize to?** This is the conceptual heart of it. Random effects treat groups as draws from a population of groups, so that your conclusions extend to schools or classrooms or hospitals you did not observe. The 160 schools in the next chapter are a sample of schools. Nine industries are not a sample of industries; they are the complete set of categories the survey used. There is no broader population of industries you are inferring toward.
+
+3. **Do you want to estimate group-specific effects, or the variation among groups?** If you want to know how each category differs, that is a fixed effect. If you want to know how much categories vary as a class, and to generalize beyond the ones you have, that is a random effect.
+
+Sex has two categories. Treatment has two. Neither is a clustering variable, no matter how the data are grouped.
+:::
+
+### The right tool for a small number of categories
+
+When there are few groups and you have them all, put them in as fixed effects. You get a direct estimate for each category, no variance component to estimate badly, and no implied generalization to unobserved industries.
+
+```{r}
+m_fixed <- lm(wage ~ ttl_exp + collgrad_f + factor(industry), data = nlsw)
+
+anova(m_fixed)
+```
+
+This answers the question that actually matters here: after accounting for industry differences, does experience still predict wages? The `anova()` output tells you whether industry explains variation in wages, and the coefficients tell you which industries differ from the reference.
+
+You can also address the standard error problem directly, without a multilevel model, using cluster-robust standard errors. That approach corrects the inference for within-group correlation while making no attempt to estimate a group-level variance. With few clusters it is generally the safer choice, though it too has small-sample limitations, and Chapter 10 returns to it.
+
+## What these data cannot show us
+
+`nlsw88` is, for our purposes, a single-level dataset. It has grouping variables, but none with enough units to support the models this book is about. That is worth saying plainly rather than forcing a demonstration the data cannot bear.
+
+To see clustering properly modeled we need data with many level-2 units and a genuine sample of them. The next chapter uses 7,185 students nested in 160 schools, which satisfies both conditions comfortably. Those 160 schools are a sample from the population of American high schools, so the between-school variance means something we can generalize.
+
+Two ideas from this chapter carry forward. The first is statistical: treating clustered observations as independent produces standard errors that are too small and p-values that are too optimistic. The second is conceptual and more interesting: a regression using all observations at once blends the comparison between two people in the same group with the comparison between two groups, and returns a single number that is cleanly neither. Multilevel modeling addresses both, provided you have the grouping structure to support it.

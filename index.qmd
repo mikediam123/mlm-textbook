@@ -1,0 +1,47 @@
+# Welcome {.unnumbered}
+
+This is an online companion to EDUS 664, Multilevel Modeling, at Virginia Commonwealth University. Each chapter works through the R code for one module of the course, using the same datasets you will use in your assignments.
+
+The book is meant to sit alongside the lectures and demonstration videos, not to replace them. The videos explain why we do things. These pages show you the code, so that you have something you can copy, adapt, and come back to later.
+
+## How to use this book
+
+Each chapter follows the same shape. We load the data, look at it before modeling it, fit a series of models that build on one another, and interpret what comes out. Code appears in gray blocks, and you can copy any block by hovering over it and clicking the copy icon in the corner.
+
+You may want to work through a chapter with RStudio open next to your browser, running each block as you go. Reading code is not the same as writing it, and the difference shows up quickly once you start the assignments.
+
+## Software you will need
+
+You will need R and RStudio, both free. The chapters use a common set of packages, which you can install once:
+
+```{r}
+#| eval: false
+
+install.packages(c(
+  "tidyverse",     # data management and graphics
+  "haven",         # reading Stata and SPSS files
+  "psych",         # descriptive statistics and reliability
+  "lme4",          # fitting multilevel models
+  "lmerTest",      # tests for random effects
+  "performance",   # ICC, R-squared, model checks
+  "see",           # required by performance's check_model()
+  "broom.mixed",   # tidy model output and residuals
+  "modelsummary",  # publication-style results tables
+  "ggeffects",     # predicted values and interaction plots
+  "nlme",          # alternative variance structures
+  "influence.ME",  # Cook's distance for multilevel models
+  "clubSandwich"   # cluster-robust standard errors
+))
+```
+
+A note on two of these. `see` is not loaded directly anywhere in this book, but `performance::check_model()` will not produce its diagnostic plots without it, and the error message when it is missing is not especially clear. `influence.ME` and `clubSandwich` are used only in Chapter 10, so you can defer installing them until you get there.
+
+A note on packages that appear in older course materials. Earlier versions of these demonstrations used `stargazer` for results tables. That package is no longer actively maintained and can fail with current versions of R, so the chapters here use `modelsummary` instead. If you find `stargazer` code in an old handout, `modelsummary()` is the direct replacement.
+
+## Data
+
+Most chapters use a dataset that is either included with this book or posted on Canvas. Each chapter names its dataset at the top. If you are running the code yourself, keep the data file in the same folder as your Quarto document, so that a plain filename like `read_csv("hsbmerged.csv")` will find it.
+
+## A word about interpretation
+
+The code in this book will run. That is the easy part, and it is also the part that matters least. What multilevel modeling asks of you is the ability to say what a variance component means, why a random slope belongs in a model, and what a coefficient does and does not license you to claim. The chapters try to model that kind of reasoning in the prose between the code blocks. That prose is worth reading slowly.

@@ -1,0 +1,22 @@
+# Quarto
+/.quarto/
+*_files/
+*_cache/
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+# macOS
+.DS_Store
+
+# LaTeX intermediates
+*.log
+*.aux
+*.tex
+
+# NOTE: the docs/ folder is intentionally NOT ignored.
+# GitHub Pages serves the site from there, so the rendered
+# output must be committed.

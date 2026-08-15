@@ -1,0 +1,70 @@
+project:
+  type: book
+  output-dir: docs        # GitHub Pages serves from this folder
+  post-render:
+    - _postrender.R       # creates docs/.nojekyll, checks for stray CDN scripts
+
+book:
+  title: "Applied Multilevel Modeling in R"
+  subtitle: "A companion to EDUS 664"
+  author: "Michael Broda, Ph.D."
+  date: today
+  description: >
+    An online companion to Dr. Broda's Multilevel Modeling course (EDUS 664)
+    at Virginia Commonwealth University. Each chapter works through the R code
+    for one course module.
+  repo-url: https://github.com/YOURUSERNAME/mlm-textbook
+  repo-actions: [issue]
+  sharing: [twitter, linkedin]
+  search: true
+  page-footer:
+    left: "Applied Multilevel Modeling in R"
+    right: "Built with [Quarto](https://quarto.org)"
+  chapters:
+    - index.qmd
+    - part: "Foundations"
+      chapters:
+        - 01-getting-started.qmd
+        - 02-regression-review.qmd
+    - part: "Two-Level Models"
+      chapters:
+        - 03-null-model.qmd
+        - 04-random-intercept.qmd
+        - 05-random-slopes.qmd
+        - 06-fit-effect-sizes.qmd
+    - part: "Extending the Model"
+      chapters:
+        - 07-three-level.qmd
+        - 08-growth-curves.qmd
+        - 09-binary-outcomes.qmd
+    - part: "Checking and Complicating"
+      chapters:
+        - 10-assumptions.qmd
+        - 11-cross-classified.qmd
+    - references.qmd
+
+bibliography: book.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+      - styles.scss
+    # KaTeX instead of MathJax. Pandoc's MathJax template injects a
+    # script tag for polyfill.io, a CDN that was sold in 2024 and used
+    # to serve malware. The domain is suspended, but the reference
+    # should not be in pages we hand to students.
+    html-math-method: katex
+    code-link: true
+    code-copy: true
+    code-tools: true      # adds a "</> Code" menu for viewing page source
+    code-overflow: wrap
+    toc: true
+    toc-depth: 3
+    fig-width: 7
+    fig-height: 5
+
+execute:
+  freeze: auto      # cache results so chapters only re-run when they change
+  warning: true
+  message: true

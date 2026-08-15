@@ -1,0 +1,175 @@
+# Three-Level Models
+
+**Data for this chapter:** `projectSTAR.dta`
+
+::: {.callout-note}
+## Data file needed
+Copy `projectSTAR.dta` into this project folder before rendering.
+:::
+
+Real data often nest more than two levels deep. Students sit in classrooms, classrooms sit in schools, and each layer can contribute its own variation. This chapter uses the Tennessee Class Size Experiment, with more than 6,000 kindergarten students nested in classrooms nested in over 200 schools.
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(haven)
+library(lme4)
+library(lmerTest)
+library(performance)
+library(modelsummary)
+```
+
+```{r}
+star <- read_dta("projectSTAR.dta")
+
+glimpse(star)
+```
+
+```{r}
+#| label: fig-math
+#| fig-cap: "Distribution of kindergarten math scores."
+
+ggplot(star, aes(x = gktmathss)) +
+  geom_histogram(bins = 40, fill = "#1a7a6e", color = "white") +
+  labs(title = "Kindergarten Math Scores",
+       x = "Scale score", y = "Number of students") +
+  theme_minimal()
+```
+
+## Specifying three levels
+
+Two syntaxes produce the same model. The nesting shorthand is compact:
+
+```{r}
+m_null3 <- lmer(gktmathss ~ 1 + (1 | gkschid/gktchid), data = star, REML = FALSE)
+
+summary(m_null3)
+```
+
+The explicit form makes what is happening more visible, and is safer when classroom IDs are not unique across schools:
+
+```{r}
+#| eval: false
+
+m_null3_alt <- lmer(gktmathss ~ 1 + (1 | gkschid) + (1 | gktchid:gkschid),
+                    data = star, REML = FALSE)
+```
+
+If your classroom identifier repeats across schools, for instance if every school numbers its classrooms starting at 1, the explicit syntax is required. Otherwise R will treat classroom 1 in School A and classroom 1 in School B as the same classroom.
+
+## Partitioning variance across three levels
+
+```{r}
+vc <- as.data.frame(VarCorr(m_null3))
+vc
+```
+
+```{r}
+tau_class  <- vc$vcov[grepl("gktchid", vc$grp)]
+tau_school <- vc$vcov[vc$grp == "gkschid"]
+sigma2     <- vc$vcov[vc$grp == "Residual"]
+
+total <- tau_class + tau_school + sigma2
+
+round(c(
+  student   = sigma2 / total,
+  classroom = tau_class / total,
+  school    = tau_school / total
+), 3)
+```
+
+These three proportions sum to one and describe where the variation in kindergarten math achievement lives. In most educational data the student level dominates, which is worth remembering when you read claims about school effects. The interesting comparison is usually between the classroom and school shares, because it speaks to whether the teacher a child draws matters more than the school they attend.
+
+```{r}
+performance::icc(m_null3, by_group = TRUE)
+```
+
+## What ignoring a level costs you
+
+Suppose we had modeled only students within schools, ignoring classrooms entirely.
+
+```{r}
+m_null2 <- lmer(gktmathss ~ 1 + (1 | gkschid), data = star, REML = FALSE)
+
+vc2 <- as.data.frame(VarCorr(m_null2))
+vc2
+```
+
+Compare the school-level variance in this model to the one in the three-level model. Dropping the classroom level does not make classroom variation disappear. It redistributes it, and much of it lands at whichever level remains. A researcher looking only at the two-level model would conclude that schools matter more than they do, when part of what they are seeing is teachers.
+
+## Adding predictors at each level
+
+A three-level model can take predictors at any level. Here we use student self-concept, two classroom-level variables, and a school-level aggregate we compute ourselves.
+
+```{r}
+star <- star |>
+  group_by(gkschid) |>
+  mutate(sch_mean_math = mean(gktmathss, na.rm = TRUE)) |>
+  ungroup() |>
+  mutate(
+    classtype_f = as_factor(gkclasstype),
+    highdeg_f   = as_factor(gkthighdegree)
+  )
+
+m_cond3 <- lmer(
+  gktmathss ~ gkselfconcraw + classtype_f + highdeg_f + sch_mean_math +
+    (1 | gkschid/gktchid),
+  data = star, REML = FALSE
+)
+
+summary(m_cond3)
+```
+
+```{r}
+performance::r2(m_cond3)
+AIC(m_null3, m_cond3)
+BIC(m_null3, m_cond3)
+```
+
+A note on the school mean. Computing a group average from the same outcome you are predicting and then using it as a predictor is common practice, but it deserves care. The school mean is partly composed of the very students whose scores you are modeling, which builds in a mechanical relationship. With large schools the contribution of any one student is small and the practice is generally accepted. With small clusters it can be seriously misleading.
+
+::: {.callout-warning}
+## About convergence warnings
+Models this complex frequently produce singularity or convergence warnings. For these data the model still converges and returns usable estimates and standard errors. Do not ignore such warnings by reflex, but do read them as diagnostic information rather than as a verdict. A singular fit usually means one variance component is being estimated at or near zero.
+:::
+
+## Random slopes at two levels
+
+A slope can vary across classrooms, across schools, or both. Fit them separately first, because asking for everything at once is the fastest route to a model that will not converge.
+
+```{r}
+m_slope_class <- lmer(
+  gktmathss ~ gkselfconcraw + classtype_f + highdeg_f + sch_mean_math +
+    (1 | gkschid) + (1 + gkselfconcraw | gktchid:gkschid),
+  data = star, REML = FALSE
+)
+
+ranova(m_slope_class)
+```
+
+```{r}
+m_slope_school <- lmer(
+  gktmathss ~ gkselfconcraw + classtype_f + highdeg_f + sch_mean_math +
+    (1 + gkselfconcraw | gkschid) + (1 | gktchid:gkschid),
+  data = star, REML = FALSE
+)
+
+ranova(m_slope_school)
+```
+
+State what each would mean before you look at the test. A random slope at the classroom level says the relationship between self-concept and math achievement differs from teacher to teacher, perhaps because some teachers are better at reaching students who doubt themselves. At the school level it says that relationship differs across schools, which points at something more structural: tracking policies, counseling resources, school climate.
+
+## Reporting
+
+```{r}
+modelsummary(
+  list("Null (3-level)" = m_null3, "Conditional" = m_cond3),
+  stars = c("*" = .05, "**" = .01, "***" = .001),
+  gof_map = c("nobs", "aic", "bic"),
+  title = "Three-level models of kindergarten math achievement"
+)
+```
+
+When you write up a three-level model, report the variance partition from the null model, not just the fixed effects from the final one. Readers need to know how much room there was to explain at each level before they can judge what your predictors accomplished.

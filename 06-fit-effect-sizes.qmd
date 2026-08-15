@@ -1,0 +1,182 @@
+# Goodness-of-Fit and Effect Sizes
+
+**Data for this chapter:** `expanded_strs_no_miss.csv`
+
+::: {.callout-note}
+## Data file needed
+Copy `expanded_strs_no_miss.csv` into this project folder before rendering.
+:::
+
+Significance tells you whether an association is distinguishable from zero. It does not tell you whether the association matters, and with large samples the two questions come apart badly. This chapter covers effect sizes for multilevel models and the fit statistics used to choose among competing models.
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(readr)
+library(lme4)
+library(lmerTest)
+library(performance)
+library(modelsummary)
+```
+
+```{r}
+strs <- readr::read_csv("expanded_strs_no_miss.csv") |>
+  mutate(
+    conflict_pre_c  = conflict_pre - mean(conflict_pre, na.rm = TRUE),
+    closeness_pre_c = closeness_pre - mean(closeness_pre, na.rm = TRUE),
+    treat = factor(creg23, levels = c(2, 1), labels = c("Control", "Best in Class"))
+  )
+```
+
+## Two models to compare
+
+```{r}
+m_null <- lmer(conflict_post ~ 1 + (1 | strs3), data = strs, REML = FALSE)
+
+m_cond <- lmer(conflict_post ~ treat + conflict_pre_c + closeness_pre_c + (1 | strs3),
+               data = strs, REML = FALSE)
+
+summary(m_cond)
+```
+
+## Proportional reduction in variance
+
+The most interpretable multilevel effect sizes ask how much variance a model explains relative to the null model, computed separately at each level. Extract the variance components first:
+
+```{r}
+vc_null <- as.data.frame(VarCorr(m_null))
+vc_cond <- as.data.frame(VarCorr(m_cond))
+
+tau_null   <- vc_null$vcov[vc_null$grp == "strs3"]
+sigma_null <- vc_null$vcov[vc_null$grp == "Residual"]
+
+tau_cond   <- vc_cond$vcov[vc_cond$grp == "strs3"]
+sigma_cond <- vc_cond$vcov[vc_cond$grp == "Residual"]
+
+c(tau_null = tau_null, sigma_null = sigma_null,
+  tau_cond = tau_cond, sigma_cond = sigma_cond)
+```
+
+Within-group proportional reduction in variance is the share of student-level variance the predictors account for:
+
+```{r}
+wg_prv <- (sigma_null - sigma_cond) / sigma_null
+wg_prv
+```
+
+Between-group PRV does the same at the teacher level:
+
+```{r}
+bg_prv <- (tau_null - tau_cond) / tau_null
+bg_prv
+```
+
+And a total, or multilevel, $R^2$ uses the combined variance:
+
+```{r}
+total_null <- tau_null + sigma_null
+total_cond <- tau_cond + sigma_cond
+
+ml_r2 <- (total_null - total_cond) / total_null
+ml_r2
+```
+
+Be precise about what each denominator refers to when you write these up. WG-PRV is the proportion of *student-level* variance explained, not the proportion of all variance. Reporting it as though it were an overall $R^2$ overstates your model considerably.
+
+### When PRV comes out negative
+
+A negative PRV looks like an arithmetic mistake and usually is not. Adding a level-one predictor can increase the estimated level-two variance, because the level-two variance is estimated conditional on everything else in the model. If a student-level predictor is unevenly distributed across teachers, controlling for it can reveal teacher differences that were previously masked. Report the negative value and explain it. Deleting it from your table is the one clearly wrong response.
+
+## The `performance` package version
+
+```{r}
+performance::r2(m_cond)
+```
+
+This reports marginal $R^2$, the variance explained by fixed effects alone, and conditional $R^2$, the variance explained by fixed and random effects together. These are Nakagawa's measures, and they answer a slightly different question than the PRV statistics above. Both are defensible. Say which you used.
+
+## Translating for a non-technical audience
+
+Suppose a district administrator asks how big the program effect is. Effect sizes in variance units rarely land. Predicted values usually do:
+
+```{r}
+#| message: false
+
+library(ggeffects)
+
+ggpredict(m_cond, terms = "treat")
+```
+
+Reporting that the predicted conflict score is some specific amount lower in treated classrooms, on a scale that runs from 1 to 5, communicates more than a proportional reduction in variance ever will. A standardized mean difference is another good option when your audience is used to reading them.
+
+## Model comparison with information criteria
+
+Now a different question: which model should we report? Start by adding a random slope for pretest conflict.
+
+```{r}
+m_slope <- lmer(conflict_post ~ treat + conflict_pre_c + closeness_pre_c +
+                  (1 + conflict_pre_c | strs3),
+                data = strs, REML = FALSE)
+
+ranova(m_slope)
+```
+
+```{r}
+anova(m_cond, m_slope)
+```
+
+```{r}
+AIC(m_cond, m_slope)
+BIC(m_cond, m_slope)
+```
+
+### When the criteria disagree
+
+They often will, and understanding why is more useful than memorizing a rule. AIC and BIC both penalize complexity, but BIC's penalty grows with sample size while AIC's does not. With a large sample, BIC prefers simpler models more aggressively than AIC does. The likelihood ratio test is a third thing again: a hypothesis test with a null of no improvement, which inherits all the usual sensitivities to sample size.
+
+For random effects there is an additional wrinkle. Testing whether a variance component equals zero puts the null on the boundary of the parameter space, which makes the usual chi-square reference distribution conservative. The `ranova()` function handles this, but it is a reason not to treat a p-value of .06 on a variance component as decisive.
+
+When the criteria disagree, say so, state which you weighted and why, and check whether your substantive conclusions change between the two models. If the treatment effect is essentially identical either way, the model choice matters less than it appears to.
+
+## When a model will not converge
+
+Ask for two random slopes and the data may refuse:
+
+```{r}
+#| error: true
+#| warning: true
+
+m_two_slopes <- lmer(conflict_post ~ treat + conflict_pre_c + closeness_pre_c +
+                       (1 + conflict_pre_c + closeness_pre_c | strs3),
+                     data = strs, REML = FALSE)
+```
+
+This one does not merely warn. It refuses to fit at all, and the error message tells you exactly why. Asking for an intercept and two slopes for each of 322 teachers means asking for 966 random effects, and we have only 828 observations. There are more quantities to estimate than there are data points to estimate them from, so the model is unidentifiable.
+
+It is worth doing that arithmetic yourself before fitting a complex random effects structure. Multiply the number of level-two units by the number of random effects you are requesting per unit, and compare it to your sample size. If the first number approaches the second, the model is in trouble whether or not R throws an error.
+
+The more common situation is milder. Instead of an outright refusal you get a singular fit, a variance component estimated at essentially zero, or a correlation of exactly 1 or -1. Those are the same message delivered more politely. The data cannot support that many random effects.
+
+The usual responses, in order of how much you give up: drop the correlations and keep both slopes uncorrelated; drop the less theoretically important slope; or return to a random intercept model and acknowledge in your write-up that slope variation could not be estimated with these data. All three are defensible. Silently reporting a singular model as though nothing happened is not.
+
+```{r}
+#| eval: false
+
+# Uncorrelated random effects
+m_uncorr <- lmer(conflict_post ~ treat + conflict_pre_c + closeness_pre_c +
+                   (1 | strs3) + (0 + conflict_pre_c | strs3),
+                 data = strs, REML = FALSE)
+```
+
+## Putting it together
+
+```{r}
+modelsummary(
+  list("Null" = m_null, "Conditional" = m_cond, "+ Random slope" = m_slope),
+  stars = c("*" = .05, "**" = .01, "***" = .001),
+  gof_map = c("nobs", "aic", "bic"),
+  title = "Models predicting end-of-year teacher-student conflict"
+)
+```

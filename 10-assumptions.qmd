@@ -1,0 +1,255 @@
+# Assessing Assumptions
+
+**Data for this chapter:** `projectSTAR.dta`
+
+::: {.callout-note}
+## Data file needed
+Copy `projectSTAR.dta` into this project folder before rendering.
+:::
+
+Diagnostics are not a pass-fail checklist. They are evidence you weigh, and the useful question is never "was an assumption violated" but "is this violation bad enough to change what I conclude." This chapter works through the standard checks and then does the thing that actually settles the question: refits the model under different assumptions and sees whether the answer moves.
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(haven)
+library(lme4)
+library(lmerTest)
+library(broom.mixed)
+library(performance)
+library(modelsummary)
+```
+
+```{r}
+star <- read_dta("projectSTAR.dta") |>
+  mutate(
+    classtype_f = as_factor(gkclasstype),
+    highdeg_f   = as_factor(gkthighdegree)
+  )
+
+m <- lmer(gktmathss ~ gkselfconcraw + classtype_f + highdeg_f + (1 | gktchid),
+          data = star, REML = FALSE)
+
+summary(m)
+```
+
+## Extracting residuals and fitted values
+
+`augment()` from `broom.mixed` returns the original data plus residuals, fitted values, and related quantities in a tidy data frame.
+
+```{r}
+aug <- augment(m)
+
+glimpse(aug)
+```
+
+```{r}
+aug <- aug |>
+  mutate(std_resid = as.numeric(scale(.resid)))
+```
+
+## Normality of residuals
+
+```{r}
+#| label: fig-resid-hist
+#| fig-cap: "Distribution of standardized residuals."
+
+ggplot(aug, aes(x = std_resid)) +
+  geom_histogram(bins = 40, fill = "#1a7a6e", color = "white") +
+  labs(title = "Standardized Residuals", x = "Standardized residual", y = "Count") +
+  theme_minimal()
+```
+
+```{r}
+#| label: fig-qq
+#| fig-cap: "Normal Q-Q plot of standardized residuals."
+
+ggplot(aug, aes(sample = std_resid)) +
+  stat_qq(alpha = 0.3, color = "#1a7a6e") +
+  stat_qq_line(color = "#b2182b") +
+  labs(title = "Normal Q-Q Plot", x = "Theoretical quantiles", y = "Sample quantiles") +
+  theme_minimal()
+```
+
+### How many observations are we actually working with?
+
+Before running a formal test, check how large the analysis sample is. This is not the same as the number of rows in the file:
+
+```{r}
+nrow(star)      # rows in the dataset
+nrow(aug)       # rows the model actually used
+```
+
+Those two numbers differ, sometimes substantially. `lmer()` drops any case missing a value on the outcome or on any predictor, a behavior called listwise deletion, and it does so silently. Adding one predictor with a lot of missingness can shrink your analysis sample dramatically without any warning appearing.
+
+This matters for more than the diagnostics below. If you compare two models fit on different subsamples, the comparison is not valid, which is why the N row in a results table is worth reading rather than skipping. It is also the reason to check missingness before modeling rather than after.
+
+### A formal test, with a caveat
+
+```{r}
+# Shapiro-Wilk accepts between 3 and 5,000 observations, so sample if needed
+if (nrow(aug) > 5000) {
+  set.seed(664)
+  shapiro.test(sample(aug$std_resid, 5000))
+} else {
+  shapiro.test(aug$std_resid)
+}
+```
+
+Expect this to be significant, and do not make much of it. Shapiro-Wilk detects arbitrarily small departures from normality once the sample is reasonably large, and at these sample sizes it will reject for essentially any real dataset. The histogram and Q-Q plot carry the information here. What you are looking for is severe skew, heavy tails, or obvious multimodality, not a p-value.
+
+It is also worth remembering what this assumption buys. Normality of residuals matters for small-sample inference. With samples this size, the central limit theorem does most of the work regardless.
+
+## Linearity and constant variance
+
+```{r}
+#| label: fig-rvf
+#| fig-cap: "Residuals versus fitted values."
+#| message: false
+
+ggplot(aug, aes(x = .fitted, y = .resid)) +
+  geom_point(alpha = 0.2, size = 0.7, color = "#1a7a6e") +
+  geom_hline(yintercept = 0, color = "gray40") +
+  geom_smooth(method = "loess", color = "#b2182b", se = FALSE) +
+  labs(title = "Residuals vs. Fitted Values",
+       x = "Fitted value", y = "Residual") +
+  theme_minimal()
+```
+
+Read this plot for shape rather than for scatter. A curved smoother suggests the relationship is not linear in the predictors as specified. A fan or funnel suggests the residual variance depends on the fitted value. Be specific in your write-up about *where* in the fitted range any problem appears, because a violation confined to a sparse tail is a different matter from one across the whole range.
+
+The `performance` package assembles several checks at once:
+
+```{r}
+#| label: fig-checkmodel
+#| fig-cap: "Model check panel from the performance package."
+#| fig-height: 9
+
+check_model(m)
+```
+
+## Influential cases
+
+```{r}
+#| message: false
+
+library(influence.ME)
+
+# Influence at the observation level can be slow on large datasets.
+# Estimating influence by cluster is usually more informative anyway.
+infl <- influence(m, group = "gktchid")
+
+cooks <- cooks.distance(infl)
+
+# influence.ME returns a matrix, with the classroom labels in the ROWNAMES,
+# not in names(). Check what you actually got before building a data frame.
+str(cooks)
+
+grp_labels <- rownames(cooks)
+if (is.null(grp_labels)) grp_labels <- names(cooks)
+if (is.null(grp_labels)) grp_labels <- as.character(seq_len(length(cooks)))
+
+cook_df <- tibble(
+  gktchid = grp_labels,
+  cooks_d = as.numeric(cooks)
+)
+
+cook_df |> arrange(desc(cooks_d)) |> head(10)
+```
+
+::: {.callout-warning}
+## A silent failure worth knowing about
+
+Writing `gktchid = names(cooks)` looks reasonable and is wrong here, because `cooks.distance()` on an `influence.ME` object returns a matrix whose labels live in `rownames()`. `names()` on that matrix returns `NULL`.
+
+The dangerous part is what happens next. `tibble()` drops `NULL` columns without complaint, so you get a one-column data frame and no error. Everything that uses only `cooks_d` keeps working, including the plot below. The failure surfaces later, at the first line that asks for `gktchid`, which may be several chunks away from the line that actually caused it.
+
+When a variable goes missing without explanation, look upstream for the place it was created, not at the line that reported the error. Running `str()` on an unfamiliar object before you build a data frame from it costs a second and prevents this whole category of problem.
+:::
+
+```{r}
+#| label: fig-cooks
+#| fig-cap: "Cook's distance by classroom."
+
+cutoff <- 4 / nrow(cook_df)
+
+ggplot(cook_df, aes(x = seq_along(cooks_d), y = cooks_d)) +
+  geom_point(alpha = 0.6, color = "#1a7a6e") +
+  geom_hline(yintercept = cutoff, linetype = "dashed", color = "#b2182b") +
+  labs(title = "Cook's Distance by Classroom",
+       subtitle = paste0("Dashed line at 4/n = ", round(cutoff, 4)),
+       x = "Classroom index", y = "Cook's distance") +
+  theme_minimal()
+```
+
+When a case is flagged, look at it before doing anything. A classroom with an implausible value, a math score of 9999 or a class size of 200, is a data error and should be fixed or removed. A classroom that is simply unusual, small and high-achieving, is data. Deleting inconvenient observations because a statistic flagged them is not a diagnostic procedure, it is a way of guaranteeing the result you already wanted.
+
+## The part that settles it: robustness checks
+
+Rather than arguing about whether assumptions hold, refit the model under different assumptions and compare.
+
+```{r}
+#| message: false
+
+library(clubSandwich)
+
+# Cluster-robust standard errors.
+# clubSandwich reads the clustering structure from the fitted model,
+# so we do not pass a cluster vector ourselves. See the note below.
+robust_test <- coef_test(m, vcov = "CR2")
+robust_test
+```
+
+::: {.callout-warning}
+## Do not pass `cluster = star$gktchid` here
+
+The obvious thing to write is `coef_test(m, vcov = "CR2", cluster = star$gktchid)`, and it fails with `arguments must have same length`.
+
+The reason is the listwise deletion we looked at earlier in this chapter. `star$gktchid` has one entry per row of the *dataset*, while the model was fit on the smaller set of complete cases. The two vectors do not line up, and clubSandwich cannot tell which classroom each residual belongs to.
+
+Omitting the argument is the reliable fix, because the fitted model already carries its grouping factor and knows which rows it used. If you do need to supply the cluster explicitly, take it from the model frame rather than the original data:
+
+```r
+mf <- model.frame(m)
+coef_test(m, vcov = "CR2", cluster = mf$gktchid)
+```
+
+This is a specific instance of a general habit worth forming. Once a model has been fit, prefer `model.frame()`, `augment()`, or the model object itself over the data frame you started with. Anything derived from the original data risks being the wrong length.
+:::
+
+```{r}
+# The model with the most influential clusters removed
+flagged <- cook_df |> filter(cooks_d > cutoff) |> pull(gktchid)
+
+length(flagged)   # how many classrooms are we dropping?
+
+# Compare as character on both sides. The labels came out of rownames(),
+# so they are character, while gktchid in the data is numeric.
+star_trimmed <- star |> filter(!(as.character(gktchid) %in% flagged))
+
+nrow(star); nrow(star_trimmed)
+
+m_trimmed <- lmer(gktmathss ~ gkselfconcraw + classtype_f + highdeg_f + (1 | gktchid),
+                  data = star_trimmed, REML = FALSE)
+
+summary(m_trimmed)
+```
+
+```{r}
+modelsummary(
+  list("Original" = m, "Outliers removed" = m_trimmed),
+  stars = c("*" = .05, "**" = .01, "***" = .001),
+  gof_map = c("nobs", "aic", "bic"),
+  title = "Robustness of the class type estimate to influential clusters"
+)
+```
+
+Focus on the class type coefficient across the columns. If it stays essentially the same in magnitude, direction, and significance, you have an answer to the reviewer who worries about your residuals: the conclusion does not depend on the assumption in question. That is a far stronger response than asserting that the assumption was met.
+
+## Writing it up
+
+A sensitivity analysis paragraph belongs in nearly every quantitative paper, and it has a predictable shape. State which diagnostics you examined. Report what they showed, honestly, including the parts that looked imperfect. Describe the robustness checks you ran. Then state whether your substantive conclusion held.
+
+The version that reads as defensive says the assumptions were met and moves on. The version that reads as competent concedes that residuals showed mild right skew and 14 classrooms exceeded the conventional Cook's distance threshold, then reports that the class size estimate changed by less than a tenth of a point under cluster-robust standard errors and with those classrooms excluded. The second version is more honest and considerably more persuasive.

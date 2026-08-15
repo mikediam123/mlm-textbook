@@ -1,0 +1,182 @@
+# The Null Model
+
+**Data for this chapter:** `hsbmerged.csv`
+
+This chapter uses a larger version of the High School and Beyond dataset, with 7,185 students nested within 160 schools. Students are nested within schools, which is the simplest structure that multilevel modeling is built for. This is the same dataset that Garson uses in Chapter 3, so you can recreate his analysis alongside this one.
+
+## Loading packages and data
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(psych)
+library(lme4)
+library(lmerTest)
+library(performance)
+```
+
+```{r}
+#| message: false
+
+hsb <- read_csv("hsbmerged.csv")
+
+glimpse(hsb)
+```
+
+## Looking at the data before modeling it
+
+The `describe()` function from the `psych` package gives a quick, high-level summary of every variable in a dataset. It is also useful for your own records. You can paste the output into a document and you have a rough codebook to share with collaborators.
+
+```{r}
+describe(hsb)
+```
+
+Two variables deserve attention before we go further. `mathach` is our outcome, a standardized math achievement score. `schoolid` identifies the school each student attends, and it is what defines the clustering in these data.
+
+`sector` is coded 0 for public schools and 1 for Catholic schools. R has read it as a number, which is fine for arithmetic but misleading for interpretation. It is worth converting it into a factor with meaningful labels, so that model output and plots say "Public" and "Catholic" rather than 0 and 1.
+
+```{r}
+hsb <- hsb |>
+  mutate(sector_f = factor(sector,
+                           levels = c(0, 1),
+                           labels = c("Public", "Catholic")))
+
+table(hsb$sector_f)
+```
+
+## Exploring the outcome
+
+```{r}
+describe(hsb$mathach)
+```
+
+```{r}
+#| label: fig-mathach
+#| fig-cap: "Distribution of math achievement scores in the High School and Beyond sample."
+
+ggplot(hsb, aes(x = mathach)) +
+  geom_histogram(bins = 30, fill = "#1a7a6e", color = "white") +
+  labs(
+    title = "Distribution of Math Achievement Scores",
+    subtitle = "N = 7,185 students from the High School and Beyond Survey",
+    x = "Standardized Math Achievement Score",
+    y = "Number of students"
+  ) +
+  theme_minimal()
+```
+
+A histogram of the whole sample tells us about students in general, but it hides the thing we actually care about. The question that motivates multilevel modeling is whether *schools* differ from one another. One quick way to see this is to plot school averages rather than individual scores.
+
+```{r}
+#| label: fig-schoolmeans
+#| fig-cap: "Average math achievement varies considerably across the 160 schools."
+
+hsb |>
+  group_by(schoolid) |>
+  summarize(school_mean = mean(mathach, na.rm = TRUE)) |>
+  ggplot(aes(x = school_mean)) +
+  geom_histogram(bins = 25, fill = "#1a7a6e", color = "white") +
+  labs(
+    title = "School Average Math Achievement",
+    subtitle = "Each observation is one of 160 schools",
+    x = "School mean math achievement",
+    y = "Number of schools"
+  ) +
+  theme_minimal()
+```
+
+If every school had the same average, this second histogram would be a single narrow spike. It is not. That spread is the phenomenon the null model is about to quantify.
+
+## Running a null model
+
+The null model, also called the unconditional model or the empty model, has no predictors at all. It only asks how the total variation in math achievement divides into two pieces: variation between schools, and variation among students within the same school.
+
+The `(1 | schoolid)` term is what makes this a multilevel model. It tells `lmer()` to estimate a separate intercept for each school, drawn from a distribution whose variance we want to estimate.
+
+```{r}
+model_null <- lmer(mathach ~ 1 + (1 | schoolid), data = hsb, REML = FALSE)
+
+summary(model_null)
+```
+
+::: {.callout-note}
+## Why `REML = FALSE`?
+
+`lmer()` can estimate a model two ways, and the choice affects the variance components you are about to interpret.
+
+**Restricted maximum likelihood (REML)**, the default, produces less biased estimates of variance components, particularly when the number of level-2 units is small. If your goal is to report a variance or an ICC as accurately as possible, REML has the edge.
+
+**Maximum likelihood (ML)**, which `REML = FALSE` requests, is required whenever you want to compare two models that differ in their *fixed* effects. REML likelihoods computed under different fixed-effect specifications are not comparable, so an `anova()` comparison of REML-fitted models with different predictors is not valid. R will usually refit them for you, but silently, and it is better to know why.
+
+This book uses ML throughout, for two reasons. Model comparison happens constantly in these chapters, and using one estimator everywhere means the numbers on one page match the numbers on the next. With 160 schools here, and reasonable numbers of clusters in most course datasets, the difference between ML and REML variance estimates is small.
+
+Where the number of level-2 units is genuinely small, chapter 11 works with just 17 schools, REML is worth considering for the final reported model. Say which you used either way.
+:::
+
+Two numbers in the Random effects section carry the story. The variance associated with `schoolid` is the between-school variance, often written $\tau_{00}$. The Residual variance is the within-school, student-level variance, written $\sigma^2$.
+
+## Post-estimation: calculating the ICC
+
+The intraclass correlation coefficient is the proportion of total variance that lies between schools:
+
+$$\text{ICC} = \frac{\tau_{00}}{\tau_{00} + \sigma^2}$$
+
+It is worth computing this by hand at least once, because the formula is the concept. You can pull the variance components directly out of the fitted model rather than typing them in, which avoids transcription errors:
+
+```{r}
+vc <- as.data.frame(VarCorr(model_null))
+
+tau00 <- vc$vcov[vc$grp == "schoolid"]
+sigma2 <- vc$vcov[vc$grp == "Residual"]
+
+icc_by_hand <- tau00 / (tau00 + sigma2)
+icc_by_hand
+```
+
+The `performance` package will do the same calculation for you, and you should get the same answer:
+
+```{r}
+performance::icc(model_null)
+```
+
+An ICC of roughly this size tells us that a meaningful share of the variation in math achievement is between schools rather than within them. It also tells us something practical: students in the same school are more similar to one another than two students picked at random from the full sample, which is exactly the condition that makes ordinary regression standard errors too small.
+
+## Is the clustering statistically detectable?
+
+The `ranova()` function from `lmerTest` performs a likelihood ratio test comparing our model to one without the random intercept.
+
+```{r}
+ranova(model_null)
+```
+
+A significant result here says that allowing schools to have their own intercepts improves the fit enough to justify the extra parameter. Read this alongside the ICC rather than instead of it. The test tells you whether school-level variance is distinguishable from zero, while the ICC tells you how much of it there is. With 7,185 students you have enough power to detect quite small amounts of clustering, so a significant test on its own is weak evidence that multilevel modeling matters substantively.
+
+## Comparing to ordinary regression
+
+It is always worth seeing what we would have gotten by ignoring the clustering entirely.
+
+```{r}
+model_ols <- lm(mathach ~ 1, data = hsb)
+
+summary(model_ols)
+```
+
+The intercept estimates are similar, which is expected in a null model. What differs is the standard error, and that difference is the whole practical argument for multilevel modeling. Ignoring clustering treats 7,185 students as 7,185 independent pieces of information, when in reality students within a school share a great deal. The result is standard errors that are too small and p-values that are too optimistic.
+
+## Interpreting the fixed intercept
+
+One last point that students routinely get wrong. The fixed-effect intercept in the null model is not simply the mean of all 7,185 students' scores. It is an estimate of the average of the *school* means, weighting schools in a way that accounts for how many students each contributes and how much schools vary. With balanced data the two are close. With unbalanced data they can differ, and the multilevel estimate is usually the quantity you actually want.
+
+```{r}
+# The grand mean of all students
+mean(hsb$mathach, na.rm = TRUE)
+
+# The model-based estimate
+fixef(model_null)
+```
+
+## What comes next
+
+The null model tells us that schools differ. It does not tell us *why*. In the next chapter we start adding predictors, at both the student level and the school level, to explain some of the variance we have just found.

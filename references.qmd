@@ -1,0 +1,48 @@
+# References {.unnumbered}
+
+::: {#refs}
+:::
+
+## Course texts
+
+Garson, G. D. (2019). *Multilevel modeling: Applications in STATA, IBM SPSS, SAS, R, and HLM* (1st ed.). Sage Publications.
+
+Finch, W. H., Bolin, J. E., & Kelley, K. (2019). *Multilevel modeling using R* (2nd ed.). Chapman & Hall/CRC Press.
+
+## Standard references
+
+Gelman, A., & Hill, J. (2007). *Data analysis using regression and multilevel/hierarchical models*. Cambridge University Press.
+
+Hox, J. J. (2010). *Multilevel analysis: Techniques and applications* (2nd ed.). Lawrence Erlbaum.
+
+Raudenbush, S. W., & Bryk, A. S. (2002). *Hierarchical linear models: Applications and data analysis methods* (2nd ed.). Sage Publications.
+
+Singer, J. D., & Willett, J. B. (2003). *Applied longitudinal data analysis: Modeling change and event occurrence*. Oxford University Press.
+
+Snijders, T. A. B., & Bosker, R. J. (2011). *Multilevel analysis: An introduction to basic and advanced multilevel modeling* (2nd ed.). Sage Publications.
+
+## Sources for the data used in this book
+
+Gavin, M. B., & Hofmann, D. A. (2002). Using hierarchical linear modeling to investigate the moderating influence of work climate. *The Leadership Quarterly, 13*(1), 15–33.
+
+Leckie, G. (2013). *Cross-classified multilevel models*. LEMMA VLE Module 12. Centre for Multilevel Modelling, University of Bristol.
+
+Raudenbush, S. W., & Bryk, A. S. (2002). High School and Beyond survey data. In *Hierarchical linear models*. Sage Publications.
+
+Word, E. R., et al. (1990). *The State of Tennessee's Student/Teacher Achievement Ratio (STAR) Project: Technical report 1985–1990*. Tennessee State Department of Education.
+
+## On critical quantitative methods
+
+Garcia, N. M., López, N., & Vélez, V. N. (2018). QuantCrit: Rectifying quantitative methods through critical race theory. *Race Ethnicity and Education, 21*(2), 149–157.
+
+Yosso, T. J. (2005). Whose culture has capital? A critical race theory discussion of community cultural wealth. *Race Ethnicity and Education, 8*(1), 69–91.
+
+## R packages
+
+Bates, D., Mächler, M., Bolker, B., & Walker, S. (2015). Fitting linear mixed-effects models using lme4. *Journal of Statistical Software, 67*(1), 1–48.
+
+Kuznetsova, A., Brockhoff, P. B., & Christensen, R. H. B. (2017). lmerTest package: Tests in linear mixed effects models. *Journal of Statistical Software, 82*(13), 1–26.
+
+Lüdecke, D., Ben-Shachar, M. S., Patil, I., Waggoner, P., & Makowski, D. (2021). performance: An R package for assessment, comparison and testing of statistical models. *Journal of Open Source Software, 6*(60), 3139.
+
+Wickham, H., et al. (2019). Welcome to the tidyverse. *Journal of Open Source Software, 4*(43), 1686.

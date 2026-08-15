@@ -1,0 +1,162 @@
+# Cross-Classified Models
+
+**Data for this chapter:** `scotland.dta`
+
+::: {.callout-note}
+## Data file needed
+Copy `scotland.dta` into this project folder before rendering.
+:::
+
+Everything so far has assumed a strict hierarchy: each student belongs to one classroom, each classroom to one school, cleanly nested like boxes inside boxes. Real social structures often refuse to cooperate. This chapter handles the case where a person belongs to two grouping structures at once, and neither one sits inside the other.
+
+The data, from Leckie (2013), cover more than 2,000 Scottish primary school students who are nested within 17 schools and also within more than 500 neighborhoods. Students from a single neighborhood attend different schools, and each school draws from many neighborhoods. Schools and neighborhoods are *crossed*, not nested.
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(haven)
+library(lme4)
+library(lmerTest)
+library(performance)
+library(modelsummary)
+```
+
+```{r}
+scot <- read_dta("scotland.dta")
+
+glimpse(scot)
+```
+
+## Confirming the structure
+
+Before choosing a model, verify the structure is actually crossed. If neighborhoods were nested within schools, each neighborhood would send students to exactly one school.
+
+```{r}
+scot |>
+  group_by(neighid) |>
+  summarize(n_schools = n_distinct(schid)) |>
+  count(n_schools, name = "n_neighborhoods")
+```
+
+If many neighborhoods appear with more than one school, the structure is crossed and a nested model would be wrong.
+
+## Separate null models
+
+Start by fitting each grouping structure on its own.
+
+```{r}
+m_school <- lmer(p7read ~ 1 + (1 | schid), data = scot, REML = FALSE)
+m_neigh  <- lmer(p7read ~ 1 + (1 | neighid), data = scot, REML = FALSE)
+
+summary(m_school)
+summary(m_neigh)
+```
+
+## The combined cross-classified model
+
+The syntax is unremarkable, which is part of the point. Two crossed factors are simply two separate random intercept terms.
+
+```{r}
+m_cross <- lmer(p7read ~ 1 + (1 | schid) + (1 | neighid), data = scot, REML = FALSE)
+
+summary(m_cross)
+```
+
+::: {.callout-warning}
+## Do not use the nesting shorthand here
+Writing `(1 | schid/neighid)` would tell R that neighborhoods are nested within schools, creating a separate random effect for every school-neighborhood combination. That is a different model and, for these data, the wrong one. Crossed factors get separate terms joined with `+`.
+:::
+
+```{r}
+vc <- as.data.frame(VarCorr(m_cross))
+vc
+
+tau_school <- vc$vcov[vc$grp == "schid"]
+tau_neigh  <- vc$vcov[vc$grp == "neighid"]
+sigma2     <- vc$vcov[vc$grp == "Residual"]
+
+total <- tau_school + tau_neigh + sigma2
+
+round(c(
+  school       = tau_school / total,
+  neighborhood = tau_neigh / total,
+  student      = sigma2 / total
+), 3)
+```
+
+## Why the variances shift
+
+Compare the school variance in `m_school` to the school variance in `m_cross`, and do the same for neighborhoods. Both typically shrink when the two factors are modeled together.
+
+The reason is that a single-factor model has nowhere to put the other source of variation. When you fit schools alone, any neighborhood differences get absorbed into the school variance, because students in the same school tend to come from overlapping neighborhoods. The school-only model attributes to schools some variation that actually belongs to where children live. Fitting both simultaneously lets each factor account for its own share.
+
+This has a direct bearing on school accountability research. A model that ignores neighborhoods will systematically overstate how much schools matter.
+
+## Adding predictors at each level
+
+```{r}
+m1 <- lmer(p7read ~ momed + daded + (1 | schid) + (1 | neighid),
+           data = scot, REML = FALSE)
+
+m2 <- lmer(p7read ~ momed + daded + dadocc + (1 | schid) + (1 | neighid),
+           data = scot, REML = FALSE)
+
+m3 <- lmer(p7read ~ momed + daded + dadocc + deprive + (1 | schid) + (1 | neighid),
+           data = scot, REML = FALSE)
+
+summary(m3)
+```
+
+```{r}
+AIC(m_cross, m1, m2, m3)
+BIC(m_cross, m1, m2, m3)
+```
+
+On the neighborhood deprivation coefficient, a word of caution that applies well beyond these data. Families are not randomly assigned to neighborhoods. Families who end up in more deprived areas differ from those who do not in many ways, some measured here and most not. The coefficient describes an association between neighborhood deprivation and reading achievement. It does not establish that moving a child to a less deprived neighborhood would raise their score.
+
+## An interaction between parental education levels
+
+```{r}
+m_int <- lmer(p7read ~ momed * daded + dadocc + deprive +
+                (1 | schid) + (1 | neighid),
+              data = scot, REML = FALSE)
+
+summary(m_int)
+```
+
+State the question before reading the coefficient. This interaction asks whether the association between mother's education and child reading achievement depends on father's education. A negative interaction would suggest the two are partly substitutable, with one highly educated parent doing much of the work and the second adding less than the main effects alone would predict. A positive interaction would suggest they compound.
+
+## A caution about 17 schools
+
+```{r}
+scot |>
+  summarize(
+    n_schools = n_distinct(schid),
+    n_neighborhoods = n_distinct(neighid),
+    n_students = n()
+  )
+```
+
+With only 17 schools, the school-level variance is estimated from very little information. Variance components need a reasonable number of higher-level units to be estimated precisely, and common rules of thumb suggest wanting at least 30 to 50. The neighborhood variance, resting on 500-plus units, is on much firmer ground.
+
+This asymmetry should shape how you write up the results. Report both variances, but attach appropriate uncertainty to claims about schools. A school-level variance that appears smaller than the neighborhood variance may reflect a genuine difference, or it may reflect that 17 units cannot pin down a variance with much precision.
+
+## Reporting
+
+```{r}
+modelsummary(
+  list("School only" = m_school, "Neighborhood only" = m_neigh,
+       "Cross-classified" = m_cross, "Full model" = m3),
+  stars = c("*" = .05, "**" = .01, "***" = .001),
+  gof_map = c("nobs", "aic", "bic"),
+  title = "Cross-classified models of Scottish primary reading attainment"
+)
+```
+
+## Recognizing this structure elsewhere
+
+Cross-classification is more common than it looks once you start watching for it. Students crossed with teachers across multiple years. Patients crossed with hospitals and with surgeons who operate at several hospitals. Employees crossed with firms and with occupations. Survey respondents crossed with interviewers and with geographic areas.
+
+The diagnostic question is simple. Does every unit in group A belong to exactly one unit in group B? If yes, the structure is nested. If units in A spread across multiple units in B, it is crossed, and modeling it as nested will misattribute variance between the two.

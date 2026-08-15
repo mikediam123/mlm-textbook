@@ -1,0 +1,175 @@
+# Generalized Multilevel Models for Binary Outcomes
+
+**Data for this chapter:** `school_belonging.csv`
+
+::: {.callout-note}
+## Data file needed
+Copy `school_belonging.csv` into this project folder before rendering.
+:::
+
+Not every outcome is continuous. When the thing you are predicting is yes or no, present or absent, the linear model is the wrong tool, and we move to generalized linear mixed models. These data cover 6,528 middle school students in 122 schools, with a binary indicator of whether each student reports a strong sense of belonging at school.
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(lme4)
+library(performance)
+library(modelsummary)
+library(ggeffects)
+```
+
+```{r}
+#| message: false
+
+belong <- read_csv("school_belonging.csv")
+
+glimpse(belong)
+```
+
+```{r}
+belong |>
+  count(school_belonging) |>
+  mutate(proportion = n / sum(n))
+```
+
+## The null model
+
+The function changes from `lmer()` to `glmer()`, and we specify a family and link.
+
+```{r}
+m_null <- glmer(school_belonging ~ 1 + (1 | school_id),
+                family = binomial(link = "logit"),
+                data = belong)
+
+summary(m_null)
+```
+
+## The ICC, with a wrinkle
+
+In a linear model we computed the ICC from two estimated variances. In a logistic model there is no estimated level-one variance, because for a binary outcome the residual variance is determined by the mean. The standard solution fixes it at $\pi^2/3 \approx 3.29$, the variance of the standard logistic distribution:
+
+$$\text{ICC} = \frac{\tau_{00}}{\tau_{00} + \pi^2/3}$$
+
+```{r}
+vc <- as.data.frame(VarCorr(m_null))
+tau00 <- vc$vcov[vc$grp == "school_id"]
+
+icc_logistic <- tau00 / (tau00 + (pi^2 / 3))
+icc_logistic
+```
+
+```{r}
+performance::icc(m_null)
+```
+
+Because that level-one variance is assumed rather than estimated, the logistic ICC is on a latent scale and is not directly comparable to an ICC from a linear model. Treat it as a rough indication of clustering, not as a precise proportion of variance in the observed outcome.
+
+## Student-level predictors
+
+```{r}
+m_l1 <- glmer(school_belonging ~ peer_inclusivity + teacher_support +
+                community_activities + (1 | school_id),
+              family = binomial(link = "logit"),
+              data = belong)
+
+summary(m_l1)
+```
+
+Coefficients from `glmer()` are on the log-odds scale, which almost nobody reads intuitively. Exponentiate to get odds ratios:
+
+```{r}
+exp(fixef(m_l1))
+```
+
+```{r}
+#| message: false
+#| warning: false
+
+exp(confint(m_l1, method = "Wald"))
+```
+
+### Saying it correctly
+
+An odds ratio of 2.4 for peer inclusivity means the *odds* of reporting strong belonging are 2.4 times higher for students who perceive their peers as inclusive, holding the other predictors constant and comparing students within the same school.
+
+It does not mean those students are 2.4 times more *likely* to feel belonging. Odds and probability are different quantities, and they diverge sharply when outcomes are common. If the baseline probability is 50 percent, an odds ratio of 2.4 corresponds to about 71 percent, not 120 percent, which would be impossible. The looser phrasing is only approximately right when the outcome is rare, and it is worth avoiding entirely.
+
+## A school-level predictor
+
+```{r}
+m_l2 <- glmer(school_belonging ~ peer_inclusivity + teacher_support +
+                community_activities + small_school + (1 | school_id),
+              family = binomial(link = "logit"),
+              data = belong)
+
+summary(m_l2)
+exp(fixef(m_l2))
+```
+
+Before interpreting the school-size coefficient causally, consider what else varies with school size. Small schools differ from large ones in funding, urbanicity, student composition, and staffing. Any of those could produce an association between size and belonging without size itself doing the work.
+
+## Predicted probabilities
+
+This is the step that makes generalized models communicable. Rather than asking your reader to think in odds ratios, compute the predicted probability for specific student profiles.
+
+```{r}
+ggpredict(m_l2, terms = c("peer_inclusivity", "teacher_support"))
+```
+
+```{r}
+#| label: fig-probs
+#| fig-cap: "Predicted probability of strong school belonging by peer inclusivity and teacher support."
+
+plot(ggpredict(m_l2, terms = c("peer_inclusivity", "teacher_support")))
+```
+
+You can also compute specific contrasts by hand. The inverse logit function, `plogis()`, converts log-odds back to probabilities:
+
+```{r}
+# A student with all supports, in a small school
+profile_high <- data.frame(
+  peer_inclusivity = 1, teacher_support = 1,
+  community_activities = 1, small_school = 1, school_id = NA
+)
+
+# A student with none, in a large school
+profile_low <- data.frame(
+  peer_inclusivity = 0, teacher_support = 0,
+  community_activities = 0, small_school = 0, school_id = NA
+)
+
+predict(m_l2, newdata = profile_high, type = "response", re.form = NA)
+predict(m_l2, newdata = profile_low,  type = "response", re.form = NA)
+```
+
+Setting `re.form = NA` asks for the prediction for a typical school rather than for any particular one. That is usually what you want when describing a general pattern.
+
+The difference between those two probabilities is the number to lead with when talking to a principal. It says what fraction of students in each situation we expect to feel they belong, in units anyone can act on.
+
+## Reporting
+
+```{r}
+modelsummary(
+  list("Null" = m_null, "Student level" = m_l1, "+ School size" = m_l2),
+  exponentiate = TRUE,
+  stars = c("*" = .05, "**" = .01, "***" = .001),
+  gof_map = c("nobs", "aic", "bic"),
+  title = "Multilevel logistic models predicting strong school belonging (odds ratios)"
+)
+```
+
+Setting `exponentiate = TRUE` puts the table on the odds ratio scale. Label the column clearly, because a reader who assumes log-odds will misread every number in it.
+
+::: {.callout-tip}
+## If the model runs slowly or will not converge
+`glmer()` uses numerical approximation and is considerably more temperamental than `lmer()`. A different optimizer often fixes convergence warnings:
+
+```r
+m <- glmer(y ~ x + (1 | group), family = binomial, data = d,
+           control = glmerControl(optimizer = "bobyqa",
+                                  optCtrl = list(maxfun = 100000)))
+```
+Increasing `nAGQ` improves accuracy at the cost of speed, but is only available for models with a single random effect.
+:::

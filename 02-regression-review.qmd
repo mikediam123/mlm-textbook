@@ -1,0 +1,219 @@
+# Review of Regression
+
+**Data for this chapter:** `nlsw88.dta`
+
+::: {.callout-note}
+## Data file needed
+Copy `nlsw88.dta` into this project folder before rendering. This is the same dataset you will use for the Module 2 content review.
+:::
+
+Multilevel models are an extension of regression, so it is worth making sure the foundation is solid before we build on it. This chapter reviews ordinary least squares regression and then, at the end, shows where it starts to fail. That failure is the reason the rest of this book exists.
+
+The data are 2,246 women from the 1988 round of the National Longitudinal Survey of Mature and Young Women, administered by the U.S. Bureau of Labor Statistics. Public data are available at <https://nlsinfo.org>.
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(haven)
+library(psych)
+library(modelsummary)
+```
+
+```{r}
+nlsw <- read_dta("nlsw88.dta")
+
+glimpse(nlsw)
+```
+
+## Preparing the variables
+
+The dummy variables here are coded 1 for yes and 0 for no. Race is coded 1 for White, 2 for Black, and 3 for Other. That coding is a poor measurement approach from a QuantCrit standpoint, collapsing enormously different populations into a residual "other" category, but it was typical of 1988 and it is what the file contains. Keep the limitation in mind when interpreting anything involving race.
+
+```{r}
+nlsw <- nlsw |>
+  mutate(
+    collgrad_f = factor(collgrad, levels = c(0, 1),
+                        labels = c("Not college grad", "College grad")),
+    race_f     = factor(race, levels = c(1, 2, 3),
+                        labels = c("White", "Black", "Other")),
+    union_f    = factor(union, levels = c(0, 1),
+                        labels = c("Non-union", "Union"))
+  )
+
+table(nlsw$collgrad_f)
+table(nlsw$race_f)
+```
+
+### A note on missing data
+
+```{r}
+nlsw |>
+  summarize(across(c(wage, age, ttl_exp, collgrad, union, hours, industry),
+                   ~ sum(is.na(.)))) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "n_missing")
+```
+
+Some variables here have missing values, and `union` in particular has a substantial number. Resist the urge to run `na.omit()` on the whole dataset. That would drop any woman missing a response on *any* variable, including ones you are not using, and can silently discard hundreds of cases you had no reason to lose.
+
+`lm()` handles this for you by dropping incomplete cases on a model-by-model basis. The consequence is that different models in this chapter may be fit on slightly different subsamples, which matters when you compare them. Watch the N in the results tables.
+
+## A single predictor
+
+```{r}
+describe(nlsw$wage)
+```
+
+```{r}
+#| label: fig-wage
+#| fig-cap: "Distribution of hourly wages. Note the right skew."
+
+ggplot(nlsw, aes(x = wage)) +
+  geom_histogram(bins = 40, fill = "#1a7a6e", color = "white") +
+  labs(title = "Distribution of Hourly Wages",
+       x = "Hourly wage (1988 dollars)", y = "Number of women") +
+  theme_minimal()
+```
+
+Wages are right-skewed, which is nearly always true of earnings data. A small number of high earners pull the mean above the median. This is worth noticing before modeling, because it affects how well a linear model will describe the data and how much influence those high earners will have on the estimates.
+
+```{r}
+m1 <- lm(wage ~ ttl_exp, data = nlsw)
+
+summary(m1)
+```
+
+The coefficient on `ttl_exp` is the estimated difference in hourly wage associated with one additional year of total work experience.
+
+Three habits of careful interpretation are worth stating explicitly. First, this is an association, not an effect. Causality is a function of research design, not of analysis, and nobody randomly assigned these women to accumulate different amounts of work experience. Second, the intercept is the predicted wage when experience equals zero, which here describes a woman with no work history at all. That is a real if unusual case, so the intercept is at least interpretable. Third, $R^2$ is the proportion of variance in wages the model accounts for. It is not the probability the model is right, and a model with low $R^2$ can still contain a coefficient worth knowing about.
+
+## Building up a series of models
+
+```{r}
+m2 <- lm(wage ~ ttl_exp + age, data = nlsw)
+m3 <- lm(wage ~ ttl_exp + age + collgrad_f, data = nlsw)
+
+summary(m3)
+```
+
+Watch what happens to the experience coefficient as age and college graduation enter the model. Experience and age are correlated, since older women have had more time to accumulate work history, so some of what the first model attributed to experience was partly age. This is what "controlling for" means in practice, and it is why a coefficient is a statement about a particular model rather than a property of the world.
+
+Notice also how R handles the factor. It picks a reference category, here "Not college grad," and the coefficient describes the difference from that reference. Had `collgrad` been a three-category variable left as 1, 2, 3, we would have gotten a single nonsensical slope instead of two comparisons.
+
+## An interaction
+
+Does the return to work experience depend on age?
+
+```{r}
+m4 <- lm(wage ~ ttl_exp * age + collgrad_f, data = nlsw)
+
+summary(m4)
+```
+
+The interaction term asks whether the wage return to an additional year of experience is different for older women than for younger women. When an interaction is present, the main effects are no longer "the effect of experience" in general. They are the effect of experience when age equals zero, which is not a meaningful case here. This is the standard argument for centering continuous predictors before interacting them:
+
+```{r}
+nlsw <- nlsw |>
+  mutate(
+    age_c     = age - mean(age, na.rm = TRUE),
+    ttl_exp_c = ttl_exp - mean(ttl_exp, na.rm = TRUE)
+  )
+
+m5 <- lm(wage ~ ttl_exp_c * age_c + collgrad_f, data = nlsw)
+
+summary(m5)
+```
+
+The interaction coefficient is identical in the two models. What changes is the interpretability of everything else. In the centered version, the experience coefficient is the return to experience for a woman of average age, which is a quantity you can put in a sentence.
+
+```{r}
+#| label: fig-interaction
+#| fig-cap: "Predicted wages across work experience, at three ages."
+#| message: false
+
+library(ggeffects)
+
+plot(ggpredict(m5, terms = c("ttl_exp_c", "age_c [-5, 0, 5]")))
+```
+
+## Comparing the models
+
+```{r}
+modelsummary(
+  list("M1" = m1, "M2" = m2, "M3" = m3, "M4: Interaction" = m4),
+  stars = c("*" = .05, "**" = .01, "***" = .001),
+  gof_map = c("nobs", "r.squared", "adj.r.squared", "aic", "bic"),
+  title = "OLS models predicting hourly wages"
+)
+```
+
+Older course materials used `stargazer` for tables like this one. That package is no longer actively maintained and can fail with current versions of R, so we use `modelsummary` instead. If you find `stargazer` code in an old handout, `modelsummary()` is the direct replacement.
+
+Reading down the columns: does total experience matter as a predictor of women's hourly wages? Does that change once college status and age are taken into account? And how well do these models perform overall? The $R^2$ values will tell you that last one, and the honest answer is that wages are hard to predict from a handful of demographic variables.
+
+## Checking assumptions
+
+```{r}
+#| label: fig-diagnostics
+#| fig-cap: "Residual diagnostics for the multiple regression model."
+
+par(mfrow = c(2, 2))
+plot(m3)
+par(mfrow = c(1, 1))
+```
+
+The residuals-versus-fitted plot checks linearity and constant variance. With right-skewed wage data you will typically see a fan shape, with residuals spreading out at higher predicted wages. The Q-Q plot will show heavy tails for the same reason. Neither is fatal, and both are worth reporting honestly rather than hiding.
+
+## Where this breaks
+
+Here is the assumption that does not appear on any of those diagnostic plots: independence of observations. Every standard error above was computed as though these 2,246 women were 2,246 independent pieces of information.
+
+Look at the industry variable.
+
+```{r}
+nlsw |>
+  filter(!is.na(industry)) |>
+  count(industry, name = "n_women") |>
+  arrange(desc(n_women)) |>
+  head(10)
+```
+
+```{r}
+industry_summary <- nlsw |>
+  filter(!is.na(industry), !is.na(wage)) |>
+  group_by(industry) |>
+  summarize(
+    n_women = n(),
+    mean_wage = mean(wage),
+    .groups = "drop"
+  ) |>
+  filter(n_women >= 20)
+
+industry_summary |> arrange(desc(mean_wage))
+```
+
+```{r}
+#| label: fig-industry
+#| fig-cap: "Average hourly wage varies substantially across industries."
+
+ggplot(industry_summary, aes(x = reorder(factor(industry), mean_wage), y = mean_wage)) +
+  geom_col(fill = "#1a7a6e") +
+  coord_flip() +
+  labs(title = "Mean Hourly Wage by Industry",
+       subtitle = "Industries with at least 20 respondents",
+       x = "Industry code", y = "Mean hourly wage") +
+  theme_minimal()
+```
+
+Women are not scattered randomly across the labor market. They are grouped into industries and occupations, and those groups differ in pay scales, unionization, credential requirements, and much else. Two women in the same industry are more similar to each other than two women drawn at random from the whole sample.
+
+That similarity has two consequences, and both are the subject of the rest of this book.
+
+The first is statistical. Treating clustered observations as independent produces standard errors that are too small, confidence intervals that are too narrow, and p-values that are too optimistic. We are claiming more precision than the data support, because we counted 2,246 correlated observations as 2,246 independent ones.
+
+The second is conceptual, and it is the more interesting of the two. A regression of wages on education using all 2,246 women blends two different comparisons: the difference between two women working in the same industry, and the difference between two industries that employ differently educated workforces. Those are distinct questions with potentially different answers. Ordinary regression returns a single number that is neither one cleanly.
+
+Multilevel modeling addresses both. It corrects the standard errors by modeling the clustering explicitly, and it separates within-group from between-group associations rather than averaging over them.
+
+The next chapter starts that work with the simplest possible multilevel model, using students nested within schools, where the clustering is even more pronounced than it is here.

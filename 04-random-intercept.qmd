@@ -1,0 +1,200 @@
+# Conditional Random Intercept Models
+
+**Data for this chapter:** `lq2002.csv`
+
+This chapter uses data from Gavin and Hofmann (2002), a study of organizational climate and attitudes published in *Leadership Quarterly*. Here we have 2,042 U.S. Army soldiers nested within companies. The structure is the same as students within schools, which is a useful reminder that multilevel modeling is not about education specifically. Anywhere individuals are grouped, these methods apply. This is the same dataset Garson uses in Chapter 6.
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(psych)
+library(lme4)
+library(lmerTest)
+library(performance)
+library(modelsummary)
+```
+
+```{r}
+#| message: false
+
+lq2002 <- read_csv("lq2002.csv")
+
+glimpse(lq2002)
+```
+
+```{r}
+describe(lq2002)
+```
+
+The variables we care about are `HOSTILE` (a scale score for hostility, our outcome), `TSIG` (task significance), `LEAD` (leadership climate), and `COMPID` (company, our clustering variable). The variables beginning with `G` are group-level aggregates, which will matter later in this chapter.
+
+## Building a scale score and checking reliability
+
+Before modeling, a short detour that is worth its own section. The `HOSTILE` variable is a scale score built from five individual items. It is good practice to verify that a scale you have been handed actually hangs together, and Cronbach's alpha is the standard first check.
+
+```{r}
+hostile_items <- lq2002 |>
+  select(HOSTIL01, HOSTIL02, HOSTIL03, HOSTIL04, HOSTIL05)
+
+psych::alpha(hostile_items)
+```
+
+Alpha is reported in the `raw_alpha` column of the output. Conventional cutoffs put acceptable reliability somewhere above .70, though the right threshold depends on what the scale is for. Pay attention to the item-level output as well. If dropping one item would raise alpha substantially, that item may not belong.
+
+You can also build the scale score yourself rather than trusting one you were given:
+
+```{r}
+keys <- list(hostile = c("HOSTIL01", "HOSTIL02", "HOSTIL03", "HOSTIL04", "HOSTIL05"))
+
+scored <- psych::scoreItems(keys, lq2002, impute = "none")
+
+lq2002 <- lq2002 |>
+  mutate(hostile_mine = as.numeric(scored$scores[, "hostile"]))
+
+# Does our version match the one in the file?
+cor(lq2002$HOSTILE, lq2002$hostile_mine, use = "complete.obs")
+```
+
+A correlation of essentially 1.0 confirms the existing variable was constructed the way we think it was.
+
+## Looking at the key variables
+
+```{r}
+#| label: fig-three-vars
+#| fig-cap: "Distributions of the three scale scores used in this chapter."
+
+lq2002 |>
+  select(HOSTILE, TSIG, LEAD) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "score") |>
+  ggplot(aes(x = score)) +
+  geom_histogram(bins = 25, fill = "#1a7a6e", color = "white") +
+  facet_wrap(~variable, scales = "free_x") +
+  labs(
+    title = "Distributions of Hostility, Task Significance, and Leadership Climate",
+    subtitle = "N = 2,042 U.S. Army active duty soldiers. Data from Gavin and Hofmann (2002).",
+    x = NULL, y = "Count"
+  ) +
+  theme_minimal()
+```
+
+## Step one: the null model
+
+As always, we start by asking whether there is any company-level clustering to model.
+
+```{r}
+model_null <- lmer(HOSTILE ~ 1 + (1 | COMPID), data = lq2002, REML = FALSE)
+
+summary(model_null)
+```
+
+```{r}
+performance::icc(model_null)
+ranova(model_null)
+```
+
+Note that the ICC here is considerably smaller than the one we found for schools and math achievement. That is substantively interesting rather than a problem. Soldiers' hostility is mostly an individual matter, with companies accounting for a modest share of the variation. A small ICC does not mean you should abandon multilevel modeling, particularly when you have company-level predictors you want to test.
+
+## Step two: adding a level-one predictor
+
+```{r}
+model_1 <- lmer(HOSTILE ~ TSIG + (1 | COMPID), data = lq2002, REML = FALSE)
+
+summary(model_1)
+```
+
+The coefficient for `TSIG` describes how hostility differs between two soldiers who differ by one unit in task significance. Because `TSIG` varies both within and between companies, this estimate blends those two comparisons. We will separate them shortly.
+
+## Step three: a second level-one predictor
+
+```{r}
+model_2 <- lmer(HOSTILE ~ TSIG + LEAD + (1 | COMPID), data = lq2002, REML = FALSE)
+
+summary(model_2)
+```
+
+## Step four: testing an interaction
+
+Does the relationship between task significance and hostility depend on leadership climate? An interaction between two level-one predictors asks exactly that.
+
+```{r}
+model_3 <- lmer(HOSTILE ~ TSIG * LEAD + (1 | COMPID), data = lq2002, REML = FALSE)
+
+summary(model_3)
+```
+
+Interactions are much easier to understand as pictures than as coefficients:
+
+```{r}
+#| label: fig-interaction
+#| fig-cap: "Predicted hostility across levels of task significance, at low, average, and high leadership climate."
+#| message: false
+
+library(ggeffects)
+
+plot(ggpredict(model_3, terms = c("TSIG", "LEAD")))
+```
+
+Whether the interaction earns its place in the model is a separate question from whether it is significant. We can test it directly:
+
+```{r}
+anova(model_2, model_3)
+```
+
+## Step five: adding level-two predictors
+
+`GTSIG` and `GLEAD` are company averages. Adding them alongside the individual-level versions is not redundancy, even though it looks like it at first glance. These two coefficients answer different questions.
+
+The individual-level coefficient asks: within a given company, do soldiers who report higher task significance report less hostility? The group-level coefficient asks: do companies with higher average task significance have lower hostility overall? A soldier can be high on task significance in a company where everyone is low, or low in a company where everyone is high. Those are different situations, and they can have different consequences.
+
+```{r}
+model_4 <- lmer(HOSTILE ~ TSIG + LEAD + GTSIG + (1 | COMPID), data = lq2002, REML = FALSE)
+
+summary(model_4)
+```
+
+```{r}
+model_5 <- lmer(HOSTILE ~ TSIG + LEAD + GTSIG + GLEAD + (1 | COMPID), data = lq2002, REML = FALSE)
+
+summary(model_5)
+```
+
+Watch what happens to the company-level variance as you move from the null model through model 5. Adding level-two predictors should reduce it, because those predictors are explaining some of the between-company differences that the null model could only describe.
+
+## Presenting the results
+
+Reporting six models one `summary()` at a time is unreadable. A single comparison table is how this belongs in a paper. Older versions of these course materials used `stargazer` for this. That package is no longer maintained and breaks with recent versions of R, so we use `modelsummary` instead.
+
+```{r}
+modelsummary(
+  list(
+    "Null"    = model_null,
+    "M1"      = model_1,
+    "M2"      = model_2,
+    "M3: Int" = model_3,
+    "M4"      = model_4,
+    "M5"      = model_5
+  ),
+  stars = c("*" = .05, "**" = .01, "***" = .001),
+  gof_map = c("nobs", "aic", "bic"),
+  title = "Multilevel models predicting hostility among U.S. Army soldiers"
+)
+```
+
+`modelsummary()` will also write this table straight to a Word or LaTeX file, which is worth knowing when you are assembling a manuscript:
+
+```{r}
+#| eval: false
+
+modelsummary(
+  list("Null" = model_null, "M5" = model_5),
+  output = "hostility_models.docx"
+)
+```
+
+## What to take from this chapter
+
+Three ideas are worth carrying forward. Level-one and level-two versions of the same construct answer different questions and belong in the model together. Variance components tell a story as you build models, and watching them shrink is how you know where your predictors are doing work. And an interaction is much easier to defend when you can show someone the plot.
+
+In the next chapter we relax an assumption we have been making all along, that the relationship between a predictor and the outcome is identical in every group.

@@ -1,21 +1,29 @@
-# The Null Model
+# Intro to MLM and the Null Model
 
 **Data for this chapter:** `hsbmerged.csv`
 
-This chapter uses a larger version of the High School and Beyond dataset, with 7,185 students nested within 160 schools. Students are nested within schools, which is the simplest structure that multilevel modeling is built for. This is the same dataset that Garson uses in Chapter 3, so you can recreate his analysis alongside this one.
+This week we use a larger version of the HSB dataset from 1988. Same structure as before: students nested within schools. This is the same dataset Garson uses in Chapter 3, so you can recreate what he has as well.
 
-## Loading packages and data
+## Load some packages to help with the analysis and data management
 
 ```{r}
 #| label: setup
 #| message: false
 
 library(tidyverse)
-library(psych)
+library(Hmisc)     # label()
 library(lme4)
 library(lmerTest)
-library(performance)
 ```
+
+`Hmisc` is new here. We want it for two things: `label()`, which attaches a description to a variable, and its own version of `describe()`, which reports more detail than the one in `psych`.
+
+::: {.callout-warning}
+## Package conflicts
+`Hmisc` and `dplyr` both define functions named `summarize` and `src`. Loading `Hmisc` after the tidyverse means its versions win, and you may see masking messages at load. If a tidyverse function starts behaving oddly, call it explicitly as `dplyr::summarize()`.
+:::
+
+## Load in the data and use `glimpse` to summarize the structure
 
 ```{r}
 #| message: false
@@ -25,158 +33,207 @@ hsb <- read_csv("hsbmerged.csv")
 glimpse(hsb)
 ```
 
-## Looking at the data before modeling it
+7,185 students across 160 schools. `mathach` is our outcome, a standardized math achievement score, and `schoolid` identifies the school each student attends. That second variable is what makes multilevel modeling possible here.
 
-The `describe()` function from the `psych` package gives a quick, high-level summary of every variable in a dataset. It is also useful for your own records. You can paste the output into a document and you have a rough codebook to share with collaborators.
+## Quick data cleaning and coding tips
 
-```{r}
-describe(hsb)
-```
-
-Two variables deserve attention before we go further. `mathach` is our outcome, a standardized math achievement score. `schoolid` identifies the school each student attends, and it is what defines the clustering in these data.
-
-`sector` is coded 0 for public schools and 1 for Catholic schools. R has read it as a number, which is fine for arithmetic but misleading for interpretation. It is worth converting it into a factor with meaningful labels, so that model output and plots say "Public" and "Catholic" rather than 0 and 1.
+### The `summary` command from base R is a quick and easy way to explore a new dataset
 
 ```{r}
-hsb <- hsb |>
-  mutate(sector_f = factor(sector,
-                           levels = c(0, 1),
-                           labels = c("Public", "Catholic")))
-
-table(hsb$sector_f)
+summary(hsb)
 ```
 
-## Exploring the outcome
+Summary gives you a quick, high-level look at every variable in a dataset. It is also useful for your own records: copy and paste it into a Word file and you have something to refer back to.
+
+Read it critically, though. Every column here gets a mean and quartiles, including `sector`, `female`, and `minority`, which are categories rather than quantities. The mean of `sector` is the proportion of students in one sector, which is mildly useful, but its quartiles are meaningless. This is the same issue from Chapter 1, and we are about to fix it.
+
+### Let's give some variables a label
+
+Now, data cleaning and coding. We will apply labels to two things: the variables themselves, and the values within a given variable. Both are good practice for keeping your data readable.
 
 ```{r}
-describe(hsb$mathach)
+label(hsb$mathach) = "Std. Math Score"
+label(hsb$sector) = "School Sector"
+
+str(hsb$sector)
 ```
+
+The `str()` output now shows the label attached to the variable. This carries through to `Hmisc::describe()` output and to some plotting functions, which means a table six months from now still says "Std. Math Score" rather than `mathach`.
+
+### Let's create a factor version of `sector` and label its values
+
+```{r}
+hsb.clean <- hsb %>%
+  mutate(.,
+         sector.factor = as_factor(sector),
+         female.factor = as_factor(female),
+         minority.factor = as_factor(minority))
+
+levels(hsb.clean$sector.factor) = c("Public", "Parochial")
+levels(hsb.clean$female.factor) = c("Male", "Female")
+levels(hsb.clean$minority.factor) = c("Non-Minority", "Minority")
+
+str(hsb.clean$sector.factor)
+```
+
+Two steps here, and it is worth separating them. `as_factor()` converts the numeric variable into a factor, so R treats it as a category. Assigning to `levels()` then renames those categories from 0 and 1 into words.
+
+Order matters when you assign levels this way. The names are applied in the order R already has the levels in, so `c("Public", "Parochial")` assumes 0 comes first. Always check the result:
+
+```{r}
+table(hsb.clean$sector.factor)
+```
+
+3,642 public and 3,543 Parochial. If those counts had come out reversed from what you expected, the labels went on backwards, and every result from here forward would be silently mislabeled.
+
+### Run `summary` again and notice how it handles factors
+
+```{r}
+summary(hsb.clean)
+```
+
+Compare this to the earlier output. The factor versions of the variables no longer report meaningless means and quartiles. Instead they report counts per category, which is what you actually want to know. Same data, same function, but R now understands what kind of variable it is looking at.
+
+## Exploring our outcome, math achievement
+
+Now let's look at `mathach` using the `describe` function from the `Hmisc` package:
+
+```{r}
+describe(hsb.clean$mathach)
+```
+
+`Hmisc::describe()` reports more than the `psych` version: distinct values, several percentiles, and the five lowest and highest observations. That last part is a quiet outlier check. If the highest values were 24, 25, and 9999, you would see it here.
 
 ```{r}
 #| label: fig-mathach
-#| fig-cap: "Distribution of math achievement scores in the High School and Beyond sample."
+#| fig-cap: "Distribution of math achievement scores."
 
-ggplot(hsb, aes(x = mathach)) +
-  geom_histogram(bins = 30, fill = "#1a7a6e", color = "white") +
-  labs(
-    title = "Distribution of Math Achievement Scores",
-    subtitle = "N = 7,185 students from the High School and Beyond Survey",
-    x = "Standardized Math Achievement Score",
-    y = "Number of students"
-  ) +
-  theme_minimal()
+hist(hsb.clean$mathach,
+     main = "Distribution of Math Achievement Scores",
+     sub = "N = 7,185. Students from the High School and Beyond Survey (1988).",
+     xlab = "Standardized Math Achievement Score")
 ```
 
-A histogram of the whole sample tells us about students in general, but it hides the thing we actually care about. The question that motivates multilevel modeling is whether *schools* differ from one another. One quick way to see this is to plot school averages rather than individual scores.
+This histogram describes students in general, which is useful but hides the thing we actually care about. The question motivating multilevel modeling is whether *schools* differ. One quick way to see it is to plot school averages instead of individual scores:
 
 ```{r}
 #| label: fig-schoolmeans
-#| fig-cap: "Average math achievement varies considerably across the 160 schools."
+#| fig-cap: "Average math achievement across the 160 schools."
 
-hsb |>
-  group_by(schoolid) |>
-  summarize(school_mean = mean(mathach, na.rm = TRUE)) |>
-  ggplot(aes(x = school_mean)) +
-  geom_histogram(bins = 25, fill = "#1a7a6e", color = "white") +
-  labs(
-    title = "School Average Math Achievement",
-    subtitle = "Each observation is one of 160 schools",
-    x = "School mean math achievement",
-    y = "Number of schools"
-  ) +
-  theme_minimal()
+school_means <- hsb.clean %>%
+  group_by(schoolid) %>%
+  dplyr::summarize(school_mean = mean(mathach, na.rm = TRUE))
+
+hist(school_means$school_mean,
+     main = "School Average Math Achievement",
+     sub = "Each observation is one of 160 schools.",
+     xlab = "School mean math achievement")
 ```
 
-If every school had the same average, this second histogram would be a single narrow spike. It is not. That spread is the phenomenon the null model is about to quantify.
+If every school had the same average, this would be a single narrow spike. It is not, and that spread is exactly what the null model is about to quantify.
 
 ## Running a null model
 
-The null model, also called the unconditional model or the empty model, has no predictors at all. It only asks how the total variation in math achievement divides into two pieces: variation between schools, and variation among students within the same school.
-
-The `(1 | schoolid)` term is what makes this a multilevel model. It tells `lmer()` to estimate a separate intercept for each school, drawn from a distribution whose variance we want to estimate.
-
 ```{r}
-model_null <- lmer(mathach ~ 1 + (1 | schoolid), data = hsb, REML = FALSE)
+model.null <- lmer(mathach ~ (1|schoolid), REML = FALSE, data = hsb.clean)
 
-summary(model_null)
+summary(model.null)
 ```
+
+The `(1|schoolid)` term is what makes this multilevel. It tells `lmer()` to estimate a separate intercept for each school, drawn from a distribution whose variance we want to estimate.
+
+::: {.callout-important}
+## What makes `schoolid` a clustering variable, and what does not
+
+This is the most common early mistake, so it is worth stopping on. Nearly every dataset has categorical variables, and almost none of them belong inside `(1 | ... )`. Before writing that term, ask three questions.
+
+**How many units are there?** A random intercept does not estimate a set of group means. It estimates a *variance*, and it does so from as many observations as there are groups. Estimating a variance from nine numbers is exactly as unreliable as it sounds. Common guidance wants 30 to 50 level-2 units for reasonable precision, with roughly 20 as a floor below which the estimate should not be trusted. We have 160 schools, which is comfortable.
+
+**Are these units a sample from a population you want to generalize to?** This is the conceptual heart of it. Random effects treat groups as draws from a population of groups, so your conclusions extend to schools you did not observe. These 160 schools are a sample of American high schools. By contrast, a variable like `sector` has two categories that are not a sample of anything; they are the complete set. There is no larger population of sectors to infer toward.
+
+**Do you want group-specific effects, or the variation among groups?** If you want to know how each category differs, that is a fixed effect: put it on the right side of the `~` like any other predictor. If you want to know how much groups vary as a class, and to generalize beyond the ones you have, that is a random effect.
+
+So in this dataset, `schoolid` goes in the random part and `sector`, `female`, and `minority` go in the fixed part. Sex has two categories. Treatment condition has two. Region usually has four. None of those are clustering variables, however naturally the data seem to group by them.
+
+R will not stop you from writing `(1 | sector)`. It will return a variance component and standard errors and flag nothing at all. The number will simply not mean what you think it means.
+:::
+
+Two numbers in the Random effects section carry the story. The variance associated with `schoolid` is the between-school variance, written $\tau_{00}$. The Residual variance is the within-school, student-level variance, written $\sigma^2$.
+
+You also get AIC and BIC, two very common information criterion measures used to assess model fit.
 
 ::: {.callout-note}
 ## Why `REML = FALSE`?
+`lmer()` can estimate a model two ways. Restricted maximum likelihood (REML), the default, gives less biased variance components, especially with few level-2 units. Maximum likelihood (ML), which `REML = FALSE` requests, is required whenever you compare models that differ in their *fixed* effects, because REML likelihoods are not comparable across different fixed-effect specifications.
 
-`lmer()` can estimate a model two ways, and the choice affects the variance components you are about to interpret.
-
-**Restricted maximum likelihood (REML)**, the default, produces less biased estimates of variance components, particularly when the number of level-2 units is small. If your goal is to report a variance or an ICC as accurately as possible, REML has the edge.
-
-**Maximum likelihood (ML)**, which `REML = FALSE` requests, is required whenever you want to compare two models that differ in their *fixed* effects. REML likelihoods computed under different fixed-effect specifications are not comparable, so an `anova()` comparison of REML-fitted models with different predictors is not valid. R will usually refit them for you, but silently, and it is better to know why.
-
-This book uses ML throughout, for two reasons. Model comparison happens constantly in these chapters, and using one estimator everywhere means the numbers on one page match the numbers on the next. With 160 schools here, and reasonable numbers of clusters in most course datasets, the difference between ML and REML variance estimates is small.
-
-Where the number of level-2 units is genuinely small, chapter 11 works with just 17 schools, REML is worth considering for the final reported model. Say which you used either way.
+This book uses ML throughout so that numbers stay consistent from one page to the next and model comparisons are always valid. With 160 schools, the difference between the two is small.
 :::
 
-Two numbers in the Random effects section carry the story. The variance associated with `schoolid` is the between-school variance, often written $\tau_{00}$. The Residual variance is the within-school, student-level variance, written $\sigma^2$.
+## Post-estimation task: calculate the ICC
 
-## Post-estimation: calculating the ICC
+These commands are run after any kind of MLM. They are called post-estimation commands because they require that the model be saved in memory. If you do something else and then try to run them, you will likely get an error.
 
-The intraclass correlation coefficient is the proportion of total variance that lies between schools:
+The intraclass correlation is the proportion of total variance lying between schools:
 
 $$\text{ICC} = \frac{\tau_{00}}{\tau_{00} + \sigma^2}$$
 
-It is worth computing this by hand at least once, because the formula is the concept. You can pull the variance components directly out of the fitted model rather than typing them in, which avoids transcription errors:
+Here's a quick and easy way to get our friend the ICC:
 
 ```{r}
-vc <- as.data.frame(VarCorr(model_null))
+null.ICC <- 8.553/(8.553 + 39.148)
+null.ICC
+```
 
-tau00 <- vc$vcov[vc$grp == "schoolid"]
+Roughly 18 percent of the variation in math achievement is between schools. Put another way, two students from the same school are noticeably more similar to each other than two students drawn at random from the full sample. That is the condition that makes ordinary regression standard errors too small.
+
+::: {.callout-tip}
+## Pulling the numbers out rather than typing them
+Typing the variance components by hand works and makes the formula visible, which is why it is worth doing once. For your own analyses it is safer to extract them from the model, since a transposed digit produces a plausible-looking wrong answer:
+
+```{r}
+vc <- as.data.frame(VarCorr(model.null))
+
+tau00  <- vc$vcov[vc$grp == "schoolid"]
 sigma2 <- vc$vcov[vc$grp == "Residual"]
 
-icc_by_hand <- tau00 / (tau00 + sigma2)
-icc_by_hand
+tau00 / (tau00 + sigma2)
 ```
 
-The `performance` package will do the same calculation for you, and you should get the same answer:
+The `performance` package will also compute it directly with `performance::icc(model.null)`.
+:::
+
+## Using `lmerTest` to evaluate random effects
 
 ```{r}
-performance::icc(model_null)
+ranova(model.null)
 ```
 
-An ICC of roughly this size tells us that a meaningful share of the variation in math achievement is between schools rather than within them. It also tells us something practical: students in the same school are more similar to one another than two students picked at random from the full sample, which is exactly the condition that makes ordinary regression standard errors too small.
+This is a likelihood ratio test comparing our model to one without the random intercept. A significant result says that letting schools have their own intercepts improves fit enough to justify the extra parameter.
 
-## Is the clustering statistically detectable?
+Read it alongside the ICC rather than instead of it. The test tells you whether school-level variance is distinguishable from zero; the ICC tells you how much of it there is. With 7,185 students you have enough power to detect quite small amounts of clustering, so significance alone is weak evidence that multilevel modeling matters substantively.
 
-The `ranova()` function from `lmerTest` performs a likelihood ratio test comparing our model to one without the random intercept.
+::: {.callout-note}
+## `rand()` became `ranova()`
+Older handouts call `lmerTest::rand()`. The function was renamed to `ranova()` several versions ago. The old name may still work but is no longer the documented one.
+:::
+
+## Always interesting: compare our MLM to a regular regression
 
 ```{r}
-ranova(model_null)
+model.regular <- lm(mathach ~ NULL, data = hsb.clean)
+
+summary(model.regular)
 ```
 
-A significant result here says that allowing schools to have their own intercepts improves the fit enough to justify the extra parameter. Read this alongside the ICC rather than instead of it. The test tells you whether school-level variance is distinguishable from zero, while the ICC tells you how much of it there is. With 7,185 students you have enough power to detect quite small amounts of clustering, so a significant test on its own is weak evidence that multilevel modeling matters substantively.
+The intercept estimates are similar, which is expected in a null model. What differs is the standard error, and that difference is the entire practical argument for multilevel modeling. Ordinary regression treats 7,185 students as 7,185 independent pieces of information, when students within a school share teachers, curricula, neighborhoods, and funding. The result is standard errors that are too small and p-values that are too optimistic.
 
-## Comparing to ordinary regression
-
-It is always worth seeing what we would have gotten by ignoring the clustering entirely.
+One last point students routinely get wrong. The fixed-effect intercept in the null model is not simply the mean of all 7,185 scores. It estimates the average of the *school* means, weighting schools by how much information each contributes. With balanced data the two are close; with unbalanced data they differ, and the multilevel estimate is usually the one you want.
 
 ```{r}
-model_ols <- lm(mathach ~ 1, data = hsb)
-
-summary(model_ols)
-```
-
-The intercept estimates are similar, which is expected in a null model. What differs is the standard error, and that difference is the whole practical argument for multilevel modeling. Ignoring clustering treats 7,185 students as 7,185 independent pieces of information, when in reality students within a school share a great deal. The result is standard errors that are too small and p-values that are too optimistic.
-
-## Interpreting the fixed intercept
-
-One last point that students routinely get wrong. The fixed-effect intercept in the null model is not simply the mean of all 7,185 students' scores. It is an estimate of the average of the *school* means, weighting schools in a way that accounts for how many students each contributes and how much schools vary. With balanced data the two are close. With unbalanced data they can differ, and the multilevel estimate is usually the quantity you actually want.
-
-```{r}
-# The grand mean of all students
-mean(hsb$mathach, na.rm = TRUE)
-
-# The model-based estimate
-fixef(model_null)
+mean(hsb.clean$mathach, na.rm = TRUE)   # grand mean of all students
+fixef(model.null)                       # model-based estimate
 ```
 
 ## What comes next
 
-The null model tells us that schools differ. It does not tell us *why*. In the next chapter we start adding predictors, at both the student level and the school level, to explain some of the variance we have just found.
+The null model tells us schools differ. It does not tell us why. The next chapter starts adding predictors, at both the student and school levels, to explain some of the variance we just found.

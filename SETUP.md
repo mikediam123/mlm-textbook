@@ -24,8 +24,8 @@ Chapters 3 and 4 will render as-is, since `hsbmerged.csv` and `lq2002.csv` are a
 
 Copy these into the project folder, alongside the `.qmd` files:
 
-- `hsb2.dta` (chapter 1)
-- `nlsw88.dta` (chapter 2)
+- `descriptive_gss.dta` (chapter 1)
+- `food.csv` (chapter 2)
 - `expanded_strs_no_miss` (chapters 5, 6)
 - `projectSTAR.dta` (chapters 7, 10)
 - `STAR_long.dta` and `STAR_wide.dta` (chapter 8)

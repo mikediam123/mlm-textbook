@@ -1,24 +1,22 @@
-# Getting Started with R
+# Getting Started with R and RStudio
 
-**Data for this chapter:** `hsb2.dta`
+**Data for this chapter:** `descriptive_gss.dta`
 
 ::: {.callout-note}
 ## Data file needed
-Copy `hsb2.dta` into this project folder before rendering. This is the same dataset you will use for the Module 1 content review.
+Copy `descriptive_gss.dta` into this project folder before rendering.
 :::
 
-This chapter assumes you have R and RStudio installed but not much beyond that. If you have used R before, you may want to skim to the section on categorical variables, which is where the first real trap lives.
+This chapter assumes you have R and RStudio installed but not much beyond that. We will load some packages, read in a dataset, look at what is inside it, and make a couple of quick plots. The data come from the General Social Survey.
 
-The data are a random sample of 200 tenth graders from the High School and Beyond survey, collected in 1980. The full codebook is at <http://www.philender.com/courses/intro/hsbcode.html>.
+## Load in some useful R packages
 
-## Packages
-
-R by itself is fairly minimal. Almost everything we do relies on packages, which are collections of functions other people have written. You install a package once, and then load it in every session where you want to use it.
+Packages are collections of functions written by other R users. They are also visible on the right side menu under **Packages**. A handful get used so often that it makes sense to load them at the start of nearly every session. If you do not have these in your library yet, click **Install** in the Packages menu, or run `install.packages()` once.
 
 ```{r}
 #| eval: false
 
-install.packages(c("tidyverse", "haven", "psych"))
+install.packages(c("tidyverse", "psych", "haven"))
 ```
 
 ```{r}
@@ -26,216 +24,116 @@ install.packages(c("tidyverse", "haven", "psych"))
 #| message: false
 
 library(tidyverse)
-library(haven)
 library(psych)
+library(haven)
 ```
 
-A habit worth forming immediately: put all of your `library()` calls at the top of your document, not scattered through it. When you render a Quarto document, R runs it top to bottom in a fresh session, and a package loaded halfway down cannot help the code above it.
+Keep all of your `library()` calls at the top of the document rather than scattering them through it. Rendering a Quarto file runs the code top to bottom in a fresh session, so a package loaded halfway down cannot help the code above it.
 
-## Reading data in
+Each of these does something specific. `tidyverse` is a bundle of packages for data management and graphics. `psych` gives us descriptive statistics and, later in the course, reliability analysis. `haven` reads files written by other statistics programs, which is what we need next.
 
-Which function you use depends on the file format. `read_dta()`, from the `haven` package, reads Stata files, which is what most of the course datasets are distributed as. `read_csv()` handles comma-separated files.
+## Load in the data
+
+Our dataset is a Stata file, so we use `read_dta()` from `haven`. Then `glimpse()` shows the structure: how many rows, how many columns, what type each column is, and the first few values.
 
 ```{r}
-hsb2 <- read_dta("hsb2.dta")
+gss <- read_dta("descriptive_gss.dta")
+
+glimpse(gss)
 ```
 
-Use a plain filename, not a full path like `C:/Users/yourname/Downloads/hsb2.dta`. Keeping the data file in the same folder as your document is what allows your code to run on someone else's computer, which is the whole point of a reproducible analysis.
-
-## First look
-
-`glimpse()` gives you the shape of a dataset: how many rows, how many columns, what type each column is, and the first few values.
-
-```{r}
-glimpse(hsb2)
-```
-
-You should see 200 observations and 11 variables: an ID, four demographic variables (`female`, `race`, `ses`, `schtyp`), the program type (`prog`), and five standardized test scores (`read`, `write`, `math`, `science`, `socst`).
-
-Compare this against the codebook. Doing so is not busywork. It is how you catch a file that was saved wrong, a variable that got dropped in transit, or values that were coded differently than you were told.
-
-`describe()` from the `psych` package goes further, giving you means, standard deviations, ranges, skew, and kurtosis for every variable at once.
-
-```{r}
-describe(hsb2)
-```
-
-This output is also useful for your own records. You can paste it into a document and you have a rough codebook to share with collaborators.
-
-## The first real trap: categorical variables stored as numbers
-
-Look carefully at `prog` in the output above. `describe()` happily reports a mean for it, something in the neighborhood of 2. That number is meaningless.
-
-`prog` is not a quantity. It is a label: 1 for general, 2 for academic, 3 for vocational. The mean of a label tells you nothing, because the distance from general to academic is not a real distance, and "2" is not twice "1" in any sense that matters.
-
-The right descriptive statistic for a variable like this is a count:
-
-```{r}
-table(hsb2$prog)
-```
-
-```{r}
-# As proportions
-prop.table(table(hsb2$prog))
-```
-
-You can check how a variable is stored, and see any labels that came along with the Stata file, using `str()`:
-
-```{r}
-str(hsb2$prog)
-```
-
-This matters enormously later. If you leave a multi-category variable like `prog` or `race` coded 1, 2, 3 and drop it into a regression, R will treat it as continuous and estimate a single slope, as though moving from general to academic has the same meaning as moving from academic to vocational. The model will run. The results will be wrong, and no error message will tell you.
-
-The fix is to convert such variables into factors, with labels attached:
-
-```{r}
-hsb2 <- hsb2 |>
-  mutate(
-    prog_f   = factor(prog, levels = c(1, 2, 3),
-                      labels = c("General", "Academic", "Vocational")),
-    ses_f    = factor(ses, levels = c(1, 2, 3),
-                      labels = c("Low", "Middle", "High")),
-    female_f = factor(female, levels = c(0, 1),
-                      labels = c("Male", "Female")),
-    schtyp_f = factor(schtyp, levels = c(1, 2),
-                      labels = c("Public", "Private"))
-  )
-
-table(hsb2$prog_f)
-table(hsb2$ses_f)
-```
+Use a plain filename rather than a full path like `C:/Users/yourname/Downloads/descriptive_gss.dta`. Keeping the data file in the same folder as your document is what lets the code run on someone else's computer, which matters as soon as you share anything.
 
 ::: {.callout-tip}
-## A shortcut for Stata files
-Stata files often carry value labels with them. When they do, `haven::as_factor()` converts a variable to a factor using those labels, saving you from typing them out:
-
-```r
-hsb2 <- hsb2 |> mutate(prog_f = as_factor(prog))
-```
-
-Always check the result with `table()`. If the labels did not come through, fall back to specifying them yourself as above.
+## A related function you will use interactively
+`View(gss)` opens a spreadsheet-style window for browsing the data. It is useful while you are exploring, but it opens a window rather than printing anything, so it does nothing in a rendered document. Use it in the console freely; leave it out of chunks you intend to render.
 :::
 
-## The pipe
+## What does a variable actually contain?
 
-You will see `|>` throughout this book. It is R's pipe operator, and it takes whatever is on the left and passes it as the first argument to whatever is on the right. These two lines do the same thing:
-
-```{r}
-#| eval: false
-
-describe(hsb2$write)
-hsb2$write |> describe()
-```
-
-The pipe becomes worth using when operations chain together. Instead of nesting functions inside one another and reading from the inside out, you read left to right in the order the steps happen.
+Stata files often carry labels describing what a variable measures and what its values mean. `str()` shows you both.
 
 ```{r}
-hsb2 |>
-  group_by(ses_f) |>
-  summarize(
-    n = n(),
-    mean_write = mean(write, na.rm = TRUE),
-    sd_write = sd(write, na.rm = TRUE)
-  )
+str(gss$satjob7)
 ```
 
-You may also see `%>%` in older code, including some of the course handouts. It is an earlier version of the same idea from the `magrittr` package, and for our purposes the two behave identically.
+Notice what came through. `haven` gives this variable the class `haven_labelled`. It holds numbers, but attached to those numbers is a `label` describing the variable and a set of value labels mapping each number to a meaning.
 
-## Graphics
+This is worth checking rather than assuming you remember the coding. It is also the first hint of something that matters throughout the course: a variable can be *stored* as a number while *meaning* a category.
 
-Base R's `hist()` is fine for a quick look at one variable:
+## Describe the dataset
+
+The `describe()` function from `psych` reports means, standard deviations, ranges and more for every variable at once. The `fast = TRUE` option trims the output to the columns you usually want.
 
 ```{r}
-#| label: fig-basehist
-#| fig-cap: "A quick base R histogram of writing scores."
-
-hist(hsb2$write,
-     main = "Distribution of Writing Scores",
-     xlab = "Standardized writing score")
+describe(gss, fast = TRUE)
 ```
 
-But `ggplot2`, part of the tidyverse, is what we will use for anything that needs to be readable by someone else. The logic takes a moment to click. You specify a dataset, then a mapping from variables to visual properties inside `aes()`, then layers of geometry.
+This output is handy for your own records. Paste it into a document and you have a rough codebook to share with collaborators.
+
+Read it with some care, though. `describe()` will compute a mean for any numeric column, including ones where a mean means nothing. We will come back to that in a moment.
+
+## Create a quick histogram
+
+A frequency histogram is a good quick-and-dirty way to explore a continuous variable. Base R's `hist()` needs nothing but the variable itself.
 
 ```{r}
-#| label: fig-ggplot
-#| fig-cap: "The same distribution in ggplot2."
+#| label: fig-educ
+#| fig-cap: "Years of education among GSS respondents."
 
-ggplot(hsb2, aes(x = write)) +
-  geom_histogram(bins = 20, fill = "#1a7a6e", color = "white") +
-  labs(
-    title = "Distribution of Writing Scores",
-    x = "Standardized writing score",
-    y = "Number of students"
-  ) +
-  theme_minimal()
+hist(gss$educ)
 ```
 
-### Comparing groups, and why the axis scale matters
+Education in years is a sensible variable for this treatment. It takes many values, the values are ordered, and the distances between them mean something: the step from 12 years to 13 is the same size as the step from 15 to 16.
 
-Suppose you want to compare writing scores across the three SES groups. One approach is to split the data into three pieces and plot each one:
+Look at where the distribution piles up. Educational attainment tends to cluster at the points where credentials are awarded, and the shape usually shows that.
+
+## Another histogram
 
 ```{r}
-#| label: fig-filtered
-#| fig-cap: "Three separately generated histograms. Note that the axes differ."
+#| label: fig-sex
+#| fig-cap: "The same function applied to a two-category variable."
 
-low    <- hsb2 |> filter(ses == 1)
-middle <- hsb2 |> filter(ses == 2)
-high   <- hsb2 |> filter(ses == 3)
-
-par(mfrow = c(1, 3))
-hist(low$write,    main = "Low SES",    xlab = "Writing score")
-hist(middle$write, main = "Middle SES", xlab = "Writing score")
-hist(high$write,   main = "High SES",   xlab = "Writing score")
-par(mfrow = c(1, 1))
+hist(gss$sex, freq = FALSE)
 ```
 
-Look at the horizontal and vertical axes across those three panels. They are not the same, because each plot scaled itself to its own data. Any comparison you make by eye is distorted, and differences can look larger or smaller than they are purely as an artifact of the scaling.
+The `freq = FALSE` argument switches the vertical axis from counts to density, so the bars represent proportions rather than numbers of people.
 
-Faceting solves this by drawing one plot split into panels, with shared axes:
+This plot is worth pausing on, because it shows something the previous one did not. `sex` has two categories, and R will happily draw a histogram of it, because the values are stored as numbers. But the picture is not telling us much. There is no meaningful spread, no shape, and the bins do not correspond to anything real. It answers a question we did not need a plot for.
+
+For a variable like this, a table is more informative and takes less space:
 
 ```{r}
-#| label: fig-facet
-#| fig-cap: "Writing scores by SES, on a shared scale."
-
-ggplot(hsb2, aes(x = write)) +
-  geom_histogram(bins = 20, fill = "#1a7a6e", color = "white") +
-  facet_wrap(~ses_f) +
-  labs(
-    title = "Writing Scores by Socioeconomic Status",
-    x = "Standardized writing score",
-    y = "Number of students"
-  ) +
-  theme_minimal()
+table(gss$sex)
 ```
 
-With only 200 students spread across three groups, histograms are fairly lumpy. Boxplots or density curves often compare distributions more clearly at this sample size:
+The same logic applies to that mean in the `describe()` output. If `sex` is coded 1 and 2, its mean is some number between 1 and 2, which describes no actual respondent.
 
-```{r}
-#| label: fig-box
-#| fig-cap: "The same comparison as boxplots."
+::: {.callout-important}
+## Numbers that are really categories
 
-ggplot(hsb2, aes(x = ses_f, y = write, fill = ses_f)) +
-  geom_boxplot(alpha = 0.7) +
-  scale_fill_manual(values = c("#e0f2ef", "#8cc9c0", "#1a7a6e")) +
-  labs(
-    title = "Writing Scores by Socioeconomic Status",
-    x = NULL, y = "Standardized writing score"
-  ) +
-  theme_minimal() +
-  theme(legend.position = "none")
+This is the single most consequential thing to internalize early. Many variables are *stored* as numbers but *mean* categories: sex, marital status, region, program type, job satisfaction on a labelled scale.
+
+R cannot tell the difference on its own. It will compute means, draw histograms, and later fit regressions treating those codes as quantities, all without warning you.
+
+The fix is to convert them to factors, so that R treats them as categories:
+
+```r
+gss <- gss |> mutate(sex_f = as_factor(sex))
+table(gss_f$sex_f)
 ```
 
-Notice how much the three groups overlap. There is a difference in the averages, and there is also a great deal of variation within each group. Both facts are true at once, and keeping them both in view is a habit worth building now. Group differences almost never mean that group membership determines an individual outcome.
+`as_factor()` from `haven` uses the value labels that came along with the Stata file. We will use this constantly once we start modeling, because a categorical variable entered as a number produces a model that runs and answers the wrong question.
+:::
 
-## Where to go when something breaks
+## When something breaks
 
-Error messages in R are often unhelpful at first and become readable with practice. A few of the most common:
+R's error messages are unhelpful at first and become readable with practice. The three you will meet most often:
 
-`could not find function "..."` almost always means a package is not loaded. Check your `library()` calls.
+`could not find function "..."` almost always means a package is not loaded. Check your `library()` calls at the top.
 
-`object '...' not found` means you are referring to something that does not exist in your current session, often because of a typo or because you created it in a chunk that has not been run.
+`object '...' not found` means you are referring to something that does not exist in the current session, usually a typo or an object created in a chunk you have not run.
 
-`undefined columns selected` usually means a variable name is misspelled or capitalized differently than you think. R is case sensitive, and `Write` is not `write`.
+`cannot open file '...'` means the data file is not where R is looking. Check the spelling, and check that the file sits in the same folder as your document.
 
-When you are stuck, `?function_name` opens the help page for any function, and the examples at the bottom of those pages are often more useful than the descriptions at the top.
+When you are stuck, `?function_name` opens the help page for any function. The examples at the bottom of those pages are often more useful than the descriptions at the top.

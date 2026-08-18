@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
-<title>Applied Multilevel Modeling in R - 1&nbsp; Getting Started with R</title>
+<title>Applied Multilevel Modeling in R - 1&nbsp; Getting Started with R and RStudio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -99,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-getting-started.html">Foundations</a></li><li class="breadcrumb-item"><a href="./01-getting-started.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started with R</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-getting-started.html">Foundations</a></li><li class="breadcrumb-item"><a href="./01-getting-started.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started with R and RStudio</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -158,13 +158,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-getting-started.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started with R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started with R and RStudio</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-regression-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -181,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-null-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Null Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -270,24 +270,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#packages" id="toc-packages" class="nav-link active" data-scroll-target="#packages"><span class="header-section-number">1.1</span> Packages</a></li>
-  <li><a href="#reading-data-in" id="toc-reading-data-in" class="nav-link" data-scroll-target="#reading-data-in"><span class="header-section-number">1.2</span> Reading data in</a></li>
-  <li><a href="#first-look" id="toc-first-look" class="nav-link" data-scroll-target="#first-look"><span class="header-section-number">1.3</span> First look</a></li>
-  <li><a href="#the-first-real-trap-categorical-variables-stored-as-numbers" id="toc-the-first-real-trap-categorical-variables-stored-as-numbers" class="nav-link" data-scroll-target="#the-first-real-trap-categorical-variables-stored-as-numbers"><span class="header-section-number">1.4</span> The first real trap: categorical variables stored as numbers</a></li>
-  <li><a href="#the-pipe" id="toc-the-pipe" class="nav-link" data-scroll-target="#the-pipe"><span class="header-section-number">1.5</span> The pipe</a></li>
-  <li>
-<a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">1.6</span> Graphics</a>
-  <ul class="collapse">
-<li><a href="#comparing-groups-and-why-the-axis-scale-matters" id="toc-comparing-groups-and-why-the-axis-scale-matters" class="nav-link" data-scroll-target="#comparing-groups-and-why-the-axis-scale-matters"><span class="header-section-number">1.6.1</span> Comparing groups, and why the axis scale matters</a></li>
-  </ul>
-</li>
-  <li><a href="#where-to-go-when-something-breaks" id="toc-where-to-go-when-something-breaks" class="nav-link" data-scroll-target="#where-to-go-when-something-breaks"><span class="header-section-number">1.7</span> Where to go when something breaks</a></li>
+<li><a href="#load-in-some-useful-r-packages" id="toc-load-in-some-useful-r-packages" class="nav-link active" data-scroll-target="#load-in-some-useful-r-packages"><span class="header-section-number">1.1</span> Load in some useful R packages</a></li>
+  <li><a href="#load-in-the-data" id="toc-load-in-the-data" class="nav-link" data-scroll-target="#load-in-the-data"><span class="header-section-number">1.2</span> Load in the data</a></li>
+  <li><a href="#what-does-a-variable-actually-contain" id="toc-what-does-a-variable-actually-contain" class="nav-link" data-scroll-target="#what-does-a-variable-actually-contain"><span class="header-section-number">1.3</span> What does a variable actually contain?</a></li>
+  <li><a href="#describe-the-dataset" id="toc-describe-the-dataset" class="nav-link" data-scroll-target="#describe-the-dataset"><span class="header-section-number">1.4</span> Describe the dataset</a></li>
+  <li><a href="#create-a-quick-histogram" id="toc-create-a-quick-histogram" class="nav-link" data-scroll-target="#create-a-quick-histogram"><span class="header-section-number">1.5</span> Create a quick histogram</a></li>
+  <li><a href="#another-histogram" id="toc-another-histogram" class="nav-link" data-scroll-target="#another-histogram"><span class="header-section-number">1.6</span> Another histogram</a></li>
+  <li><a href="#when-something-breaks" id="toc-when-something-breaks" class="nav-link" data-scroll-target="#when-something-breaks"><span class="header-section-number">1.7</span> When something breaks</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOURUSERNAME/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
-<span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started with R</span>
+<span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started with R and RStudio</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
@@ -301,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header><p><strong>Data for this chapter:</strong> <code>hsb2.dta</code></p>
+</header><p><strong>Data for this chapter:</strong> <code>descriptive_gss.dta</code></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -312,282 +307,172 @@ Data file needed
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Copy <code>hsb2.dta</code> into this project folder before rendering. This is the same dataset you will use for the Module 1 content review.</p>
+<p>Copy <code>descriptive_gss.dta</code> into this project folder before rendering.</p>
 </div>
 </div>
-<p>This chapter assumes you have R and RStudio installed but not much beyond that. If you have used R before, you may want to skim to the section on categorical variables, which is where the first real trap lives.</p>
-<p>The data are a random sample of 200 tenth graders from the High School and Beyond survey, collected in 1980. The full codebook is at <a href="http://www.philender.com/courses/intro/hsbcode.html" class="uri">http://www.philender.com/courses/intro/hsbcode.html</a>.</p>
-<section id="packages" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="packages">
-<span class="header-section-number">1.1</span> Packages</h2>
-<p>R by itself is fairly minimal. Almost everything we do relies on packages, which are collections of functions other people have written. You install a package once, and then load it in every session where you want to use it.</p>
+<p>This chapter assumes you have R and RStudio installed but not much beyond that. We will load some packages, read in a dataset, look at what is inside it, and make a couple of quick plots. The data come from the General Social Survey.</p>
+<section id="load-in-some-useful-r-packages" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="load-in-some-useful-r-packages">
+<span class="header-section-number">1.1</span> Load in some useful R packages</h2>
+<p>Packages are collections of functions written by other R users. They are also visible on the right side menu under <strong>Packages</strong>. A handful get used so often that it makes sense to load them at the start of nearly every session. If you do not have these in your library yet, click <strong>Install</strong> in the Packages menu, or run <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code> once.</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tidyverse"</span>, <span class="st">"haven"</span>, <span class="st">"psych"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://haven.tidyverse.org">haven</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>A habit worth forming immediately: put all of your <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> calls at the top of your document, not scattered through it. When you render a Quarto document, R runs it top to bottom in a fresh session, and a package loaded halfway down cannot help the code above it.</p>
-</section><section id="reading-data-in" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="reading-data-in">
-<span class="header-section-number">1.2</span> Reading data in</h2>
-<p>Which function you use depends on the file format. <code><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta()</a></code>, from the <code>haven</code> package, reads Stata files, which is what most of the course datasets are distributed as. <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> handles comma-separated files.</p>
-<div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hsb2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"hsb2.dta"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Use a plain filename, not a full path like <code>C:/Users/yourname/Downloads/hsb2.dta</code>. Keeping the data file in the same folder as your document is what allows your code to run on someone else’s computer, which is the whole point of a reproducible analysis.</p>
-</section><section id="first-look" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="first-look">
-<span class="header-section-number">1.3</span> First look</h2>
-<p><code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code> gives you the shape of a dataset: how many rows, how many columns, what type each column is, and the first few values.</p>
-<div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">hsb2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 200
-Columns: 11
-$ id      &lt;dbl&gt; 70, 121, 86, 141, 172, 113, 50, 11, 84, 48, 75, 60, 95, 104, 3…
-$ female  &lt;dbl+lbl&gt; 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
-$ race    &lt;dbl+lbl&gt; 4, 4, 4, 4, 4, 4, 3, 1, 4, 3, 4, 4, 4, 4, 3, 4, 4, 4, 4, 4…
-$ ses     &lt;dbl+lbl&gt; 1, 2, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 1, 1, 3, 2, 3, 2…
-$ schtyp  &lt;dbl+lbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1…
-$ prog    &lt;dbl+lbl&gt; 1, 3, 1, 3, 2, 2, 1, 2, 1, 2, 3, 2, 2, 2, 2, 1, 2, 1, 2, 1…
-$ read    &lt;dbl&gt; 57, 68, 44, 63, 47, 44, 50, 34, 63, 57, 60, 57, 73, 54, 45, 42…
-$ write   &lt;dbl&gt; 52, 59, 33, 44, 52, 52, 59, 46, 57, 55, 46, 65, 60, 63, 57, 49…
-$ math    &lt;dbl&gt; 41, 53, 54, 47, 57, 51, 42, 45, 54, 52, 51, 51, 71, 57, 50, 43…
-$ science &lt;dbl&gt; 47, 63, 58, 53, 53, 63, 53, 39, 58, 50, 53, 63, 61, 55, 31, 50…
-$ socst   &lt;dbl&gt; 57, 61, 31, 56, 61, 61, 61, 36, 51, 51, 61, 61, 71, 46, 56, 56…</code></pre>
-</div>
-</div>
-<p>You should see 200 observations and 11 variables: an ID, four demographic variables (<code>female</code>, <code>race</code>, <code>ses</code>, <code>schtyp</code>), the program type (<code>prog</code>), and five standardized test scores (<code>read</code>, <code>write</code>, <code>math</code>, <code>science</code>, <code>socst</code>).</p>
-<p>Compare this against the codebook. Doing so is not busywork. It is how you catch a file that was saved wrong, a variable that got dropped in transit, or values that were coded differently than you were told.</p>
-<p><code><a href="https://rdrr.io/pkg/psych/man/describe.html">describe()</a></code> from the <code>psych</code> package goes further, giving you means, standard deviations, ranges, skew, and kurtosis for every variable at once.</p>
-<div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="va">hsb2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>        vars   n   mean    sd median trimmed   mad min max range  skew kurtosis
-id         1 200 100.50 57.88  100.5  100.50 74.13   1 200   199  0.00    -1.22
-female     2 200   0.54  0.50    1.0    0.56  0.00   0   1     1 -0.18    -1.98
-race       3 200   3.43  1.04    4.0    3.66  0.00   1   4     3 -1.56     0.85
-ses        4 200   2.06  0.72    2.0    2.07  1.48   1   3     2 -0.08    -1.10
-schtyp     5 200   1.16  0.37    1.0    1.07  0.00   1   2     1  1.84     1.40
-prog       6 200   2.02  0.69    2.0    2.03  0.00   1   3     2 -0.03    -0.91
-read       7 200  52.23 10.25   50.0   52.03 10.38  28  76    48  0.19    -0.66
-write      8 200  52.77  9.48   54.0   53.36 11.86  31  67    36 -0.47    -0.78
-math       9 200  52.64  9.37   52.0   52.23 10.38  33  75    42  0.28    -0.69
-science   10 200  51.85  9.90   53.0   52.03 11.86  26  74    48 -0.19    -0.60
-socst     11 200  52.41 10.74   52.0   52.99 13.34  26  71    45 -0.38    -0.57
-          se
-id      4.09
-female  0.04
-race    0.07
-ses     0.05
-schtyp  0.03
-prog    0.05
-read    0.72
-write   0.67
-math    0.66
-science 0.70
-socst   0.76</code></pre>
-</div>
-</div>
-<p>This output is also useful for your own records. You can paste it into a document and you have a rough codebook to share with collaborators.</p>
-</section><section id="the-first-real-trap-categorical-variables-stored-as-numbers" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="the-first-real-trap-categorical-variables-stored-as-numbers">
-<span class="header-section-number">1.4</span> The first real trap: categorical variables stored as numbers</h2>
-<p>Look carefully at <code>prog</code> in the output above. <code><a href="https://rdrr.io/pkg/psych/man/describe.html">describe()</a></code> happily reports a mean for it, something in the neighborhood of 2. That number is meaningless.</p>
-<p><code>prog</code> is not a quantity. It is a label: 1 for general, 2 for academic, 3 for vocational. The mean of a label tells you nothing, because the distance from general to academic is not a real distance, and “2” is not twice “1” in any sense that matters.</p>
-<p>The right descriptive statistic for a variable like this is a count:</p>
-<div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">hsb2</span><span class="op">$</span><span class="va">prog</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-  1   2   3 
- 45 105  50 </code></pre>
-</div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tidyverse"</span>, <span class="st">"psych"</span>, <span class="st">"haven"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># As proportions</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">hsb2</span><span class="op">$</span><span class="va">prog</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    1     2     3 
-0.225 0.525 0.250 </code></pre>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.5.2</code></pre>
 </div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://haven.tidyverse.org">haven</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You can check how a variable is stored, and see any labels that came along with the Stata file, using <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>:</p>
+<p>Keep all of your <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> calls at the top of the document rather than scattering them through it. Rendering a Quarto file runs the code top to bottom in a fresh session, so a package loaded halfway down cannot help the code above it.</p>
+<p>Each of these does something specific. <code>tidyverse</code> is a bundle of packages for data management and graphics. <code>psych</code> gives us descriptive statistics and, later in the course, reliability analysis. <code>haven</code> reads files written by other statistics programs, which is what we need next.</p>
+</section><section id="load-in-the-data" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="load-in-the-data">
+<span class="header-section-number">1.2</span> Load in the data</h2>
+<p>Our dataset is a Stata file, so we use <code><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta()</a></code> from <code>haven</code>. Then <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code> shows the structure: how many rows, how many columns, what type each column is, and the first few values.</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">hsb2</span><span class="op">$</span><span class="va">prog</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> dbl+lbl [1:200] 1, 3, 1, 3, 2, 2, 1, 2, 1, 2, 3, 2, 2, 2, 2, 1, 2, 1, 2, 1...
- @ label       : chr "type of program"
- @ format.stata: chr "%9.0g"
- @ labels      : Named num [1:3] 1 2 3
-  ..- attr(*, "names")= chr [1:3] "general" "academic" "vocation"</code></pre>
-</div>
-</div>
-<p>This matters enormously later. If you leave a multi-category variable like <code>prog</code> or <code>race</code> coded 1, 2, 3 and drop it into a regression, R will treat it as continuous and estimate a single slope, as though moving from general to academic has the same meaning as moving from academic to vocational. The model will run. The results will be wrong, and no error message will tell you.</p>
-<p>The fix is to convert such variables into factors, with labels attached:</p>
-<div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hsb2</span> <span class="op">&lt;-</span> <span class="va">hsb2</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
-<span>    prog_f   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">prog</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,</span>
-<span>                      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"General"</span>, <span class="st">"Academic"</span>, <span class="st">"Vocational"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    ses_f    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">ses</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,</span>
-<span>                      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Low"</span>, <span class="st">"Middle"</span>, <span class="st">"High"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    female_f <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">female</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>                      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Male"</span>, <span class="st">"Female"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    schtyp_f <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">schtyp</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
-<span>                      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Public"</span>, <span class="st">"Private"</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gss</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"descriptive_gss.dta"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">hsb2</span><span class="op">$</span><span class="va">prog_f</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">gss</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-   General   Academic Vocational 
-        45        105         50 </code></pre>
+<pre><code>Rows: 2,765
+Columns: 16
+$ id       &lt;dbl&gt; 2331, 2003, 1221, 2051, 2465, 546, 1291, 732, 303, 2700, 855,…
+$ hrs1     &lt;dbl+lbl&gt; NA, NA, NA, NA, 50, 60, 40, 25, NA, 40, 64, 45, 60, 85, N…
+$ marital  &lt;dbl+lbl&gt; 1, 3, 1, 1, 1, 1, 5, 2, 1, 1, 1, 1, 1, 1, 2, 5, 1, 1, 5, …
+$ childs   &lt;dbl+lbl&gt; 3, 8, 3, 2, 0, 0, 0, 3, 3, 2, 3, 3, 2, 3, 6, 0, 4, 2, 0, …
+$ age      &lt;dbl+lbl&gt; 71, 69, 40, 60, 31, 37, 23, 86, 70, 42, 41, 30, 43, 48, 7…
+$ educ     &lt;dbl+lbl&gt; 18, 11, 19, 13, 11, 19, 11, 11, 13, 12, 12, 12, 13, 20, 1…
+$ sex      &lt;dbl+lbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ polviews &lt;dbl+lbl&gt;  4,  4, NA,  5,  4,  2,  1,  4,  4,  3,  6, NA,  5,  5, N…
+$ wwwhr    &lt;dbl+lbl&gt; NA, NA,  7,  1,  0,  3, NA, NA, NA,  3,  5, 20,  1,  2, N…
+$ trustpeo &lt;dbl+lbl&gt;  4,  1, NA,  1,  2,  2, NA,  1,  4,  1,  2, NA,  5,  2, N…
+$ wantbest &lt;dbl+lbl&gt;  2,  4, NA,  2,  2,  4, NA,  4,  1,  2,  2, NA,  1,  3, N…
+$ advantge &lt;dbl+lbl&gt;  3,  2, NA,  1,  2,  2, NA,  2,  2,  2,  1, NA,  4,  4, N…
+$ goodlife &lt;dbl+lbl&gt;  4, NA, NA, NA, NA,  1,  2,  2, NA, NA, NA, NA,  3, NA, N…
+$ deckids  &lt;dbl+lbl&gt; NA, NA,  4, NA, NA, NA, NA, NA, NA, NA, NA,  3, NA, NA, N…
+$ strsswrk &lt;dbl+lbl&gt; NA, NA,  5, NA, NA, NA, NA, NA, NA, NA, NA,  2, NA, NA,  …
+$ satjob7  &lt;dbl+lbl&gt; NA, NA,  3, NA, NA, NA, NA, NA, NA, NA, NA,  3, NA, NA, N…</code></pre>
 </div>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">hsb2</span><span class="op">$</span><span class="va">ses_f</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-   Low Middle   High 
-    47     95     58 </code></pre>
 </div>
-</div>
+<p>Use a plain filename rather than a full path like <code>C:/Users/yourname/Downloads/descriptive_gss.dta</code>. Keeping the data file in the same folder as your document is what lets the code run on someone else’s computer, which matters as soon as you share anything.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-A shortcut for Stata files
+A related function you will use interactively
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Stata files often carry value labels with them. When they do, <code><a href="https://forcats.tidyverse.org/reference/as_factor.html">haven::as_factor()</a></code> converts a variable to a factor using those labels, saving you from typing them out:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hsb2</span> <span class="op">&lt;-</span> <span class="va">hsb2</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>prog_f <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">prog</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Always check the result with <code><a href="https://rdrr.io/r/base/table.html">table()</a></code>. If the labels did not come through, fall back to specifying them yourself as above.</p>
+<p><code>View(gss)</code> opens a spreadsheet-style window for browsing the data. It is useful while you are exploring, but it opens a window rather than printing anything, so it does nothing in a rendered document. Use it in the console freely; leave it out of chunks you intend to render.</p>
 </div>
 </div>
-</section><section id="the-pipe" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="the-pipe">
-<span class="header-section-number">1.5</span> The pipe</h2>
-<p>You will see <code>|&gt;</code> throughout this book. It is R’s pipe operator, and it takes whatever is on the left and passes it as the first argument to whatever is on the right. These two lines do the same thing:</p>
+</section><section id="what-does-a-variable-actually-contain" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="what-does-a-variable-actually-contain">
+<span class="header-section-number">1.3</span> What does a variable actually contain?</h2>
+<p>Stata files often carry labels describing what a variable measures and what its values mean. <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> shows you both.</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="va">hsb2</span><span class="op">$</span><span class="va">write</span><span class="op">)</span></span>
-<span><span class="va">hsb2</span><span class="op">$</span><span class="va">write</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>The pipe becomes worth using when operations chain together. Instead of nesting functions inside one another and reading from the inside out, you read left to right in the order the steps happen.</p>
-<div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hsb2</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ses_f</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span></span>
-<span>    n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    mean_write <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">write</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>    sd_write <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">write</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">gss</span><span class="op">$</span><span class="va">satjob7</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 4
-  ses_f      n mean_write sd_write
-  &lt;fct&gt;  &lt;int&gt;      &lt;dbl&gt;    &lt;dbl&gt;
-1 Low       47       50.6     9.49
-2 Middle    95       51.9     9.11
-3 High      58       55.9     9.44</code></pre>
+<pre><code> dbl+lbl [1:2765] NA, NA,  3, NA, NA, NA, NA, NA, NA, NA, NA,  3, NA, NA, N...
+ @ label       : chr "job satisfaction in general"
+ @ format.stata: chr "%37.0g"
+ @ labels      : Named num [1:10] 0 1 2 3 4 5 6 7 8 9
+  ..- attr(*, "names")= chr [1:10] "nap" "completely satisfied" "very satisfied" "fairly satisfied" ...</code></pre>
 </div>
 </div>
-<p>You may also see <code>%&gt;%</code> in older code, including some of the course handouts. It is an earlier version of the same idea from the <code>magrittr</code> package, and for our purposes the two behave identically.</p>
-</section><section id="graphics" class="level2" data-number="1.6"><h2 data-number="1.6" class="anchored" data-anchor-id="graphics">
-<span class="header-section-number">1.6</span> Graphics</h2>
-<p>Base R’s <code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code> is fine for a quick look at one variable:</p>
+<p>Notice what came through. <code>haven</code> gives this variable the class <code>haven_labelled</code>. It holds numbers, but attached to those numbers is a <code>label</code> describing the variable and a set of value labels mapping each number to a meaning.</p>
+<p>This is worth checking rather than assuming you remember the coding. It is also the first hint of something that matters throughout the course: a variable can be <em>stored</em> as a number while <em>meaning</em> a category.</p>
+</section><section id="describe-the-dataset" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="describe-the-dataset">
+<span class="header-section-number">1.4</span> Describe the dataset</h2>
+<p>The <code><a href="https://rdrr.io/pkg/psych/man/describe.html">describe()</a></code> function from <code>psych</code> reports means, standard deviations, ranges and more for every variable at once. The <code>fast = TRUE</code> option trims the output to the columns you usually want.</p>
 <div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">hsb2</span><span class="op">$</span><span class="va">write</span>,</span>
-<span>     main <span class="op">=</span> <span class="st">"Distribution of Writing Scores"</span>,</span>
-<span>     xlab <span class="op">=</span> <span class="st">"Standardized writing score"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-basehist" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="01-getting-started_files/figure-html/fig-basehist-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;1.1: A quick base R histogram of writing scores.</figcaption></figure>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="va">gss</span>, fast <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         vars    n    mean     sd median min  max range  skew kurtosis    se
+id          1 2765 1383.00 798.33   1383   1 2765  2764  0.00    -1.20 15.18
+hrs1        2 1729   41.78  14.62     40   1   89    88  0.28     1.31  0.35
+marital     3 2765    2.54   1.67      2   1    5     4  0.49    -1.42  0.03
+childs      4 2760    1.81   1.69      2   0    8     8  1.07     1.45  0.03
+age         5 2751   46.28  17.37     44  18   89    71  0.45    -0.70  0.33
+educ        6 2753   13.36   2.97     13   0   20    20 -0.45     1.78  0.06
+sex         7 2765    1.56   0.50      2   1    2     1 -0.22    -1.95  0.01
+polviews    8 1331    4.12   1.39      4   1    7     6 -0.15    -0.31  0.04
+wwwhr       9 1574    5.91   8.87      3   0  112   112  3.99    27.35  0.22
+trustpeo   10 1131    1.94   1.00      2   1    5     4  1.07     0.50  0.03
+wantbest   11 1124    2.40   0.94      2   1    5     4  0.61     0.00  0.03
+advantge   12 1129    2.20   0.99      2   1    5     4  0.66    -0.28  0.03
+goodlife   13  909    2.17   1.01      2   1    5     4  0.85     0.07  0.03
+deckids    14  538    3.21   1.12      4   1    5     4 -1.01    -0.41  0.05
+strsswrk   15 1000    3.24   1.19      3   1    5     4 -0.19    -1.03  0.04
+satjob7    16  820    2.68   1.30      2   1    7     6  1.10     1.23  0.05</code></pre>
 </div>
 </div>
-</div>
-<p>But <code>ggplot2</code>, part of the tidyverse, is what we will use for anything that needs to be readable by someone else. The logic takes a moment to click. You specify a dataset, then a mapping from variables to visual properties inside <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>, then layers of geometry.</p>
+<p>This output is handy for your own records. Paste it into a document and you have a rough codebook to share with collaborators.</p>
+<p>Read it with some care, though. <code><a href="https://rdrr.io/pkg/psych/man/describe.html">describe()</a></code> will compute a mean for any numeric column, including ones where a mean means nothing. We will come back to that in a moment.</p>
+</section><section id="create-a-quick-histogram" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="create-a-quick-histogram">
+<span class="header-section-number">1.5</span> Create a quick histogram</h2>
+<p>A frequency histogram is a good quick-and-dirty way to explore a continuous variable. Base R’s <code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code> needs nothing but the variable itself.</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">hsb2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">write</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span>, fill <span class="op">=</span> <span class="st">"#1a7a6e"</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Distribution of Writing Scores"</span>,</span>
-<span>    x <span class="op">=</span> <span class="st">"Standardized writing score"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"Number of students"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">gss</span><span class="op">$</span><span class="va">educ</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-ggplot" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="01-getting-started_files/figure-html/fig-ggplot-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;1.2: The same distribution in ggplot2.</figcaption></figure>
+<div id="fig-educ" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="01-getting-started_files/figure-html/fig-educ-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.1: Years of education among GSS respondents.</figcaption></figure>
 </div>
 </div>
 </div>
-<section id="comparing-groups-and-why-the-axis-scale-matters" class="level3" data-number="1.6.1"><h3 data-number="1.6.1" class="anchored" data-anchor-id="comparing-groups-and-why-the-axis-scale-matters">
-<span class="header-section-number">1.6.1</span> Comparing groups, and why the axis scale matters</h3>
-<p>Suppose you want to compare writing scores across the three SES groups. One approach is to split the data into three pieces and plot each one:</p>
+<p>Education in years is a sensible variable for this treatment. It takes many values, the values are ordered, and the distances between them mean something: the step from 12 years to 13 is the same size as the step from 15 to 16.</p>
+<p>Look at where the distribution piles up. Educational attainment tends to cluster at the points where credentials are awarded, and the shape usually shows that.</p>
+</section><section id="another-histogram" class="level2" data-number="1.6"><h2 data-number="1.6" class="anchored" data-anchor-id="another-histogram">
+<span class="header-section-number">1.6</span> Another histogram</h2>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">low</span>    <span class="op">&lt;-</span> <span class="va">hsb2</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">ses</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">middle</span> <span class="op">&lt;-</span> <span class="va">hsb2</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">ses</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">high</span>   <span class="op">&lt;-</span> <span class="va">hsb2</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">ses</span> <span class="op">==</span> <span class="fl">3</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">low</span><span class="op">$</span><span class="va">write</span>,    main <span class="op">=</span> <span class="st">"Low SES"</span>,    xlab <span class="op">=</span> <span class="st">"Writing score"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">middle</span><span class="op">$</span><span class="va">write</span>, main <span class="op">=</span> <span class="st">"Middle SES"</span>, xlab <span class="op">=</span> <span class="st">"Writing score"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">high</span><span class="op">$</span><span class="va">write</span>,   main <span class="op">=</span> <span class="st">"High SES"</span>,   xlab <span class="op">=</span> <span class="st">"Writing score"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">gss</span><span class="op">$</span><span class="va">sex</span>, freq <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-filtered" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="01-getting-started_files/figure-html/fig-filtered-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;1.3: Three separately generated histograms. Note that the axes differ.</figcaption></figure>
+<div id="fig-sex" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="01-getting-started_files/figure-html/fig-sex-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.2: The same function applied to a two-category variable.</figcaption></figure>
 </div>
 </div>
 </div>
-<p>Look at the horizontal and vertical axes across those three panels. They are not the same, because each plot scaled itself to its own data. Any comparison you make by eye is distorted, and differences can look larger or smaller than they are purely as an artifact of the scaling.</p>
-<p>Faceting solves this by drawing one plot split into panels, with shared axes:</p>
+<p>The <code>freq = FALSE</code> argument switches the vertical axis from counts to density, so the bars represent proportions rather than numbers of people.</p>
+<p>This plot is worth pausing on, because it shows something the previous one did not. <code>sex</code> has two categories, and R will happily draw a histogram of it, because the values are stored as numbers. But the picture is not telling us much. There is no meaningful spread, no shape, and the bins do not correspond to anything real. It answers a question we did not need a plot for.</p>
+<p>For a variable like this, a table is more informative and takes less space:</p>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">hsb2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">write</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span>, fill <span class="op">=</span> <span class="st">"#1a7a6e"</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">ses_f</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Writing Scores by Socioeconomic Status"</span>,</span>
-<span>    x <span class="op">=</span> <span class="st">"Standardized writing score"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"Number of students"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-facet" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="01-getting-started_files/figure-html/fig-facet-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;1.4: Writing scores by SES, on a shared scale.</figcaption></figure>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">gss</span><span class="op">$</span><span class="va">sex</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   1    2 
+1228 1537 </code></pre>
 </div>
 </div>
+<p>The same logic applies to that mean in the <code><a href="https://rdrr.io/pkg/psych/man/describe.html">describe()</a></code> output. If <code>sex</code> is coded 1 and 2, its mean is some number between 1 and 2, which describes no actual respondent.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p>With only 200 students spread across three groups, histograms are fairly lumpy. Boxplots or density curves often compare distributions more clearly at this sample size:</p>
-<div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">hsb2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">ses_f</span>, y <span class="op">=</span> <span class="va">write</span>, fill <span class="op">=</span> <span class="va">ses_f</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#e0f2ef"</span>, <span class="st">"#8cc9c0"</span>, <span class="st">"#1a7a6e"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Writing Scores by Socioeconomic Status"</span>,</span>
-<span>    x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Standardized writing score"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-box" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="01-getting-started_files/figure-html/fig-box-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;1.5: The same comparison as boxplots.</figcaption></figure>
+<div class="callout-title-container flex-fill">
+Numbers that are really categories
 </div>
 </div>
+<div class="callout-body-container callout-body">
+<p>This is the single most consequential thing to internalize early. Many variables are <em>stored</em> as numbers but <em>mean</em> categories: sex, marital status, region, program type, job satisfaction on a labelled scale.</p>
+<p>R cannot tell the difference on its own. It will compute means, draw histograms, and later fit regressions treating those codes as quantities, all without warning you.</p>
+<p>The fix is to convert them to factors, so that R treats them as categories:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gss</span> <span class="op">&lt;-</span> <span class="va">gss</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>sex_f <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">gss_f</span><span class="op">$</span><span class="va">sex_f</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor()</a></code> from <code>haven</code> uses the value labels that came along with the Stata file. We will use this constantly once we start modeling, because a categorical variable entered as a number produces a model that runs and answers the wrong question.</p>
 </div>
-<p>Notice how much the three groups overlap. There is a difference in the averages, and there is also a great deal of variation within each group. Both facts are true at once, and keeping them both in view is a habit worth building now. Group differences almost never mean that group membership determines an individual outcome.</p>
-</section></section><section id="where-to-go-when-something-breaks" class="level2" data-number="1.7"><h2 data-number="1.7" class="anchored" data-anchor-id="where-to-go-when-something-breaks">
-<span class="header-section-number">1.7</span> Where to go when something breaks</h2>
-<p>Error messages in R are often unhelpful at first and become readable with practice. A few of the most common:</p>
-<p><code>could not find function "..."</code> almost always means a package is not loaded. Check your <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> calls.</p>
-<p><code>object '...' not found</code> means you are referring to something that does not exist in your current session, often because of a typo or because you created it in a chunk that has not been run.</p>
-<p><code>undefined columns selected</code> usually means a variable name is misspelled or capitalized differently than you think. R is case sensitive, and <code>Write</code> is not <code>write</code>.</p>
-<p>When you are stuck, <code>?function_name</code> opens the help page for any function, and the examples at the bottom of those pages are often more useful than the descriptions at the top.</p>
+</div>
+</section><section id="when-something-breaks" class="level2" data-number="1.7"><h2 data-number="1.7" class="anchored" data-anchor-id="when-something-breaks">
+<span class="header-section-number">1.7</span> When something breaks</h2>
+<p>R’s error messages are unhelpful at first and become readable with practice. The three you will meet most often:</p>
+<p><code>could not find function "..."</code> almost always means a package is not loaded. Check your <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> calls at the top.</p>
+<p><code>object '...' not found</code> means you are referring to something that does not exist in the current session, usually a typo or an object created in a chunk you have not run.</p>
+<p><code>cannot open file '...'</code> means the data file is not where R is looking. Check the spelling, and check that the file sits in the same folder as your document.</p>
+<p>When you are stuck, <code>?function_name</code> opens the help page for any function. The examples at the bottom of those pages are often more useful than the descriptions at the top.</p>
 
 
 <!-- -->
@@ -882,251 +767,149 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./02-regression-review.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Regression</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb27" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Getting Started with R</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>**Data for this chapter:** <span class="in">`hsb2.dta`</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data file needed</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>Copy <span class="in">`hsb2.dta`</span> into this project folder before rendering. This is the same dataset you will use for the Module 1 content review.</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>This chapter assumes you have R and RStudio installed but not much beyond that. If you have used R before, you may want to skim to the section on categorical variables, which is where the first real trap lives.</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>The data are a random sample of 200 tenth graders from the High School and Beyond survey, collected in 1980. The full codebook is at <span class="ot">&lt;http://www.philender.com/courses/intro/hsbcode.html&gt;</span>.</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Packages</span></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>R by itself is fairly minimal. Almost everything we do relies on packages, which are collections of functions other people have written. You install a package once, and then load it in every session where you want to use it.</span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"haven"</span>, <span class="st">"psych"</span>))</span>
-<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
-<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
-<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a>A habit worth forming immediately: put all of your <span class="in">`library()`</span> calls at the top of your document, not scattered through it. When you render a Quarto document, R runs it top to bottom in a fresh session, and a package loaded halfway down cannot help the code above it.</span>
-<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reading data in</span></span>
-<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a>Which function you use depends on the file format. <span class="in">`read_dta()`</span>, from the <span class="in">`haven`</span> package, reads Stata files, which is what most of the course datasets are distributed as. <span class="in">`read_csv()`</span> handles comma-separated files.</span>
-<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a>hsb2 <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"hsb2.dta"</span>)</span>
-<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a>Use a plain filename, not a full path like <span class="in">`C:/Users/yourname/Downloads/hsb2.dta`</span>. Keeping the data file in the same folder as your document is what allows your code to run on someone else's computer, which is the whole point of a reproducible analysis.</span>
-<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a><span class="fu">## First look</span></span>
-<span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-53"><a href="#cb27-53" aria-hidden="true" tabindex="-1"></a><span class="in">`glimpse()`</span> gives you the shape of a dataset: how many rows, how many columns, what type each column is, and the first few values.</span>
-<span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-57"><a href="#cb27-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-58"><a href="#cb27-58" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(hsb2)</span>
-<span id="cb27-59"><a href="#cb27-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-60"><a href="#cb27-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-61"><a href="#cb27-61" aria-hidden="true" tabindex="-1"></a>You should see 200 observations and 11 variables: an ID, four demographic variables (<span class="in">`female`</span>, <span class="in">`race`</span>, <span class="in">`ses`</span>, <span class="in">`schtyp`</span>), the program type (<span class="in">`prog`</span>), and five standardized test scores (<span class="in">`read`</span>, <span class="in">`write`</span>, <span class="in">`math`</span>, <span class="in">`science`</span>, <span class="in">`socst`</span>).</span>
-<span id="cb27-62"><a href="#cb27-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-63"><a href="#cb27-63" aria-hidden="true" tabindex="-1"></a>Compare this against the codebook. Doing so is not busywork. It is how you catch a file that was saved wrong, a variable that got dropped in transit, or values that were coded differently than you were told.</span>
-<span id="cb27-64"><a href="#cb27-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-65"><a href="#cb27-65" aria-hidden="true" tabindex="-1"></a><span class="in">`describe()`</span> from the <span class="in">`psych`</span> package goes further, giving you means, standard deviations, ranges, skew, and kurtosis for every variable at once.</span>
-<span id="cb27-66"><a href="#cb27-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-69"><a href="#cb27-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-70"><a href="#cb27-70" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(hsb2)</span>
-<span id="cb27-71"><a href="#cb27-71" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-72"><a href="#cb27-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-73"><a href="#cb27-73" aria-hidden="true" tabindex="-1"></a>This output is also useful for your own records. You can paste it into a document and you have a rough codebook to share with collaborators.</span>
-<span id="cb27-74"><a href="#cb27-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-75"><a href="#cb27-75" aria-hidden="true" tabindex="-1"></a><span class="fu">## The first real trap: categorical variables stored as numbers</span></span>
-<span id="cb27-76"><a href="#cb27-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-77"><a href="#cb27-77" aria-hidden="true" tabindex="-1"></a>Look carefully at <span class="in">`prog`</span> in the output above. <span class="in">`describe()`</span> happily reports a mean for it, something in the neighborhood of 2. That number is meaningless.</span>
-<span id="cb27-78"><a href="#cb27-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-79"><a href="#cb27-79" aria-hidden="true" tabindex="-1"></a><span class="in">`prog`</span> is not a quantity. It is a label: 1 for general, 2 for academic, 3 for vocational. The mean of a label tells you nothing, because the distance from general to academic is not a real distance, and "2" is not twice "1" in any sense that matters.</span>
-<span id="cb27-80"><a href="#cb27-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-81"><a href="#cb27-81" aria-hidden="true" tabindex="-1"></a>The right descriptive statistic for a variable like this is a count:</span>
-<span id="cb27-82"><a href="#cb27-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-85"><a href="#cb27-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-86"><a href="#cb27-86" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(hsb2<span class="sc">$</span>prog)</span>
-<span id="cb27-87"><a href="#cb27-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-88"><a href="#cb27-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-91"><a href="#cb27-91" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-92"><a href="#cb27-92" aria-hidden="true" tabindex="-1"></a><span class="co"># As proportions</span></span>
-<span id="cb27-93"><a href="#cb27-93" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(hsb2<span class="sc">$</span>prog))</span>
-<span id="cb27-94"><a href="#cb27-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-95"><a href="#cb27-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-96"><a href="#cb27-96" aria-hidden="true" tabindex="-1"></a>You can check how a variable is stored, and see any labels that came along with the Stata file, using <span class="in">`str()`</span>:</span>
-<span id="cb27-97"><a href="#cb27-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-100"><a href="#cb27-100" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-101"><a href="#cb27-101" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(hsb2<span class="sc">$</span>prog)</span>
-<span id="cb27-102"><a href="#cb27-102" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-103"><a href="#cb27-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-104"><a href="#cb27-104" aria-hidden="true" tabindex="-1"></a>This matters enormously later. If you leave a multi-category variable like <span class="in">`prog`</span> or <span class="in">`race`</span> coded 1, 2, 3 and drop it into a regression, R will treat it as continuous and estimate a single slope, as though moving from general to academic has the same meaning as moving from academic to vocational. The model will run. The results will be wrong, and no error message will tell you.</span>
-<span id="cb27-105"><a href="#cb27-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-106"><a href="#cb27-106" aria-hidden="true" tabindex="-1"></a>The fix is to convert such variables into factors, with labels attached:</span>
-<span id="cb27-107"><a href="#cb27-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-110"><a href="#cb27-110" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-111"><a href="#cb27-111" aria-hidden="true" tabindex="-1"></a>hsb2 <span class="ot">&lt;-</span> hsb2 <span class="sc">|&gt;</span></span>
-<span id="cb27-112"><a href="#cb27-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb27-113"><a href="#cb27-113" aria-hidden="true" tabindex="-1"></a>    <span class="at">prog_f   =</span> <span class="fu">factor</span>(prog, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
-<span id="cb27-114"><a href="#cb27-114" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"General"</span>, <span class="st">"Academic"</span>, <span class="st">"Vocational"</span>)),</span>
-<span id="cb27-115"><a href="#cb27-115" aria-hidden="true" tabindex="-1"></a>    <span class="at">ses_f    =</span> <span class="fu">factor</span>(ses, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
-<span id="cb27-116"><a href="#cb27-116" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"Middle"</span>, <span class="st">"High"</span>)),</span>
-<span id="cb27-117"><a href="#cb27-117" aria-hidden="true" tabindex="-1"></a>    <span class="at">female_f =</span> <span class="fu">factor</span>(female, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb27-118"><a href="#cb27-118" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>)),</span>
-<span id="cb27-119"><a href="#cb27-119" aria-hidden="true" tabindex="-1"></a>    <span class="at">schtyp_f =</span> <span class="fu">factor</span>(schtyp, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
-<span id="cb27-120"><a href="#cb27-120" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Public"</span>, <span class="st">"Private"</span>))</span>
-<span id="cb27-121"><a href="#cb27-121" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb27-122"><a href="#cb27-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-123"><a href="#cb27-123" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(hsb2<span class="sc">$</span>prog_f)</span>
-<span id="cb27-124"><a href="#cb27-124" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(hsb2<span class="sc">$</span>ses_f)</span>
-<span id="cb27-125"><a href="#cb27-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-126"><a href="#cb27-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-127"><a href="#cb27-127" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb27-128"><a href="#cb27-128" aria-hidden="true" tabindex="-1"></a><span class="fu">## A shortcut for Stata files</span></span>
-<span id="cb27-129"><a href="#cb27-129" aria-hidden="true" tabindex="-1"></a>Stata files often carry value labels with them. When they do, <span class="in">`haven::as_factor()`</span> converts a variable to a factor using those labels, saving you from typing them out:</span>
-<span id="cb27-130"><a href="#cb27-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-131"><a href="#cb27-131" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb27-132"><a href="#cb27-132" aria-hidden="true" tabindex="-1"></a>hsb2 <span class="ot">&lt;-</span> hsb2 <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">prog_f =</span> <span class="fu">as_factor</span>(prog))</span>
-<span id="cb27-133"><a href="#cb27-133" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-134"><a href="#cb27-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-135"><a href="#cb27-135" aria-hidden="true" tabindex="-1"></a>Always check the result with <span class="in">`table()`</span>. If the labels did not come through, fall back to specifying them yourself as above.</span>
-<span id="cb27-136"><a href="#cb27-136" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-137"><a href="#cb27-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-138"><a href="#cb27-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## The pipe</span></span>
-<span id="cb27-139"><a href="#cb27-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-140"><a href="#cb27-140" aria-hidden="true" tabindex="-1"></a>You will see <span class="in">`|&gt;`</span> throughout this book. It is R's pipe operator, and it takes whatever is on the left and passes it as the first argument to whatever is on the right. These two lines do the same thing:</span>
-<span id="cb27-141"><a href="#cb27-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-144"><a href="#cb27-144" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-145"><a href="#cb27-145" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb27-146"><a href="#cb27-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-147"><a href="#cb27-147" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(hsb2<span class="sc">$</span>write)</span>
-<span id="cb27-148"><a href="#cb27-148" aria-hidden="true" tabindex="-1"></a>hsb2<span class="sc">$</span>write <span class="sc">|&gt;</span> <span class="fu">describe</span>()</span>
-<span id="cb27-149"><a href="#cb27-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-150"><a href="#cb27-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-151"><a href="#cb27-151" aria-hidden="true" tabindex="-1"></a>The pipe becomes worth using when operations chain together. Instead of nesting functions inside one another and reading from the inside out, you read left to right in the order the steps happen.</span>
-<span id="cb27-152"><a href="#cb27-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-155"><a href="#cb27-155" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-156"><a href="#cb27-156" aria-hidden="true" tabindex="-1"></a>hsb2 <span class="sc">|&gt;</span></span>
-<span id="cb27-157"><a href="#cb27-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ses_f) <span class="sc">|&gt;</span></span>
-<span id="cb27-158"><a href="#cb27-158" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb27-159"><a href="#cb27-159" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb27-160"><a href="#cb27-160" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_write =</span> <span class="fu">mean</span>(write, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb27-161"><a href="#cb27-161" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_write =</span> <span class="fu">sd</span>(write, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-162"><a href="#cb27-162" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb27-163"><a href="#cb27-163" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-164"><a href="#cb27-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-165"><a href="#cb27-165" aria-hidden="true" tabindex="-1"></a>You may also see <span class="in">`%&gt;%`</span> in older code, including some of the course handouts. It is an earlier version of the same idea from the <span class="in">`magrittr`</span> package, and for our purposes the two behave identically.</span>
-<span id="cb27-166"><a href="#cb27-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-167"><a href="#cb27-167" aria-hidden="true" tabindex="-1"></a><span class="fu">## Graphics</span></span>
-<span id="cb27-168"><a href="#cb27-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-169"><a href="#cb27-169" aria-hidden="true" tabindex="-1"></a>Base R's <span class="in">`hist()`</span> is fine for a quick look at one variable:</span>
-<span id="cb27-170"><a href="#cb27-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-173"><a href="#cb27-173" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-174"><a href="#cb27-174" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-basehist</span></span>
-<span id="cb27-175"><a href="#cb27-175" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "A quick base R histogram of writing scores."</span></span>
-<span id="cb27-176"><a href="#cb27-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-177"><a href="#cb27-177" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(hsb2<span class="sc">$</span>write,</span>
-<span id="cb27-178"><a href="#cb27-178" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Distribution of Writing Scores"</span>,</span>
-<span id="cb27-179"><a href="#cb27-179" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Standardized writing score"</span>)</span>
-<span id="cb27-180"><a href="#cb27-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-181"><a href="#cb27-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-182"><a href="#cb27-182" aria-hidden="true" tabindex="-1"></a>But <span class="in">`ggplot2`</span>, part of the tidyverse, is what we will use for anything that needs to be readable by someone else. The logic takes a moment to click. You specify a dataset, then a mapping from variables to visual properties inside <span class="in">`aes()`</span>, then layers of geometry.</span>
-<span id="cb27-183"><a href="#cb27-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-186"><a href="#cb27-186" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-187"><a href="#cb27-187" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-ggplot</span></span>
-<span id="cb27-188"><a href="#cb27-188" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "The same distribution in ggplot2."</span></span>
-<span id="cb27-189"><a href="#cb27-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-190"><a href="#cb27-190" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hsb2, <span class="fu">aes</span>(<span class="at">x =</span> write)) <span class="sc">+</span></span>
-<span id="cb27-191"><a href="#cb27-191" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">fill =</span> <span class="st">"#1a7a6e"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb27-192"><a href="#cb27-192" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb27-193"><a href="#cb27-193" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of Writing Scores"</span>,</span>
-<span id="cb27-194"><a href="#cb27-194" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Standardized writing score"</span>,</span>
-<span id="cb27-195"><a href="#cb27-195" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of students"</span></span>
-<span id="cb27-196"><a href="#cb27-196" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb27-197"><a href="#cb27-197" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb27-198"><a href="#cb27-198" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-199"><a href="#cb27-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-200"><a href="#cb27-200" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comparing groups, and why the axis scale matters</span></span>
-<span id="cb27-201"><a href="#cb27-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-202"><a href="#cb27-202" aria-hidden="true" tabindex="-1"></a>Suppose you want to compare writing scores across the three SES groups. One approach is to split the data into three pieces and plot each one:</span>
-<span id="cb27-203"><a href="#cb27-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-206"><a href="#cb27-206" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-207"><a href="#cb27-207" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-filtered</span></span>
-<span id="cb27-208"><a href="#cb27-208" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Three separately generated histograms. Note that the axes differ."</span></span>
-<span id="cb27-209"><a href="#cb27-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-210"><a href="#cb27-210" aria-hidden="true" tabindex="-1"></a>low    <span class="ot">&lt;-</span> hsb2 <span class="sc">|&gt;</span> <span class="fu">filter</span>(ses <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb27-211"><a href="#cb27-211" aria-hidden="true" tabindex="-1"></a>middle <span class="ot">&lt;-</span> hsb2 <span class="sc">|&gt;</span> <span class="fu">filter</span>(ses <span class="sc">==</span> <span class="dv">2</span>)</span>
-<span id="cb27-212"><a href="#cb27-212" aria-hidden="true" tabindex="-1"></a>high   <span class="ot">&lt;-</span> hsb2 <span class="sc">|&gt;</span> <span class="fu">filter</span>(ses <span class="sc">==</span> <span class="dv">3</span>)</span>
-<span id="cb27-213"><a href="#cb27-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-214"><a href="#cb27-214" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb27-215"><a href="#cb27-215" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(low<span class="sc">$</span>write,    <span class="at">main =</span> <span class="st">"Low SES"</span>,    <span class="at">xlab =</span> <span class="st">"Writing score"</span>)</span>
-<span id="cb27-216"><a href="#cb27-216" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(middle<span class="sc">$</span>write, <span class="at">main =</span> <span class="st">"Middle SES"</span>, <span class="at">xlab =</span> <span class="st">"Writing score"</span>)</span>
-<span id="cb27-217"><a href="#cb27-217" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(high<span class="sc">$</span>write,   <span class="at">main =</span> <span class="st">"High SES"</span>,   <span class="at">xlab =</span> <span class="st">"Writing score"</span>)</span>
-<span id="cb27-218"><a href="#cb27-218" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb27-219"><a href="#cb27-219" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-220"><a href="#cb27-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-221"><a href="#cb27-221" aria-hidden="true" tabindex="-1"></a>Look at the horizontal and vertical axes across those three panels. They are not the same, because each plot scaled itself to its own data. Any comparison you make by eye is distorted, and differences can look larger or smaller than they are purely as an artifact of the scaling.</span>
-<span id="cb27-222"><a href="#cb27-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-223"><a href="#cb27-223" aria-hidden="true" tabindex="-1"></a>Faceting solves this by drawing one plot split into panels, with shared axes:</span>
-<span id="cb27-224"><a href="#cb27-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-227"><a href="#cb27-227" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-228"><a href="#cb27-228" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-facet</span></span>
-<span id="cb27-229"><a href="#cb27-229" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Writing scores by SES, on a shared scale."</span></span>
-<span id="cb27-230"><a href="#cb27-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-231"><a href="#cb27-231" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hsb2, <span class="fu">aes</span>(<span class="at">x =</span> write)) <span class="sc">+</span></span>
-<span id="cb27-232"><a href="#cb27-232" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">fill =</span> <span class="st">"#1a7a6e"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb27-233"><a href="#cb27-233" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>ses_f) <span class="sc">+</span></span>
-<span id="cb27-234"><a href="#cb27-234" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb27-235"><a href="#cb27-235" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Writing Scores by Socioeconomic Status"</span>,</span>
-<span id="cb27-236"><a href="#cb27-236" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Standardized writing score"</span>,</span>
-<span id="cb27-237"><a href="#cb27-237" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of students"</span></span>
-<span id="cb27-238"><a href="#cb27-238" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb27-239"><a href="#cb27-239" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb27-240"><a href="#cb27-240" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-241"><a href="#cb27-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-242"><a href="#cb27-242" aria-hidden="true" tabindex="-1"></a>With only 200 students spread across three groups, histograms are fairly lumpy. Boxplots or density curves often compare distributions more clearly at this sample size:</span>
-<span id="cb27-243"><a href="#cb27-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-246"><a href="#cb27-246" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-247"><a href="#cb27-247" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-box</span></span>
-<span id="cb27-248"><a href="#cb27-248" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "The same comparison as boxplots."</span></span>
-<span id="cb27-249"><a href="#cb27-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-250"><a href="#cb27-250" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hsb2, <span class="fu">aes</span>(<span class="at">x =</span> ses_f, <span class="at">y =</span> write, <span class="at">fill =</span> ses_f)) <span class="sc">+</span></span>
-<span id="cb27-251"><a href="#cb27-251" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb27-252"><a href="#cb27-252" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#e0f2ef"</span>, <span class="st">"#8cc9c0"</span>, <span class="st">"#1a7a6e"</span>)) <span class="sc">+</span></span>
-<span id="cb27-253"><a href="#cb27-253" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb27-254"><a href="#cb27-254" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Writing Scores by Socioeconomic Status"</span>,</span>
-<span id="cb27-255"><a href="#cb27-255" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Standardized writing score"</span></span>
-<span id="cb27-256"><a href="#cb27-256" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb27-257"><a href="#cb27-257" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb27-258"><a href="#cb27-258" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb27-259"><a href="#cb27-259" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-260"><a href="#cb27-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-261"><a href="#cb27-261" aria-hidden="true" tabindex="-1"></a>Notice how much the three groups overlap. There is a difference in the averages, and there is also a great deal of variation within each group. Both facts are true at once, and keeping them both in view is a habit worth building now. Group differences almost never mean that group membership determines an individual outcome.</span>
-<span id="cb27-262"><a href="#cb27-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-263"><a href="#cb27-263" aria-hidden="true" tabindex="-1"></a><span class="fu">## Where to go when something breaks</span></span>
-<span id="cb27-264"><a href="#cb27-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-265"><a href="#cb27-265" aria-hidden="true" tabindex="-1"></a>Error messages in R are often unhelpful at first and become readable with practice. A few of the most common:</span>
-<span id="cb27-266"><a href="#cb27-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-267"><a href="#cb27-267" aria-hidden="true" tabindex="-1"></a><span class="in">`could not find function "..."`</span> almost always means a package is not loaded. Check your <span class="in">`library()`</span> calls.</span>
-<span id="cb27-268"><a href="#cb27-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-269"><a href="#cb27-269" aria-hidden="true" tabindex="-1"></a><span class="in">`object '...' not found`</span> means you are referring to something that does not exist in your current session, often because of a typo or because you created it in a chunk that has not been run.</span>
-<span id="cb27-270"><a href="#cb27-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-271"><a href="#cb27-271" aria-hidden="true" tabindex="-1"></a><span class="in">`undefined columns selected`</span> usually means a variable name is misspelled or capitalized differently than you think. R is case sensitive, and <span class="in">`Write`</span> is not <span class="in">`write`</span>.</span>
-<span id="cb27-272"><a href="#cb27-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-273"><a href="#cb27-273" aria-hidden="true" tabindex="-1"></a>When you are stuck, <span class="in">`?function_name`</span> opens the help page for any function, and the examples at the bottom of those pages are often more useful than the descriptions at the top.</span>
+<div class="sourceCode" id="cb16" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Getting Started with R and RStudio</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>**Data for this chapter:** <span class="in">`descriptive_gss.dta`</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data file needed</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>Copy <span class="in">`descriptive_gss.dta`</span> into this project folder before rendering.</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>This chapter assumes you have R and RStudio installed but not much beyond that. We will load some packages, read in a dataset, look at what is inside it, and make a couple of quick plots. The data come from the General Social Survey.</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load in some useful R packages</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>Packages are collections of functions written by other R users. They are also visible on the right side menu under **Packages**. A handful get used so often that it makes sense to load them at the start of nearly every session. If you do not have these in your library yet, click **Install** in the Packages menu, or run <span class="in">`install.packages()`</span> once.</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"psych"</span>, <span class="st">"haven"</span>))</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>Keep all of your <span class="in">`library()`</span> calls at the top of the document rather than scattering them through it. Rendering a Quarto file runs the code top to bottom in a fresh session, so a package loaded halfway down cannot help the code above it.</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>Each of these does something specific. <span class="in">`tidyverse`</span> is a bundle of packages for data management and graphics. <span class="in">`psych`</span> gives us descriptive statistics and, later in the course, reliability analysis. <span class="in">`haven`</span> reads files written by other statistics programs, which is what we need next.</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load in the data</span></span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>Our dataset is a Stata file, so we use <span class="in">`read_dta()`</span> from <span class="in">`haven`</span>. Then <span class="in">`glimpse()`</span> shows the structure: how many rows, how many columns, what type each column is, and the first few values.</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>gss <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"descriptive_gss.dta"</span>)</span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(gss)</span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a>Use a plain filename rather than a full path like <span class="in">`C:/Users/yourname/Downloads/descriptive_gss.dta`</span>. Keeping the data file in the same folder as your document is what lets the code run on someone else's computer, which matters as soon as you share anything.</span>
+<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## A related function you will use interactively</span></span>
+<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a><span class="in">`View(gss)`</span> opens a spreadsheet-style window for browsing the data. It is useful while you are exploring, but it opens a window rather than printing anything, so it does nothing in a rendered document. Use it in the console freely; leave it out of chunks you intend to render.</span>
+<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a><span class="fu">## What does a variable actually contain?</span></span>
+<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a>Stata files often carry labels describing what a variable measures and what its values mean. <span class="in">`str()`</span> shows you both.</span>
+<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(gss<span class="sc">$</span>satjob7)</span>
+<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a>Notice what came through. <span class="in">`haven`</span> gives this variable the class <span class="in">`haven_labelled`</span>. It holds numbers, but attached to those numbers is a <span class="in">`label`</span> describing the variable and a set of value labels mapping each number to a meaning.</span>
+<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a>This is worth checking rather than assuming you remember the coding. It is also the first hint of something that matters throughout the course: a variable can be *stored* as a number while *meaning* a category.</span>
+<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a><span class="fu">## Describe the dataset</span></span>
+<span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a>The <span class="in">`describe()`</span> function from <span class="in">`psych`</span> reports means, standard deviations, ranges and more for every variable at once. The <span class="in">`fast = TRUE`</span> option trims the output to the columns you usually want.</span>
+<span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(gss, <span class="at">fast =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a>This output is handy for your own records. Paste it into a document and you have a rough codebook to share with collaborators.</span>
+<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a>Read it with some care, though. <span class="in">`describe()`</span> will compute a mean for any numeric column, including ones where a mean means nothing. We will come back to that in a moment.</span>
+<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a><span class="fu">## Create a quick histogram</span></span>
+<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a>A frequency histogram is a good quick-and-dirty way to explore a continuous variable. Base R's <span class="in">`hist()`</span> needs nothing but the variable itself.</span>
+<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-93"><a href="#cb16-93" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-educ</span></span>
+<span id="cb16-94"><a href="#cb16-94" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Years of education among GSS respondents."</span></span>
+<span id="cb16-95"><a href="#cb16-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-96"><a href="#cb16-96" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(gss<span class="sc">$</span>educ)</span>
+<span id="cb16-97"><a href="#cb16-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-98"><a href="#cb16-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-99"><a href="#cb16-99" aria-hidden="true" tabindex="-1"></a>Education in years is a sensible variable for this treatment. It takes many values, the values are ordered, and the distances between them mean something: the step from 12 years to 13 is the same size as the step from 15 to 16.</span>
+<span id="cb16-100"><a href="#cb16-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-101"><a href="#cb16-101" aria-hidden="true" tabindex="-1"></a>Look at where the distribution piles up. Educational attainment tends to cluster at the points where credentials are awarded, and the shape usually shows that.</span>
+<span id="cb16-102"><a href="#cb16-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-103"><a href="#cb16-103" aria-hidden="true" tabindex="-1"></a><span class="fu">## Another histogram</span></span>
+<span id="cb16-104"><a href="#cb16-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-107"><a href="#cb16-107" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-108"><a href="#cb16-108" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-sex</span></span>
+<span id="cb16-109"><a href="#cb16-109" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "The same function applied to a two-category variable."</span></span>
+<span id="cb16-110"><a href="#cb16-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-111"><a href="#cb16-111" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(gss<span class="sc">$</span>sex, <span class="at">freq =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-112"><a href="#cb16-112" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-113"><a href="#cb16-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-114"><a href="#cb16-114" aria-hidden="true" tabindex="-1"></a>The <span class="in">`freq = FALSE`</span> argument switches the vertical axis from counts to density, so the bars represent proportions rather than numbers of people.</span>
+<span id="cb16-115"><a href="#cb16-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-116"><a href="#cb16-116" aria-hidden="true" tabindex="-1"></a>This plot is worth pausing on, because it shows something the previous one did not. <span class="in">`sex`</span> has two categories, and R will happily draw a histogram of it, because the values are stored as numbers. But the picture is not telling us much. There is no meaningful spread, no shape, and the bins do not correspond to anything real. It answers a question we did not need a plot for.</span>
+<span id="cb16-117"><a href="#cb16-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-118"><a href="#cb16-118" aria-hidden="true" tabindex="-1"></a>For a variable like this, a table is more informative and takes less space:</span>
+<span id="cb16-119"><a href="#cb16-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-122"><a href="#cb16-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-123"><a href="#cb16-123" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(gss<span class="sc">$</span>sex)</span>
+<span id="cb16-124"><a href="#cb16-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-125"><a href="#cb16-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-126"><a href="#cb16-126" aria-hidden="true" tabindex="-1"></a>The same logic applies to that mean in the <span class="in">`describe()`</span> output. If <span class="in">`sex`</span> is coded 1 and 2, its mean is some number between 1 and 2, which describes no actual respondent.</span>
+<span id="cb16-127"><a href="#cb16-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-128"><a href="#cb16-128" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb16-129"><a href="#cb16-129" aria-hidden="true" tabindex="-1"></a><span class="fu">## Numbers that are really categories</span></span>
+<span id="cb16-130"><a href="#cb16-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a>This is the single most consequential thing to internalize early. Many variables are *stored* as numbers but *mean* categories: sex, marital status, region, program type, job satisfaction on a labelled scale.</span>
+<span id="cb16-132"><a href="#cb16-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a>R cannot tell the difference on its own. It will compute means, draw histograms, and later fit regressions treating those codes as quantities, all without warning you.</span>
+<span id="cb16-134"><a href="#cb16-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-135"><a href="#cb16-135" aria-hidden="true" tabindex="-1"></a>The fix is to convert them to factors, so that R treats them as categories:</span>
+<span id="cb16-136"><a href="#cb16-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb16-138"><a href="#cb16-138" aria-hidden="true" tabindex="-1"></a>gss <span class="ot">&lt;-</span> gss <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">sex_f =</span> <span class="fu">as_factor</span>(sex))</span>
+<span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(gss_f<span class="sc">$</span>sex_f)</span>
+<span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a><span class="in">`as_factor()`</span> from <span class="in">`haven`</span> uses the value labels that came along with the Stata file. We will use this constantly once we start modeling, because a categorical variable entered as a number produces a model that runs and answers the wrong question.</span>
+<span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-144"><a href="#cb16-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-145"><a href="#cb16-145" aria-hidden="true" tabindex="-1"></a><span class="fu">## When something breaks</span></span>
+<span id="cb16-146"><a href="#cb16-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-147"><a href="#cb16-147" aria-hidden="true" tabindex="-1"></a>R's error messages are unhelpful at first and become readable with practice. The three you will meet most often:</span>
+<span id="cb16-148"><a href="#cb16-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-149"><a href="#cb16-149" aria-hidden="true" tabindex="-1"></a><span class="in">`could not find function "..."`</span> almost always means a package is not loaded. Check your <span class="in">`library()`</span> calls at the top.</span>
+<span id="cb16-150"><a href="#cb16-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-151"><a href="#cb16-151" aria-hidden="true" tabindex="-1"></a><span class="in">`object '...' not found`</span> means you are referring to something that does not exist in the current session, usually a typo or an object created in a chunk you have not run.</span>
+<span id="cb16-152"><a href="#cb16-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-153"><a href="#cb16-153" aria-hidden="true" tabindex="-1"></a><span class="in">`cannot open file '...'`</span> means the data file is not where R is looking. Check the spelling, and check that the file sits in the same folder as your document.</span>
+<span id="cb16-154"><a href="#cb16-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-155"><a href="#cb16-155" aria-hidden="true" tabindex="-1"></a>When you are stuck, <span class="in">`?function_name`</span> opens the help page for any function. The examples at the bottom of those pages are often more useful than the descriptions at the top.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

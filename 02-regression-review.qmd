@@ -1,263 +1,179 @@
-# Review of Regression
+# Review of Linear Regression
 
-**Data for this chapter:** `nlsw88.dta`
+**Data for this chapter:** `food.csv`
 
 ::: {.callout-note}
 ## Data file needed
-Copy `nlsw88.dta` into this project folder before rendering. This is the same dataset you will use for the Module 2 content review.
+Copy `food.csv` into this project folder before rendering.
 :::
 
-Multilevel models are an extension of regression, so it is worth making sure the foundation is solid before we build on it. This chapter reviews ordinary least squares regression and then, at the end, shows where it starts to fail. That failure is the reason the rest of this book exists.
+Multilevel models are an extension of regression, so it is worth making sure the foundation is solid before building on it. This chapter reviews simple and multiple regression, interactions, and how to present a series of models. The data come from the reading: 50 families, with information on food expenditures, income, children, and whether the family keeps a garden.
 
-The data are 2,246 women from the 1988 round of the National Longitudinal Survey of Mature and Young Women, administered by the U.S. Bureau of Labor Statistics. Public data are available at <https://nlsinfo.org>.
+## Load a few packages
 
 ```{r}
 #| label: setup
 #| message: false
 
 library(tidyverse)
-library(haven)
-library(psych)
-library(modelsummary)
+library(ggplot2)
+library(broom)
+library(skimr)
 ```
 
-```{r}
-nlsw <- read_dta("nlsw88.dta")
+`ggplot2` is part of the tidyverse, so loading it separately is not strictly necessary, but naming it explicitly makes clear that we plan to plot. `broom` tidies model output into data frames. `skimr` gives a compact and readable summary of a dataset.
 
-glimpse(nlsw)
-```
-
-## Preparing the variables
-
-The dummy variables here are coded 1 for yes and 0 for no. Race is coded 1 for White, 2 for Black, and 3 for Other. That coding is a poor measurement approach from a QuantCrit standpoint, collapsing enormously different populations into a residual "other" category, but it was typical of 1988 and it is what the file contains. Keep the limitation in mind when interpreting anything involving race.
+## Input the food dataset
 
 ```{r}
-nlsw <- nlsw |>
-  mutate(
-    collgrad_f = factor(collgrad, levels = c(0, 1),
-                        labels = c("Not college grad", "College grad")),
-    race_f     = factor(race, levels = c(1, 2, 3),
-                        labels = c("White", "Black", "Other")),
-    union_f    = factor(union, levels = c(0, 1),
-                        labels = c("Non-union", "Union"))
-  )
-
-table(nlsw$collgrad_f)
-table(nlsw$race_f)
-```
-
-### A note on missing data
-
-```{r}
-nlsw |>
-  summarize(across(c(wage, age, ttl_exp, collgrad, union, hours, industry),
-                   ~ sum(is.na(.)))) |>
-  pivot_longer(everything(), names_to = "variable", values_to = "n_missing")
-```
-
-Some variables here have missing values, and `union` in particular has a substantial number. Resist the urge to run `na.omit()` on the whole dataset. That would drop any woman missing a response on *any* variable, including ones you are not using, and can silently discard hundreds of cases you had no reason to lose.
-
-`lm()` handles this for you by dropping incomplete cases on a model-by-model basis. The consequence is that different models in this chapter may be fit on slightly different subsamples, which matters when you compare them. Watch the N in the results tables.
-
-## A single predictor
-
-```{r}
-describe(nlsw$wage)
-```
-
-```{r}
-#| label: fig-wage
-#| fig-cap: "Distribution of hourly wages. Note the right skew."
-
-ggplot(nlsw, aes(x = wage)) +
-  geom_histogram(bins = 40, fill = "#1a7a6e", color = "white") +
-  labs(title = "Distribution of Hourly Wages",
-       x = "Hourly wage (1988 dollars)", y = "Number of women") +
-  theme_minimal()
-```
-
-Wages are right-skewed, which is nearly always true of earnings data. A small number of high earners pull the mean above the median. This is worth noticing before modeling, because it affects how well a linear model will describe the data and how much influence those high earners will have on the estimates.
-
-```{r}
-m1 <- lm(wage ~ ttl_exp, data = nlsw)
-
-summary(m1)
-```
-
-The coefficient on `ttl_exp` is the estimated difference in hourly wage associated with one additional year of total work experience.
-
-Three habits of careful interpretation are worth stating explicitly. First, this is an association, not an effect. Causality is a function of research design, not of analysis, and nobody randomly assigned these women to accumulate different amounts of work experience. Second, the intercept is the predicted wage when experience equals zero, which here describes a woman with no work history at all. That is a real if unusual case, so the intercept is at least interpretable. Third, $R^2$ is the proportion of variance in wages the model accounts for. It is not the probability the model is right, and a model with low $R^2$ can still contain a coefficient worth knowing about.
-
-## Building up a series of models
-
-```{r}
-m2 <- lm(wage ~ ttl_exp + age, data = nlsw)
-m3 <- lm(wage ~ ttl_exp + age + collgrad_f, data = nlsw)
-
-summary(m3)
-```
-
-Watch what happens to the experience coefficient as age and college graduation enter the model. Experience and age are correlated, since older women have had more time to accumulate work history, so some of what the first model attributed to experience was partly age. This is what "controlling for" means in practice, and it is why a coefficient is a statement about a particular model rather than a property of the world.
-
-Notice also how R handles the factor. It picks a reference category, here "Not college grad," and the coefficient describes the difference from that reference. Had `collgrad` been a three-category variable left as 1, 2, 3, we would have gotten a single nonsensical slope instead of two comparisons.
-
-## An interaction
-
-Does the return to work experience depend on age?
-
-```{r}
-m4 <- lm(wage ~ ttl_exp * age + collgrad_f, data = nlsw)
-
-summary(m4)
-```
-
-The interaction term asks whether the wage return to an additional year of experience is different for older women than for younger women. When an interaction is present, the main effects are no longer "the effect of experience" in general. They are the effect of experience when age equals zero, which is not a meaningful case here. This is the standard argument for centering continuous predictors before interacting them:
-
-```{r}
-nlsw <- nlsw |>
-  mutate(
-    age_c     = age - mean(age, na.rm = TRUE),
-    ttl_exp_c = ttl_exp - mean(ttl_exp, na.rm = TRUE)
-  )
-
-m5 <- lm(wage ~ ttl_exp_c * age_c + collgrad_f, data = nlsw)
-
-summary(m5)
-```
-
-The interaction coefficient is identical in the two models. What changes is the interpretability of everything else. In the centered version, the experience coefficient is the return to experience for a woman of average age, which is a quantity you can put in a sentence.
-
-```{r}
-#| label: fig-interaction
-#| fig-cap: "Predicted wages across work experience, at three ages."
 #| message: false
 
-library(ggeffects)
+food <- read_csv("food.csv")
 
-plot(ggpredict(m5, terms = c("ttl_exp_c", "age_c [-5, 0, 5]")))
+glimpse(food)
 ```
 
-## Comparing the models
+`view(food)` opens the data in a spreadsheet-style window, which is useful while exploring but does nothing in a rendered document, so it is left out here.
+
+## Data cleaning and coding
+
+Three functions do the work. The first two come from `dplyr`, and the third from base R.
+
+**`rename()`** changes the name of any variable in your dataset. The formula is `newname = oldname`. Here we are getting rid of capital letters and putting underscores between words, which makes everything easier to type and read. (Notice that the original file has a typo in one of the column names. Renaming is a good moment to quietly fix that.)
+
+**`mutate()`** is another function I use constantly. It creates a new variable based on a transformation of an existing one. Here I take the renamed `have_garden` and create `have_garden_fac`, equal to the old variable but converted to a factor, which is what `as_factor()` does. Now R recognizes that "Yes" and "No" are two levels of a categorical variable, which it can use in frequency tables, regression models, and so on.
+
+**`na.omit()`** should come with a warning label. It removes any row in a dataset with missing data, which is the same idea as listwise deletion. We use it here because the original `food` dataset had an extra row that was entirely missing, an error rather than a real response. But run it on a dataset that has genuine missingness and *any* observation missing on *any* variable will be dropped, including variables you were not planning to use. The nice part is that we still have `food` alongside `food.clean`, so we can always look back and see how many observations went away.
 
 ```{r}
+food.clean <- food %>%
+  rename(.,
+         food_consumption = FOODCONSUMPTION,
+         family_income = FAMILYINCOME,
+         num_children = NUMCHULDREN,
+         have_garden = HAVEGARDEN) %>%
+  mutate(.,
+         have_garden_fac = as_factor(have_garden)) %>%
+  na.omit()
+
+glimpse(food.clean)
+```
+
+```{r}
+# How many observations did we actually lose?
+nrow(food); nrow(food.clean)
+```
+
+Running that comparison every time you clean a dataset is a habit worth forming. A drop of one row is what we expected here. A drop of forty would mean something very different, and you want to find that out now rather than in the results section.
+
+## Use `skim` for a nice summary
+
+```{r}
+skim(food.clean)
+```
+
+`skim()` splits the output by variable type, so numeric variables get means and quartiles while factors get counts of each level. It also shows a completion rate per variable, which is a quick check for missingness.
+
+## A simple linear regression: does income predict food consumption?
+
+```{r}
+foodreg1 <- lm(food_consumption ~ family_income, data = food.clean)
+
+summary(foodreg1)
+```
+
+The short answer is yes. Family income significantly predicts food expenditures, and the two are positively related. For each additional dollar of income, a family would be expected to spend an additional six cents on food. The relationship is highly significant. The adjusted $R^2$ is about .56, meaning family income by itself explains roughly 56 percent of the variation in food expenditures.
+
+A note on language while we are here. "Predicts" is the right word; "causes" is not. Nobody assigned these families their incomes, and plenty of things that travel with income could be doing the work. Regression describes association, and research design is what licenses causal claims.
+
+## What about kids? Do things change when we account for them?
+
+```{r}
+foodreg2 <- lm(food_consumption ~ family_income + num_children, data = food.clean)
+
+summary(foodreg2)
+```
+
+Kids make a big difference too. For each additional child, we would expect a family to spend about $826 more per year on food. Because `family_income` is also in the model, we can say this holds while controlling for family income. Another way to put it: take two families with the same income, and the one with one more child is predicted to spend roughly $827 more per year.
+
+Notice also that the estimate for `family_income` has not changed much, from about .06 down to .05. The adjusted $R^2$ rose from .56 to .60, so adding number of children explained about four percent more of the variation.
+
+That stability in the income coefficient is itself informative. When a coefficient moves substantially after adding a variable, the two predictors are entangled and the first model was attributing to income something that belonged elsewhere. When it barely moves, as here, the two are telling you fairly separate things.
+
+## Now, what about families who have a garden?
+
+```{r}
+foodreg3 <- lm(food_consumption ~ family_income + num_children + have_garden_fac,
+               data = food.clean)
+
+summary(foodreg3)
+```
+
+Short answer: no, not after controlling for family income and number of children. As a side note, we could test whether gardens relate to food expenditures on their own by running a simple regression with only `have_garden_fac` as the predictor. But here, owning a garden does not appear significantly related to food expenditures once the other two variables are in the model.
+
+Notice how R handled the factor. It picked a reference category and reports the coefficient as a difference from it. This is exactly why converting to a factor mattered. Left as a raw number, a two-category variable would give the same answer, but a three-category variable would have produced one nonsensical slope instead of two comparisons.
+
+## Does the number of children moderate the income-food relationship?
+
+```{r}
+foodreg4 <- lm(food_consumption ~ family_income + num_children +
+                 family_income:num_children,
+               data = food.clean)
+
+summary(foodreg4)
+```
+
+Now for the fancy stuff. The first three models assumed the predictors were additive rather than interactive. That means the relationship between `num_children` and food expenditures is the same regardless of income, and the relationship between `family_income` and food is the same regardless of how many children a family has.
+
+That is fine as a first step, but another hypothesis is that these two variables *interact*, or moderate one another, so that the slope of one depends on the value of the other. We specify an interaction with the `:` symbol, and we include both main effects as well as the interaction term. If the interaction estimate is significant, some moderation is likely happening.
+
+In this case we do not have enough evidence to say an interaction exists. Power is likely an issue as well. We have only 50 observations, and interaction effects are notoriously underpowered, meaning you usually need a much larger sample to detect a true effect with any regularity.
+
+That last point deserves emphasis, because it is the difference between two very different sentences. "There is no interaction" is a claim about the world. "We did not detect an interaction with 50 families" is a claim about this study. Only the second one is supported here.
+
+## Organizing your results
+
+Last thing: let's make the results presentable. Reporting four models one `summary()` at a time is unreadable, and a single comparison table is how this belongs in a paper. We named our models along the way (`foodreg1`, `foodreg2`, and so on), so collecting them is easy.
+
+```{r}
+#| message: false
+
+library(modelsummary)
+
+models <- list(
+  "Income"        = foodreg1,
+  "+ Children"    = foodreg2,
+  "+ Garden"      = foodreg3,
+  "Interaction"   = foodreg4
+)
+
 modelsummary(
-  list("M1" = m1, "M2" = m2, "M3" = m3, "M4: Interaction" = m4),
+  models,
   stars = c("*" = .05, "**" = .01, "***" = .001),
-  gof_map = c("nobs", "r.squared", "adj.r.squared", "aic", "bic"),
-  title = "OLS models predicting hourly wages"
+  gof_map = c("nobs", "r.squared", "adj.r.squared"),
+  fmt = 2,
+  title = "Regression models predicting annual food expenditures"
 )
 ```
 
-Older course materials used `stargazer` for tables like this one. That package is no longer actively maintained and can fail with current versions of R, so we use `modelsummary` instead. If you find `stargazer` code in an old handout, `modelsummary()` is the direct replacement.
-
-Reading down the columns: does total experience matter as a predictor of women's hourly wages? Does that change once college status and age are taken into account? And how well do these models perform overall? The $R^2$ values will tell you that last one, and the honest answer is that wages are hard to predict from a handful of demographic variables.
-
-## Checking assumptions
+One more useful trick. `modelsummary()` will write the table straight out to a file, and Word opens both HTML and .docx directly. So you can generate a formatted table, open it in Word, and paste it into your paper.
 
 ```{r}
-#| label: fig-diagnostics
-#| fig-cap: "Residual diagnostics for the multiple regression model."
+#| eval: false
 
-par(mfrow = c(2, 2))
-plot(m3)
-par(mfrow = c(1, 1))
+modelsummary(models, output = "food_models.docx",
+             stars = c("*" = .05, "**" = .01, "***" = .001))
 ```
 
-The residuals-versus-fitted plot checks linearity and constant variance. With right-skewed wage data you will typically see a fan shape, with residuals spreading out at higher predicted wages. The Q-Q plot will show heavy tails for the same reason. Neither is fatal, and both are worth reporting honestly rather than hiding.
-
-## Where this breaks
-
-Here is the assumption that does not appear on any of those diagnostic plots: independence of observations. Every standard error above was computed as though these 2,246 women were 2,246 independent pieces of information.
-
-That assumption is often wrong. Women are not scattered randomly across the labor market. They work in particular industries and occupations, which differ in pay scales, unionization, and credential requirements. If two women in the same industry are more alike than two women drawn at random, the independence assumption fails and the standard errors above are too small.
-
-So the natural next question is whether we should be fitting a multilevel model to account for it. Working through that question carefully is the point of this section, and the answer for these data is no.
-
-## Is `industry` a clustering variable?
-
-The mistake to avoid is treating any categorical variable as a potential clustering variable. Grouping structure is necessary but nowhere near sufficient. Start by counting.
-
-```{r}
-nlsw |>
-  filter(!is.na(industry)) |>
-  count(industry, name = "n_women") |>
-  arrange(desc(n_women))
-```
-
-```{r}
-n_industries <- n_distinct(nlsw$industry, na.rm = TRUE)
-n_occupations <- n_distinct(nlsw$occupation, na.rm = TRUE)
-
-c(industries = n_industries, occupations = n_occupations)
-```
-
-That count is the whole problem. A random intercept does not estimate a set of group means. It estimates a **variance** describing how group means are spread around the overall average, and it does so from as many observations as there are groups. Estimating a variance from a handful of numbers is exactly as unreliable as it sounds. You would not report a standard deviation computed from nine cases and treat it as precise; the variance component here rests on no more information than that.
-
-Common guidance puts the minimum somewhere around 30 to 50 level-2 units for a variance component to be estimated with reasonable precision, with roughly 20 as an absolute floor below which the estimate should not be trusted at all. These data are well below any of those thresholds.
-
-### R will not stop you
-
-The trap is that fitting it anyway produces output that looks completely normal.
-
-```{r}
-#| message: false
-
-library(lme4)
-
-# This runs. It should not be trusted.
-m_bad <- lmer(wage ~ ttl_exp + collgrad_f + (1 | industry),
-              data = nlsw, REML = FALSE)
-
-summary(m_bad)
-```
-
-There is a variance component. There are standard errors. Nothing is flagged. You could paste this into a manuscript and no software would object.
-
-But that industry-level variance was estimated from a single-digit number of industries, and the uncertainty around it is enormous. Confidence intervals make the situation visible:
-
-```{r}
-#| warning: false
-#| message: false
-
-confint(m_bad, parm = "theta_", method = "profile")
-```
-
-The interval on the group-level standard deviation is wide, and often runs nearly to zero. That is the model telling you it cannot pin this quantity down. Reporting the point estimate without that interval would imply a precision the data cannot support.
-
-::: {.callout-important}
-## The question is not "are there groups?"
-
-Almost every dataset has categorical variables. Sex, treatment condition, region, program type, marital status. None of those are clustering variables for multilevel modeling, and treating them as such is the single most common error students make when first choosing a model.
-
-Before writing `(1 | something)`, ask three questions:
-
-1. **How many units are there?** Fewer than about 20 and the variance component is not estimable with any precision. Between 20 and 50, proceed but report uncertainty honestly. Above 50 you are on solid ground.
-
-2. **Are these units a sample from a larger population you want to generalize to?** This is the conceptual heart of it. Random effects treat groups as draws from a population of groups, so that your conclusions extend to schools or classrooms or hospitals you did not observe. The 160 schools in the next chapter are a sample of schools. Nine industries are not a sample of industries; they are the complete set of categories the survey used. There is no broader population of industries you are inferring toward.
-
-3. **Do you want to estimate group-specific effects, or the variation among groups?** If you want to know how each category differs, that is a fixed effect. If you want to know how much categories vary as a class, and to generalize beyond the ones you have, that is a random effect.
-
-Sex has two categories. Treatment has two. Neither is a clustering variable, no matter how the data are grouped.
+::: {.callout-note}
+## A note on `stargazer`
+The demonstration video uses the `stargazer` package for this table, with an `out = "test.html"` option that does the same job. `stargazer` is no longer actively maintained and can fail with current versions of R, so this book uses `modelsummary` instead. The idea is identical, and `modelsummary()` also handles the multilevel models we fit later, which `stargazer` does not.
 :::
 
-### The right tool for a small number of categories
+## Where this goes next
 
-When there are few groups and you have them all, put them in as fixed effects. You get a direct estimate for each category, no variance component to estimate badly, and no implied generalization to unobserved industries.
+Every standard error in this chapter was computed as though these 50 families were 50 independent observations, which for these data is reasonable. But a great deal of social science data is not like that. Students sit in schools, patients in hospitals, employees in firms, and repeated measures inside people. When observations come in groups, treating them as independent produces standard errors that are too small and p-values that are too optimistic.
 
-```{r}
-m_fixed <- lm(wage ~ ttl_exp + collgrad_f + factor(industry), data = nlsw)
+It also raises a question ordinary regression cannot answer cleanly. A regression using everyone at once blends the comparison between two people in the same group with the comparison between two groups, and returns a single number that is neither.
 
-anova(m_fixed)
-```
-
-This answers the question that actually matters here: after accounting for industry differences, does experience still predict wages? The `anova()` output tells you whether industry explains variation in wages, and the coefficients tell you which industries differ from the reference.
-
-You can also address the standard error problem directly, without a multilevel model, using cluster-robust standard errors. That approach corrects the inference for within-group correlation while making no attempt to estimate a group-level variance. With few clusters it is generally the safer choice, though it too has small-sample limitations, and Chapter 10 returns to it.
-
-## What these data cannot show us
-
-`nlsw88` is, for our purposes, a single-level dataset. It has grouping variables, but none with enough units to support the models this book is about. That is worth saying plainly rather than forcing a demonstration the data cannot bear.
-
-To see clustering properly modeled we need data with many level-2 units and a genuine sample of them. The next chapter uses 7,185 students nested in 160 schools, which satisfies both conditions comfortably. Those 160 schools are a sample from the population of American high schools, so the between-school variance means something we can generalize.
-
-Two ideas from this chapter carry forward. The first is statistical: treating clustered observations as independent produces standard errors that are too small and p-values that are too optimistic. The second is conceptual and more interesting: a regression using all observations at once blends the comparison between two people in the same group with the comparison between two groups, and returns a single number that is cleanly neither. Multilevel modeling addresses both, provided you have the grouping structure to support it.
+The next chapter takes up both problems, using 7,185 students nested within 160 schools.

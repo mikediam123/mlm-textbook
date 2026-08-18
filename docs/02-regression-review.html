@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
-<title>Applied Multilevel Modeling in R - 2&nbsp; Review of Regression</title>
+<title>Applied Multilevel Modeling in R - 2&nbsp; Review of Linear Regression</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -112,7 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-getting-started.html">Foundations</a></li><li class="breadcrumb-item"><a href="./02-regression-review.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Regression</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-getting-started.html">Foundations</a></li><li class="breadcrumb-item"><a href="./02-regression-review.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -171,13 +171,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started with R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started with R and RStudio</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-regression-review.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -194,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-null-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Null Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -283,32 +283,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li>
-<a href="#preparing-the-variables" id="toc-preparing-the-variables" class="nav-link active" data-scroll-target="#preparing-the-variables"><span class="header-section-number">2.1</span> Preparing the variables</a>
-  <ul class="collapse">
-<li><a href="#a-note-on-missing-data" id="toc-a-note-on-missing-data" class="nav-link" data-scroll-target="#a-note-on-missing-data"><span class="header-section-number">2.1.1</span> A note on missing data</a></li>
-  </ul>
-</li>
-  <li><a href="#a-single-predictor" id="toc-a-single-predictor" class="nav-link" data-scroll-target="#a-single-predictor"><span class="header-section-number">2.2</span> A single predictor</a></li>
-  <li><a href="#building-up-a-series-of-models" id="toc-building-up-a-series-of-models" class="nav-link" data-scroll-target="#building-up-a-series-of-models"><span class="header-section-number">2.3</span> Building up a series of models</a></li>
-  <li><a href="#an-interaction" id="toc-an-interaction" class="nav-link" data-scroll-target="#an-interaction"><span class="header-section-number">2.4</span> An interaction</a></li>
-  <li><a href="#comparing-the-models" id="toc-comparing-the-models" class="nav-link" data-scroll-target="#comparing-the-models"><span class="header-section-number">2.5</span> Comparing the models</a></li>
-  <li><a href="#checking-assumptions" id="toc-checking-assumptions" class="nav-link" data-scroll-target="#checking-assumptions"><span class="header-section-number">2.6</span> Checking assumptions</a></li>
-  <li><a href="#where-this-breaks" id="toc-where-this-breaks" class="nav-link" data-scroll-target="#where-this-breaks"><span class="header-section-number">2.7</span> Where this breaks</a></li>
-  <li>
-<a href="#is-industry-a-clustering-variable" id="toc-is-industry-a-clustering-variable" class="nav-link" data-scroll-target="#is-industry-a-clustering-variable"><span class="header-section-number">2.8</span> Is <code>industry</code> a clustering variable?</a>
-  <ul class="collapse">
-<li><a href="#r-will-not-stop-you" id="toc-r-will-not-stop-you" class="nav-link" data-scroll-target="#r-will-not-stop-you"><span class="header-section-number">2.8.1</span> R will not stop you</a></li>
-  <li><a href="#the-right-tool-for-a-small-number-of-categories" id="toc-the-right-tool-for-a-small-number-of-categories" class="nav-link" data-scroll-target="#the-right-tool-for-a-small-number-of-categories"><span class="header-section-number">2.8.2</span> The right tool for a small number of categories</a></li>
-  </ul>
-</li>
-  <li><a href="#what-these-data-cannot-show-us" id="toc-what-these-data-cannot-show-us" class="nav-link" data-scroll-target="#what-these-data-cannot-show-us"><span class="header-section-number">2.9</span> What these data cannot show us</a></li>
+<li><a href="#load-a-few-packages" id="toc-load-a-few-packages" class="nav-link active" data-scroll-target="#load-a-few-packages"><span class="header-section-number">2.1</span> Load a few packages</a></li>
+  <li><a href="#input-the-food-dataset" id="toc-input-the-food-dataset" class="nav-link" data-scroll-target="#input-the-food-dataset"><span class="header-section-number">2.2</span> Input the food dataset</a></li>
+  <li><a href="#data-cleaning-and-coding" id="toc-data-cleaning-and-coding" class="nav-link" data-scroll-target="#data-cleaning-and-coding"><span class="header-section-number">2.3</span> Data cleaning and coding</a></li>
+  <li><a href="#use-skim-for-a-nice-summary" id="toc-use-skim-for-a-nice-summary" class="nav-link" data-scroll-target="#use-skim-for-a-nice-summary"><span class="header-section-number">2.4</span> Use <code>skim</code> for a nice summary</a></li>
+  <li><a href="#a-simple-linear-regression-does-income-predict-food-consumption" id="toc-a-simple-linear-regression-does-income-predict-food-consumption" class="nav-link" data-scroll-target="#a-simple-linear-regression-does-income-predict-food-consumption"><span class="header-section-number">2.5</span> A simple linear regression: does income predict food consumption?</a></li>
+  <li><a href="#what-about-kids-do-things-change-when-we-account-for-them" id="toc-what-about-kids-do-things-change-when-we-account-for-them" class="nav-link" data-scroll-target="#what-about-kids-do-things-change-when-we-account-for-them"><span class="header-section-number">2.6</span> What about kids? Do things change when we account for them?</a></li>
+  <li><a href="#now-what-about-families-who-have-a-garden" id="toc-now-what-about-families-who-have-a-garden" class="nav-link" data-scroll-target="#now-what-about-families-who-have-a-garden"><span class="header-section-number">2.7</span> Now, what about families who have a garden?</a></li>
+  <li><a href="#does-the-number-of-children-moderate-the-income-food-relationship" id="toc-does-the-number-of-children-moderate-the-income-food-relationship" class="nav-link" data-scroll-target="#does-the-number-of-children-moderate-the-income-food-relationship"><span class="header-section-number">2.8</span> Does the number of children moderate the income-food relationship?</a></li>
+  <li><a href="#organizing-your-results" id="toc-organizing-your-results" class="nav-link" data-scroll-target="#organizing-your-results"><span class="header-section-number">2.9</span> Organizing your results</a></li>
+  <li><a href="#where-this-goes-next" id="toc-where-this-goes-next" class="nav-link" data-scroll-target="#where-this-goes-next"><span class="header-section-number">2.10</span> Where this goes next</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOURUSERNAME/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
-<span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Regression</span>
+<span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
@@ -322,7 +312,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header><p><strong>Data for this chapter:</strong> <code>nlsw88.dta</code></p>
+</header><p><strong>Data for this chapter:</strong> <code>food.csv</code></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -333,268 +323,414 @@ Data file needed
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Copy <code>nlsw88.dta</code> into this project folder before rendering. This is the same dataset you will use for the Module 2 content review.</p>
+<p>Copy <code>food.csv</code> into this project folder before rendering.</p>
 </div>
 </div>
-<p>Multilevel models are an extension of regression, so it is worth making sure the foundation is solid before we build on it. This chapter reviews ordinary least squares regression and then, at the end, shows where it starts to fail. That failure is the reason the rest of this book exists.</p>
-<p>The data are 2,246 women from the 1988 round of the National Longitudinal Survey of Mature and Young Women, administered by the U.S. Bureau of Labor Statistics. Public data are available at <a href="https://nlsinfo.org" class="uri">https://nlsinfo.org</a>.</p>
+<p>Multilevel models are an extension of regression, so it is worth making sure the foundation is solid before building on it. This chapter reviews simple and multiple regression, interactions, and how to present a series of models. The data come from the reading: 50 families, with information on food expenditures, income, children, and whether the family keeps a garden.</p>
+<section id="load-a-few-packages" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="load-a-few-packages">
+<span class="header-section-number">2.1</span> Load a few packages</h2>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'ggplot2' was built under R version 4.5.2</code></pre>
 </div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://haven.tidyverse.org">haven</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/skimr/">skimr</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'skimr' was built under R version 4.5.2</code></pre>
+</div>
+</div>
+<p><code>ggplot2</code> is part of the tidyverse, so loading it separately is not strictly necessary, but naming it explicitly makes clear that we plan to plot. <code>broom</code> tidies model output into data frames. <code>skimr</code> gives a compact and readable summary of a dataset.</p>
+</section><section id="input-the-food-dataset" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="input-the-food-dataset">
+<span class="header-section-number">2.2</span> Input the food dataset</h2>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">food</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"food.csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">food</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 51
+Columns: 4
+$ FOODCONSUMPTION &lt;dbl&gt; 780, 1612, 1621, 1820, 2444, 3120, 3952, 4056, 4160, 4…
+$ FAMILYINCOME    &lt;dbl&gt; 24000, 20000, 37436, 36600, 10164, 2500, 29000, 40000,…
+$ NUMCHULDREN     &lt;dbl&gt; 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 2, …
+$ HAVEGARDEN      &lt;chr&gt; "NO", "NO", "NO", "YES", "YES", "NO", "YES", "NO", "NO…</code></pre>
+</div>
+</div>
+<p><code>view(food)</code> opens the data in a spreadsheet-style window, which is useful while exploring but does nothing in a rendered document, so it is left out here.</p>
+</section><section id="data-cleaning-and-coding" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="data-cleaning-and-coding">
+<span class="header-section-number">2.3</span> Data cleaning and coding</h2>
+<p>Three functions do the work. The first two come from <code>dplyr</code>, and the third from base R.</p>
+<p><strong><code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code></strong> changes the name of any variable in your dataset. The formula is <code>newname = oldname</code>. Here we are getting rid of capital letters and putting underscores between words, which makes everything easier to type and read. (Notice that the original file has a typo in one of the column names. Renaming is a good moment to quietly fix that.)</p>
+<p><strong><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code></strong> is another function I use constantly. It creates a new variable based on a transformation of an existing one. Here I take the renamed <code>have_garden</code> and create <code>have_garden_fac</code>, equal to the old variable but converted to a factor, which is what <code><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor()</a></code> does. Now R recognizes that “Yes” and “No” are two levels of a categorical variable, which it can use in frequency tables, regression models, and so on.</p>
+<p><strong><code><a href="https://rdrr.io/r/stats/na.fail.html">na.omit()</a></code></strong> should come with a warning label. It removes any row in a dataset with missing data, which is the same idea as listwise deletion. We use it here because the original <code>food</code> dataset had an extra row that was entirely missing, an error rather than a real response. But run it on a dataset that has genuine missingness and <em>any</em> observation missing on <em>any</em> variable will be dropped, including variables you were not planning to use. The nice part is that we still have <code>food</code> alongside <code>food.clean</code>, so we can always look back and see how many observations went away.</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">food.clean</span> <span class="op">&lt;-</span> <span class="va">food</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="va">.</span>,</span>
+<span>         food_consumption <span class="op">=</span> <span class="va">FOODCONSUMPTION</span>,</span>
+<span>         family_income <span class="op">=</span> <span class="va">FAMILYINCOME</span>,</span>
+<span>         num_children <span class="op">=</span> <span class="va">NUMCHULDREN</span>,</span>
+<span>         have_garden <span class="op">=</span> <span class="va">HAVEGARDEN</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
+<span>         have_garden_fac <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">have_garden</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">food.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 50
+Columns: 5
+$ food_consumption &lt;dbl&gt; 780, 1612, 1621, 1820, 2444, 3120, 3952, 4056, 4160, …
+$ family_income    &lt;dbl&gt; 24000, 20000, 37436, 36600, 10164, 2500, 29000, 40000…
+$ num_children     &lt;dbl&gt; 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 2,…
+$ have_garden      &lt;chr&gt; "NO", "NO", "NO", "YES", "YES", "NO", "YES", "NO", "N…
+$ have_garden_fac  &lt;fct&gt; NO, NO, NO, YES, YES, NO, YES, NO, NO, YES, NO, NO, Y…</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># How many observations did we actually lose?</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">food</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">food.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 51</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 50</code></pre>
+</div>
+</div>
+<p>Running that comparison every time you clean a dataset is a habit worth forming. A drop of one row is what we expected here. A drop of forty would mean something very different, and you want to find that out now rather than in the results section.</p>
+</section><section id="use-skim-for-a-nice-summary" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="use-skim-for-a-nice-summary">
+<span class="header-section-number">2.4</span> Use <code>skim</code> for a nice summary</h2>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="va">food.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">food.clean</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">50</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">factor</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 13%">
+<col style="width: 19%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 12%">
+<col style="width: 15%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">empty</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: right;">whitespace</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td style="text-align: left;">have_garden</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr></tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 13%">
+<col style="width: 19%">
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 21%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: left;">ordered</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: left;">top_counts</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td style="text-align: left;">have_garden_fac</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">NO: 36, YES: 14</td>
+</tr></tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 10%">
+<col style="width: 14%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 9%">
+<col style="width: 7%">
+<col style="width: 6%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">food_consumption</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8795.14</td>
+<td style="text-align: right;">4598.52</td>
+<td style="text-align: right;">780</td>
+<td style="text-align: right;">5200</td>
+<td style="text-align: right;">8826</td>
+<td style="text-align: right;">11895.0</td>
+<td style="text-align: right;">20132</td>
+<td style="text-align: left;">▅▅▇▂▂</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">family_income</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">72321.72</td>
+<td style="text-align: right;">54169.54</td>
+<td style="text-align: right;">1200</td>
+<td style="text-align: right;">31825</td>
+<td style="text-align: right;">52710</td>
+<td style="text-align: right;">105701.5</td>
+<td style="text-align: right;">192220</td>
+<td style="text-align: left;">▇▇▂▂▃</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">num_children</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.28</td>
+<td style="text-align: right;">1.36</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">▇▁▂▁▁</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><code><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim()</a></code> splits the output by variable type, so numeric variables get means and quartiles while factors get counts of each level. It also shows a completion rate per variable, which is a quick check for missingness.</p>
+</section><section id="a-simple-linear-regression-does-income-predict-food-consumption" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="a-simple-linear-regression-does-income-predict-food-consumption">
+<span class="header-section-number">2.5</span> A simple linear regression: does income predict food consumption?</h2>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">foodreg1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">food_consumption</span> <span class="op">~</span> <span class="va">family_income</span>, data <span class="op">=</span> <span class="va">food.clean</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">foodreg1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = food_consumption ~ family_income, data = food.clean)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4936.0 -2282.4   -48.4  1707.7  7372.6 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   4.155e+03  7.224e+02   5.752 5.99e-07 ***
+family_income 6.416e-02  8.024e-03   7.996 2.24e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3043 on 48 degrees of freedom
+Multiple R-squared:  0.5712,    Adjusted R-squared:  0.5622 
+F-statistic: 63.93 on 1 and 48 DF,  p-value: 2.236e-10</code></pre>
+</div>
+</div>
+<p>The short answer is yes. Family income significantly predicts food expenditures, and the two are positively related. For each additional dollar of income, a family would be expected to spend an additional six cents on food. The relationship is highly significant. The adjusted <span class="math inline">R^2</span> is about .56, meaning family income by itself explains roughly 56 percent of the variation in food expenditures.</p>
+<p>A note on language while we are here. “Predicts” is the right word; “causes” is not. Nobody assigned these families their incomes, and plenty of things that travel with income could be doing the work. Regression describes association, and research design is what licenses causal claims.</p>
+</section><section id="what-about-kids-do-things-change-when-we-account-for-them" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="what-about-kids-do-things-change-when-we-account-for-them">
+<span class="header-section-number">2.6</span> What about kids? Do things change when we account for them?</h2>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">foodreg2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">food_consumption</span> <span class="op">~</span> <span class="va">family_income</span> <span class="op">+</span> <span class="va">num_children</span>, data <span class="op">=</span> <span class="va">food.clean</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">foodreg2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = food_consumption ~ family_income + num_children, 
+    data = food.clean)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4793.2 -1678.5  -128.3  1376.2  7379.1 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   2.963e+03  8.503e+02   3.485  0.00108 ** 
+family_income 5.461e-02  8.631e-03   6.327  8.6e-08 ***
+num_children  8.258e+02  3.448e+02   2.395  0.02068 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2903 on 47 degrees of freedom
+Multiple R-squared:  0.6178,    Adjusted R-squared:  0.6015 
+F-statistic: 37.98 on 2 and 47 DF,  p-value: 1.528e-10</code></pre>
+</div>
+</div>
+<p>Kids make a big difference too. For each additional child, we would expect a family to spend about $826 more per year on food. Because <code>family_income</code> is also in the model, we can say this holds while controlling for family income. Another way to put it: take two families with the same income, and the one with one more child is predicted to spend roughly $827 more per year.</p>
+<p>Notice also that the estimate for <code>family_income</code> has not changed much, from about .06 down to .05. The adjusted <span class="math inline">R^2</span> rose from .56 to .60, so adding number of children explained about four percent more of the variation.</p>
+<p>That stability in the income coefficient is itself informative. When a coefficient moves substantially after adding a variable, the two predictors are entangled and the first model was attributing to income something that belonged elsewhere. When it barely moves, as here, the two are telling you fairly separate things.</p>
+</section><section id="now-what-about-families-who-have-a-garden" class="level2" data-number="2.7"><h2 data-number="2.7" class="anchored" data-anchor-id="now-what-about-families-who-have-a-garden">
+<span class="header-section-number">2.7</span> Now, what about families who have a garden?</h2>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">foodreg3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">food_consumption</span> <span class="op">~</span> <span class="va">family_income</span> <span class="op">+</span> <span class="va">num_children</span> <span class="op">+</span> <span class="va">have_garden_fac</span>,</span>
+<span>               data <span class="op">=</span> <span class="va">food.clean</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">foodreg3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = food_consumption ~ family_income + num_children + 
+    have_garden_fac, data = food.clean)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4618.9 -1616.2  -256.2  1505.4  7246.8 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)         3.179e+03  9.613e+02   3.307  0.00183 ** 
+family_income       5.414e-02  8.753e-03   6.185 1.53e-07 ***
+num_children        8.036e+02  3.505e+02   2.293  0.02648 *  
+have_garden_facYES -4.703e+02  9.456e+02  -0.497  0.62135    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2926 on 46 degrees of freedom
+Multiple R-squared:  0.6198,    Adjusted R-squared:  0.595 
+F-statistic:    25 on 3 and 46 DF,  p-value: 9.576e-10</code></pre>
+</div>
+</div>
+<p>Short answer: no, not after controlling for family income and number of children. As a side note, we could test whether gardens relate to food expenditures on their own by running a simple regression with only <code>have_garden_fac</code> as the predictor. But here, owning a garden does not appear significantly related to food expenditures once the other two variables are in the model.</p>
+<p>Notice how R handled the factor. It picked a reference category and reports the coefficient as a difference from it. This is exactly why converting to a factor mattered. Left as a raw number, a two-category variable would give the same answer, but a three-category variable would have produced one nonsensical slope instead of two comparisons.</p>
+</section><section id="does-the-number-of-children-moderate-the-income-food-relationship" class="level2" data-number="2.8"><h2 data-number="2.8" class="anchored" data-anchor-id="does-the-number-of-children-moderate-the-income-food-relationship">
+<span class="header-section-number">2.8</span> Does the number of children moderate the income-food relationship?</h2>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">foodreg4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">food_consumption</span> <span class="op">~</span> <span class="va">family_income</span> <span class="op">+</span> <span class="va">num_children</span> <span class="op">+</span></span>
+<span>                 <span class="va">family_income</span><span class="op">:</span><span class="va">num_children</span>,</span>
+<span>               data <span class="op">=</span> <span class="va">food.clean</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">foodreg4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = food_consumption ~ family_income + num_children + 
+    family_income:num_children, data = food.clean)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4833.2 -1654.1  -216.8  1476.2  7185.1 
+
+Coefficients:
+                             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                 1.424e+03  1.349e+03   1.055   0.2968    
+family_income               7.644e-02  1.723e-02   4.436 5.68e-05 ***
+num_children                1.512e+03  5.812e+02   2.602   0.0124 *  
+family_income:num_children -8.101e-03  5.556e-03  -1.458   0.1516    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2869 on 46 degrees of freedom
+Multiple R-squared:  0.6347,    Adjusted R-squared:  0.6109 
+F-statistic: 26.64 on 3 and 46 DF,  p-value: 3.875e-10</code></pre>
+</div>
+</div>
+<p>Now for the fancy stuff. The first three models assumed the predictors were additive rather than interactive. That means the relationship between <code>num_children</code> and food expenditures is the same regardless of income, and the relationship between <code>family_income</code> and food is the same regardless of how many children a family has.</p>
+<p>That is fine as a first step, but another hypothesis is that these two variables <em>interact</em>, or moderate one another, so that the slope of one depends on the value of the other. We specify an interaction with the <code>:</code> symbol, and we include both main effects as well as the interaction term. If the interaction estimate is significant, some moderation is likely happening.</p>
+<p>In this case we do not have enough evidence to say an interaction exists. Power is likely an issue as well. We have only 50 observations, and interaction effects are notoriously underpowered, meaning you usually need a much larger sample to detect a true effect with any regularity.</p>
+<p>That last point deserves emphasis, because it is the difference between two very different sentences. “There is no interaction” is a claim about the world. “We did not detect an interaction with 50 families” is a claim about this study. Only the second one is supported here.</p>
+</section><section id="organizing-your-results" class="level2" data-number="2.9"><h2 data-number="2.9" class="anchored" data-anchor-id="organizing-your-results">
+<span class="header-section-number">2.9</span> Organizing your results</h2>
+<p>Last thing: let’s make the results presentable. Reporting four models one <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> at a time is unreadable, and a single comparison table is how this belongs in a paper. We named our models along the way (<code>foodreg1</code>, <code>foodreg2</code>, and so on), so collecting them is easy.</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'modelsummary' was built under R version 4.5.2</code></pre>
 </div>
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nlsw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"nlsw88.dta"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  <span class="st">"Income"</span>        <span class="op">=</span> <span class="va">foodreg1</span>,</span>
+<span>  <span class="st">"+ Children"</span>    <span class="op">=</span> <span class="va">foodreg2</span>,</span>
+<span>  <span class="st">"+ Garden"</span>      <span class="op">=</span> <span class="va">foodreg3</span>,</span>
+<span>  <span class="st">"Interaction"</span>   <span class="op">=</span> <span class="va">foodreg4</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">nlsw</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 2,246
-Columns: 17
-$ idcode        &lt;dbl&gt; 1, 2, 3, 4, 6, 7, 9, 12, 13, 14, 15, 16, 18, 19, 20, 22,…
-$ age           &lt;dbl&gt; 37, 37, 42, 43, 42, 39, 37, 40, 40, 40, 39, 40, 40, 40, …
-$ race          &lt;dbl+lbl&gt; 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-$ married       &lt;dbl+lbl&gt; 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1…
-$ never_married &lt;dbl&gt; 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
-$ grade         &lt;dbl&gt; 12, 12, 12, 17, 12, 12, 12, 18, 14, 15, 16, 15, 15, 15, …
-$ collgrad      &lt;dbl+lbl&gt; 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1…
-$ south         &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
-$ smsa          &lt;dbl+lbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1…
-$ c_city        &lt;dbl&gt; 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,…
-$ industry      &lt;dbl+lbl&gt;  5,  4,  4, 11,  4, 11,  5, 11, 11, 11, 11, 11,  6, …
-$ occupation    &lt;dbl+lbl&gt;  6,  5,  3, 13,  6,  3,  2,  2,  3,  1,  1,  1,  5, …
-$ union         &lt;dbl+lbl&gt;  1,  1, NA,  1,  0,  0,  1,  0,  0,  0,  1,  0,  0, …
-$ wage          &lt;dbl&gt; 11.739125, 6.400963, 5.016723, 9.033813, 8.083731, 4.629…
-$ hours         &lt;dbl&gt; 48, 40, 40, 42, 48, 30, 40, 45, 8, 50, 16, 40, 40, 40, 4…
-$ ttl_exp       &lt;dbl&gt; 10.333334, 13.621795, 17.730770, 13.211537, 17.820513, 7…
-$ tenure        &lt;dbl&gt; 5.3333335, 5.2500000, 1.2500000, 1.7500000, 17.7500000, …</code></pre>
-</div>
-</div>
-<section id="preparing-the-variables" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="preparing-the-variables">
-<span class="header-section-number">2.1</span> Preparing the variables</h2>
-<p>The dummy variables here are coded 1 for yes and 0 for no. Race is coded 1 for White, 2 for Black, and 3 for Other. That coding is a poor measurement approach from a QuantCrit standpoint, collapsing enormously different populations into a residual “other” category, but it was typical of 1988 and it is what the file contains. Keep the limitation in mind when interpreting anything involving race.</p>
-<div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nlsw</span> <span class="op">&lt;-</span> <span class="va">nlsw</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
-<span>    collgrad_f <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">collgrad</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>                        labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Not college grad"</span>, <span class="st">"College grad"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    race_f     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">race</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,</span>
-<span>                        labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"White"</span>, <span class="st">"Black"</span>, <span class="st">"Other"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    union_f    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">union</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>                        labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Non-union"</span>, <span class="st">"Union"</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">nlsw</span><span class="op">$</span><span class="va">collgrad_f</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Not college grad     College grad 
-            1714              532 </code></pre>
-</div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">nlsw</span><span class="op">$</span><span class="va">race_f</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-White Black Other 
- 1637   583    26 </code></pre>
-</div>
-</div>
-<section id="a-note-on-missing-data" class="level3" data-number="2.1.1"><h3 data-number="2.1.1" class="anchored" data-anchor-id="a-note-on-missing-data">
-<span class="header-section-number">2.1.1</span> A note on missing data</h3>
-<div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nlsw</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">wage</span>, <span class="va">age</span>, <span class="va">ttl_exp</span>, <span class="va">collgrad</span>, <span class="va">union</span>, <span class="va">hours</span>, <span class="va">industry</span><span class="op">)</span>,</span>
-<span>                   <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"variable"</span>, values_to <span class="op">=</span> <span class="st">"n_missing"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 2
-  variable n_missing
-  &lt;chr&gt;        &lt;int&gt;
-1 wage             0
-2 age              0
-3 ttl_exp          0
-4 collgrad         0
-5 union          368
-6 hours            4
-7 industry        14</code></pre>
-</div>
-</div>
-<p>Some variables here have missing values, and <code>union</code> in particular has a substantial number. Resist the urge to run <code><a href="https://rdrr.io/r/stats/na.fail.html">na.omit()</a></code> on the whole dataset. That would drop any woman missing a response on <em>any</em> variable, including ones you are not using, and can silently discard hundreds of cases you had no reason to lose.</p>
-<p><code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> handles this for you by dropping incomplete cases on a model-by-model basis. The consequence is that different models in this chapter may be fit on slightly different subsamples, which matters when you compare them. Watch the N in the results tables.</p>
-</section></section><section id="a-single-predictor" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="a-single-predictor">
-<span class="header-section-number">2.2</span> A single predictor</h2>
-<div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="va">nlsw</span><span class="op">$</span><span class="va">wage</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   vars    n mean   sd median trimmed mad min   max range skew kurtosis   se
-X1    1 2246 7.77 5.76   6.27     6.8 3.4   1 40.75 39.74 3.09    12.84 0.12</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nlsw</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">wage</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">40</span>, fill <span class="op">=</span> <span class="st">"#1a7a6e"</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Distribution of Hourly Wages"</span>,</span>
-<span>       x <span class="op">=</span> <span class="st">"Hourly wage (1988 dollars)"</span>, y <span class="op">=</span> <span class="st">"Number of women"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-wage" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-regression-review_files/figure-html/fig-wage-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.1: Distribution of hourly wages. Note the right skew.</figcaption></figure>
-</div>
-</div>
-</div>
-<p>Wages are right-skewed, which is nearly always true of earnings data. A small number of high earners pull the mean above the median. This is worth noticing before modeling, because it affects how well a linear model will describe the data and how much influence those high earners will have on the estimates.</p>
-<div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">ttl_exp</span>, data <span class="op">=</span> <span class="va">nlsw</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = wage ~ ttl_exp, data = nlsw)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--8.502 -2.911 -1.295  1.308 35.370 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  3.61249    0.33935   10.64   &lt;2e-16 ***
-ttl_exp      0.33143    0.02541   13.04   &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 5.55 on 2244 degrees of freedom
-Multiple R-squared:  0.07048,   Adjusted R-squared:  0.07006 
-F-statistic: 170.1 on 1 and 2244 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-<p>The coefficient on <code>ttl_exp</code> is the estimated difference in hourly wage associated with one additional year of total work experience.</p>
-<p>Three habits of careful interpretation are worth stating explicitly. First, this is an association, not an effect. Causality is a function of research design, not of analysis, and nobody randomly assigned these women to accumulate different amounts of work experience. Second, the intercept is the predicted wage when experience equals zero, which here describes a woman with no work history at all. That is a real if unusual case, so the intercept is at least interpretable. Third, <span class="math inline">R^2</span> is the proportion of variance in wages the model accounts for. It is not the probability the model is right, and a model with low <span class="math inline">R^2</span> can still contain a coefficient worth knowing about.</p>
-</section><section id="building-up-a-series-of-models" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="building-up-a-series-of-models">
-<span class="header-section-number">2.3</span> Building up a series of models</h2>
-<div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">ttl_exp</span> <span class="op">+</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">nlsw</span><span class="op">)</span></span>
-<span><span class="va">m3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">ttl_exp</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">collgrad_f</span>, data <span class="op">=</span> <span class="va">nlsw</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = wage ~ ttl_exp + age + collgrad_f, data = nlsw)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--9.917 -2.689 -1.021  1.086 35.550 
-
-Coefficients:
-                       Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)             7.92690    1.46037   5.428 6.31e-08 ***
-ttl_exp                 0.30869    0.02491  12.391  &lt; 2e-16 ***
-age                    -0.12252    0.03731  -3.284  0.00104 ** 
-collgrad_fCollege grad  3.24134    0.26799  12.095  &lt; 2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 5.366 on 2242 degrees of freedom
-Multiple R-squared:  0.132, Adjusted R-squared:  0.1308 
-F-statistic: 113.6 on 3 and 2242 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-<p>Watch what happens to the experience coefficient as age and college graduation enter the model. Experience and age are correlated, since older women have had more time to accumulate work history, so some of what the first model attributed to experience was partly age. This is what “controlling for” means in practice, and it is why a coefficient is a statement about a particular model rather than a property of the world.</p>
-<p>Notice also how R handles the factor. It picks a reference category, here “Not college grad,” and the coefficient describes the difference from that reference. Had <code>collgrad</code> been a three-category variable left as 1, 2, 3, we would have gotten a single nonsensical slope instead of two comparisons.</p>
-</section><section id="an-interaction" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="an-interaction">
-<span class="header-section-number">2.4</span> An interaction</h2>
-<p>Does the return to work experience depend on age?</p>
-<div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">ttl_exp</span> <span class="op">*</span> <span class="va">age</span> <span class="op">+</span> <span class="va">collgrad_f</span>, data <span class="op">=</span> <span class="va">nlsw</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = wage ~ ttl_exp * age + collgrad_f, data = nlsw)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--9.535 -2.646 -1.027  1.064 35.940 
-
-Coefficients:
-                        Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)             1.701472   4.151041   0.410   0.6819    
-ttl_exp                 0.816992   0.318256   2.567   0.0103 *  
-age                     0.034692   0.104979   0.330   0.7411    
-collgrad_fCollege grad  3.229193   0.268005  12.049   &lt;2e-16 ***
-ttl_exp:age            -0.012788   0.007982  -1.602   0.1093    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 5.364 on 2241 degrees of freedom
-Multiple R-squared:  0.133, Adjusted R-squared:  0.1314 
-F-statistic: 85.92 on 4 and 2241 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-<p>The interaction term asks whether the wage return to an additional year of experience is different for older women than for younger women. When an interaction is present, the main effects are no longer “the effect of experience” in general. They are the effect of experience when age equals zero, which is not a meaningful case here. This is the standard argument for centering continuous predictors before interacting them:</p>
-<div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nlsw</span> <span class="op">&lt;-</span> <span class="va">nlsw</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
-<span>    age_c     <span class="op">=</span> <span class="va">age</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">age</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>    ttl_exp_c <span class="op">=</span> <span class="va">ttl_exp</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">ttl_exp</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span><span class="va">m5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">ttl_exp_c</span> <span class="op">*</span> <span class="va">age_c</span> <span class="op">+</span> <span class="va">collgrad_f</span>, data <span class="op">=</span> <span class="va">nlsw</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = wage ~ ttl_exp_c * age_c + collgrad_f, data = nlsw)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--9.535 -2.646 -1.027  1.064 35.940 
-
-Coefficients:
-                        Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)             7.024480   0.130715  53.739  &lt; 2e-16 ***
-ttl_exp_c               0.316293   0.025352  12.476  &lt; 2e-16 ***
-age_c                  -0.125609   0.037344  -3.364 0.000782 ***
-collgrad_fCollege grad  3.229193   0.268005  12.049  &lt; 2e-16 ***
-ttl_exp_c:age_c        -0.012788   0.007982  -1.602 0.109281    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 5.364 on 2241 degrees of freedom
-Multiple R-squared:  0.133, Adjusted R-squared:  0.1314 
-F-statistic: 85.92 on 4 and 2241 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-<p>The interaction coefficient is identical in the two models. What changes is the interpretability of everything else. In the centered version, the experience coefficient is the return to experience for a woman of average age, which is a quantity you can put in a sentence.</p>
-<div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://strengejacke.github.io/ggeffects/">ggeffects</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'ggeffects' was built under R version 4.5.2</code></pre>
-</div>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://strengejacke.github.io/ggeffects/reference/ggpredict.html">ggpredict</a></span><span class="op">(</span><span class="va">m5</span>, terms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ttl_exp_c"</span>, <span class="st">"age_c [-5, 0, 5]"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-interaction" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-regression-review_files/figure-html/fig-interaction-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.2: Predicted wages across work experience, at three ages.</figcaption></figure>
-</div>
-</div>
-</div>
-</section><section id="comparing-the-models" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="comparing-the-models">
-<span class="header-section-number">2.5</span> Comparing the models</h2>
-<div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"M1"</span> <span class="op">=</span> <span class="va">m1</span>, <span class="st">"M2"</span> <span class="op">=</span> <span class="va">m2</span>, <span class="st">"M3"</span> <span class="op">=</span> <span class="va">m3</span>, <span class="st">"M4: Interaction"</span> <span class="op">=</span> <span class="va">m4</span><span class="op">)</span>,</span>
+<span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span></span>
+<span>  <span class="va">models</span>,</span>
 <span>  stars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"*"</span> <span class="op">=</span> <span class="fl">.05</span>, <span class="st">"**"</span> <span class="op">=</span> <span class="fl">.01</span>, <span class="st">"***"</span> <span class="op">=</span> <span class="fl">.001</span><span class="op">)</span>,</span>
-<span>  gof_map <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"nobs"</span>, <span class="st">"r.squared"</span>, <span class="st">"adj.r.squared"</span>, <span class="st">"aic"</span>, <span class="st">"bic"</span><span class="op">)</span>,</span>
-<span>  title <span class="op">=</span> <span class="st">"OLS models predicting hourly wages"</span></span>
+<span>  gof_map <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"nobs"</span>, <span class="st">"r.squared"</span>, <span class="st">"adj.r.squared"</span><span class="op">)</span>,</span>
+<span>  fmt <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  title <span class="op">=</span> <span class="st">"Regression models predicting annual food expenditures"</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
@@ -602,156 +738,142 @@ F-statistic: 85.92 on 4 and 2241 DF,  p-value: &lt; 2.2e-16</code></pre>
 
     <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
       // Create table-specific functions using external factory
-      const tableFns_wj2v1bgd8rmptz8g0wpu = TinyTable.createTableFunctions("tinytable_wj2v1bgd8rmptz8g0wpu");
+      const tableFns_6g8mzmsy4u5pa6283wfx = TinyTable.createTableFunctions("tinytable_6g8mzmsy4u5pa6283wfx");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '15', j: 2 }, { i: '15', j: 3 }, { i: '15', j: 4 }, { i: '15', j: 5 } ], css_id: 'tinytable_css_zwo0km37qce8nyvljj25',}, 
-          { positions: [ { i: '10', j: 2 }, { i: '10', j: 3 }, { i: '10', j: 4 }, { i: '10', j: 5 } ], css_id: 'tinytable_css_59xde7y96cqqu4btz5n2',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '13', j: 4 }, { i: '14', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 }, { i: '13', j: 5 }, { i: '14', j: 5 } ], css_id: 'tinytable_css_y82konw5i36b1pkl4131',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 } ], css_id: 'tinytable_css_r9wvmo8zwdnm74otrr6x',}, 
-          { positions: [ { i: '15', j: 1 } ], css_id: 'tinytable_css_n7embgp1ztw3iei24md0',}, 
-          { positions: [ { i: '10', j: 1 } ], css_id: 'tinytable_css_mmmy2vjmdzy72wkjusvd',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 } ], css_id: 'tinytable_css_e77ed4ccffx41v7dobt1',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_c8s5yhai1fu7lje6t0dw',}, 
+          { positions: [ { i: '13', j: 2 }, { i: '13', j: 3 }, { i: '13', j: 4 }, { i: '13', j: 5 } ], css_id: 'tinytable_css_s57u1gpiy6ggzaowl9yw',}, 
+          { positions: [ { i: '10', j: 2 }, { i: '10', j: 3 }, { i: '10', j: 4 }, { i: '10', j: 5 } ], css_id: 'tinytable_css_qvx2lxdomlxti67prqsj',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 } ], css_id: 'tinytable_css_sfda69n91qy7g7dq13ob',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 } ], css_id: 'tinytable_css_8g68p59an3z1ugut7y4j',}, 
+          { positions: [ { i: '13', j: 1 } ], css_id: 'tinytable_css_tw97eyr1zx6l6vhaabn4',}, 
+          { positions: [ { i: '10', j: 1 } ], css_id: 'tinytable_css_ygsc66khqjaeonlpox1q',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 } ], css_id: 'tinytable_css_jk2gnrke5t1e70dtmyp6',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_tehnj6jtaj5k6rq5li8g',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_wj2v1bgd8rmptz8g0wpu.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_6g8mzmsy4u5pa6283wfx.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
 <style>
     /* tinytable css entries after */
-    #tinytable_wj2v1bgd8rmptz8g0wpu td.tinytable_css_zwo0km37qce8nyvljj25, #tinytable_wj2v1bgd8rmptz8g0wpu th.tinytable_css_zwo0km37qce8nyvljj25 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_wj2v1bgd8rmptz8g0wpu td.tinytable_css_59xde7y96cqqu4btz5n2, #tinytable_wj2v1bgd8rmptz8g0wpu th.tinytable_css_59xde7y96cqqu4btz5n2 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_wj2v1bgd8rmptz8g0wpu td.tinytable_css_y82konw5i36b1pkl4131, #tinytable_wj2v1bgd8rmptz8g0wpu th.tinytable_css_y82konw5i36b1pkl4131 { text-align: center }
-    #tinytable_wj2v1bgd8rmptz8g0wpu td.tinytable_css_r9wvmo8zwdnm74otrr6x, #tinytable_wj2v1bgd8rmptz8g0wpu th.tinytable_css_r9wvmo8zwdnm74otrr6x {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_wj2v1bgd8rmptz8g0wpu td.tinytable_css_n7embgp1ztw3iei24md0, #tinytable_wj2v1bgd8rmptz8g0wpu th.tinytable_css_n7embgp1ztw3iei24md0 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_wj2v1bgd8rmptz8g0wpu td.tinytable_css_mmmy2vjmdzy72wkjusvd, #tinytable_wj2v1bgd8rmptz8g0wpu th.tinytable_css_mmmy2vjmdzy72wkjusvd {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_wj2v1bgd8rmptz8g0wpu td.tinytable_css_e77ed4ccffx41v7dobt1, #tinytable_wj2v1bgd8rmptz8g0wpu th.tinytable_css_e77ed4ccffx41v7dobt1 { text-align: left }
-    #tinytable_wj2v1bgd8rmptz8g0wpu td.tinytable_css_c8s5yhai1fu7lje6t0dw, #tinytable_wj2v1bgd8rmptz8g0wpu th.tinytable_css_c8s5yhai1fu7lje6t0dw {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_6g8mzmsy4u5pa6283wfx td.tinytable_css_s57u1gpiy6ggzaowl9yw, #tinytable_6g8mzmsy4u5pa6283wfx th.tinytable_css_s57u1gpiy6ggzaowl9yw {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_6g8mzmsy4u5pa6283wfx td.tinytable_css_qvx2lxdomlxti67prqsj, #tinytable_6g8mzmsy4u5pa6283wfx th.tinytable_css_qvx2lxdomlxti67prqsj {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_6g8mzmsy4u5pa6283wfx td.tinytable_css_sfda69n91qy7g7dq13ob, #tinytable_6g8mzmsy4u5pa6283wfx th.tinytable_css_sfda69n91qy7g7dq13ob { text-align: center }
+    #tinytable_6g8mzmsy4u5pa6283wfx td.tinytable_css_8g68p59an3z1ugut7y4j, #tinytable_6g8mzmsy4u5pa6283wfx th.tinytable_css_8g68p59an3z1ugut7y4j {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_6g8mzmsy4u5pa6283wfx td.tinytable_css_tw97eyr1zx6l6vhaabn4, #tinytable_6g8mzmsy4u5pa6283wfx th.tinytable_css_tw97eyr1zx6l6vhaabn4 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_6g8mzmsy4u5pa6283wfx td.tinytable_css_ygsc66khqjaeonlpox1q, #tinytable_6g8mzmsy4u5pa6283wfx th.tinytable_css_ygsc66khqjaeonlpox1q {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_6g8mzmsy4u5pa6283wfx td.tinytable_css_jk2gnrke5t1e70dtmyp6, #tinytable_6g8mzmsy4u5pa6283wfx th.tinytable_css_jk2gnrke5t1e70dtmyp6 { text-align: left }
+    #tinytable_6g8mzmsy4u5pa6283wfx td.tinytable_css_tehnj6jtaj5k6rq5li8g, #tinytable_6g8mzmsy4u5pa6283wfx th.tinytable_css_tehnj6jtaj5k6rq5li8g {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
 <div class="container">
-      <table class="tinytable" id="tinytable_wj2v1bgd8rmptz8g0wpu" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-<caption>OLS models predicting hourly wages</caption>
+      <table class="tinytable" id="tinytable_6g8mzmsy4u5pa6283wfx" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<caption>Regression models predicting annual food expenditures</caption>
         <thead><tr>
 <th scope="col" data-row="0" data-col="1"> </th>
-                <th scope="col" data-row="0" data-col="2">M1</th>
-                <th scope="col" data-row="0" data-col="3">M2</th>
-                <th scope="col" data-row="0" data-col="4">M3</th>
-                <th scope="col" data-row="0" data-col="5">M4: Interaction</th>
+                <th scope="col" data-row="0" data-col="2">Income</th>
+                <th scope="col" data-row="0" data-col="3">+ Children</th>
+                <th scope="col" data-row="0" data-col="4">+ Garden</th>
+                <th scope="col" data-row="0" data-col="5">Interaction</th>
               </tr></thead>
 <tfoot><tr><td colspan="5">* p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
 <tbody>
 <tr>
 <td data-row="1" data-col="1">(Intercept)</td>
-                  <td data-row="1" data-col="2">3.612***</td>
-                  <td data-row="1" data-col="3">8.649***</td>
-                  <td data-row="1" data-col="4">7.927***</td>
-                  <td data-row="1" data-col="5">1.701</td>
+                  <td data-row="1" data-col="2">4155.21***</td>
+                  <td data-row="1" data-col="3">2962.95**</td>
+                  <td data-row="1" data-col="4">3179.40**</td>
+                  <td data-row="1" data-col="5">1423.79</td>
                 </tr>
 <tr>
 <td data-row="2" data-col="1"></td>
-                  <td data-row="2" data-col="2">(0.339)</td>
-                  <td data-row="2" data-col="3">(1.506)</td>
-                  <td data-row="2" data-col="4">(1.460)</td>
-                  <td data-row="2" data-col="5">(4.151)</td>
+                  <td data-row="2" data-col="2">(722.43)</td>
+                  <td data-row="2" data-col="3">(850.26)</td>
+                  <td data-row="2" data-col="4">(961.33)</td>
+                  <td data-row="2" data-col="5">(1349.23)</td>
                 </tr>
 <tr>
-<td data-row="3" data-col="1">ttl_exp</td>
-                  <td data-row="3" data-col="2">0.331***</td>
-                  <td data-row="3" data-col="3">0.342***</td>
-                  <td data-row="3" data-col="4">0.309***</td>
-                  <td data-row="3" data-col="5">0.817*</td>
+<td data-row="3" data-col="1">family_income</td>
+                  <td data-row="3" data-col="2">0.06***</td>
+                  <td data-row="3" data-col="3">0.05***</td>
+                  <td data-row="3" data-col="4">0.05***</td>
+                  <td data-row="3" data-col="5">0.08***</td>
                 </tr>
 <tr>
 <td data-row="4" data-col="1"></td>
-                  <td data-row="4" data-col="2">(0.025)</td>
-                  <td data-row="4" data-col="3">(0.026)</td>
-                  <td data-row="4" data-col="4">(0.025)</td>
-                  <td data-row="4" data-col="5">(0.318)</td>
+                  <td data-row="4" data-col="2">(0.01)</td>
+                  <td data-row="4" data-col="3">(0.01)</td>
+                  <td data-row="4" data-col="4">(0.01)</td>
+                  <td data-row="4" data-col="5">(0.02)</td>
                 </tr>
 <tr>
-<td data-row="5" data-col="1">age</td>
+<td data-row="5" data-col="1">num_children</td>
                   <td data-row="5" data-col="2"></td>
-                  <td data-row="5" data-col="3">-0.132***</td>
-                  <td data-row="5" data-col="4">-0.123**</td>
-                  <td data-row="5" data-col="5">0.035</td>
+                  <td data-row="5" data-col="3">825.78*</td>
+                  <td data-row="5" data-col="4">803.61*</td>
+                  <td data-row="5" data-col="5">1512.28*</td>
                 </tr>
 <tr>
 <td data-row="6" data-col="1"></td>
                   <td data-row="6" data-col="2"></td>
-                  <td data-row="6" data-col="3">(0.038)</td>
-                  <td data-row="6" data-col="4">(0.037)</td>
-                  <td data-row="6" data-col="5">(0.105)</td>
+                  <td data-row="6" data-col="3">(344.84)</td>
+                  <td data-row="6" data-col="4">(350.48)</td>
+                  <td data-row="6" data-col="5">(581.23)</td>
                 </tr>
 <tr>
-<td data-row="7" data-col="1">collgrad_fCollege grad</td>
+<td data-row="7" data-col="1">have_garden_facYES</td>
                   <td data-row="7" data-col="2"></td>
                   <td data-row="7" data-col="3"></td>
-                  <td data-row="7" data-col="4">3.241***</td>
-                  <td data-row="7" data-col="5">3.229***</td>
+                  <td data-row="7" data-col="4">-470.26</td>
+                  <td data-row="7" data-col="5"></td>
                 </tr>
 <tr>
 <td data-row="8" data-col="1"></td>
                   <td data-row="8" data-col="2"></td>
                   <td data-row="8" data-col="3"></td>
-                  <td data-row="8" data-col="4">(0.268)</td>
-                  <td data-row="8" data-col="5">(0.268)</td>
+                  <td data-row="8" data-col="4">(945.63)</td>
+                  <td data-row="8" data-col="5"></td>
                 </tr>
 <tr>
-<td data-row="9" data-col="1">ttl_exp × age</td>
+<td data-row="9" data-col="1">family_income × num_children</td>
                   <td data-row="9" data-col="2"></td>
                   <td data-row="9" data-col="3"></td>
                   <td data-row="9" data-col="4"></td>
-                  <td data-row="9" data-col="5">-0.013</td>
+                  <td data-row="9" data-col="5">-0.01</td>
                 </tr>
 <tr>
 <td data-row="10" data-col="1"></td>
                   <td data-row="10" data-col="2"></td>
                   <td data-row="10" data-col="3"></td>
                   <td data-row="10" data-col="4"></td>
-                  <td data-row="10" data-col="5">(0.008)</td>
+                  <td data-row="10" data-col="5">(0.01)</td>
                 </tr>
 <tr>
 <td data-row="11" data-col="1">Num.Obs.</td>
-                  <td data-row="11" data-col="2">2246</td>
-                  <td data-row="11" data-col="3">2246</td>
-                  <td data-row="11" data-col="4">2246</td>
-                  <td data-row="11" data-col="5">2246</td>
+                  <td data-row="11" data-col="2">50</td>
+                  <td data-row="11" data-col="3">50</td>
+                  <td data-row="11" data-col="4">50</td>
+                  <td data-row="11" data-col="5">50</td>
                 </tr>
 <tr>
 <td data-row="12" data-col="1">R2</td>
-                  <td data-row="12" data-col="2">0.070</td>
-                  <td data-row="12" data-col="3">0.075</td>
-                  <td data-row="12" data-col="4">0.132</td>
-                  <td data-row="12" data-col="5">0.133</td>
+                  <td data-row="12" data-col="2">0.571</td>
+                  <td data-row="12" data-col="3">0.618</td>
+                  <td data-row="12" data-col="4">0.620</td>
+                  <td data-row="12" data-col="5">0.635</td>
                 </tr>
 <tr>
 <td data-row="13" data-col="1">R2 Adj.</td>
-                  <td data-row="13" data-col="2">0.070</td>
-                  <td data-row="13" data-col="3">0.075</td>
-                  <td data-row="13" data-col="4">0.131</td>
-                  <td data-row="13" data-col="5">0.131</td>
-                </tr>
-<tr>
-<td data-row="14" data-col="1">AIC</td>
-                  <td data-row="14" data-col="2">14076.4</td>
-                  <td data-row="14" data-col="3">14066.7</td>
-                  <td data-row="14" data-col="4">13926.7</td>
-                  <td data-row="14" data-col="5">13926.1</td>
-                </tr>
-<tr>
-<td data-row="15" data-col="1">BIC</td>
-                  <td data-row="15" data-col="2">14093.6</td>
-                  <td data-row="15" data-col="3">14089.5</td>
-                  <td data-row="15" data-col="4">13955.3</td>
-                  <td data-row="15" data-col="5">13960.4</td>
+                  <td data-row="13" data-col="2">0.562</td>
+                  <td data-row="13" data-col="3">0.602</td>
+                  <td data-row="13" data-col="4">0.595</td>
+                  <td data-row="13" data-col="5">0.611</td>
                 </tr>
 </tbody>
 </table>
@@ -759,166 +881,29 @@ F-statistic: 85.92 on 4 and 2241 DF,  p-value: &lt; 2.2e-16</code></pre>
 <!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
-<p>Older course materials used <code>stargazer</code> for tables like this one. That package is no longer actively maintained and can fail with current versions of R, so we use <code>modelsummary</code> instead. If you find <code>stargazer</code> code in an old handout, <code><a href="https://modelsummary.com/man/modelsummary.html">modelsummary()</a></code> is the direct replacement.</p>
-<p>Reading down the columns: does total experience matter as a predictor of women’s hourly wages? Does that change once college status and age are taken into account? And how well do these models perform overall? The <span class="math inline">R^2</span> values will tell you that last one, and the honest answer is that wages are hard to predict from a handful of demographic variables.</p>
-</section><section id="checking-assumptions" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="checking-assumptions">
-<span class="header-section-number">2.6</span> Checking assumptions</h2>
+<p>One more useful trick. <code><a href="https://modelsummary.com/man/modelsummary.html">modelsummary()</a></code> will write the table straight out to a file, and Word opens both HTML and .docx directly. So you can generate a formatted table, open it in Word, and paste it into your paper.</p>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">m3</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-diagnostics" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-regression-review_files/figure-html/fig-diagnostics-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.3: Residual diagnostics for the multiple regression model.</figcaption></figure>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>, output <span class="op">=</span> <span class="st">"food_models.docx"</span>,</span>
+<span>             stars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"*"</span> <span class="op">=</span> <span class="fl">.05</span>, <span class="st">"**"</span> <span class="op">=</span> <span class="fl">.01</span>, <span class="st">"***"</span> <span class="op">=</span> <span class="fl">.001</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</div>
-<p>The residuals-versus-fitted plot checks linearity and constant variance. With right-skewed wage data you will typically see a fan shape, with residuals spreading out at higher predicted wages. The Q-Q plot will show heavy tails for the same reason. Neither is fatal, and both are worth reporting honestly rather than hiding.</p>
-</section><section id="where-this-breaks" class="level2" data-number="2.7"><h2 data-number="2.7" class="anchored" data-anchor-id="where-this-breaks">
-<span class="header-section-number">2.7</span> Where this breaks</h2>
-<p>Here is the assumption that does not appear on any of those diagnostic plots: independence of observations. Every standard error above was computed as though these 2,246 women were 2,246 independent pieces of information.</p>
-<p>That assumption is often wrong. Women are not scattered randomly across the labor market. They work in particular industries and occupations, which differ in pay scales, unionization, and credential requirements. If two women in the same industry are more alike than two women drawn at random, the independence assumption fails and the standard errors above are too small.</p>
-<p>So the natural next question is whether we should be fitting a multilevel model to account for it. Working through that question carefully is the point of this section, and the answer for these data is no.</p>
-</section><section id="is-industry-a-clustering-variable" class="level2" data-number="2.8"><h2 data-number="2.8" class="anchored" data-anchor-id="is-industry-a-clustering-variable">
-<span class="header-section-number">2.8</span> Is <code>industry</code> a clustering variable?</h2>
-<p>The mistake to avoid is treating any categorical variable as a potential clustering variable. Grouping structure is necessary but nowhere near sufficient. Start by counting.</p>
-<div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nlsw</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">industry</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">industry</span>, name <span class="op">=</span> <span class="st">"n_women"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">n_women</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12 × 2
-   industry                     n_women
-   &lt;dbl+lbl&gt;                      &lt;int&gt;
- 1 11 [Professional Services]       824
- 2  4 [Manufacturing]               367
- 3  6 [Wholesale/Retail Trade]      333
- 4  7 [Finance/Ins/Real Estate]     192
- 5 12 [Public Administration]       176
- 6  9 [Personal Services]            97
- 7  5 [Transport/Comm/Utility]       90
- 8  8 [Business/Repair Svc]          86
- 9  3 [Construction]                 29
-10  1 [Ag/Forestry/Fisheries]        17
-11 10 [Entertainment/Rec Svc]        17
-12  2 [Mining]                        4</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">n_industries</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct</a></span><span class="op">(</span><span class="va">nlsw</span><span class="op">$</span><span class="va">industry</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">n_occupations</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct</a></span><span class="op">(</span><span class="va">nlsw</span><span class="op">$</span><span class="va">occupation</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>industries <span class="op">=</span> <span class="va">n_industries</span>, occupations <span class="op">=</span> <span class="va">n_occupations</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> industries occupations 
-         12          13 </code></pre>
-</div>
-</div>
-<p>That count is the whole problem. A random intercept does not estimate a set of group means. It estimates a <strong>variance</strong> describing how group means are spread around the overall average, and it does so from as many observations as there are groups. Estimating a variance from a handful of numbers is exactly as unreliable as it sounds. You would not report a standard deviation computed from nine cases and treat it as precise; the variance component here rests on no more information than that.</p>
-<p>Common guidance puts the minimum somewhere around 30 to 50 level-2 units for a variance component to be estimated with reasonable precision, with roughly 20 as an absolute floor below which the estimate should not be trusted at all. These data are well below any of those thresholds.</p>
-<section id="r-will-not-stop-you" class="level3" data-number="2.8.1"><h3 data-number="2.8.1" class="anchored" data-anchor-id="r-will-not-stop-you">
-<span class="header-section-number">2.8.1</span> R will not stop you</h3>
-<p>The trap is that fitting it anyway produces output that looks completely normal.</p>
-<div class="cell">
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'lme4' was built under R version 4.5.2</code></pre>
-</div>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># This runs. It should not be trusted.</span></span>
-<span><span class="va">m_bad</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">ttl_exp</span> <span class="op">+</span> <span class="va">collgrad_f</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">industry</span><span class="op">)</span>,</span>
-<span>              data <span class="op">=</span> <span class="va">nlsw</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m_bad</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
-Formula: wage ~ ttl_exp + collgrad_f + (1 | industry)
-   Data: nlsw
-
-      AIC       BIC    logLik -2*log(L)  df.resid 
-  13788.5   13817.1   -6889.3   13778.5      2227 
-
-Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--2.2548 -0.4679 -0.1730  0.1839  6.8371 
-
-Random effects:
- Groups   Name        Variance Std.Dev.
- industry (Intercept)  2.46    1.568   
- Residual             27.75    5.268   
-Number of obs: 2232, groups:  industry, 12
-
-Fixed effects:
-                       Estimate Std. Error t value
-(Intercept)             4.24325    0.59196   7.168
-ttl_exp                 0.24870    0.02518   9.876
-collgrad_fCollege grad  3.54662    0.28052  12.643
-
-Correlation of Fixed Effects:
-            (Intr) ttl_xp
-ttl_exp     -0.517       
-cllgrd_fClg -0.024 -0.109</code></pre>
-</div>
-</div>
-<p>There is a variance component. There are standard errors. Nothing is flagged. You could paste this into a manuscript and no software would object.</p>
-<p>But that industry-level variance was estimated from a single-digit number of industries, and the uncertainty around it is enormous. Confidence intervals make the situation visible:</p>
-<div class="cell">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">m_bad</span>, parm <span class="op">=</span> <span class="st">"theta_"</span>, method <span class="op">=</span> <span class="st">"profile"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>           2.5 %   97.5 %
-.sig01 0.9516599 2.854340
-.sigma 5.1164805 5.426696</code></pre>
-</div>
-</div>
-<p>The interval on the group-level standard deviation is wide, and often runs nearly to zero. That is the model telling you it cannot pin this quantity down. Reporting the point estimate without that interval would imply a precision the data cannot support.</p>
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-The question is not “are there groups?”
+A note on <code>stargazer</code>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Almost every dataset has categorical variables. Sex, treatment condition, region, program type, marital status. None of those are clustering variables for multilevel modeling, and treating them as such is the single most common error students make when first choosing a model.</p>
-<p>Before writing <code>(1 | something)</code>, ask three questions:</p>
-<ol type="1">
-<li><p><strong>How many units are there?</strong> Fewer than about 20 and the variance component is not estimable with any precision. Between 20 and 50, proceed but report uncertainty honestly. Above 50 you are on solid ground.</p></li>
-<li><p><strong>Are these units a sample from a larger population you want to generalize to?</strong> This is the conceptual heart of it. Random effects treat groups as draws from a population of groups, so that your conclusions extend to schools or classrooms or hospitals you did not observe. The 160 schools in the next chapter are a sample of schools. Nine industries are not a sample of industries; they are the complete set of categories the survey used. There is no broader population of industries you are inferring toward.</p></li>
-<li><p><strong>Do you want to estimate group-specific effects, or the variation among groups?</strong> If you want to know how each category differs, that is a fixed effect. If you want to know how much categories vary as a class, and to generalize beyond the ones you have, that is a random effect.</p></li>
-</ol>
-<p>Sex has two categories. Treatment has two. Neither is a clustering variable, no matter how the data are grouped.</p>
+<p>The demonstration video uses the <code>stargazer</code> package for this table, with an <code>out = "test.html"</code> option that does the same job. <code>stargazer</code> is no longer actively maintained and can fail with current versions of R, so this book uses <code>modelsummary</code> instead. The idea is identical, and <code><a href="https://modelsummary.com/man/modelsummary.html">modelsummary()</a></code> also handles the multilevel models we fit later, which <code>stargazer</code> does not.</p>
 </div>
 </div>
-</section><section id="the-right-tool-for-a-small-number-of-categories" class="level3" data-number="2.8.2"><h3 data-number="2.8.2" class="anchored" data-anchor-id="the-right-tool-for-a-small-number-of-categories">
-<span class="header-section-number">2.8.2</span> The right tool for a small number of categories</h3>
-<p>When there are few groups and you have them all, put them in as fixed effects. You get a direct estimate for each category, no variance component to estimate badly, and no implied generalization to unobserved industries.</p>
-<div class="cell">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m_fixed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">ttl_exp</span> <span class="op">+</span> <span class="va">collgrad_f</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">industry</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">nlsw</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">m_fixed</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Analysis of Variance Table
-
-Response: wage
-                   Df Sum Sq Mean Sq F value    Pr(&gt;F)    
-ttl_exp             1   5121  5121.2 184.683 &lt; 2.2e-16 ***
-collgrad_f          1   4245  4244.6 153.069 &lt; 2.2e-16 ***
-factor(industry)   11   3246   295.1  10.643 &lt; 2.2e-16 ***
-Residuals        2218  61505    27.7                      
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
-</div>
-<p>This answers the question that actually matters here: after accounting for industry differences, does experience still predict wages? The <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> output tells you whether industry explains variation in wages, and the coefficients tell you which industries differ from the reference.</p>
-<p>You can also address the standard error problem directly, without a multilevel model, using cluster-robust standard errors. That approach corrects the inference for within-group correlation while making no attempt to estimate a group-level variance. With few clusters it is generally the safer choice, though it too has small-sample limitations, and Chapter 10 returns to it.</p>
-</section></section><section id="what-these-data-cannot-show-us" class="level2" data-number="2.9"><h2 data-number="2.9" class="anchored" data-anchor-id="what-these-data-cannot-show-us">
-<span class="header-section-number">2.9</span> What these data cannot show us</h2>
-<p><code>nlsw88</code> is, for our purposes, a single-level dataset. It has grouping variables, but none with enough units to support the models this book is about. That is worth saying plainly rather than forcing a demonstration the data cannot bear.</p>
-<p>To see clustering properly modeled we need data with many level-2 units and a genuine sample of them. The next chapter uses 7,185 students nested in 160 schools, which satisfies both conditions comfortably. Those 160 schools are a sample from the population of American high schools, so the between-school variance means something we can generalize.</p>
-<p>Two ideas from this chapter carry forward. The first is statistical: treating clustered observations as independent produces standard errors that are too small and p-values that are too optimistic. The second is conceptual and more interesting: a regression using all observations at once blends the comparison between two people in the same group with the comparison between two groups, and returns a single number that is cleanly neither. Multilevel modeling addresses both, provided you have the grouping structure to support it.</p>
+</section><section id="where-this-goes-next" class="level2" data-number="2.10"><h2 data-number="2.10" class="anchored" data-anchor-id="where-this-goes-next">
+<span class="header-section-number">2.10</span> Where this goes next</h2>
+<p>Every standard error in this chapter was computed as though these 50 families were 50 independent observations, which for these data is reasonable. But a great deal of social science data is not like that. Students sit in schools, patients in hospitals, employees in firms, and repeated measures inside people. When observations come in groups, treating them as independent produces standard errors that are too small and p-values that are too optimistic.</p>
+<p>It also raises a question ordinary regression cannot answer cleanly. A regression using everyone at once blends the comparison between two people in the same group with the comparison between two groups, and returns a single number that is neither.</p>
+<p>The next chapter takes up both problems, using 7,185 students nested within 160 schools.</p>
 
 
 <!-- -->
@@ -1208,278 +1193,194 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./01-getting-started.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started with R</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started with R and RStudio</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./03-null-model.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Null Model</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb41" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Review of Regression</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>**Data for this chapter:** <span class="in">`nlsw88.dta`</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data file needed</span></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>Copy <span class="in">`nlsw88.dta`</span> into this project folder before rendering. This is the same dataset you will use for the Module 2 content review.</span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>Multilevel models are an extension of regression, so it is worth making sure the foundation is solid before we build on it. This chapter reviews ordinary least squares regression and then, at the end, shows where it starts to fail. That failure is the reason the rest of this book exists.</span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>The data are 2,246 women from the 1988 round of the National Longitudinal Survey of Mature and Young Women, administered by the U.S. Bureau of Labor Statistics. Public data are available at <span class="ot">&lt;https://nlsinfo.org&gt;</span>.</span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
-<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
-<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>nlsw <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"nlsw88.dta"</span>)</span>
-<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(nlsw)</span>
-<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## Preparing the variables</span></span>
-<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>The dummy variables here are coded 1 for yes and 0 for no. Race is coded 1 for White, 2 for Black, and 3 for Other. That coding is a poor measurement approach from a QuantCrit standpoint, collapsing enormously different populations into a residual "other" category, but it was typical of 1988 and it is what the file contains. Keep the limitation in mind when interpreting anything involving race.</span>
-<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a>nlsw <span class="ot">&lt;-</span> nlsw <span class="sc">|&gt;</span></span>
-<span id="cb41-42"><a href="#cb41-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb41-43"><a href="#cb41-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">collgrad_f =</span> <span class="fu">factor</span>(collgrad, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb41-44"><a href="#cb41-44" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Not college grad"</span>, <span class="st">"College grad"</span>)),</span>
-<span id="cb41-45"><a href="#cb41-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">race_f     =</span> <span class="fu">factor</span>(race, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
-<span id="cb41-46"><a href="#cb41-46" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"White"</span>, <span class="st">"Black"</span>, <span class="st">"Other"</span>)),</span>
-<span id="cb41-47"><a href="#cb41-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">union_f    =</span> <span class="fu">factor</span>(union, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb41-48"><a href="#cb41-48" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Non-union"</span>, <span class="st">"Union"</span>))</span>
-<span id="cb41-49"><a href="#cb41-49" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb41-50"><a href="#cb41-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-51"><a href="#cb41-51" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nlsw<span class="sc">$</span>collgrad_f)</span>
-<span id="cb41-52"><a href="#cb41-52" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nlsw<span class="sc">$</span>race_f)</span>
-<span id="cb41-53"><a href="#cb41-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-54"><a href="#cb41-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-55"><a href="#cb41-55" aria-hidden="true" tabindex="-1"></a><span class="fu">### A note on missing data</span></span>
-<span id="cb41-56"><a href="#cb41-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-59"><a href="#cb41-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-60"><a href="#cb41-60" aria-hidden="true" tabindex="-1"></a>nlsw <span class="sc">|&gt;</span></span>
-<span id="cb41-61"><a href="#cb41-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">c</span>(wage, age, ttl_exp, collgrad, union, hours, industry),</span>
-<span id="cb41-62"><a href="#cb41-62" aria-hidden="true" tabindex="-1"></a>                   <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.)))) <span class="sc">|&gt;</span></span>
-<span id="cb41-63"><a href="#cb41-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"variable"</span>, <span class="at">values_to =</span> <span class="st">"n_missing"</span>)</span>
-<span id="cb41-64"><a href="#cb41-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-65"><a href="#cb41-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-66"><a href="#cb41-66" aria-hidden="true" tabindex="-1"></a>Some variables here have missing values, and <span class="in">`union`</span> in particular has a substantial number. Resist the urge to run <span class="in">`na.omit()`</span> on the whole dataset. That would drop any woman missing a response on *any* variable, including ones you are not using, and can silently discard hundreds of cases you had no reason to lose.</span>
-<span id="cb41-67"><a href="#cb41-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-68"><a href="#cb41-68" aria-hidden="true" tabindex="-1"></a><span class="in">`lm()`</span> handles this for you by dropping incomplete cases on a model-by-model basis. The consequence is that different models in this chapter may be fit on slightly different subsamples, which matters when you compare them. Watch the N in the results tables.</span>
-<span id="cb41-69"><a href="#cb41-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-70"><a href="#cb41-70" aria-hidden="true" tabindex="-1"></a><span class="fu">## A single predictor</span></span>
-<span id="cb41-71"><a href="#cb41-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-74"><a href="#cb41-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-75"><a href="#cb41-75" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(nlsw<span class="sc">$</span>wage)</span>
-<span id="cb41-76"><a href="#cb41-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-77"><a href="#cb41-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-80"><a href="#cb41-80" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-81"><a href="#cb41-81" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-wage</span></span>
-<span id="cb41-82"><a href="#cb41-82" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribution of hourly wages. Note the right skew."</span></span>
-<span id="cb41-83"><a href="#cb41-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-84"><a href="#cb41-84" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nlsw, <span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span></span>
-<span id="cb41-85"><a href="#cb41-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"#1a7a6e"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb41-86"><a href="#cb41-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Hourly Wages"</span>,</span>
-<span id="cb41-87"><a href="#cb41-87" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Hourly wage (1988 dollars)"</span>, <span class="at">y =</span> <span class="st">"Number of women"</span>) <span class="sc">+</span></span>
-<span id="cb41-88"><a href="#cb41-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb41-89"><a href="#cb41-89" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-90"><a href="#cb41-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-91"><a href="#cb41-91" aria-hidden="true" tabindex="-1"></a>Wages are right-skewed, which is nearly always true of earnings data. A small number of high earners pull the mean above the median. This is worth noticing before modeling, because it affects how well a linear model will describe the data and how much influence those high earners will have on the estimates.</span>
-<span id="cb41-92"><a href="#cb41-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-95"><a href="#cb41-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-96"><a href="#cb41-96" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> ttl_exp, <span class="at">data =</span> nlsw)</span>
-<span id="cb41-97"><a href="#cb41-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-98"><a href="#cb41-98" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span>
-<span id="cb41-99"><a href="#cb41-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-100"><a href="#cb41-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-101"><a href="#cb41-101" aria-hidden="true" tabindex="-1"></a>The coefficient on <span class="in">`ttl_exp`</span> is the estimated difference in hourly wage associated with one additional year of total work experience.</span>
-<span id="cb41-102"><a href="#cb41-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-103"><a href="#cb41-103" aria-hidden="true" tabindex="-1"></a>Three habits of careful interpretation are worth stating explicitly. First, this is an association, not an effect. Causality is a function of research design, not of analysis, and nobody randomly assigned these women to accumulate different amounts of work experience. Second, the intercept is the predicted wage when experience equals zero, which here describes a woman with no work history at all. That is a real if unusual case, so the intercept is at least interpretable. Third, $R^2$ is the proportion of variance in wages the model accounts for. It is not the probability the model is right, and a model with low $R^2$ can still contain a coefficient worth knowing about.</span>
-<span id="cb41-104"><a href="#cb41-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-105"><a href="#cb41-105" aria-hidden="true" tabindex="-1"></a><span class="fu">## Building up a series of models</span></span>
-<span id="cb41-106"><a href="#cb41-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-109"><a href="#cb41-109" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-110"><a href="#cb41-110" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> ttl_exp <span class="sc">+</span> age, <span class="at">data =</span> nlsw)</span>
-<span id="cb41-111"><a href="#cb41-111" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> ttl_exp <span class="sc">+</span> age <span class="sc">+</span> collgrad_f, <span class="at">data =</span> nlsw)</span>
-<span id="cb41-112"><a href="#cb41-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-113"><a href="#cb41-113" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m3)</span>
-<span id="cb41-114"><a href="#cb41-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-115"><a href="#cb41-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-116"><a href="#cb41-116" aria-hidden="true" tabindex="-1"></a>Watch what happens to the experience coefficient as age and college graduation enter the model. Experience and age are correlated, since older women have had more time to accumulate work history, so some of what the first model attributed to experience was partly age. This is what "controlling for" means in practice, and it is why a coefficient is a statement about a particular model rather than a property of the world.</span>
-<span id="cb41-117"><a href="#cb41-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-118"><a href="#cb41-118" aria-hidden="true" tabindex="-1"></a>Notice also how R handles the factor. It picks a reference category, here "Not college grad," and the coefficient describes the difference from that reference. Had <span class="in">`collgrad`</span> been a three-category variable left as 1, 2, 3, we would have gotten a single nonsensical slope instead of two comparisons.</span>
-<span id="cb41-119"><a href="#cb41-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-120"><a href="#cb41-120" aria-hidden="true" tabindex="-1"></a><span class="fu">## An interaction</span></span>
-<span id="cb41-121"><a href="#cb41-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-122"><a href="#cb41-122" aria-hidden="true" tabindex="-1"></a>Does the return to work experience depend on age?</span>
-<span id="cb41-123"><a href="#cb41-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-126"><a href="#cb41-126" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-127"><a href="#cb41-127" aria-hidden="true" tabindex="-1"></a>m4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> ttl_exp <span class="sc">*</span> age <span class="sc">+</span> collgrad_f, <span class="at">data =</span> nlsw)</span>
-<span id="cb41-128"><a href="#cb41-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-129"><a href="#cb41-129" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m4)</span>
-<span id="cb41-130"><a href="#cb41-130" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-131"><a href="#cb41-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-132"><a href="#cb41-132" aria-hidden="true" tabindex="-1"></a>The interaction term asks whether the wage return to an additional year of experience is different for older women than for younger women. When an interaction is present, the main effects are no longer "the effect of experience" in general. They are the effect of experience when age equals zero, which is not a meaningful case here. This is the standard argument for centering continuous predictors before interacting them:</span>
-<span id="cb41-133"><a href="#cb41-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-136"><a href="#cb41-136" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-137"><a href="#cb41-137" aria-hidden="true" tabindex="-1"></a>nlsw <span class="ot">&lt;-</span> nlsw <span class="sc">|&gt;</span></span>
-<span id="cb41-138"><a href="#cb41-138" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb41-139"><a href="#cb41-139" aria-hidden="true" tabindex="-1"></a>    <span class="at">age_c     =</span> age <span class="sc">-</span> <span class="fu">mean</span>(age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb41-140"><a href="#cb41-140" aria-hidden="true" tabindex="-1"></a>    <span class="at">ttl_exp_c =</span> ttl_exp <span class="sc">-</span> <span class="fu">mean</span>(ttl_exp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb41-141"><a href="#cb41-141" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb41-142"><a href="#cb41-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-143"><a href="#cb41-143" aria-hidden="true" tabindex="-1"></a>m5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> ttl_exp_c <span class="sc">*</span> age_c <span class="sc">+</span> collgrad_f, <span class="at">data =</span> nlsw)</span>
-<span id="cb41-144"><a href="#cb41-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-145"><a href="#cb41-145" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m5)</span>
-<span id="cb41-146"><a href="#cb41-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-147"><a href="#cb41-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-148"><a href="#cb41-148" aria-hidden="true" tabindex="-1"></a>The interaction coefficient is identical in the two models. What changes is the interpretability of everything else. In the centered version, the experience coefficient is the return to experience for a woman of average age, which is a quantity you can put in a sentence.</span>
-<span id="cb41-149"><a href="#cb41-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-152"><a href="#cb41-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-153"><a href="#cb41-153" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-interaction</span></span>
-<span id="cb41-154"><a href="#cb41-154" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Predicted wages across work experience, at three ages."</span></span>
-<span id="cb41-155"><a href="#cb41-155" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb41-156"><a href="#cb41-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-157"><a href="#cb41-157" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggeffects)</span>
-<span id="cb41-158"><a href="#cb41-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-159"><a href="#cb41-159" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ggpredict</span>(m5, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"ttl_exp_c"</span>, <span class="st">"age_c [-5, 0, 5]"</span>)))</span>
-<span id="cb41-160"><a href="#cb41-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-161"><a href="#cb41-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-162"><a href="#cb41-162" aria-hidden="true" tabindex="-1"></a><span class="fu">## Comparing the models</span></span>
-<span id="cb41-163"><a href="#cb41-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-166"><a href="#cb41-166" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-167"><a href="#cb41-167" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(</span>
-<span id="cb41-168"><a href="#cb41-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">"M1"</span> <span class="ot">=</span> m1, <span class="st">"M2"</span> <span class="ot">=</span> m2, <span class="st">"M3"</span> <span class="ot">=</span> m3, <span class="st">"M4: Interaction"</span> <span class="ot">=</span> m4),</span>
-<span id="cb41-169"><a href="#cb41-169" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"*"</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">"**"</span> <span class="ot">=</span> .<span class="dv">01</span>, <span class="st">"***"</span> <span class="ot">=</span> .<span class="dv">001</span>),</span>
-<span id="cb41-170"><a href="#cb41-170" aria-hidden="true" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">"nobs"</span>, <span class="st">"r.squared"</span>, <span class="st">"adj.r.squared"</span>, <span class="st">"aic"</span>, <span class="st">"bic"</span>),</span>
-<span id="cb41-171"><a href="#cb41-171" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"OLS models predicting hourly wages"</span></span>
-<span id="cb41-172"><a href="#cb41-172" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb41-173"><a href="#cb41-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-174"><a href="#cb41-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-175"><a href="#cb41-175" aria-hidden="true" tabindex="-1"></a>Older course materials used <span class="in">`stargazer`</span> for tables like this one. That package is no longer actively maintained and can fail with current versions of R, so we use <span class="in">`modelsummary`</span> instead. If you find <span class="in">`stargazer`</span> code in an old handout, <span class="in">`modelsummary()`</span> is the direct replacement.</span>
-<span id="cb41-176"><a href="#cb41-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-177"><a href="#cb41-177" aria-hidden="true" tabindex="-1"></a>Reading down the columns: does total experience matter as a predictor of women's hourly wages? Does that change once college status and age are taken into account? And how well do these models perform overall? The $R^2$ values will tell you that last one, and the honest answer is that wages are hard to predict from a handful of demographic variables.</span>
-<span id="cb41-178"><a href="#cb41-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-179"><a href="#cb41-179" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checking assumptions</span></span>
-<span id="cb41-180"><a href="#cb41-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-183"><a href="#cb41-183" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-184"><a href="#cb41-184" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-diagnostics</span></span>
-<span id="cb41-185"><a href="#cb41-185" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Residual diagnostics for the multiple regression model."</span></span>
-<span id="cb41-186"><a href="#cb41-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-187"><a href="#cb41-187" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb41-188"><a href="#cb41-188" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m3)</span>
-<span id="cb41-189"><a href="#cb41-189" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb41-190"><a href="#cb41-190" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-191"><a href="#cb41-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-192"><a href="#cb41-192" aria-hidden="true" tabindex="-1"></a>The residuals-versus-fitted plot checks linearity and constant variance. With right-skewed wage data you will typically see a fan shape, with residuals spreading out at higher predicted wages. The Q-Q plot will show heavy tails for the same reason. Neither is fatal, and both are worth reporting honestly rather than hiding.</span>
-<span id="cb41-193"><a href="#cb41-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-194"><a href="#cb41-194" aria-hidden="true" tabindex="-1"></a><span class="fu">## Where this breaks</span></span>
-<span id="cb41-195"><a href="#cb41-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-196"><a href="#cb41-196" aria-hidden="true" tabindex="-1"></a>Here is the assumption that does not appear on any of those diagnostic plots: independence of observations. Every standard error above was computed as though these 2,246 women were 2,246 independent pieces of information.</span>
-<span id="cb41-197"><a href="#cb41-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-198"><a href="#cb41-198" aria-hidden="true" tabindex="-1"></a>That assumption is often wrong. Women are not scattered randomly across the labor market. They work in particular industries and occupations, which differ in pay scales, unionization, and credential requirements. If two women in the same industry are more alike than two women drawn at random, the independence assumption fails and the standard errors above are too small.</span>
-<span id="cb41-199"><a href="#cb41-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-200"><a href="#cb41-200" aria-hidden="true" tabindex="-1"></a>So the natural next question is whether we should be fitting a multilevel model to account for it. Working through that question carefully is the point of this section, and the answer for these data is no.</span>
-<span id="cb41-201"><a href="#cb41-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-202"><a href="#cb41-202" aria-hidden="true" tabindex="-1"></a><span class="fu">## Is `industry` a clustering variable?</span></span>
-<span id="cb41-203"><a href="#cb41-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-204"><a href="#cb41-204" aria-hidden="true" tabindex="-1"></a>The mistake to avoid is treating any categorical variable as a potential clustering variable. Grouping structure is necessary but nowhere near sufficient. Start by counting.</span>
-<span id="cb41-205"><a href="#cb41-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-208"><a href="#cb41-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-209"><a href="#cb41-209" aria-hidden="true" tabindex="-1"></a>nlsw <span class="sc">|&gt;</span></span>
-<span id="cb41-210"><a href="#cb41-210" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(industry)) <span class="sc">|&gt;</span></span>
-<span id="cb41-211"><a href="#cb41-211" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(industry, <span class="at">name =</span> <span class="st">"n_women"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb41-212"><a href="#cb41-212" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n_women))</span>
-<span id="cb41-213"><a href="#cb41-213" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-214"><a href="#cb41-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-217"><a href="#cb41-217" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-218"><a href="#cb41-218" aria-hidden="true" tabindex="-1"></a>n_industries <span class="ot">&lt;-</span> <span class="fu">n_distinct</span>(nlsw<span class="sc">$</span>industry, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb41-219"><a href="#cb41-219" aria-hidden="true" tabindex="-1"></a>n_occupations <span class="ot">&lt;-</span> <span class="fu">n_distinct</span>(nlsw<span class="sc">$</span>occupation, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb41-220"><a href="#cb41-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-221"><a href="#cb41-221" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">industries =</span> n_industries, <span class="at">occupations =</span> n_occupations)</span>
-<span id="cb41-222"><a href="#cb41-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-223"><a href="#cb41-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-224"><a href="#cb41-224" aria-hidden="true" tabindex="-1"></a>That count is the whole problem. A random intercept does not estimate a set of group means. It estimates a **variance** describing how group means are spread around the overall average, and it does so from as many observations as there are groups. Estimating a variance from a handful of numbers is exactly as unreliable as it sounds. You would not report a standard deviation computed from nine cases and treat it as precise; the variance component here rests on no more information than that.</span>
-<span id="cb41-225"><a href="#cb41-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-226"><a href="#cb41-226" aria-hidden="true" tabindex="-1"></a>Common guidance puts the minimum somewhere around 30 to 50 level-2 units for a variance component to be estimated with reasonable precision, with roughly 20 as an absolute floor below which the estimate should not be trusted at all. These data are well below any of those thresholds.</span>
-<span id="cb41-227"><a href="#cb41-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-228"><a href="#cb41-228" aria-hidden="true" tabindex="-1"></a><span class="fu">### R will not stop you</span></span>
-<span id="cb41-229"><a href="#cb41-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-230"><a href="#cb41-230" aria-hidden="true" tabindex="-1"></a>The trap is that fitting it anyway produces output that looks completely normal.</span>
-<span id="cb41-231"><a href="#cb41-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-234"><a href="#cb41-234" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-235"><a href="#cb41-235" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb41-236"><a href="#cb41-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-237"><a href="#cb41-237" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb41-238"><a href="#cb41-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-239"><a href="#cb41-239" aria-hidden="true" tabindex="-1"></a><span class="co"># This runs. It should not be trusted.</span></span>
-<span id="cb41-240"><a href="#cb41-240" aria-hidden="true" tabindex="-1"></a>m_bad <span class="ot">&lt;-</span> <span class="fu">lmer</span>(wage <span class="sc">~</span> ttl_exp <span class="sc">+</span> collgrad_f <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> industry),</span>
-<span id="cb41-241"><a href="#cb41-241" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> nlsw, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb41-242"><a href="#cb41-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-243"><a href="#cb41-243" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_bad)</span>
-<span id="cb41-244"><a href="#cb41-244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-245"><a href="#cb41-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-246"><a href="#cb41-246" aria-hidden="true" tabindex="-1"></a>There is a variance component. There are standard errors. Nothing is flagged. You could paste this into a manuscript and no software would object.</span>
-<span id="cb41-247"><a href="#cb41-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-248"><a href="#cb41-248" aria-hidden="true" tabindex="-1"></a>But that industry-level variance was estimated from a single-digit number of industries, and the uncertainty around it is enormous. Confidence intervals make the situation visible:</span>
-<span id="cb41-249"><a href="#cb41-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-252"><a href="#cb41-252" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-253"><a href="#cb41-253" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb41-254"><a href="#cb41-254" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb41-255"><a href="#cb41-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-256"><a href="#cb41-256" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m_bad, <span class="at">parm =</span> <span class="st">"theta_"</span>, <span class="at">method =</span> <span class="st">"profile"</span>)</span>
-<span id="cb41-257"><a href="#cb41-257" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-258"><a href="#cb41-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-259"><a href="#cb41-259" aria-hidden="true" tabindex="-1"></a>The interval on the group-level standard deviation is wide, and often runs nearly to zero. That is the model telling you it cannot pin this quantity down. Reporting the point estimate without that interval would imply a precision the data cannot support.</span>
-<span id="cb41-260"><a href="#cb41-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-261"><a href="#cb41-261" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
-<span id="cb41-262"><a href="#cb41-262" aria-hidden="true" tabindex="-1"></a><span class="fu">## The question is not "are there groups?"</span></span>
-<span id="cb41-263"><a href="#cb41-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-264"><a href="#cb41-264" aria-hidden="true" tabindex="-1"></a>Almost every dataset has categorical variables. Sex, treatment condition, region, program type, marital status. None of those are clustering variables for multilevel modeling, and treating them as such is the single most common error students make when first choosing a model.</span>
-<span id="cb41-265"><a href="#cb41-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-266"><a href="#cb41-266" aria-hidden="true" tabindex="-1"></a>Before writing <span class="in">`(1 | something)`</span>, ask three questions:</span>
-<span id="cb41-267"><a href="#cb41-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-268"><a href="#cb41-268" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**How many units are there?** Fewer than about 20 and the variance component is not estimable with any precision. Between 20 and 50, proceed but report uncertainty honestly. Above 50 you are on solid ground.</span>
-<span id="cb41-269"><a href="#cb41-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-270"><a href="#cb41-270" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Are these units a sample from a larger population you want to generalize to?** This is the conceptual heart of it. Random effects treat groups as draws from a population of groups, so that your conclusions extend to schools or classrooms or hospitals you did not observe. The 160 schools in the next chapter are a sample of schools. Nine industries are not a sample of industries; they are the complete set of categories the survey used. There is no broader population of industries you are inferring toward.</span>
-<span id="cb41-271"><a href="#cb41-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-272"><a href="#cb41-272" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Do you want to estimate group-specific effects, or the variation among groups?** If you want to know how each category differs, that is a fixed effect. If you want to know how much categories vary as a class, and to generalize beyond the ones you have, that is a random effect.</span>
-<span id="cb41-273"><a href="#cb41-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-274"><a href="#cb41-274" aria-hidden="true" tabindex="-1"></a>Sex has two categories. Treatment has two. Neither is a clustering variable, no matter how the data are grouped.</span>
-<span id="cb41-275"><a href="#cb41-275" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb41-276"><a href="#cb41-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-277"><a href="#cb41-277" aria-hidden="true" tabindex="-1"></a><span class="fu">### The right tool for a small number of categories</span></span>
-<span id="cb41-278"><a href="#cb41-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-279"><a href="#cb41-279" aria-hidden="true" tabindex="-1"></a>When there are few groups and you have them all, put them in as fixed effects. You get a direct estimate for each category, no variance component to estimate badly, and no implied generalization to unobserved industries.</span>
-<span id="cb41-280"><a href="#cb41-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-283"><a href="#cb41-283" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-284"><a href="#cb41-284" aria-hidden="true" tabindex="-1"></a>m_fixed <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> ttl_exp <span class="sc">+</span> collgrad_f <span class="sc">+</span> <span class="fu">factor</span>(industry), <span class="at">data =</span> nlsw)</span>
-<span id="cb41-285"><a href="#cb41-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-286"><a href="#cb41-286" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m_fixed)</span>
-<span id="cb41-287"><a href="#cb41-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-288"><a href="#cb41-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-289"><a href="#cb41-289" aria-hidden="true" tabindex="-1"></a>This answers the question that actually matters here: after accounting for industry differences, does experience still predict wages? The <span class="in">`anova()`</span> output tells you whether industry explains variation in wages, and the coefficients tell you which industries differ from the reference.</span>
-<span id="cb41-290"><a href="#cb41-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-291"><a href="#cb41-291" aria-hidden="true" tabindex="-1"></a>You can also address the standard error problem directly, without a multilevel model, using cluster-robust standard errors. That approach corrects the inference for within-group correlation while making no attempt to estimate a group-level variance. With few clusters it is generally the safer choice, though it too has small-sample limitations, and Chapter 10 returns to it.</span>
-<span id="cb41-292"><a href="#cb41-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-293"><a href="#cb41-293" aria-hidden="true" tabindex="-1"></a><span class="fu">## What these data cannot show us</span></span>
-<span id="cb41-294"><a href="#cb41-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-295"><a href="#cb41-295" aria-hidden="true" tabindex="-1"></a><span class="in">`nlsw88`</span> is, for our purposes, a single-level dataset. It has grouping variables, but none with enough units to support the models this book is about. That is worth saying plainly rather than forcing a demonstration the data cannot bear.</span>
-<span id="cb41-296"><a href="#cb41-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-297"><a href="#cb41-297" aria-hidden="true" tabindex="-1"></a>To see clustering properly modeled we need data with many level-2 units and a genuine sample of them. The next chapter uses 7,185 students nested in 160 schools, which satisfies both conditions comfortably. Those 160 schools are a sample from the population of American high schools, so the between-school variance means something we can generalize.</span>
-<span id="cb41-298"><a href="#cb41-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-299"><a href="#cb41-299" aria-hidden="true" tabindex="-1"></a>Two ideas from this chapter carry forward. The first is statistical: treating clustered observations as independent produces standard errors that are too small and p-values that are too optimistic. The second is conceptual and more interesting: a regression using all observations at once blends the comparison between two people in the same group with the comparison between two groups, and returns a single number that is cleanly neither. Multilevel modeling addresses both, provided you have the grouping structure to support it.</span>
+<div class="sourceCode" id="cb25" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Review of Linear Regression</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>**Data for this chapter:** <span class="in">`food.csv`</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data file needed</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>Copy <span class="in">`food.csv`</span> into this project folder before rendering.</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>Multilevel models are an extension of regression, so it is worth making sure the foundation is solid before building on it. This chapter reviews simple and multiple regression, interactions, and how to present a series of models. The data come from the reading: 50 families, with information on food expenditures, income, children, and whether the family keeps a garden.</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load a few packages</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a><span class="in">`ggplot2`</span> is part of the tidyverse, so loading it separately is not strictly necessary, but naming it explicitly makes clear that we plan to plot. <span class="in">`broom`</span> tidies model output into data frames. <span class="in">`skimr`</span> gives a compact and readable summary of a dataset.</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Input the food dataset</span></span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>food <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"food.csv"</span>)</span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(food)</span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a><span class="in">`view(food)`</span> opens the data in a spreadsheet-style window, which is useful while exploring but does nothing in a rendered document, so it is left out here.</span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data cleaning and coding</span></span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>Three functions do the work. The first two come from <span class="in">`dplyr`</span>, and the third from base R.</span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>**`rename()`** changes the name of any variable in your dataset. The formula is <span class="in">`newname = oldname`</span>. Here we are getting rid of capital letters and putting underscores between words, which makes everything easier to type and read. (Notice that the original file has a typo in one of the column names. Renaming is a good moment to quietly fix that.)</span>
+<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a>**`mutate()`** is another function I use constantly. It creates a new variable based on a transformation of an existing one. Here I take the renamed <span class="in">`have_garden`</span> and create <span class="in">`have_garden_fac`</span>, equal to the old variable but converted to a factor, which is what <span class="in">`as_factor()`</span> does. Now R recognizes that "Yes" and "No" are two levels of a categorical variable, which it can use in frequency tables, regression models, and so on.</span>
+<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a>**`na.omit()`** should come with a warning label. It removes any row in a dataset with missing data, which is the same idea as listwise deletion. We use it here because the original <span class="in">`food`</span> dataset had an extra row that was entirely missing, an error rather than a real response. But run it on a dataset that has genuine missingness and *any* observation missing on *any* variable will be dropped, including variables you were not planning to use. The nice part is that we still have <span class="in">`food`</span> alongside <span class="in">`food.clean`</span>, so we can always look back and see how many observations went away.</span>
+<span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a>food.clean <span class="ot">&lt;-</span> food <span class="sc">%&gt;%</span></span>
+<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(.,</span>
+<span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a>         <span class="at">food_consumption =</span> FOODCONSUMPTION,</span>
+<span id="cb25-58"><a href="#cb25-58" aria-hidden="true" tabindex="-1"></a>         <span class="at">family_income =</span> FAMILYINCOME,</span>
+<span id="cb25-59"><a href="#cb25-59" aria-hidden="true" tabindex="-1"></a>         <span class="at">num_children =</span> NUMCHULDREN,</span>
+<span id="cb25-60"><a href="#cb25-60" aria-hidden="true" tabindex="-1"></a>         <span class="at">have_garden =</span> HAVEGARDEN) <span class="sc">%&gt;%</span></span>
+<span id="cb25-61"><a href="#cb25-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(.,</span>
+<span id="cb25-62"><a href="#cb25-62" aria-hidden="true" tabindex="-1"></a>         <span class="at">have_garden_fac =</span> <span class="fu">as_factor</span>(have_garden)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-63"><a href="#cb25-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
+<span id="cb25-64"><a href="#cb25-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-65"><a href="#cb25-65" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(food.clean)</span>
+<span id="cb25-66"><a href="#cb25-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-67"><a href="#cb25-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-70"><a href="#cb25-70" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-71"><a href="#cb25-71" aria-hidden="true" tabindex="-1"></a><span class="co"># How many observations did we actually lose?</span></span>
+<span id="cb25-72"><a href="#cb25-72" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(food); <span class="fu">nrow</span>(food.clean)</span>
+<span id="cb25-73"><a href="#cb25-73" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-74"><a href="#cb25-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-75"><a href="#cb25-75" aria-hidden="true" tabindex="-1"></a>Running that comparison every time you clean a dataset is a habit worth forming. A drop of one row is what we expected here. A drop of forty would mean something very different, and you want to find that out now rather than in the results section.</span>
+<span id="cb25-76"><a href="#cb25-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-77"><a href="#cb25-77" aria-hidden="true" tabindex="-1"></a><span class="fu">## Use `skim` for a nice summary</span></span>
+<span id="cb25-78"><a href="#cb25-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-81"><a href="#cb25-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-82"><a href="#cb25-82" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(food.clean)</span>
+<span id="cb25-83"><a href="#cb25-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-84"><a href="#cb25-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-85"><a href="#cb25-85" aria-hidden="true" tabindex="-1"></a><span class="in">`skim()`</span> splits the output by variable type, so numeric variables get means and quartiles while factors get counts of each level. It also shows a completion rate per variable, which is a quick check for missingness.</span>
+<span id="cb25-86"><a href="#cb25-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-87"><a href="#cb25-87" aria-hidden="true" tabindex="-1"></a><span class="fu">## A simple linear regression: does income predict food consumption?</span></span>
+<span id="cb25-88"><a href="#cb25-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-91"><a href="#cb25-91" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-92"><a href="#cb25-92" aria-hidden="true" tabindex="-1"></a>foodreg1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(food_consumption <span class="sc">~</span> family_income, <span class="at">data =</span> food.clean)</span>
+<span id="cb25-93"><a href="#cb25-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-94"><a href="#cb25-94" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(foodreg1)</span>
+<span id="cb25-95"><a href="#cb25-95" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-96"><a href="#cb25-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-97"><a href="#cb25-97" aria-hidden="true" tabindex="-1"></a>The short answer is yes. Family income significantly predicts food expenditures, and the two are positively related. For each additional dollar of income, a family would be expected to spend an additional six cents on food. The relationship is highly significant. The adjusted $R^2$ is about .56, meaning family income by itself explains roughly 56 percent of the variation in food expenditures.</span>
+<span id="cb25-98"><a href="#cb25-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-99"><a href="#cb25-99" aria-hidden="true" tabindex="-1"></a>A note on language while we are here. "Predicts" is the right word; "causes" is not. Nobody assigned these families their incomes, and plenty of things that travel with income could be doing the work. Regression describes association, and research design is what licenses causal claims.</span>
+<span id="cb25-100"><a href="#cb25-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-101"><a href="#cb25-101" aria-hidden="true" tabindex="-1"></a><span class="fu">## What about kids? Do things change when we account for them?</span></span>
+<span id="cb25-102"><a href="#cb25-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-105"><a href="#cb25-105" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-106"><a href="#cb25-106" aria-hidden="true" tabindex="-1"></a>foodreg2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(food_consumption <span class="sc">~</span> family_income <span class="sc">+</span> num_children, <span class="at">data =</span> food.clean)</span>
+<span id="cb25-107"><a href="#cb25-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-108"><a href="#cb25-108" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(foodreg2)</span>
+<span id="cb25-109"><a href="#cb25-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-110"><a href="#cb25-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-111"><a href="#cb25-111" aria-hidden="true" tabindex="-1"></a>Kids make a big difference too. For each additional child, we would expect a family to spend about $826 more per year on food. Because <span class="in">`family_income`</span> is also in the model, we can say this holds while controlling for family income. Another way to put it: take two families with the same income, and the one with one more child is predicted to spend roughly $827 more per year.</span>
+<span id="cb25-112"><a href="#cb25-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-113"><a href="#cb25-113" aria-hidden="true" tabindex="-1"></a>Notice also that the estimate for <span class="in">`family_income`</span> has not changed much, from about .06 down to .05. The adjusted $R^2$ rose from .56 to .60, so adding number of children explained about four percent more of the variation.</span>
+<span id="cb25-114"><a href="#cb25-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-115"><a href="#cb25-115" aria-hidden="true" tabindex="-1"></a>That stability in the income coefficient is itself informative. When a coefficient moves substantially after adding a variable, the two predictors are entangled and the first model was attributing to income something that belonged elsewhere. When it barely moves, as here, the two are telling you fairly separate things.</span>
+<span id="cb25-116"><a href="#cb25-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-117"><a href="#cb25-117" aria-hidden="true" tabindex="-1"></a><span class="fu">## Now, what about families who have a garden?</span></span>
+<span id="cb25-118"><a href="#cb25-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-121"><a href="#cb25-121" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-122"><a href="#cb25-122" aria-hidden="true" tabindex="-1"></a>foodreg3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(food_consumption <span class="sc">~</span> family_income <span class="sc">+</span> num_children <span class="sc">+</span> have_garden_fac,</span>
+<span id="cb25-123"><a href="#cb25-123" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> food.clean)</span>
+<span id="cb25-124"><a href="#cb25-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-125"><a href="#cb25-125" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(foodreg3)</span>
+<span id="cb25-126"><a href="#cb25-126" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-127"><a href="#cb25-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-128"><a href="#cb25-128" aria-hidden="true" tabindex="-1"></a>Short answer: no, not after controlling for family income and number of children. As a side note, we could test whether gardens relate to food expenditures on their own by running a simple regression with only <span class="in">`have_garden_fac`</span> as the predictor. But here, owning a garden does not appear significantly related to food expenditures once the other two variables are in the model.</span>
+<span id="cb25-129"><a href="#cb25-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-130"><a href="#cb25-130" aria-hidden="true" tabindex="-1"></a>Notice how R handled the factor. It picked a reference category and reports the coefficient as a difference from it. This is exactly why converting to a factor mattered. Left as a raw number, a two-category variable would give the same answer, but a three-category variable would have produced one nonsensical slope instead of two comparisons.</span>
+<span id="cb25-131"><a href="#cb25-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-132"><a href="#cb25-132" aria-hidden="true" tabindex="-1"></a><span class="fu">## Does the number of children moderate the income-food relationship?</span></span>
+<span id="cb25-133"><a href="#cb25-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-136"><a href="#cb25-136" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-137"><a href="#cb25-137" aria-hidden="true" tabindex="-1"></a>foodreg4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(food_consumption <span class="sc">~</span> family_income <span class="sc">+</span> num_children <span class="sc">+</span></span>
+<span id="cb25-138"><a href="#cb25-138" aria-hidden="true" tabindex="-1"></a>                 family_income<span class="sc">:</span>num_children,</span>
+<span id="cb25-139"><a href="#cb25-139" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> food.clean)</span>
+<span id="cb25-140"><a href="#cb25-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-141"><a href="#cb25-141" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(foodreg4)</span>
+<span id="cb25-142"><a href="#cb25-142" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-143"><a href="#cb25-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-144"><a href="#cb25-144" aria-hidden="true" tabindex="-1"></a>Now for the fancy stuff. The first three models assumed the predictors were additive rather than interactive. That means the relationship between <span class="in">`num_children`</span> and food expenditures is the same regardless of income, and the relationship between <span class="in">`family_income`</span> and food is the same regardless of how many children a family has.</span>
+<span id="cb25-145"><a href="#cb25-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-146"><a href="#cb25-146" aria-hidden="true" tabindex="-1"></a>That is fine as a first step, but another hypothesis is that these two variables *interact*, or moderate one another, so that the slope of one depends on the value of the other. We specify an interaction with the <span class="in">`:`</span> symbol, and we include both main effects as well as the interaction term. If the interaction estimate is significant, some moderation is likely happening.</span>
+<span id="cb25-147"><a href="#cb25-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-148"><a href="#cb25-148" aria-hidden="true" tabindex="-1"></a>In this case we do not have enough evidence to say an interaction exists. Power is likely an issue as well. We have only 50 observations, and interaction effects are notoriously underpowered, meaning you usually need a much larger sample to detect a true effect with any regularity.</span>
+<span id="cb25-149"><a href="#cb25-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-150"><a href="#cb25-150" aria-hidden="true" tabindex="-1"></a>That last point deserves emphasis, because it is the difference between two very different sentences. "There is no interaction" is a claim about the world. "We did not detect an interaction with 50 families" is a claim about this study. Only the second one is supported here.</span>
+<span id="cb25-151"><a href="#cb25-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-152"><a href="#cb25-152" aria-hidden="true" tabindex="-1"></a><span class="fu">## Organizing your results</span></span>
+<span id="cb25-153"><a href="#cb25-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-154"><a href="#cb25-154" aria-hidden="true" tabindex="-1"></a>Last thing: let's make the results presentable. Reporting four models one <span class="in">`summary()`</span> at a time is unreadable, and a single comparison table is how this belongs in a paper. We named our models along the way (<span class="in">`foodreg1`</span>, <span class="in">`foodreg2`</span>, and so on), so collecting them is easy.</span>
+<span id="cb25-155"><a href="#cb25-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-158"><a href="#cb25-158" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-159"><a href="#cb25-159" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb25-160"><a href="#cb25-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-161"><a href="#cb25-161" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb25-162"><a href="#cb25-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-163"><a href="#cb25-163" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb25-164"><a href="#cb25-164" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Income"</span>        <span class="ot">=</span> foodreg1,</span>
+<span id="cb25-165"><a href="#cb25-165" aria-hidden="true" tabindex="-1"></a>  <span class="st">"+ Children"</span>    <span class="ot">=</span> foodreg2,</span>
+<span id="cb25-166"><a href="#cb25-166" aria-hidden="true" tabindex="-1"></a>  <span class="st">"+ Garden"</span>      <span class="ot">=</span> foodreg3,</span>
+<span id="cb25-167"><a href="#cb25-167" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Interaction"</span>   <span class="ot">=</span> foodreg4</span>
+<span id="cb25-168"><a href="#cb25-168" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-169"><a href="#cb25-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-170"><a href="#cb25-170" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(</span>
+<span id="cb25-171"><a href="#cb25-171" aria-hidden="true" tabindex="-1"></a>  models,</span>
+<span id="cb25-172"><a href="#cb25-172" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"*"</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">"**"</span> <span class="ot">=</span> .<span class="dv">01</span>, <span class="st">"***"</span> <span class="ot">=</span> .<span class="dv">001</span>),</span>
+<span id="cb25-173"><a href="#cb25-173" aria-hidden="true" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">"nobs"</span>, <span class="st">"r.squared"</span>, <span class="st">"adj.r.squared"</span>),</span>
+<span id="cb25-174"><a href="#cb25-174" aria-hidden="true" tabindex="-1"></a>  <span class="at">fmt =</span> <span class="dv">2</span>,</span>
+<span id="cb25-175"><a href="#cb25-175" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Regression models predicting annual food expenditures"</span></span>
+<span id="cb25-176"><a href="#cb25-176" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-177"><a href="#cb25-177" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-178"><a href="#cb25-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-179"><a href="#cb25-179" aria-hidden="true" tabindex="-1"></a>One more useful trick. <span class="in">`modelsummary()`</span> will write the table straight out to a file, and Word opens both HTML and .docx directly. So you can generate a formatted table, open it in Word, and paste it into your paper.</span>
+<span id="cb25-180"><a href="#cb25-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-183"><a href="#cb25-183" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-184"><a href="#cb25-184" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb25-185"><a href="#cb25-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-186"><a href="#cb25-186" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models, <span class="at">output =</span> <span class="st">"food_models.docx"</span>,</span>
+<span id="cb25-187"><a href="#cb25-187" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"*"</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">"**"</span> <span class="ot">=</span> .<span class="dv">01</span>, <span class="st">"***"</span> <span class="ot">=</span> .<span class="dv">001</span>))</span>
+<span id="cb25-188"><a href="#cb25-188" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-189"><a href="#cb25-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-190"><a href="#cb25-190" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb25-191"><a href="#cb25-191" aria-hidden="true" tabindex="-1"></a><span class="fu">## A note on `stargazer`</span></span>
+<span id="cb25-192"><a href="#cb25-192" aria-hidden="true" tabindex="-1"></a>The demonstration video uses the <span class="in">`stargazer`</span> package for this table, with an <span class="in">`out = "test.html"`</span> option that does the same job. <span class="in">`stargazer`</span> is no longer actively maintained and can fail with current versions of R, so this book uses <span class="in">`modelsummary`</span> instead. The idea is identical, and <span class="in">`modelsummary()`</span> also handles the multilevel models we fit later, which <span class="in">`stargazer`</span> does not.</span>
+<span id="cb25-193"><a href="#cb25-193" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb25-194"><a href="#cb25-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-195"><a href="#cb25-195" aria-hidden="true" tabindex="-1"></a><span class="fu">## Where this goes next</span></span>
+<span id="cb25-196"><a href="#cb25-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-197"><a href="#cb25-197" aria-hidden="true" tabindex="-1"></a>Every standard error in this chapter was computed as though these 50 families were 50 independent observations, which for these data is reasonable. But a great deal of social science data is not like that. Students sit in schools, patients in hospitals, employees in firms, and repeated measures inside people. When observations come in groups, treating them as independent produces standard errors that are too small and p-values that are too optimistic.</span>
+<span id="cb25-198"><a href="#cb25-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-199"><a href="#cb25-199" aria-hidden="true" tabindex="-1"></a>It also raises a question ordinary regression cannot answer cleanly. A regression using everyone at once blends the comparison between two people in the same group with the comparison between two groups, and returns a single number that is neither.</span>
+<span id="cb25-200"><a href="#cb25-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-201"><a href="#cb25-201" aria-hidden="true" tabindex="-1"></a>The next chapter takes up both problems, using 7,185 students nested within 160 schools.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

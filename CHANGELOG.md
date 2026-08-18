@@ -117,6 +117,48 @@ Logged as chapters are executed for the first time. Each entry is a place where 
 
 **Also added:** A callout on the general hazard. `tibble()` accepting a `NULL` column silently means a variable can go missing far from where the error appears. The habit worth teaching is to look upstream at where the object was created, and to run `str()` on unfamiliar objects before building data frames from them.
 
+### Chapters 1–3 aligned to the actual demonstration handouts
+
+Dr. Broda supplied the three MLM demonstration handouts (`Video Links and Code Demos/`). All three chapters were rewritten so the book follows the code students see in the videos. Elaboration was added freely; the code spine was not changed.
+
+**Chapter 1** now follows `MLM_Module_1_Handout.Qmd`: tidyverse/psych/haven, `read_dta("descriptive_gss.dta")`, `glimpse()`, `str(gss$satjob7)`, `describe(gss, fast = TRUE)`, `hist(gss$educ)`, `hist(gss$sex, freq = FALSE)`. Base R `hist()` rather than ggplot, matching the handout.
+
+An earlier draft had used the *MVS* Module 1 handout, which covers similar ground on the same dataset but with different variables (`marital`, `childs`) and ggplot rather than base graphics. Corrected.
+
+Elaboration added: what `haven_labelled` means; why the `sex` histogram is uninformative and `table()` is the better tool for a two-category variable; the categorical-variables-stored-as-numbers callout; common error messages.
+
+**Chapter 2** now follows `Module_2_Handout.Rmd` and uses `food.csv`, not `nlsw88.dta`. This was the largest correction: the chapter had been built on entirely different data. Now: tidyverse/ggplot2/broom/skimr, the `rename` → `mutate` → `na.omit` cleaning pipeline, `skim()`, and the four-model sequence `foodreg1` through `foodreg4` ending in the income × children interaction.
+
+Dr. Broda's substantive explanations were preserved: the warning label on `na.omit()`, the mutation joke, the interpretation of each coefficient, and the power caveat on the interaction.
+
+Elaboration added: a row-count check before and after `na.omit()`; why a stable coefficient across models is informative; the distinction between "there is no interaction" and "we did not detect one with 50 families"; the association-versus-causation note.
+
+**Chapter 3** now follows `MLM_Week_3_Handout.Rmd` more closely. Switched from `psych::describe()` to `Hmisc::describe()` with `label()`, adopted the `summary()` before-and-after-factors sequence, and uses the `as_factor()` then `levels()` assignment idiom with Public/Parochial, Male/Female, Non-Minority/Minority. The by-hand ICC now uses the handout's literal `8.553/(8.553 + 39.148)`.
+
+Elaboration added: an `Hmisc`/`dplyr` masking warning; why level-assignment order matters and how to check it; extracting variance components programmatically as a safer alternative alongside the by-hand version; the fixed intercept versus grand mean comparison.
+
+**Deviation, deliberate and flagged:** `rand()` appears as `ranova()`, with a callout noting the rename. Chapter 2 uses `modelsummary` rather than `stargazer`, with a callout explaining why and noting the video shows `stargazer`.
+
+**Relocated:** the "few categories do not make a clustering variable" material, written for the old nlsw88 chapter 2, now lives in Chapter 3 as a callout at the point where `(1 | schoolid)` is introduced. That is a better home, since it answers the question a student has exactly when they first meet the syntax.
+
+### Superseded: Chapter 1 rebuilt on the MVS Module 1 handout
+
+**Changed:** Chapter 1 now follows the Module 1 demonstration handout rather than the version drafted from scratch. Dataset moves from `hsb2.dta` to `descriptive_gss.dta` (General Social Survey 2012, N = 2,765), using `marital`, `sex`, and `childs`.
+
+**Structure follows the handout:** load packages with the note about the Packages menu, load data with the note about the Import Dataset button, `View()` and `glimpse()`, `str()` for variable labels, `describe(fast = TRUE)`, `table()` for categorical variables, `geom_bar()`, then the labelled version with `labs()`.
+
+**Additions kept from the earlier draft:**
+
+- The categorical-variables-stored-as-numbers trap, which lands better on these data than on the previous version, since `marital` and `sex` arrive from Stata as `haven_labelled` and `describe()` reports meaningless means for both
+- `as_factor()` for converting labelled Stata variables, with a manual `factor()` fallback
+- A `geom_bar()` versus `geom_histogram()` section: bar counts distinct values, correct for `childs`; histogram bins, correct for continuous measures. Includes a demonstration of the information lost by binning a count
+- Faceting for group comparison on a shared axis
+- The pipe, and the common error messages
+
+**One practical fix:** `View()` opens an interactive window and does nothing useful during a render. It appears in the chapter as the handout has it, but in an `eval: false` chunk with a callout explaining why. Left live, it would produce a confusing failure.
+
+**Consequence:** Chapter 1 no longer matches the Module 1 content review, which uses `hsb2.dta`. Documented in the README alongside the Chapter 4 mismatch.
+
 ### Chapter 2 — reworked the clustering section
 
 **Problem:** The chapter used `industry` in `nlsw88` as its example of a clustering variable. With fewer than a dozen industries, this taught the wrong lesson, and it reinforced a misconception students arrive with: that any categorical variable is a candidate for `(1 | group)`.

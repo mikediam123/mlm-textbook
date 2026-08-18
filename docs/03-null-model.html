@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
-<title>Applied Multilevel Modeling in R - 3&nbsp; The Null Model</title>
+<title>Applied Multilevel Modeling in R - 3&nbsp; Intro to MLM and the Null Model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -112,7 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-null-model.html">Two-Level Models</a></li><li class="breadcrumb-item"><a href="./03-null-model.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Null Model</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-null-model.html">Two-Level Models</a></li><li class="breadcrumb-item"><a href="./03-null-model.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -171,13 +171,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started with R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started with R and RStudio</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-regression-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -194,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-null-model.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Null Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -283,21 +283,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#loading-packages-and-data" id="toc-loading-packages-and-data" class="nav-link active" data-scroll-target="#loading-packages-and-data"><span class="header-section-number">3.1</span> Loading packages and data</a></li>
-  <li><a href="#looking-at-the-data-before-modeling-it" id="toc-looking-at-the-data-before-modeling-it" class="nav-link" data-scroll-target="#looking-at-the-data-before-modeling-it"><span class="header-section-number">3.2</span> Looking at the data before modeling it</a></li>
-  <li><a href="#exploring-the-outcome" id="toc-exploring-the-outcome" class="nav-link" data-scroll-target="#exploring-the-outcome"><span class="header-section-number">3.3</span> Exploring the outcome</a></li>
-  <li><a href="#running-a-null-model" id="toc-running-a-null-model" class="nav-link" data-scroll-target="#running-a-null-model"><span class="header-section-number">3.4</span> Running a null model</a></li>
-  <li><a href="#post-estimation-calculating-the-icc" id="toc-post-estimation-calculating-the-icc" class="nav-link" data-scroll-target="#post-estimation-calculating-the-icc"><span class="header-section-number">3.5</span> Post-estimation: calculating the ICC</a></li>
-  <li><a href="#is-the-clustering-statistically-detectable" id="toc-is-the-clustering-statistically-detectable" class="nav-link" data-scroll-target="#is-the-clustering-statistically-detectable"><span class="header-section-number">3.6</span> Is the clustering statistically detectable?</a></li>
-  <li><a href="#comparing-to-ordinary-regression" id="toc-comparing-to-ordinary-regression" class="nav-link" data-scroll-target="#comparing-to-ordinary-regression"><span class="header-section-number">3.7</span> Comparing to ordinary regression</a></li>
-  <li><a href="#interpreting-the-fixed-intercept" id="toc-interpreting-the-fixed-intercept" class="nav-link" data-scroll-target="#interpreting-the-fixed-intercept"><span class="header-section-number">3.8</span> Interpreting the fixed intercept</a></li>
+<li><a href="#load-some-packages-to-help-with-the-analysis-and-data-management" id="toc-load-some-packages-to-help-with-the-analysis-and-data-management" class="nav-link active" data-scroll-target="#load-some-packages-to-help-with-the-analysis-and-data-management"><span class="header-section-number">3.1</span> Load some packages to help with the analysis and data management</a></li>
+  <li><a href="#load-in-the-data-and-use-glimpse-to-summarize-the-structure" id="toc-load-in-the-data-and-use-glimpse-to-summarize-the-structure" class="nav-link" data-scroll-target="#load-in-the-data-and-use-glimpse-to-summarize-the-structure"><span class="header-section-number">3.2</span> Load in the data and use <code>glimpse</code> to summarize the structure</a></li>
+  <li>
+<a href="#quick-data-cleaning-and-coding-tips" id="toc-quick-data-cleaning-and-coding-tips" class="nav-link" data-scroll-target="#quick-data-cleaning-and-coding-tips"><span class="header-section-number">3.3</span> Quick data cleaning and coding tips</a>
+  <ul class="collapse">
+<li><a href="#the-summary-command-from-base-r-is-a-quick-and-easy-way-to-explore-a-new-dataset" id="toc-the-summary-command-from-base-r-is-a-quick-and-easy-way-to-explore-a-new-dataset" class="nav-link" data-scroll-target="#the-summary-command-from-base-r-is-a-quick-and-easy-way-to-explore-a-new-dataset"><span class="header-section-number">3.3.1</span> The <code>summary</code> command from base R is a quick and easy way to explore a new dataset</a></li>
+  <li><a href="#lets-give-some-variables-a-label" id="toc-lets-give-some-variables-a-label" class="nav-link" data-scroll-target="#lets-give-some-variables-a-label"><span class="header-section-number">3.3.2</span> Let’s give some variables a label</a></li>
+  <li><a href="#lets-create-a-factor-version-of-sector-and-label-its-values" id="toc-lets-create-a-factor-version-of-sector-and-label-its-values" class="nav-link" data-scroll-target="#lets-create-a-factor-version-of-sector-and-label-its-values"><span class="header-section-number">3.3.3</span> Let’s create a factor version of <code>sector</code> and label its values</a></li>
+  <li><a href="#run-summary-again-and-notice-how-it-handles-factors" id="toc-run-summary-again-and-notice-how-it-handles-factors" class="nav-link" data-scroll-target="#run-summary-again-and-notice-how-it-handles-factors"><span class="header-section-number">3.3.4</span> Run <code>summary</code> again and notice how it handles factors</a></li>
+  </ul>
+</li>
+  <li><a href="#exploring-our-outcome-math-achievement" id="toc-exploring-our-outcome-math-achievement" class="nav-link" data-scroll-target="#exploring-our-outcome-math-achievement"><span class="header-section-number">3.4</span> Exploring our outcome, math achievement</a></li>
+  <li><a href="#running-a-null-model" id="toc-running-a-null-model" class="nav-link" data-scroll-target="#running-a-null-model"><span class="header-section-number">3.5</span> Running a null model</a></li>
+  <li><a href="#post-estimation-task-calculate-the-icc" id="toc-post-estimation-task-calculate-the-icc" class="nav-link" data-scroll-target="#post-estimation-task-calculate-the-icc"><span class="header-section-number">3.6</span> Post-estimation task: calculate the ICC</a></li>
+  <li><a href="#using-lmertest-to-evaluate-random-effects" id="toc-using-lmertest-to-evaluate-random-effects" class="nav-link" data-scroll-target="#using-lmertest-to-evaluate-random-effects"><span class="header-section-number">3.7</span> Using <code>lmerTest</code> to evaluate random effects</a></li>
+  <li><a href="#always-interesting-compare-our-mlm-to-a-regular-regression" id="toc-always-interesting-compare-our-mlm-to-a-regular-regression" class="nav-link" data-scroll-target="#always-interesting-compare-our-mlm-to-a-regular-regression"><span class="header-section-number">3.8</span> Always interesting: compare our MLM to a regular regression</a></li>
   <li><a href="#what-comes-next" id="toc-what-comes-next" class="nav-link" data-scroll-target="#what-comes-next"><span class="header-section-number">3.9</span> What comes next</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOURUSERNAME/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
-<span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Null Model</span>
+<span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
@@ -312,27 +320,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 </header><p><strong>Data for this chapter:</strong> <code>hsbmerged.csv</code></p>
-<p>This chapter uses a larger version of the High School and Beyond dataset, with 7,185 students nested within 160 schools. Students are nested within schools, which is the simplest structure that multilevel modeling is built for. This is the same dataset that Garson uses in Chapter 3, so you can recreate his analysis alongside this one.</p>
-<section id="loading-packages-and-data" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="loading-packages-and-data">
-<span class="header-section-number">3.1</span> Loading packages and data</h2>
+<p>This week we use a larger version of the HSB dataset from 1988. Same structure as before: students nested within schools. This is the same dataset Garson uses in Chapter 3, so you can recreate what he has as well.</p>
+<section id="load-some-packages-to-help-with-the-analysis-and-data-management" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="load-some-packages-to-help-with-the-analysis-and-data-management">
+<span class="header-section-number">3.1</span> Load some packages to help with the analysis and data management</h2>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.5.2</code></pre>
+</div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://hbiostat.org/R/Hmisc/">Hmisc</a></span><span class="op">)</span>     <span class="co"># label()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'Hmisc' was built under R version 4.5.2</code></pre>
+</div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'lme4' was built under R version 4.5.2</code></pre>
 </div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/runehaubo/lmerTestR">lmerTest</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/runehaubo/lmerTestR">lmerTest</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'lmerTest' was built under R version 4.5.2</code></pre>
 </div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/">performance</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'performance' was built under R version 4.5.2</code></pre>
+</div>
+<p><code>Hmisc</code> is new here. We want it for two things: <code><a href="https://rdrr.io/pkg/Hmisc/man/label.html">label()</a></code>, which attaches a description to a variable, and its own version of <code><a href="https://rdrr.io/pkg/Hmisc/man/describe.html">describe()</a></code>, which reports more detail than the one in <code>psych</code>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Package conflicts
 </div>
 </div>
+<div class="callout-body-container callout-body">
+<p><code>Hmisc</code> and <code>dplyr</code> both define functions named <code>summarize</code> and <code>src</code>. Loading <code>Hmisc</code> after the tidyverse means its versions win, and you may see masking messages at load. If a tidyverse function starts behaving oddly, call it explicitly as <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">dplyr::summarize()</a></code>.</p>
+</div>
+</div>
+</section><section id="load-in-the-data-and-use-glimpse-to-summarize-the-structure" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="load-in-the-data-and-use-glimpse-to-summarize-the-structure">
+<span class="header-section-number">3.2</span> Load in the data and use <code>glimpse</code> to summarize the structure</h2>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hsb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"hsbmerged.csv"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hsb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"hsbmerged.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">hsb</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -351,116 +377,175 @@ $ himinty  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 $ meanses  &lt;dbl&gt; -0.428, -0.428, -0.428, -0.428, -0.428, -0.428, -0.428, -0.42…</code></pre>
 </div>
 </div>
-</section><section id="looking-at-the-data-before-modeling-it" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="looking-at-the-data-before-modeling-it">
-<span class="header-section-number">3.2</span> Looking at the data before modeling it</h2>
-<p>The <code><a href="https://rdrr.io/pkg/psych/man/describe.html">describe()</a></code> function from the <code>psych</code> package gives a quick, high-level summary of every variable in a dataset. It is also useful for your own records. You can paste the output into a document and you have a rough codebook to share with collaborators.</p>
+<p>7,185 students across 160 schools. <code>mathach</code> is our outcome, a standardized math achievement score, and <code>schoolid</code> identifies the school each student attends. That second variable is what makes multilevel modeling possible here.</p>
+</section><section id="quick-data-cleaning-and-coding-tips" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="quick-data-cleaning-and-coding-tips">
+<span class="header-section-number">3.3</span> Quick data cleaning and coding tips</h2>
+<section id="the-summary-command-from-base-r-is-a-quick-and-easy-way-to-explore-a-new-dataset" class="level3" data-number="3.3.1"><h3 data-number="3.3.1" class="anchored" data-anchor-id="the-summary-command-from-base-r-is-a-quick-and-easy-way-to-explore-a-new-dataset">
+<span class="header-section-number">3.3.1</span> The <code>summary</code> command from base R is a quick and easy way to explore a new dataset</h3>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="va">hsb</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">hsb</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         vars    n    mean      sd  median trimmed     mad     min     max
-schoolid    1 7185 5277.90 2499.58 5192.00 5254.46 3192.04 1224.00 9586.00
-minority    2 7185    0.27    0.45    0.00    0.22    0.00    0.00    1.00
-female      3 7185    0.53    0.50    1.00    0.54    0.00    0.00    1.00
-ses         4 7185    0.00    0.78    0.00    0.02    0.85   -3.76    2.69
-mathach     5 7185   12.75    6.88   13.13   12.91    8.12   -2.83   24.99
-size        6 7185 1056.86  604.17 1016.00 1011.71  661.24  100.00 2713.00
-sector      7 7185    0.49    0.50    0.00    0.49    0.00    0.00    1.00
-pracad      8 7185    0.53    0.25    0.53    0.53    0.27    0.00    1.00
-disclim     9 7185   -0.13    0.94   -0.23   -0.16    0.94   -2.42    2.76
-himinty    10 7185    0.28    0.45    0.00    0.23    0.00    0.00    1.00
-meanses    11 7185    0.01    0.41    0.04    0.02    0.47   -1.19    0.83
-           range  skew kurtosis    se
-schoolid 8362.00  0.11    -1.25 29.49
-minority    1.00  1.01    -0.98  0.01
-female      1.00 -0.11    -1.99  0.01
-ses         6.45 -0.23    -0.38  0.01
-mathach    27.82 -0.18    -0.92  0.08
-size     2613.00  0.57    -0.36  7.13
-sector      1.00  0.03    -2.00  0.01
-pracad      1.00  0.16    -0.89  0.00
-disclim     5.17  0.24    -0.16  0.01
-himinty     1.00  0.98    -1.04  0.01
-meanses     2.02 -0.27    -0.48  0.00</code></pre>
+<pre><code>    schoolid       minority          female            ses            
+ Min.   :1224   Min.   :0.0000   Min.   :0.0000   Min.   :-3.7580000  
+ 1st Qu.:3020   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:-0.5380000  
+ Median :5192   Median :0.0000   Median :1.0000   Median : 0.0020000  
+ Mean   :5278   Mean   :0.2747   Mean   :0.5282   Mean   : 0.0001434  
+ 3rd Qu.:7342   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.: 0.6020000  
+ Max.   :9586   Max.   :1.0000   Max.   :1.0000   Max.   : 2.6920000  
+    mathach            size          sector           pracad      
+ Min.   :-2.832   Min.   : 100   Min.   :0.0000   Min.   :0.0000  
+ 1st Qu.: 7.275   1st Qu.: 565   1st Qu.:0.0000   1st Qu.:0.3200  
+ Median :13.131   Median :1016   Median :0.0000   Median :0.5300  
+ Mean   :12.748   Mean   :1057   Mean   :0.4931   Mean   :0.5345  
+ 3rd Qu.:18.317   3rd Qu.:1436   3rd Qu.:1.0000   3rd Qu.:0.7000  
+ Max.   :24.993   Max.   :2713   Max.   :1.0000   Max.   :1.0000  
+    disclim           himinty        meanses         
+ Min.   :-2.4160   Min.   :0.00   Min.   :-1.188000  
+ 1st Qu.:-0.8170   1st Qu.:0.00   1st Qu.:-0.317000  
+ Median :-0.2310   Median :0.00   Median : 0.038000  
+ Mean   :-0.1319   Mean   :0.28   Mean   : 0.006138  
+ 3rd Qu.: 0.4600   3rd Qu.:1.00   3rd Qu.: 0.333000  
+ Max.   : 2.7560   Max.   :1.00   Max.   : 0.831000  </code></pre>
 </div>
 </div>
-<p>Two variables deserve attention before we go further. <code>mathach</code> is our outcome, a standardized math achievement score. <code>schoolid</code> identifies the school each student attends, and it is what defines the clustering in these data.</p>
-<p><code>sector</code> is coded 0 for public schools and 1 for Catholic schools. R has read it as a number, which is fine for arithmetic but misleading for interpretation. It is worth converting it into a factor with meaningful labels, so that model output and plots say “Public” and “Catholic” rather than 0 and 1.</p>
+<p>Summary gives you a quick, high-level look at every variable in a dataset. It is also useful for your own records: copy and paste it into a Word file and you have something to refer back to.</p>
+<p>Read it critically, though. Every column here gets a mean and quartiles, including <code>sector</code>, <code>female</code>, and <code>minority</code>, which are categories rather than quantities. The mean of <code>sector</code> is the proportion of students in one sector, which is mildly useful, but its quartiles are meaningless. This is the same issue from Chapter 1, and we are about to fix it.</p>
+</section><section id="lets-give-some-variables-a-label" class="level3" data-number="3.3.2"><h3 data-number="3.3.2" class="anchored" data-anchor-id="lets-give-some-variables-a-label">
+<span class="header-section-number">3.3.2</span> Let’s give some variables a label</h3>
+<p>Now, data cleaning and coding. We will apply labels to two things: the variables themselves, and the values within a given variable. Both are good practice for keeping your data readable.</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hsb</span> <span class="op">&lt;-</span> <span class="va">hsb</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>sector_f <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">sector</span>,</span>
-<span>                           levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>                           labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Public"</span>, <span class="st">"Catholic"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/label.html">label</a></span><span class="op">(</span><span class="va">hsb</span><span class="op">$</span><span class="va">mathach</span><span class="op">)</span> <span class="op">=</span> <span class="st">"Std. Math Score"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/label.html">label</a></span><span class="op">(</span><span class="va">hsb</span><span class="op">$</span><span class="va">sector</span><span class="op">)</span> <span class="op">=</span> <span class="st">"School Sector"</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">hsb</span><span class="op">$</span><span class="va">sector_f</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">hsb</span><span class="op">$</span><span class="va">sector</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> 'labelled' num [1:7185] 0 0 0 0 0 0 0 0 0 0 ...
+ - attr(*, "label")= chr "School Sector"</code></pre>
+</div>
+</div>
+<p>The <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> output now shows the label attached to the variable. This carries through to <code><a href="https://rdrr.io/pkg/Hmisc/man/describe.html">Hmisc::describe()</a></code> output and to some plotting functions, which means a table six months from now still says “Std. Math Score” rather than <code>mathach</code>.</p>
+</section><section id="lets-create-a-factor-version-of-sector-and-label-its-values" class="level3" data-number="3.3.3"><h3 data-number="3.3.3" class="anchored" data-anchor-id="lets-create-a-factor-version-of-sector-and-label-its-values">
+<span class="header-section-number">3.3.3</span> Let’s create a factor version of <code>sector</code> and label its values</h3>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hsb.clean</span> <span class="op">&lt;-</span> <span class="va">hsb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
+<span>         sector.factor <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">sector</span><span class="op">)</span>,</span>
+<span>         female.factor <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">female</span><span class="op">)</span>,</span>
+<span>         minority.factor <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">minority</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">hsb.clean</span><span class="op">$</span><span class="va">sector.factor</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Public"</span>, <span class="st">"Parochial"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">hsb.clean</span><span class="op">$</span><span class="va">female.factor</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Male"</span>, <span class="st">"Female"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">hsb.clean</span><span class="op">$</span><span class="va">minority.factor</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Non-Minority"</span>, <span class="st">"Minority"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">hsb.clean</span><span class="op">$</span><span class="va">sector.factor</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Factor w/ 2 levels "Public","Parochial": 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+</div>
+</div>
+<p>Two steps here, and it is worth separating them. <code><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor()</a></code> converts the numeric variable into a factor, so R treats it as a category. Assigning to <code><a href="https://rdrr.io/r/base/levels.html">levels()</a></code> then renames those categories from 0 and 1 into words.</p>
+<p>Order matters when you assign levels this way. The names are applied in the order R already has the levels in, so <code>c("Public", "Parochial")</code> assumes 0 comes first. Always check the result:</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">hsb.clean</span><span class="op">$</span><span class="va">sector.factor</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-  Public Catholic 
-    3642     3543 </code></pre>
+   Public Parochial 
+     3642      3543 </code></pre>
 </div>
 </div>
-</section><section id="exploring-the-outcome" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="exploring-the-outcome">
-<span class="header-section-number">3.3</span> Exploring the outcome</h2>
+<p>3,642 public and 3,543 Parochial. If those counts had come out reversed from what you expected, the labels went on backwards, and every result from here forward would be silently mislabeled.</p>
+</section><section id="run-summary-again-and-notice-how-it-handles-factors" class="level3" data-number="3.3.4"><h3 data-number="3.3.4" class="anchored" data-anchor-id="run-summary-again-and-notice-how-it-handles-factors">
+<span class="header-section-number">3.3.4</span> Run <code>summary</code> again and notice how it handles factors</h3>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="va">hsb</span><span class="op">$</span><span class="va">mathach</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">hsb.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   vars    n  mean   sd median trimmed  mad   min   max range  skew kurtosis
-X1    1 7185 12.75 6.88  13.13   12.91 8.12 -2.83 24.99 27.82 -0.18    -0.92
-     se
-X1 0.08</code></pre>
+<pre><code>    schoolid       minority          female            ses            
+ Min.   :1224   Min.   :0.0000   Min.   :0.0000   Min.   :-3.7580000  
+ 1st Qu.:3020   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:-0.5380000  
+ Median :5192   Median :0.0000   Median :1.0000   Median : 0.0020000  
+ Mean   :5278   Mean   :0.2747   Mean   :0.5282   Mean   : 0.0001434  
+ 3rd Qu.:7342   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.: 0.6020000  
+ Max.   :9586   Max.   :1.0000   Max.   :1.0000   Max.   : 2.6920000  
+    mathach            size          sector           pracad      
+ Min.   :-2.832   Min.   : 100   Min.   :0.0000   Min.   :0.0000  
+ 1st Qu.: 7.275   1st Qu.: 565   1st Qu.:0.0000   1st Qu.:0.3200  
+ Median :13.131   Median :1016   Median :0.0000   Median :0.5300  
+ Mean   :12.748   Mean   :1057   Mean   :0.4931   Mean   :0.5345  
+ 3rd Qu.:18.317   3rd Qu.:1436   3rd Qu.:1.0000   3rd Qu.:0.7000  
+ Max.   :24.993   Max.   :2713   Max.   :1.0000   Max.   :1.0000  
+    disclim           himinty        meanses            sector.factor 
+ Min.   :-2.4160   Min.   :0.00   Min.   :-1.188000   Public   :3642  
+ 1st Qu.:-0.8170   1st Qu.:0.00   1st Qu.:-0.317000   Parochial:3543  
+ Median :-0.2310   Median :0.00   Median : 0.038000                   
+ Mean   :-0.1319   Mean   :0.28   Mean   : 0.006138                   
+ 3rd Qu.: 0.4600   3rd Qu.:1.00   3rd Qu.: 0.333000                   
+ Max.   : 2.7560   Max.   :1.00   Max.   : 0.831000                   
+ female.factor     minority.factor
+ Male  :3390   Non-Minority:5211  
+ Female:3795   Minority    :1974  
+                                  
+                                  
+                                  
+                                  </code></pre>
 </div>
 </div>
+<p>Compare this to the earlier output. The factor versions of the variables no longer report meaningless means and quartiles. Instead they report counts per category, which is what you actually want to know. Same data, same function, but R now understands what kind of variable it is looking at.</p>
+</section></section><section id="exploring-our-outcome-math-achievement" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="exploring-our-outcome-math-achievement">
+<span class="header-section-number">3.4</span> Exploring our outcome, math achievement</h2>
+<p>Now let’s look at <code>mathach</code> using the <code>describe</code> function from the <code>Hmisc</code> package:</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">hsb</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mathach</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">30</span>, fill <span class="op">=</span> <span class="st">"#1a7a6e"</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Distribution of Math Achievement Scores"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"N = 7,185 students from the High School and Beyond Survey"</span>,</span>
-<span>    x <span class="op">=</span> <span class="st">"Standardized Math Achievement Score"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"Number of students"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/describe.html">describe</a></span><span class="op">(</span><span class="va">hsb.clean</span><span class="op">$</span><span class="va">mathach</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>hsb.clean$mathach : Std. Math Score 
+       n  missing distinct     Info     Mean  pMedian      Gmd      .05 
+    7185        0     6031        1    12.75    12.85     7.91    1.210 
+     .10      .25      .50      .75      .90      .95 
+   3.301    7.275   13.131   18.317   22.016   23.123 
+
+lowest : -2.832 -2.83  -2.721 -2.658 -2.657, highest: 24.677 24.707 24.812 24.869 24.993</code></pre>
+</div>
+</div>
+<p><code><a href="https://rdrr.io/pkg/Hmisc/man/describe.html">Hmisc::describe()</a></code> reports more than the <code>psych</code> version: distinct values, several percentiles, and the five lowest and highest observations. That last part is a quiet outlier check. If the highest values were 24, 25, and 9999, you would see it here.</p>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">hsb.clean</span><span class="op">$</span><span class="va">mathach</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Distribution of Math Achievement Scores"</span>,</span>
+<span>     sub <span class="op">=</span> <span class="st">"N = 7,185. Students from the High School and Beyond Survey (1988)."</span>,</span>
+<span>     xlab <span class="op">=</span> <span class="st">"Standardized Math Achievement Score"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-mathach" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="03-null-model_files/figure-html/fig-mathach-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.1: Distribution of math achievement scores in the High School and Beyond sample.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;3.1: Distribution of math achievement scores.</figcaption></figure>
 </div>
 </div>
 </div>
-<p>A histogram of the whole sample tells us about students in general, but it hides the thing we actually care about. The question that motivates multilevel modeling is whether <em>schools</em> differ from one another. One quick way to see this is to plot school averages rather than individual scores.</p>
+<p>This histogram describes students in general, which is useful but hides the thing we actually care about. The question motivating multilevel modeling is whether <em>schools</em> differ. One quick way to see it is to plot school averages instead of individual scores:</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hsb</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>school_mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mathach</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">school_mean</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">25</span>, fill <span class="op">=</span> <span class="st">"#1a7a6e"</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"School Average Math Achievement"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"Each observation is one of 160 schools"</span>,</span>
-<span>    x <span class="op">=</span> <span class="st">"School mean math achievement"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"Number of schools"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">school_means</span> <span class="op">&lt;-</span> <span class="va">hsb.clean</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">schoolid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>school_mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mathach</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">school_means</span><span class="op">$</span><span class="va">school_mean</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"School Average Math Achievement"</span>,</span>
+<span>     sub <span class="op">=</span> <span class="st">"Each observation is one of 160 schools."</span>,</span>
+<span>     xlab <span class="op">=</span> <span class="st">"School mean math achievement"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-schoolmeans" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="03-null-model_files/figure-html/fig-schoolmeans-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.2: Average math achievement varies considerably across the 160 schools.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;3.2: Average math achievement across the 160 schools.</figcaption></figure>
 </div>
 </div>
 </div>
-<p>If every school had the same average, this second histogram would be a single narrow spike. It is not. That spread is the phenomenon the null model is about to quantify.</p>
-</section><section id="running-a-null-model" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="running-a-null-model">
-<span class="header-section-number">3.4</span> Running a null model</h2>
-<p>The null model, also called the unconditional model or the empty model, has no predictors at all. It only asks how the total variation in math achievement divides into two pieces: variation between schools, and variation among students within the same school.</p>
-<p>The <code>(1 | schoolid)</code> term is what makes this a multilevel model. It tells <code><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer()</a></code> to estimate a separate intercept for each school, drawn from a distribution whose variance we want to estimate.</p>
+<p>If every school had the same average, this would be a single narrow spike. It is not, and that spread is exactly what the null model is about to quantify.</p>
+</section><section id="running-a-null-model" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="running-a-null-model">
+<span class="header-section-number">3.5</span> Running a null model</h2>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_null</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">mathach</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">schoolid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">hsb</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.null</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">mathach</span> <span class="op">~</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">hsb.clean</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_null</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.null</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
   method [lmerModLmerTest]
-Formula: mathach ~ 1 + (1 | schoolid)
-   Data: hsb
+Formula: mathach ~ (1 | schoolid)
+   Data: hsb.clean
 
       AIC       BIC    logLik -2*log(L)  df.resid 
   47121.8   47142.4  -23557.9   47115.8      7182 
@@ -482,6 +567,27 @@ Fixed effects:
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
+<p>The <code>(1|schoolid)</code> term is what makes this multilevel. It tells <code><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer()</a></code> to estimate a separate intercept for each school, drawn from a distribution whose variance we want to estimate.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What makes <code>schoolid</code> a clustering variable, and what does not
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is the most common early mistake, so it is worth stopping on. Nearly every dataset has categorical variables, and almost none of them belong inside <code>(1 | ... )</code>. Before writing that term, ask three questions.</p>
+<p><strong>How many units are there?</strong> A random intercept does not estimate a set of group means. It estimates a <em>variance</em>, and it does so from as many observations as there are groups. Estimating a variance from nine numbers is exactly as unreliable as it sounds. Common guidance wants 30 to 50 level-2 units for reasonable precision, with roughly 20 as a floor below which the estimate should not be trusted. We have 160 schools, which is comfortable.</p>
+<p><strong>Are these units a sample from a population you want to generalize to?</strong> This is the conceptual heart of it. Random effects treat groups as draws from a population of groups, so your conclusions extend to schools you did not observe. These 160 schools are a sample of American high schools. By contrast, a variable like <code>sector</code> has two categories that are not a sample of anything; they are the complete set. There is no larger population of sectors to infer toward.</p>
+<p><strong>Do you want group-specific effects, or the variation among groups?</strong> If you want to know how each category differs, that is a fixed effect: put it on the right side of the <code>~</code> like any other predictor. If you want to know how much groups vary as a class, and to generalize beyond the ones you have, that is a random effect.</p>
+<p>So in this dataset, <code>schoolid</code> goes in the random part and <code>sector</code>, <code>female</code>, and <code>minority</code> go in the fixed part. Sex has two categories. Treatment condition has two. Region usually has four. None of those are clustering variables, however naturally the data seem to group by them.</p>
+<p>R will not stop you from writing <code>(1 | sector)</code>. It will return a variance component and standard errors and flag nothing at all. The number will simply not mean what you think it means.</p>
+</div>
+</div>
+<p>Two numbers in the Random effects section carry the story. The variance associated with <code>schoolid</code> is the between-school variance, written <span class="math inline">\tau_{00}</span>. The Residual variance is the within-school, student-level variance, written <span class="math inline">\sigma^2</span>.</p>
+<p>You also get AIC and BIC, two very common information criterion measures used to assess model fit.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -492,47 +598,53 @@ Why <code>REML = FALSE</code>?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer()</a></code> can estimate a model two ways, and the choice affects the variance components you are about to interpret.</p>
-<p><strong>Restricted maximum likelihood (REML)</strong>, the default, produces less biased estimates of variance components, particularly when the number of level-2 units is small. If your goal is to report a variance or an ICC as accurately as possible, REML has the edge.</p>
-<p><strong>Maximum likelihood (ML)</strong>, which <code>REML = FALSE</code> requests, is required whenever you want to compare two models that differ in their <em>fixed</em> effects. REML likelihoods computed under different fixed-effect specifications are not comparable, so an <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> comparison of REML-fitted models with different predictors is not valid. R will usually refit them for you, but silently, and it is better to know why.</p>
-<p>This book uses ML throughout, for two reasons. Model comparison happens constantly in these chapters, and using one estimator everywhere means the numbers on one page match the numbers on the next. With 160 schools here, and reasonable numbers of clusters in most course datasets, the difference between ML and REML variance estimates is small.</p>
-<p>Where the number of level-2 units is genuinely small, chapter 11 works with just 17 schools, REML is worth considering for the final reported model. Say which you used either way.</p>
+<p><code><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer()</a></code> can estimate a model two ways. Restricted maximum likelihood (REML), the default, gives less biased variance components, especially with few level-2 units. Maximum likelihood (ML), which <code>REML = FALSE</code> requests, is required whenever you compare models that differ in their <em>fixed</em> effects, because REML likelihoods are not comparable across different fixed-effect specifications.</p>
+<p>This book uses ML throughout so that numbers stay consistent from one page to the next and model comparisons are always valid. With 160 schools, the difference between the two is small.</p>
 </div>
 </div>
-<p>Two numbers in the Random effects section carry the story. The variance associated with <code>schoolid</code> is the between-school variance, often written <span class="math inline">\tau_{00}</span>. The Residual variance is the within-school, student-level variance, written <span class="math inline">\sigma^2</span>.</p>
-</section><section id="post-estimation-calculating-the-icc" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="post-estimation-calculating-the-icc">
-<span class="header-section-number">3.5</span> Post-estimation: calculating the ICC</h2>
-<p>The intraclass correlation coefficient is the proportion of total variance that lies between schools:</p>
+</section><section id="post-estimation-task-calculate-the-icc" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="post-estimation-task-calculate-the-icc">
+<span class="header-section-number">3.6</span> Post-estimation task: calculate the ICC</h2>
+<p>These commands are run after any kind of MLM. They are called post-estimation commands because they require that the model be saved in memory. If you do something else and then try to run them, you will likely get an error.</p>
+<p>The intraclass correlation is the proportion of total variance lying between schools:</p>
 <p><span class="math display">\text{ICC} = \frac{\tau_{00}}{\tau_{00} + \sigma^2}</span></p>
-<p>It is worth computing this by hand at least once, because the formula is the concept. You can pull the variance components directly out of the fitted model rather than typing them in, which avoids transcription errors:</p>
+<p>Here’s a quick and easy way to get our friend the ICC:</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">vc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/nlme/man/VarCorr.html">VarCorr</a></span><span class="op">(</span><span class="va">model_null</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">null.ICC</span> <span class="op">&lt;-</span> <span class="fl">8.553</span><span class="op">/</span><span class="op">(</span><span class="fl">8.553</span> <span class="op">+</span> <span class="fl">39.148</span><span class="op">)</span></span>
+<span><span class="va">null.ICC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1793044</code></pre>
+</div>
+</div>
+<p>Roughly 18 percent of the variation in math achievement is between schools. Put another way, two students from the same school are noticeably more similar to each other than two students drawn at random from the full sample. That is the condition that makes ordinary regression standard errors too small.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Pulling the numbers out rather than typing them
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Typing the variance components by hand works and makes the formula visible, which is why it is worth doing once. For your own analyses it is safer to extract them from the model, since a transposed digit produces a plausible-looking wrong answer:</p>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">vc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/nlme/man/VarCorr.html">VarCorr</a></span><span class="op">(</span><span class="va">model.null</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">tau00</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="va">vcov</span><span class="op">[</span><span class="va">vc</span><span class="op">$</span><span class="va">grp</span> <span class="op">==</span> <span class="st">"schoolid"</span><span class="op">]</span></span>
+<span><span class="va">tau00</span>  <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="va">vcov</span><span class="op">[</span><span class="va">vc</span><span class="op">$</span><span class="va">grp</span> <span class="op">==</span> <span class="st">"schoolid"</span><span class="op">]</span></span>
 <span><span class="va">sigma2</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="va">vcov</span><span class="op">[</span><span class="va">vc</span><span class="op">$</span><span class="va">grp</span> <span class="op">==</span> <span class="st">"Residual"</span><span class="op">]</span></span>
 <span></span>
-<span><span class="va">icc_by_hand</span> <span class="op">&lt;-</span> <span class="va">tau00</span> <span class="op">/</span> <span class="op">(</span><span class="va">tau00</span> <span class="op">+</span> <span class="va">sigma2</span><span class="op">)</span></span>
-<span><span class="va">icc_by_hand</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">tau00</span> <span class="op">/</span> <span class="op">(</span><span class="va">tau00</span> <span class="op">+</span> <span class="va">sigma2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1793109</code></pre>
 </div>
 </div>
-<p>The <code>performance</code> package will do the same calculation for you, and you should get the same answer:</p>
-<div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/performance/reference/icc.html">icc</a></span><span class="op">(</span><span class="va">model_null</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># Intraclass Correlation Coefficient
-
-    Adjusted ICC: 0.179
-  Unadjusted ICC: 0.179</code></pre>
+<p>The <code>performance</code> package will also compute it directly with <code>performance::icc(model.null)</code>.</p>
 </div>
 </div>
-<p>An ICC of roughly this size tells us that a meaningful share of the variation in math achievement is between schools rather than within them. It also tells us something practical: students in the same school are more similar to one another than two students picked at random from the full sample, which is exactly the condition that makes ordinary regression standard errors too small.</p>
-</section><section id="is-the-clustering-statistically-detectable" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="is-the-clustering-statistically-detectable">
-<span class="header-section-number">3.6</span> Is the clustering statistically detectable?</h2>
-<p>The <code><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova()</a></code> function from <code>lmerTest</code> performs a likelihood ratio test comparing our model to one without the random intercept.</p>
+</section><section id="using-lmertest-to-evaluate-random-effects" class="level2" data-number="3.7"><h2 data-number="3.7" class="anchored" data-anchor-id="using-lmertest-to-evaluate-random-effects">
+<span class="header-section-number">3.7</span> Using <code>lmerTest</code> to evaluate random effects</h2>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova</a></span><span class="op">(</span><span class="va">model_null</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova</a></span><span class="op">(</span><span class="va">model.null</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ANOVA-like table for random-effects: Single term deletions
 
@@ -545,20 +657,34 @@ mathach ~ 1 + (1 | schoolid)
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>A significant result here says that allowing schools to have their own intercepts improves the fit enough to justify the extra parameter. Read this alongside the ICC rather than instead of it. The test tells you whether school-level variance is distinguishable from zero, while the ICC tells you how much of it there is. With 7,185 students you have enough power to detect quite small amounts of clustering, so a significant test on its own is weak evidence that multilevel modeling matters substantively.</p>
-</section><section id="comparing-to-ordinary-regression" class="level2" data-number="3.7"><h2 data-number="3.7" class="anchored" data-anchor-id="comparing-to-ordinary-regression">
-<span class="header-section-number">3.7</span> Comparing to ordinary regression</h2>
-<p>It is always worth seeing what we would have gotten by ignoring the clustering entirely.</p>
+<p>This is a likelihood ratio test comparing our model to one without the random intercept. A significant result says that letting schools have their own intercepts improves fit enough to justify the extra parameter.</p>
+<p>Read it alongside the ICC rather than instead of it. The test tells you whether school-level variance is distinguishable from zero; the ICC tells you how much of it there is. With 7,185 students you have enough power to detect quite small amounts of clustering, so significance alone is weak evidence that multilevel modeling matters substantively.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">rand()</a></code> became <code><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova()</a></code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Older handouts call <code><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">lmerTest::rand()</a></code>. The function was renamed to <code><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova()</a></code> several versions ago. The old name may still work but is no longer the documented one.</p>
+</div>
+</div>
+</section><section id="always-interesting-compare-our-mlm-to-a-regular-regression" class="level2" data-number="3.8"><h2 data-number="3.8" class="anchored" data-anchor-id="always-interesting-compare-our-mlm-to-a-regular-regression">
+<span class="header-section-number">3.8</span> Always interesting: compare our MLM to a regular regression</h2>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_ols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mathach</span> <span class="op">~</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">hsb</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.regular</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mathach</span> <span class="op">~</span> <span class="cn">NULL</span>, data <span class="op">=</span> <span class="va">hsb.clean</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_ols</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.regular</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = mathach ~ 1, data = hsb)
+lm(formula = mathach ~ NULL, data = hsb.clean)
 
 Residuals:
+Std. Math Score 
      Min       1Q   Median       3Q      Max 
 -15.5799  -5.4729   0.3831   5.5691  12.2451 
 
@@ -571,18 +697,14 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Residual standard error: 6.878 on 7184 degrees of freedom</code></pre>
 </div>
 </div>
-<p>The intercept estimates are similar, which is expected in a null model. What differs is the standard error, and that difference is the whole practical argument for multilevel modeling. Ignoring clustering treats 7,185 students as 7,185 independent pieces of information, when in reality students within a school share a great deal. The result is standard errors that are too small and p-values that are too optimistic.</p>
-</section><section id="interpreting-the-fixed-intercept" class="level2" data-number="3.8"><h2 data-number="3.8" class="anchored" data-anchor-id="interpreting-the-fixed-intercept">
-<span class="header-section-number">3.8</span> Interpreting the fixed intercept</h2>
-<p>One last point that students routinely get wrong. The fixed-effect intercept in the null model is not simply the mean of all 7,185 students’ scores. It is an estimate of the average of the <em>school</em> means, weighting schools in a way that accounts for how many students each contributes and how much schools vary. With balanced data the two are close. With unbalanced data they can differ, and the multilevel estimate is usually the quantity you actually want.</p>
+<p>The intercept estimates are similar, which is expected in a null model. What differs is the standard error, and that difference is the entire practical argument for multilevel modeling. Ordinary regression treats 7,185 students as 7,185 independent pieces of information, when students within a school share teachers, curricula, neighborhoods, and funding. The result is standard errors that are too small and p-values that are too optimistic.</p>
+<p>One last point students routinely get wrong. The fixed-effect intercept in the null model is not simply the mean of all 7,185 scores. It estimates the average of the <em>school</em> means, weighting schools by how much information each contributes. With balanced data the two are close; with unbalanced data they differ, and the multilevel estimate is usually the one you want.</p>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># The grand mean of all students</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">hsb</span><span class="op">$</span><span class="va">mathach</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">hsb.clean</span><span class="op">$</span><span class="va">mathach</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>   <span class="co"># grand mean of all students</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 12.74785</code></pre>
 </div>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># The model-based estimate</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/nlme/man/fixed.effects.html">fixef</a></span><span class="op">(</span><span class="va">model_null</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/nlme/man/fixed.effects.html">fixef</a></span><span class="op">(</span><span class="va">model.null</span><span class="op">)</span>                       <span class="co"># model-based estimate</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept) 
    12.63707 </code></pre>
@@ -590,7 +712,7 @@ Residual standard error: 6.878 on 7184 degrees of freedom</code></pre>
 </div>
 </section><section id="what-comes-next" class="level2" data-number="3.9"><h2 data-number="3.9" class="anchored" data-anchor-id="what-comes-next">
 <span class="header-section-number">3.9</span> What comes next</h2>
-<p>The null model tells us that schools differ. It does not tell us <em>why</em>. In the next chapter we start adding predictors, at both the student level and the school level, to explain some of the variance we have just found.</p>
+<p>The null model tells us schools differ. It does not tell us why. The next chapter starts adding predictors, at both the student and school levels, to explain some of the variance we just found.</p>
 
 
 <!-- -->
@@ -880,7 +1002,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./02-regression-review.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Regression</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -889,188 +1011,245 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb31" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># The Null Model</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>**Data for this chapter:** <span class="in">`hsbmerged.csv`</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>This chapter uses a larger version of the High School and Beyond dataset, with 7,185 students nested within 160 schools. Students are nested within schools, which is the simplest structure that multilevel modeling is built for. This is the same dataset that Garson uses in Chapter 3, so you can recreate his analysis alongside this one.</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Loading packages and data</span></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
-<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
-<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>hsb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"hsbmerged.csv"</span>)</span>
-<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(hsb)</span>
-<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Looking at the data before modeling it</span></span>
-<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-34"><a href="#cb31-34" aria-hidden="true" tabindex="-1"></a>The <span class="in">`describe()`</span> function from the <span class="in">`psych`</span> package gives a quick, high-level summary of every variable in a dataset. It is also useful for your own records. You can paste the output into a document and you have a rough codebook to share with collaborators.</span>
-<span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-38"><a href="#cb31-38" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-39"><a href="#cb31-39" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(hsb)</span>
-<span id="cb31-40"><a href="#cb31-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-41"><a href="#cb31-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-42"><a href="#cb31-42" aria-hidden="true" tabindex="-1"></a>Two variables deserve attention before we go further. <span class="in">`mathach`</span> is our outcome, a standardized math achievement score. <span class="in">`schoolid`</span> identifies the school each student attends, and it is what defines the clustering in these data.</span>
-<span id="cb31-43"><a href="#cb31-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-44"><a href="#cb31-44" aria-hidden="true" tabindex="-1"></a><span class="in">`sector`</span> is coded 0 for public schools and 1 for Catholic schools. R has read it as a number, which is fine for arithmetic but misleading for interpretation. It is worth converting it into a factor with meaningful labels, so that model output and plots say "Public" and "Catholic" rather than 0 and 1.</span>
-<span id="cb31-45"><a href="#cb31-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-48"><a href="#cb31-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-49"><a href="#cb31-49" aria-hidden="true" tabindex="-1"></a>hsb <span class="ot">&lt;-</span> hsb <span class="sc">|&gt;</span></span>
-<span id="cb31-50"><a href="#cb31-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sector_f =</span> <span class="fu">factor</span>(sector,</span>
-<span id="cb31-51"><a href="#cb31-51" aria-hidden="true" tabindex="-1"></a>                           <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb31-52"><a href="#cb31-52" aria-hidden="true" tabindex="-1"></a>                           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Public"</span>, <span class="st">"Catholic"</span>)))</span>
-<span id="cb31-53"><a href="#cb31-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-54"><a href="#cb31-54" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(hsb<span class="sc">$</span>sector_f)</span>
-<span id="cb31-55"><a href="#cb31-55" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-56"><a href="#cb31-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-57"><a href="#cb31-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exploring the outcome</span></span>
-<span id="cb31-58"><a href="#cb31-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-61"><a href="#cb31-61" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-62"><a href="#cb31-62" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(hsb<span class="sc">$</span>mathach)</span>
-<span id="cb31-63"><a href="#cb31-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-64"><a href="#cb31-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-67"><a href="#cb31-67" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-68"><a href="#cb31-68" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-mathach</span></span>
-<span id="cb31-69"><a href="#cb31-69" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribution of math achievement scores in the High School and Beyond sample."</span></span>
-<span id="cb31-70"><a href="#cb31-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-71"><a href="#cb31-71" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hsb, <span class="fu">aes</span>(<span class="at">x =</span> mathach)) <span class="sc">+</span></span>
-<span id="cb31-72"><a href="#cb31-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"#1a7a6e"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb31-73"><a href="#cb31-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb31-74"><a href="#cb31-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of Math Achievement Scores"</span>,</span>
-<span id="cb31-75"><a href="#cb31-75" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"N = 7,185 students from the High School and Beyond Survey"</span>,</span>
-<span id="cb31-76"><a href="#cb31-76" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Standardized Math Achievement Score"</span>,</span>
-<span id="cb31-77"><a href="#cb31-77" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of students"</span></span>
-<span id="cb31-78"><a href="#cb31-78" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb31-79"><a href="#cb31-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb31-80"><a href="#cb31-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-81"><a href="#cb31-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-82"><a href="#cb31-82" aria-hidden="true" tabindex="-1"></a>A histogram of the whole sample tells us about students in general, but it hides the thing we actually care about. The question that motivates multilevel modeling is whether *schools* differ from one another. One quick way to see this is to plot school averages rather than individual scores.</span>
-<span id="cb31-83"><a href="#cb31-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-86"><a href="#cb31-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-87"><a href="#cb31-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-schoolmeans</span></span>
-<span id="cb31-88"><a href="#cb31-88" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Average math achievement varies considerably across the 160 schools."</span></span>
-<span id="cb31-89"><a href="#cb31-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-90"><a href="#cb31-90" aria-hidden="true" tabindex="-1"></a>hsb <span class="sc">|&gt;</span></span>
-<span id="cb31-91"><a href="#cb31-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolid) <span class="sc">|&gt;</span></span>
-<span id="cb31-92"><a href="#cb31-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">school_mean =</span> <span class="fu">mean</span>(mathach, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb31-93"><a href="#cb31-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> school_mean)) <span class="sc">+</span></span>
-<span id="cb31-94"><a href="#cb31-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>, <span class="at">fill =</span> <span class="st">"#1a7a6e"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb31-95"><a href="#cb31-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb31-96"><a href="#cb31-96" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"School Average Math Achievement"</span>,</span>
-<span id="cb31-97"><a href="#cb31-97" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Each observation is one of 160 schools"</span>,</span>
-<span id="cb31-98"><a href="#cb31-98" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"School mean math achievement"</span>,</span>
-<span id="cb31-99"><a href="#cb31-99" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of schools"</span></span>
-<span id="cb31-100"><a href="#cb31-100" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb31-101"><a href="#cb31-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb31-102"><a href="#cb31-102" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-103"><a href="#cb31-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-104"><a href="#cb31-104" aria-hidden="true" tabindex="-1"></a>If every school had the same average, this second histogram would be a single narrow spike. It is not. That spread is the phenomenon the null model is about to quantify.</span>
-<span id="cb31-105"><a href="#cb31-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-106"><a href="#cb31-106" aria-hidden="true" tabindex="-1"></a><span class="fu">## Running a null model</span></span>
-<span id="cb31-107"><a href="#cb31-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-108"><a href="#cb31-108" aria-hidden="true" tabindex="-1"></a>The null model, also called the unconditional model or the empty model, has no predictors at all. It only asks how the total variation in math achievement divides into two pieces: variation between schools, and variation among students within the same school.</span>
-<span id="cb31-109"><a href="#cb31-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-110"><a href="#cb31-110" aria-hidden="true" tabindex="-1"></a>The <span class="in">`(1 | schoolid)`</span> term is what makes this a multilevel model. It tells <span class="in">`lmer()`</span> to estimate a separate intercept for each school, drawn from a distribution whose variance we want to estimate.</span>
-<span id="cb31-111"><a href="#cb31-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-114"><a href="#cb31-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-115"><a href="#cb31-115" aria-hidden="true" tabindex="-1"></a>model_null <span class="ot">&lt;-</span> <span class="fu">lmer</span>(mathach <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> schoolid), <span class="at">data =</span> hsb, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb31-116"><a href="#cb31-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-117"><a href="#cb31-117" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_null)</span>
-<span id="cb31-118"><a href="#cb31-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-119"><a href="#cb31-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-120"><a href="#cb31-120" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb31-121"><a href="#cb31-121" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why `REML = FALSE`?</span></span>
-<span id="cb31-122"><a href="#cb31-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-123"><a href="#cb31-123" aria-hidden="true" tabindex="-1"></a><span class="in">`lmer()`</span> can estimate a model two ways, and the choice affects the variance components you are about to interpret.</span>
-<span id="cb31-124"><a href="#cb31-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-125"><a href="#cb31-125" aria-hidden="true" tabindex="-1"></a>**Restricted maximum likelihood (REML)**, the default, produces less biased estimates of variance components, particularly when the number of level-2 units is small. If your goal is to report a variance or an ICC as accurately as possible, REML has the edge.</span>
-<span id="cb31-126"><a href="#cb31-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-127"><a href="#cb31-127" aria-hidden="true" tabindex="-1"></a>**Maximum likelihood (ML)**, which <span class="in">`REML = FALSE`</span> requests, is required whenever you want to compare two models that differ in their *fixed* effects. REML likelihoods computed under different fixed-effect specifications are not comparable, so an <span class="in">`anova()`</span> comparison of REML-fitted models with different predictors is not valid. R will usually refit them for you, but silently, and it is better to know why.</span>
-<span id="cb31-128"><a href="#cb31-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-129"><a href="#cb31-129" aria-hidden="true" tabindex="-1"></a>This book uses ML throughout, for two reasons. Model comparison happens constantly in these chapters, and using one estimator everywhere means the numbers on one page match the numbers on the next. With 160 schools here, and reasonable numbers of clusters in most course datasets, the difference between ML and REML variance estimates is small.</span>
-<span id="cb31-130"><a href="#cb31-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-131"><a href="#cb31-131" aria-hidden="true" tabindex="-1"></a>Where the number of level-2 units is genuinely small, chapter 11 works with just 17 schools, REML is worth considering for the final reported model. Say which you used either way.</span>
-<span id="cb31-132"><a href="#cb31-132" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb31-133"><a href="#cb31-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-134"><a href="#cb31-134" aria-hidden="true" tabindex="-1"></a>Two numbers in the Random effects section carry the story. The variance associated with <span class="in">`schoolid`</span> is the between-school variance, often written $\tau_{00}$. The Residual variance is the within-school, student-level variance, written $\sigma^2$.</span>
-<span id="cb31-135"><a href="#cb31-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-136"><a href="#cb31-136" aria-hidden="true" tabindex="-1"></a><span class="fu">## Post-estimation: calculating the ICC</span></span>
-<span id="cb31-137"><a href="#cb31-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-138"><a href="#cb31-138" aria-hidden="true" tabindex="-1"></a>The intraclass correlation coefficient is the proportion of total variance that lies between schools:</span>
-<span id="cb31-139"><a href="#cb31-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-140"><a href="#cb31-140" aria-hidden="true" tabindex="-1"></a>$$\text{ICC} = \frac{\tau_{00}}{\tau_{00} + \sigma^2}$$</span>
-<span id="cb31-141"><a href="#cb31-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-142"><a href="#cb31-142" aria-hidden="true" tabindex="-1"></a>It is worth computing this by hand at least once, because the formula is the concept. You can pull the variance components directly out of the fitted model rather than typing them in, which avoids transcription errors:</span>
-<span id="cb31-143"><a href="#cb31-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-146"><a href="#cb31-146" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-147"><a href="#cb31-147" aria-hidden="true" tabindex="-1"></a>vc <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">VarCorr</span>(model_null))</span>
-<span id="cb31-148"><a href="#cb31-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-149"><a href="#cb31-149" aria-hidden="true" tabindex="-1"></a>tau00 <span class="ot">&lt;-</span> vc<span class="sc">$</span>vcov[vc<span class="sc">$</span>grp <span class="sc">==</span> <span class="st">"schoolid"</span>]</span>
-<span id="cb31-150"><a href="#cb31-150" aria-hidden="true" tabindex="-1"></a>sigma2 <span class="ot">&lt;-</span> vc<span class="sc">$</span>vcov[vc<span class="sc">$</span>grp <span class="sc">==</span> <span class="st">"Residual"</span>]</span>
-<span id="cb31-151"><a href="#cb31-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-152"><a href="#cb31-152" aria-hidden="true" tabindex="-1"></a>icc_by_hand <span class="ot">&lt;-</span> tau00 <span class="sc">/</span> (tau00 <span class="sc">+</span> sigma2)</span>
-<span id="cb31-153"><a href="#cb31-153" aria-hidden="true" tabindex="-1"></a>icc_by_hand</span>
-<span id="cb31-154"><a href="#cb31-154" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-155"><a href="#cb31-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-156"><a href="#cb31-156" aria-hidden="true" tabindex="-1"></a>The <span class="in">`performance`</span> package will do the same calculation for you, and you should get the same answer:</span>
-<span id="cb31-157"><a href="#cb31-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-160"><a href="#cb31-160" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-161"><a href="#cb31-161" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(model_null)</span>
-<span id="cb31-162"><a href="#cb31-162" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-163"><a href="#cb31-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-164"><a href="#cb31-164" aria-hidden="true" tabindex="-1"></a>An ICC of roughly this size tells us that a meaningful share of the variation in math achievement is between schools rather than within them. It also tells us something practical: students in the same school are more similar to one another than two students picked at random from the full sample, which is exactly the condition that makes ordinary regression standard errors too small.</span>
-<span id="cb31-165"><a href="#cb31-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-166"><a href="#cb31-166" aria-hidden="true" tabindex="-1"></a><span class="fu">## Is the clustering statistically detectable?</span></span>
-<span id="cb31-167"><a href="#cb31-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-168"><a href="#cb31-168" aria-hidden="true" tabindex="-1"></a>The <span class="in">`ranova()`</span> function from <span class="in">`lmerTest`</span> performs a likelihood ratio test comparing our model to one without the random intercept.</span>
-<span id="cb31-169"><a href="#cb31-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-172"><a href="#cb31-172" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-173"><a href="#cb31-173" aria-hidden="true" tabindex="-1"></a><span class="fu">ranova</span>(model_null)</span>
-<span id="cb31-174"><a href="#cb31-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-175"><a href="#cb31-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-176"><a href="#cb31-176" aria-hidden="true" tabindex="-1"></a>A significant result here says that allowing schools to have their own intercepts improves the fit enough to justify the extra parameter. Read this alongside the ICC rather than instead of it. The test tells you whether school-level variance is distinguishable from zero, while the ICC tells you how much of it there is. With 7,185 students you have enough power to detect quite small amounts of clustering, so a significant test on its own is weak evidence that multilevel modeling matters substantively.</span>
-<span id="cb31-177"><a href="#cb31-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-178"><a href="#cb31-178" aria-hidden="true" tabindex="-1"></a><span class="fu">## Comparing to ordinary regression</span></span>
-<span id="cb31-179"><a href="#cb31-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-180"><a href="#cb31-180" aria-hidden="true" tabindex="-1"></a>It is always worth seeing what we would have gotten by ignoring the clustering entirely.</span>
-<span id="cb31-181"><a href="#cb31-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-184"><a href="#cb31-184" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-185"><a href="#cb31-185" aria-hidden="true" tabindex="-1"></a>model_ols <span class="ot">&lt;-</span> <span class="fu">lm</span>(mathach <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> hsb)</span>
-<span id="cb31-186"><a href="#cb31-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-187"><a href="#cb31-187" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_ols)</span>
-<span id="cb31-188"><a href="#cb31-188" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-189"><a href="#cb31-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-190"><a href="#cb31-190" aria-hidden="true" tabindex="-1"></a>The intercept estimates are similar, which is expected in a null model. What differs is the standard error, and that difference is the whole practical argument for multilevel modeling. Ignoring clustering treats 7,185 students as 7,185 independent pieces of information, when in reality students within a school share a great deal. The result is standard errors that are too small and p-values that are too optimistic.</span>
-<span id="cb31-191"><a href="#cb31-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-192"><a href="#cb31-192" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interpreting the fixed intercept</span></span>
-<span id="cb31-193"><a href="#cb31-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-194"><a href="#cb31-194" aria-hidden="true" tabindex="-1"></a>One last point that students routinely get wrong. The fixed-effect intercept in the null model is not simply the mean of all 7,185 students' scores. It is an estimate of the average of the *school* means, weighting schools in a way that accounts for how many students each contributes and how much schools vary. With balanced data the two are close. With unbalanced data they can differ, and the multilevel estimate is usually the quantity you actually want.</span>
-<span id="cb31-195"><a href="#cb31-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-198"><a href="#cb31-198" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-199"><a href="#cb31-199" aria-hidden="true" tabindex="-1"></a><span class="co"># The grand mean of all students</span></span>
-<span id="cb31-200"><a href="#cb31-200" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(hsb<span class="sc">$</span>mathach, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb31-201"><a href="#cb31-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-202"><a href="#cb31-202" aria-hidden="true" tabindex="-1"></a><span class="co"># The model-based estimate</span></span>
-<span id="cb31-203"><a href="#cb31-203" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>(model_null)</span>
-<span id="cb31-204"><a href="#cb31-204" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-205"><a href="#cb31-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-206"><a href="#cb31-206" aria-hidden="true" tabindex="-1"></a><span class="fu">## What comes next</span></span>
-<span id="cb31-207"><a href="#cb31-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-208"><a href="#cb31-208" aria-hidden="true" tabindex="-1"></a>The null model tells us that schools differ. It does not tell us *why*. In the next chapter we start adding predictors, at both the student level and the school level, to explain some of the variance we have just found.</span>
+<div class="sourceCode" id="cb39" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Intro to MLM and the Null Model</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>**Data for this chapter:** <span class="in">`hsbmerged.csv`</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>This week we use a larger version of the HSB dataset from 1988. Same structure as before: students nested within schools. This is the same dataset Garson uses in Chapter 3, so you can recreate what he has as well.</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load some packages to help with the analysis and data management</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)     <span class="co"># label()</span></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a><span class="in">`Hmisc`</span> is new here. We want it for two things: <span class="in">`label()`</span>, which attaches a description to a variable, and its own version of <span class="in">`describe()`</span>, which reports more detail than the one in <span class="in">`psych`</span>.</span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## Package conflicts</span></span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a><span class="in">`Hmisc`</span> and <span class="in">`dplyr`</span> both define functions named <span class="in">`summarize`</span> and <span class="in">`src`</span>. Loading <span class="in">`Hmisc`</span> after the tidyverse means its versions win, and you may see masking messages at load. If a tidyverse function starts behaving oddly, call it explicitly as <span class="in">`dplyr::summarize()`</span>.</span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load in the data and use `glimpse` to summarize the structure</span></span>
+<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-32"><a href="#cb39-32" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-33"><a href="#cb39-33" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb39-34"><a href="#cb39-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-35"><a href="#cb39-35" aria-hidden="true" tabindex="-1"></a>hsb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"hsbmerged.csv"</span>)</span>
+<span id="cb39-36"><a href="#cb39-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-37"><a href="#cb39-37" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(hsb)</span>
+<span id="cb39-38"><a href="#cb39-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-39"><a href="#cb39-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-40"><a href="#cb39-40" aria-hidden="true" tabindex="-1"></a>7,185 students across 160 schools. <span class="in">`mathach`</span> is our outcome, a standardized math achievement score, and <span class="in">`schoolid`</span> identifies the school each student attends. That second variable is what makes multilevel modeling possible here.</span>
+<span id="cb39-41"><a href="#cb39-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-42"><a href="#cb39-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quick data cleaning and coding tips</span></span>
+<span id="cb39-43"><a href="#cb39-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-44"><a href="#cb39-44" aria-hidden="true" tabindex="-1"></a><span class="fu">### The `summary` command from base R is a quick and easy way to explore a new dataset</span></span>
+<span id="cb39-45"><a href="#cb39-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-48"><a href="#cb39-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-49"><a href="#cb39-49" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hsb)</span>
+<span id="cb39-50"><a href="#cb39-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-51"><a href="#cb39-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-52"><a href="#cb39-52" aria-hidden="true" tabindex="-1"></a>Summary gives you a quick, high-level look at every variable in a dataset. It is also useful for your own records: copy and paste it into a Word file and you have something to refer back to.</span>
+<span id="cb39-53"><a href="#cb39-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-54"><a href="#cb39-54" aria-hidden="true" tabindex="-1"></a>Read it critically, though. Every column here gets a mean and quartiles, including <span class="in">`sector`</span>, <span class="in">`female`</span>, and <span class="in">`minority`</span>, which are categories rather than quantities. The mean of <span class="in">`sector`</span> is the proportion of students in one sector, which is mildly useful, but its quartiles are meaningless. This is the same issue from Chapter 1, and we are about to fix it.</span>
+<span id="cb39-55"><a href="#cb39-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-56"><a href="#cb39-56" aria-hidden="true" tabindex="-1"></a><span class="fu">### Let's give some variables a label</span></span>
+<span id="cb39-57"><a href="#cb39-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-58"><a href="#cb39-58" aria-hidden="true" tabindex="-1"></a>Now, data cleaning and coding. We will apply labels to two things: the variables themselves, and the values within a given variable. Both are good practice for keeping your data readable.</span>
+<span id="cb39-59"><a href="#cb39-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-62"><a href="#cb39-62" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-63"><a href="#cb39-63" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(hsb<span class="sc">$</span>mathach) <span class="ot">=</span> <span class="st">"Std. Math Score"</span></span>
+<span id="cb39-64"><a href="#cb39-64" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(hsb<span class="sc">$</span>sector) <span class="ot">=</span> <span class="st">"School Sector"</span></span>
+<span id="cb39-65"><a href="#cb39-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-66"><a href="#cb39-66" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(hsb<span class="sc">$</span>sector)</span>
+<span id="cb39-67"><a href="#cb39-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-68"><a href="#cb39-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-69"><a href="#cb39-69" aria-hidden="true" tabindex="-1"></a>The <span class="in">`str()`</span> output now shows the label attached to the variable. This carries through to <span class="in">`Hmisc::describe()`</span> output and to some plotting functions, which means a table six months from now still says "Std. Math Score" rather than <span class="in">`mathach`</span>.</span>
+<span id="cb39-70"><a href="#cb39-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-71"><a href="#cb39-71" aria-hidden="true" tabindex="-1"></a><span class="fu">### Let's create a factor version of `sector` and label its values</span></span>
+<span id="cb39-72"><a href="#cb39-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-75"><a href="#cb39-75" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-76"><a href="#cb39-76" aria-hidden="true" tabindex="-1"></a>hsb.clean <span class="ot">&lt;-</span> hsb <span class="sc">%&gt;%</span></span>
+<span id="cb39-77"><a href="#cb39-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(.,</span>
+<span id="cb39-78"><a href="#cb39-78" aria-hidden="true" tabindex="-1"></a>         <span class="at">sector.factor =</span> <span class="fu">as_factor</span>(sector),</span>
+<span id="cb39-79"><a href="#cb39-79" aria-hidden="true" tabindex="-1"></a>         <span class="at">female.factor =</span> <span class="fu">as_factor</span>(female),</span>
+<span id="cb39-80"><a href="#cb39-80" aria-hidden="true" tabindex="-1"></a>         <span class="at">minority.factor =</span> <span class="fu">as_factor</span>(minority))</span>
+<span id="cb39-81"><a href="#cb39-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-82"><a href="#cb39-82" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(hsb.clean<span class="sc">$</span>sector.factor) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Public"</span>, <span class="st">"Parochial"</span>)</span>
+<span id="cb39-83"><a href="#cb39-83" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(hsb.clean<span class="sc">$</span>female.factor) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>)</span>
+<span id="cb39-84"><a href="#cb39-84" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(hsb.clean<span class="sc">$</span>minority.factor) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Non-Minority"</span>, <span class="st">"Minority"</span>)</span>
+<span id="cb39-85"><a href="#cb39-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-86"><a href="#cb39-86" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(hsb.clean<span class="sc">$</span>sector.factor)</span>
+<span id="cb39-87"><a href="#cb39-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-88"><a href="#cb39-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-89"><a href="#cb39-89" aria-hidden="true" tabindex="-1"></a>Two steps here, and it is worth separating them. <span class="in">`as_factor()`</span> converts the numeric variable into a factor, so R treats it as a category. Assigning to <span class="in">`levels()`</span> then renames those categories from 0 and 1 into words.</span>
+<span id="cb39-90"><a href="#cb39-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-91"><a href="#cb39-91" aria-hidden="true" tabindex="-1"></a>Order matters when you assign levels this way. The names are applied in the order R already has the levels in, so <span class="in">`c("Public", "Parochial")`</span> assumes 0 comes first. Always check the result:</span>
+<span id="cb39-92"><a href="#cb39-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-95"><a href="#cb39-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-96"><a href="#cb39-96" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(hsb.clean<span class="sc">$</span>sector.factor)</span>
+<span id="cb39-97"><a href="#cb39-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-98"><a href="#cb39-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-99"><a href="#cb39-99" aria-hidden="true" tabindex="-1"></a>3,642 public and 3,543 Parochial. If those counts had come out reversed from what you expected, the labels went on backwards, and every result from here forward would be silently mislabeled.</span>
+<span id="cb39-100"><a href="#cb39-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-101"><a href="#cb39-101" aria-hidden="true" tabindex="-1"></a><span class="fu">### Run `summary` again and notice how it handles factors</span></span>
+<span id="cb39-102"><a href="#cb39-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-105"><a href="#cb39-105" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-106"><a href="#cb39-106" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hsb.clean)</span>
+<span id="cb39-107"><a href="#cb39-107" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-108"><a href="#cb39-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-109"><a href="#cb39-109" aria-hidden="true" tabindex="-1"></a>Compare this to the earlier output. The factor versions of the variables no longer report meaningless means and quartiles. Instead they report counts per category, which is what you actually want to know. Same data, same function, but R now understands what kind of variable it is looking at.</span>
+<span id="cb39-110"><a href="#cb39-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-111"><a href="#cb39-111" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exploring our outcome, math achievement</span></span>
+<span id="cb39-112"><a href="#cb39-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-113"><a href="#cb39-113" aria-hidden="true" tabindex="-1"></a>Now let's look at <span class="in">`mathach`</span> using the <span class="in">`describe`</span> function from the <span class="in">`Hmisc`</span> package:</span>
+<span id="cb39-114"><a href="#cb39-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-117"><a href="#cb39-117" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-118"><a href="#cb39-118" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(hsb.clean<span class="sc">$</span>mathach)</span>
+<span id="cb39-119"><a href="#cb39-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-120"><a href="#cb39-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-121"><a href="#cb39-121" aria-hidden="true" tabindex="-1"></a><span class="in">`Hmisc::describe()`</span> reports more than the <span class="in">`psych`</span> version: distinct values, several percentiles, and the five lowest and highest observations. That last part is a quiet outlier check. If the highest values were 24, 25, and 9999, you would see it here.</span>
+<span id="cb39-122"><a href="#cb39-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-125"><a href="#cb39-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-126"><a href="#cb39-126" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-mathach</span></span>
+<span id="cb39-127"><a href="#cb39-127" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribution of math achievement scores."</span></span>
+<span id="cb39-128"><a href="#cb39-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-129"><a href="#cb39-129" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(hsb.clean<span class="sc">$</span>mathach,</span>
+<span id="cb39-130"><a href="#cb39-130" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Distribution of Math Achievement Scores"</span>,</span>
+<span id="cb39-131"><a href="#cb39-131" aria-hidden="true" tabindex="-1"></a>     <span class="at">sub =</span> <span class="st">"N = 7,185. Students from the High School and Beyond Survey (1988)."</span>,</span>
+<span id="cb39-132"><a href="#cb39-132" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Standardized Math Achievement Score"</span>)</span>
+<span id="cb39-133"><a href="#cb39-133" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-134"><a href="#cb39-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-135"><a href="#cb39-135" aria-hidden="true" tabindex="-1"></a>This histogram describes students in general, which is useful but hides the thing we actually care about. The question motivating multilevel modeling is whether *schools* differ. One quick way to see it is to plot school averages instead of individual scores:</span>
+<span id="cb39-136"><a href="#cb39-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-139"><a href="#cb39-139" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-140"><a href="#cb39-140" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-schoolmeans</span></span>
+<span id="cb39-141"><a href="#cb39-141" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Average math achievement across the 160 schools."</span></span>
+<span id="cb39-142"><a href="#cb39-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-143"><a href="#cb39-143" aria-hidden="true" tabindex="-1"></a>school_means <span class="ot">&lt;-</span> hsb.clean <span class="sc">%&gt;%</span></span>
+<span id="cb39-144"><a href="#cb39-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolid) <span class="sc">%&gt;%</span></span>
+<span id="cb39-145"><a href="#cb39-145" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">school_mean =</span> <span class="fu">mean</span>(mathach, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb39-146"><a href="#cb39-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-147"><a href="#cb39-147" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(school_means<span class="sc">$</span>school_mean,</span>
+<span id="cb39-148"><a href="#cb39-148" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"School Average Math Achievement"</span>,</span>
+<span id="cb39-149"><a href="#cb39-149" aria-hidden="true" tabindex="-1"></a>     <span class="at">sub =</span> <span class="st">"Each observation is one of 160 schools."</span>,</span>
+<span id="cb39-150"><a href="#cb39-150" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"School mean math achievement"</span>)</span>
+<span id="cb39-151"><a href="#cb39-151" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-152"><a href="#cb39-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-153"><a href="#cb39-153" aria-hidden="true" tabindex="-1"></a>If every school had the same average, this would be a single narrow spike. It is not, and that spread is exactly what the null model is about to quantify.</span>
+<span id="cb39-154"><a href="#cb39-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-155"><a href="#cb39-155" aria-hidden="true" tabindex="-1"></a><span class="fu">## Running a null model</span></span>
+<span id="cb39-156"><a href="#cb39-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-159"><a href="#cb39-159" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-160"><a href="#cb39-160" aria-hidden="true" tabindex="-1"></a>model.null <span class="ot">&lt;-</span> <span class="fu">lmer</span>(mathach <span class="sc">~</span> (<span class="dv">1</span><span class="sc">|</span>schoolid), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> hsb.clean)</span>
+<span id="cb39-161"><a href="#cb39-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-162"><a href="#cb39-162" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.null)</span>
+<span id="cb39-163"><a href="#cb39-163" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-164"><a href="#cb39-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-165"><a href="#cb39-165" aria-hidden="true" tabindex="-1"></a>The <span class="in">`(1|schoolid)`</span> term is what makes this multilevel. It tells <span class="in">`lmer()`</span> to estimate a separate intercept for each school, drawn from a distribution whose variance we want to estimate.</span>
+<span id="cb39-166"><a href="#cb39-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-167"><a href="#cb39-167" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb39-168"><a href="#cb39-168" aria-hidden="true" tabindex="-1"></a><span class="fu">## What makes `schoolid` a clustering variable, and what does not</span></span>
+<span id="cb39-169"><a href="#cb39-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-170"><a href="#cb39-170" aria-hidden="true" tabindex="-1"></a>This is the most common early mistake, so it is worth stopping on. Nearly every dataset has categorical variables, and almost none of them belong inside <span class="in">`(1 | ... )`</span>. Before writing that term, ask three questions.</span>
+<span id="cb39-171"><a href="#cb39-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-172"><a href="#cb39-172" aria-hidden="true" tabindex="-1"></a>**How many units are there?** A random intercept does not estimate a set of group means. It estimates a *variance*, and it does so from as many observations as there are groups. Estimating a variance from nine numbers is exactly as unreliable as it sounds. Common guidance wants 30 to 50 level-2 units for reasonable precision, with roughly 20 as a floor below which the estimate should not be trusted. We have 160 schools, which is comfortable.</span>
+<span id="cb39-173"><a href="#cb39-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-174"><a href="#cb39-174" aria-hidden="true" tabindex="-1"></a>**Are these units a sample from a population you want to generalize to?** This is the conceptual heart of it. Random effects treat groups as draws from a population of groups, so your conclusions extend to schools you did not observe. These 160 schools are a sample of American high schools. By contrast, a variable like <span class="in">`sector`</span> has two categories that are not a sample of anything; they are the complete set. There is no larger population of sectors to infer toward.</span>
+<span id="cb39-175"><a href="#cb39-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-176"><a href="#cb39-176" aria-hidden="true" tabindex="-1"></a>**Do you want group-specific effects, or the variation among groups?** If you want to know how each category differs, that is a fixed effect: put it on the right side of the <span class="in">`~`</span> like any other predictor. If you want to know how much groups vary as a class, and to generalize beyond the ones you have, that is a random effect.</span>
+<span id="cb39-177"><a href="#cb39-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-178"><a href="#cb39-178" aria-hidden="true" tabindex="-1"></a>So in this dataset, <span class="in">`schoolid`</span> goes in the random part and <span class="in">`sector`</span>, <span class="in">`female`</span>, and <span class="in">`minority`</span> go in the fixed part. Sex has two categories. Treatment condition has two. Region usually has four. None of those are clustering variables, however naturally the data seem to group by them.</span>
+<span id="cb39-179"><a href="#cb39-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-180"><a href="#cb39-180" aria-hidden="true" tabindex="-1"></a>R will not stop you from writing <span class="in">`(1 | sector)`</span>. It will return a variance component and standard errors and flag nothing at all. The number will simply not mean what you think it means.</span>
+<span id="cb39-181"><a href="#cb39-181" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb39-182"><a href="#cb39-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-183"><a href="#cb39-183" aria-hidden="true" tabindex="-1"></a>Two numbers in the Random effects section carry the story. The variance associated with <span class="in">`schoolid`</span> is the between-school variance, written $\tau_{00}$. The Residual variance is the within-school, student-level variance, written $\sigma^2$.</span>
+<span id="cb39-184"><a href="#cb39-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-185"><a href="#cb39-185" aria-hidden="true" tabindex="-1"></a>You also get AIC and BIC, two very common information criterion measures used to assess model fit.</span>
+<span id="cb39-186"><a href="#cb39-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-187"><a href="#cb39-187" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb39-188"><a href="#cb39-188" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why `REML = FALSE`?</span></span>
+<span id="cb39-189"><a href="#cb39-189" aria-hidden="true" tabindex="-1"></a><span class="in">`lmer()`</span> can estimate a model two ways. Restricted maximum likelihood (REML), the default, gives less biased variance components, especially with few level-2 units. Maximum likelihood (ML), which <span class="in">`REML = FALSE`</span> requests, is required whenever you compare models that differ in their *fixed* effects, because REML likelihoods are not comparable across different fixed-effect specifications.</span>
+<span id="cb39-190"><a href="#cb39-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-191"><a href="#cb39-191" aria-hidden="true" tabindex="-1"></a>This book uses ML throughout so that numbers stay consistent from one page to the next and model comparisons are always valid. With 160 schools, the difference between the two is small.</span>
+<span id="cb39-192"><a href="#cb39-192" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb39-193"><a href="#cb39-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-194"><a href="#cb39-194" aria-hidden="true" tabindex="-1"></a><span class="fu">## Post-estimation task: calculate the ICC</span></span>
+<span id="cb39-195"><a href="#cb39-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-196"><a href="#cb39-196" aria-hidden="true" tabindex="-1"></a>These commands are run after any kind of MLM. They are called post-estimation commands because they require that the model be saved in memory. If you do something else and then try to run them, you will likely get an error.</span>
+<span id="cb39-197"><a href="#cb39-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-198"><a href="#cb39-198" aria-hidden="true" tabindex="-1"></a>The intraclass correlation is the proportion of total variance lying between schools:</span>
+<span id="cb39-199"><a href="#cb39-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-200"><a href="#cb39-200" aria-hidden="true" tabindex="-1"></a>$$\text{ICC} = \frac{\tau_{00}}{\tau_{00} + \sigma^2}$$</span>
+<span id="cb39-201"><a href="#cb39-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-202"><a href="#cb39-202" aria-hidden="true" tabindex="-1"></a>Here's a quick and easy way to get our friend the ICC:</span>
+<span id="cb39-203"><a href="#cb39-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-206"><a href="#cb39-206" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-207"><a href="#cb39-207" aria-hidden="true" tabindex="-1"></a>null.ICC <span class="ot">&lt;-</span> <span class="fl">8.553</span><span class="sc">/</span>(<span class="fl">8.553</span> <span class="sc">+</span> <span class="fl">39.148</span>)</span>
+<span id="cb39-208"><a href="#cb39-208" aria-hidden="true" tabindex="-1"></a>null.ICC</span>
+<span id="cb39-209"><a href="#cb39-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-210"><a href="#cb39-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-211"><a href="#cb39-211" aria-hidden="true" tabindex="-1"></a>Roughly 18 percent of the variation in math achievement is between schools. Put another way, two students from the same school are noticeably more similar to each other than two students drawn at random from the full sample. That is the condition that makes ordinary regression standard errors too small.</span>
+<span id="cb39-212"><a href="#cb39-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-213"><a href="#cb39-213" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb39-214"><a href="#cb39-214" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pulling the numbers out rather than typing them</span></span>
+<span id="cb39-215"><a href="#cb39-215" aria-hidden="true" tabindex="-1"></a>Typing the variance components by hand works and makes the formula visible, which is why it is worth doing once. For your own analyses it is safer to extract them from the model, since a transposed digit produces a plausible-looking wrong answer:</span>
+<span id="cb39-216"><a href="#cb39-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-219"><a href="#cb39-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-220"><a href="#cb39-220" aria-hidden="true" tabindex="-1"></a>vc <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">VarCorr</span>(model.null))</span>
+<span id="cb39-221"><a href="#cb39-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-222"><a href="#cb39-222" aria-hidden="true" tabindex="-1"></a>tau00  <span class="ot">&lt;-</span> vc<span class="sc">$</span>vcov[vc<span class="sc">$</span>grp <span class="sc">==</span> <span class="st">"schoolid"</span>]</span>
+<span id="cb39-223"><a href="#cb39-223" aria-hidden="true" tabindex="-1"></a>sigma2 <span class="ot">&lt;-</span> vc<span class="sc">$</span>vcov[vc<span class="sc">$</span>grp <span class="sc">==</span> <span class="st">"Residual"</span>]</span>
+<span id="cb39-224"><a href="#cb39-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-225"><a href="#cb39-225" aria-hidden="true" tabindex="-1"></a>tau00 <span class="sc">/</span> (tau00 <span class="sc">+</span> sigma2)</span>
+<span id="cb39-226"><a href="#cb39-226" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-227"><a href="#cb39-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-228"><a href="#cb39-228" aria-hidden="true" tabindex="-1"></a>The <span class="in">`performance`</span> package will also compute it directly with <span class="in">`performance::icc(model.null)`</span>.</span>
+<span id="cb39-229"><a href="#cb39-229" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb39-230"><a href="#cb39-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-231"><a href="#cb39-231" aria-hidden="true" tabindex="-1"></a><span class="fu">## Using `lmerTest` to evaluate random effects</span></span>
+<span id="cb39-232"><a href="#cb39-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-235"><a href="#cb39-235" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-236"><a href="#cb39-236" aria-hidden="true" tabindex="-1"></a><span class="fu">ranova</span>(model.null)</span>
+<span id="cb39-237"><a href="#cb39-237" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-238"><a href="#cb39-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-239"><a href="#cb39-239" aria-hidden="true" tabindex="-1"></a>This is a likelihood ratio test comparing our model to one without the random intercept. A significant result says that letting schools have their own intercepts improves fit enough to justify the extra parameter.</span>
+<span id="cb39-240"><a href="#cb39-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-241"><a href="#cb39-241" aria-hidden="true" tabindex="-1"></a>Read it alongside the ICC rather than instead of it. The test tells you whether school-level variance is distinguishable from zero; the ICC tells you how much of it there is. With 7,185 students you have enough power to detect quite small amounts of clustering, so significance alone is weak evidence that multilevel modeling matters substantively.</span>
+<span id="cb39-242"><a href="#cb39-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-243"><a href="#cb39-243" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb39-244"><a href="#cb39-244" aria-hidden="true" tabindex="-1"></a><span class="fu">## `rand()` became `ranova()`</span></span>
+<span id="cb39-245"><a href="#cb39-245" aria-hidden="true" tabindex="-1"></a>Older handouts call <span class="in">`lmerTest::rand()`</span>. The function was renamed to <span class="in">`ranova()`</span> several versions ago. The old name may still work but is no longer the documented one.</span>
+<span id="cb39-246"><a href="#cb39-246" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb39-247"><a href="#cb39-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-248"><a href="#cb39-248" aria-hidden="true" tabindex="-1"></a><span class="fu">## Always interesting: compare our MLM to a regular regression</span></span>
+<span id="cb39-249"><a href="#cb39-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-252"><a href="#cb39-252" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-253"><a href="#cb39-253" aria-hidden="true" tabindex="-1"></a>model.regular <span class="ot">&lt;-</span> <span class="fu">lm</span>(mathach <span class="sc">~</span> <span class="cn">NULL</span>, <span class="at">data =</span> hsb.clean)</span>
+<span id="cb39-254"><a href="#cb39-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-255"><a href="#cb39-255" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.regular)</span>
+<span id="cb39-256"><a href="#cb39-256" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-257"><a href="#cb39-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-258"><a href="#cb39-258" aria-hidden="true" tabindex="-1"></a>The intercept estimates are similar, which is expected in a null model. What differs is the standard error, and that difference is the entire practical argument for multilevel modeling. Ordinary regression treats 7,185 students as 7,185 independent pieces of information, when students within a school share teachers, curricula, neighborhoods, and funding. The result is standard errors that are too small and p-values that are too optimistic.</span>
+<span id="cb39-259"><a href="#cb39-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-260"><a href="#cb39-260" aria-hidden="true" tabindex="-1"></a>One last point students routinely get wrong. The fixed-effect intercept in the null model is not simply the mean of all 7,185 scores. It estimates the average of the *school* means, weighting schools by how much information each contributes. With balanced data the two are close; with unbalanced data they differ, and the multilevel estimate is usually the one you want.</span>
+<span id="cb39-261"><a href="#cb39-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-264"><a href="#cb39-264" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb39-265"><a href="#cb39-265" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(hsb.clean<span class="sc">$</span>mathach, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)   <span class="co"># grand mean of all students</span></span>
+<span id="cb39-266"><a href="#cb39-266" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>(model.null)                       <span class="co"># model-based estimate</span></span>
+<span id="cb39-267"><a href="#cb39-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb39-268"><a href="#cb39-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-269"><a href="#cb39-269" aria-hidden="true" tabindex="-1"></a><span class="fu">## What comes next</span></span>
+<span id="cb39-270"><a href="#cb39-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-271"><a href="#cb39-271" aria-hidden="true" tabindex="-1"></a>The null model tells us schools differ. It does not tell us why. The next chapter starts adding predictors, at both the student and school levels, to explain some of the variance we just found.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -1,0 +1,201 @@
+# Reading: Regression and Where It Runs Out
+
+*This is the assigned reading for Module 2. There is no code in this chapter; the demonstration that follows puts all of it into practice.*
+
+You have taken a regression course. This reading is not going to teach you regression from scratch, and it is not going to pretend you have never seen a coefficient before. What it will do is walk back through the ideas you already know, slowly enough that the assumptions become visible, and then show you the one assumption that breaks constantly in social science data.
+
+That broken assumption is the reason this course exists. Everything we do from Module 3 onward is a response to it.
+
+## What regression is for
+
+Most quantitative research questions are questions about relationships. Does an additional hour of tutoring raise test scores? Do teachers with more experience have students who learn more? Does neighborhood poverty predict educational attainment, and if so, by how much?
+
+These are not questions about whether two things are associated. Correlation answers that, and it answers it symmetrically: it tells you that two variables move together without saying which is doing the moving. Regression makes a stronger commitment. It designates one variable as the outcome and asks how it changes as the others change, in units you can report and act on.
+
+That extra commitment costs something. A correlation requires no claim about which variable depends on which. A regression requires you to decide, and that decision comes from your theory, not from your data. The software will happily reverse the roles and hand you a number either way.
+
+## An example we will use all term
+
+Suppose we want to know how much a family's spending on food increases as its income rises. This sounds mundane, and it is a real economic question with a long research history: how households allocate income across necessities is the foundation of a great deal of poverty policy.
+
+We have data on 50 families. For each one we know annual food expenditure, annual income, the number of children, and whether the family keeps a garden. That last one matters because a family growing its own vegetables might spend less at the store.
+
+This is the dataset used in next week's demonstration, so it is worth getting familiar with the setup now.
+
+If you plotted food expenditure against income for these 50 families, you would see an upward drift with a lot of scatter. Families with more income generally spend more on food, but the points would not fall on a line. Two families with identical incomes might spend quite differently.
+
+That scatter is not a failure of the data. It is the phenomenon. Families differ in size, in taste, in where they shop, in whether anyone in the house cooks. And some of the variation is simply unexplainable: a family buys more food one year for no reason you could ever measure. Regression does not try to eliminate that scatter. It tries to summarize the pattern running through it.
+
+## The line, and what its pieces mean
+
+The summary regression produces is a line. In the food example:
+
+$$\text{food} = \alpha + \beta(\text{income}) + \varepsilon$$
+
+Three pieces, each worth naming carefully.
+
+**The intercept** ($\alpha$) is the predicted food expenditure for a family with zero income. Whether that is meaningful depends entirely on whether zero is a value your data contain. Here it nearly is, since some families report very low income, so the intercept is at least interpretable. In many analyses zero is nowhere near the observed range and the intercept is a mathematical necessity rather than a finding. Hold onto that thought: it comes back when we discuss centering.
+
+**The slope** ($\beta$) is the change in predicted food expenditure for a one-unit increase in income. If income is measured in dollars, the slope is the predicted change in food spending per additional dollar of income, which will be a small number. This is a fact about units, not about importance.
+
+**The residual** ($\varepsilon$) is the gap between what a family actually spent and what the line predicted. Every family has one. Residuals are not noise to be discarded; they are where most of the diagnostic information in a regression lives, and in this course they become the main event.
+
+## Why *least squares*
+
+Draw a scatterplot and you could sketch many lines through it. Which one does regression pick?
+
+It picks the line that makes the residuals smallest, in a specific sense: it minimizes the *sum of the squared* residuals. Two questions follow naturally. Why sum them, and why square them first?
+
+Summing raw residuals will not work, because positive and negative errors cancel. A line that misses badly in both directions could sum to zero and look perfect.
+
+Squaring solves the cancellation problem, and it does something else worth noticing. Squaring means a residual of 4 contributes sixteen times as much as a residual of 1, not four times. The procedure therefore works much harder to avoid large misses than small ones. That is a defensible choice, since being wildly wrong about one family is arguably worse than being slightly wrong about four. But it is a *choice*, built into the method, and it is why a single extreme observation can pull a regression line noticeably toward itself. We return to that in Module 10.
+
+## How well does the line fit?
+
+$R^2$ answers this. It is the proportion of variation in the outcome that the model accounts for, running from 0 to 1.
+
+Three things students routinely get wrong about it.
+
+$R^2$ is not the probability the model is correct. A model with $R^2$ of .60 is not "60% right."
+
+$R^2$ says nothing about whether your coefficients are trustworthy. A model can have a low $R^2$ and still contain a precisely estimated, substantively important slope. Human behavior is hard to predict; interesting effects often live inside models that leave most of the variance unexplained.
+
+$R^2$ always rises when you add predictors, even useless ones. Adding a column of random numbers will nudge it upward. This is why adjusted $R^2$ exists: it penalizes the count of predictors, so it can go *down* when you add something that does not earn its place.
+
+## More than one predictor
+
+Family income is not the only thing shaping a food budget. Adding number of children gives:
+
+$$\text{food} = \alpha + \beta_1(\text{income}) + \beta_2(\text{children}) + \varepsilon$$
+
+Now each coefficient means something more specific. The income slope is the predicted change in food spending per dollar of income *among families with the same number of children*. The children slope is the predicted difference per additional child *among families with the same income*.
+
+The usual phrase is "holding constant" or "controlling for," and the phrase does real damage if taken too literally. Nothing has been held constant. Nobody intervened. The model is performing an arithmetic adjustment, estimating what the association would look like if the families being compared did not differ on the other measured variables. Whether that adjustment gets you close to a meaningful comparison depends on whether you measured the things that matter. Controlling for the variables you happened to collect is not the same as controlling for the variables that are doing the work.
+
+### Watch what moves
+
+Here is a habit worth building. When you add a predictor, do not only look at the new coefficient. Look at what happened to the old ones.
+
+If the income coefficient barely changes when children enter the model, income and family size are telling you fairly separate things. If it drops substantially, they are entangled, and the first model was crediting income with something that belonged partly to family size.
+
+That movement is often more informative than any single p-value, and it is the logic behind building models in steps rather than fitting one model with everything in it. In this course we will build up model sequences constantly, and reading across them is the skill.
+
+### Comparing coefficients
+
+A coefficient's size depends on its units. Income measured in dollars produces a small slope; the same income measured in thousands produces a slope a thousand times larger. Nothing about the relationship changed.
+
+So you cannot look at two coefficients in a table and conclude the bigger one matters more. They may be on entirely different scales. Standardized coefficients, expressed in standard deviation units, make within-model comparison possible, though comparing them across models or samples brings its own problems.
+
+The safer habit is to interpret each coefficient in its own units and ask whether that magnitude is substantively meaningful. Does $826 more per year on food matter to a family? That is a question about families, not about statistics, and it is usually the question your reader has.
+
+## Categorical predictors
+
+Whether a family keeps a garden is not a quantity. It is a category, and it needs different handling.
+
+For a two-category variable this is straightforward: code it 0 and 1, and the coefficient becomes the predicted difference between the groups. With more than two categories, one becomes the reference and each remaining category gets its own coefficient describing its difference from that reference. Software does this automatically once you tell it the variable is categorical — in R, once you make it a factor.
+
+The failure mode is forgetting that step. A variable coded 1, 2, 3 for three program types looks numeric to R, which will fit a single slope, treating the step from program 1 to 2 as equivalent to the step from 2 to 3. The model runs. The output looks normal. The result is meaningless, and nothing warns you.
+
+This is the most common analysis error I see in student work, and it costs nothing to prevent.
+
+## Interactions
+
+Everything so far assumes the predictors are *additive*: the effect of income on food spending is the same regardless of family size, and vice versa. Each predictor contributes its bit, independently.
+
+That assumption is often wrong, and it is frequently wrong in the interesting way. An extra thousand dollars of income might mean something quite different for a family of six than for a family of two. If so, income and family size *interact*: the slope of one depends on the value of the other.
+
+You specify this by adding a product term. Substantively, a significant interaction means you can no longer report a single "effect of income," because there isn't one. There is an effect of income at each family size, and the honest way to communicate it is usually a plot rather than a coefficient.
+
+Two cautions. Interactions are badly underpowered: detecting one reliably takes a much larger sample than detecting a main effect, so a non-significant interaction in 50 families is weak evidence of anything. And failing to find one is not the same as showing there isn't one — "we did not detect an interaction in this sample" is a claim about the study, while "there is no interaction" is a claim about the world.
+
+Interactions matter enormously in this course. In multilevel models they become the tool for asking whether a relationship differs across schools, or classrooms, or people.
+
+## Centering
+
+When you include an interaction, the main effects change meaning. The income coefficient in a model with an income-by-children interaction is no longer "the effect of income." It is the effect of income *when children equals zero*.
+
+If zero children is a real and interesting case, fine. Often the equivalent value is neither. In a model interacting age with something else, the main effect would describe a person of age zero.
+
+Centering fixes this. Subtract the mean from a predictor, and zero now means "average." The main effect becomes the effect at an average value of the other variable, which is a quantity you can write in a sentence.
+
+Centering changes no relationship in the model. The interaction coefficient, the fit, the residuals, and every prediction stay exactly the same. Only the intercept and the interpretation of main effects shift. This makes it a free improvement in clarity, which is why we do it routinely from Module 5 onward.
+
+## Assumptions, in order of how much trouble they cause
+
+Regression rests on several assumptions. Textbooks tend to list them as equals. They are not, and it is worth knowing which ones will actually bite you.
+
+**Linearity.** The relationship between each predictor and the outcome is a straight line. Check it with residual plots. Violations are usually fixable by transforming a variable or adding a squared term.
+
+**Correct specification.** The model includes the variables that matter. This one is serious, because omitting a relevant variable biases the coefficients of the ones you kept. No diagnostic plot will reveal it. Only substantive knowledge will.
+
+**Homoscedasticity.** Residual variance is constant across the range of predictions. When it isn't — often with income or expenditure data, where high earners vary more — the coefficients remain unbiased but the standard errors are wrong.
+
+**Normally distributed residuals.** Needed for hypothesis tests and confidence intervals in small samples, and progressively less important as the sample grows. Note that this concerns the *residuals*, not the outcome. A skewed outcome variable is not by itself a problem.
+
+**Measurement without error in the predictors.** Never literally true in social science. Measurement error in a predictor biases its coefficient, usually downward in simple regression and unpredictably in multiple regression. This is a strong argument for using well-validated measures and for reporting reliability, which is why Module 4 spends time on Cronbach's alpha.
+
+**Independence of observations.** Every observation carries information that no other observation carries.
+
+That last one gets a single line in most treatments. It deserves the rest of this reading.
+
+## Where regression runs out
+
+The independence assumption says that knowing one family's residual tells you nothing about another's. For our 50 families, sampled separately, that is reasonable.
+
+Now consider the data you actually work with.
+
+You have test scores from 3,000 students in 60 schools. Two students in the same school share a principal, a curriculum, a schedule, a neighborhood, a funding formula, and often a set of classmates. Knowing that one student in a school scored above average tells you something real about the next student from that school. They are not independent pieces of information.
+
+Or you have six yearly measurements from each of 1,700 children. All six scores from one child are linked by the fact that they belong to that child.
+
+Or you have survey responses from 40,000 people across 50 states, patients within hospitals, teachers within districts, employees within firms. The pattern is everywhere once you start looking for it. Social data are clustered because social life is clustered.
+
+Two consequences follow, and only the first is widely known.
+
+**Your standard errors are wrong.** Treating 3,000 clustered students as 3,000 independent observations means claiming far more information than you have. Standard errors come out too small, confidence intervals too narrow, p-values too optimistic. You will find significant results that are not there. And the problem gets *worse* with larger samples, not better, because adding more students to the same 60 schools adds less new information than the formula assumes.
+
+**Your coefficient is answering two questions at once.** This one is subtler and more interesting.
+
+Regress achievement on socioeconomic status across all 3,000 students and you get one number. But there are two distinct comparisons buried inside it. There is the *within-school* comparison: among students at the same school, how do higher-SES and lower-SES students differ? And there is the *between-school* comparison: how do schools serving higher-SES populations differ from schools serving lower-SES populations?
+
+Those are different questions with different answers and different policy implications. The first is about how a school treats the students it has. The second is about how schools differ from one another. Ordinary regression collapses them into a single coefficient that is a weighted blend of both, and does not tell you the mixing ratio.
+
+This is not a technicality. Analyses that ignore it have reached wrong conclusions about school effectiveness, neighborhood effects, and teacher quality, sometimes with real consequences for policy.
+
+## What multilevel modeling does about it
+
+Multilevel modeling addresses both problems directly.
+
+It fixes the standard errors by modeling the clustering explicitly rather than pretending it away. It separates within-group from between-group associations so you can report each. And it lets you ask questions ordinary regression cannot express at all: how much do schools differ from one another, and does the relationship between SES and achievement vary from school to school?
+
+That last question is the one I find most interesting. In a standard regression, an effect is a single number that applies everywhere. In a multilevel model, an effect can *vary*, and the variation itself becomes something to estimate and explain.
+
+Module 3 begins that work with the simplest possible version: a model with no predictors at all, which does nothing but ask how much of the variation in an outcome lies between groups rather than within them.
+
+## A note on what we are not covering
+
+You may encounter stepwise, forward, and backward selection: automated procedures that add and drop predictors based on statistical criteria. They appear in older textbooks and in software menus.
+
+We are not going to use them. They build models on purely statistical grounds, run large numbers of implicit hypothesis tests, produce results that do not replicate well, and yield coefficients and p-values that are biased by the selection process itself. They can also do incoherent things, like keeping one dummy variable from a categorical predictor while dropping another.
+
+In this course, and in most good practice, what goes into a model is a theoretical decision. You include a variable because your research question or the prior literature says it belongs, and you justify it in words.
+
+## A closing caution
+
+One more thing, and it is not a technical point.
+
+Regression describes associations among measured variables. It does not, on its own, license causal claims. Causality comes from research design — from randomization, or from a credible argument about why the comparison you are making is a fair one. No amount of statistical control substitutes for that.
+
+This matters especially when the variables involve people's circumstances rather than their choices. A coefficient on neighborhood poverty, or on free lunch status, or on a racial category, describes a difference between groups as they exist in a society that produced those differences. It does not describe something about the people in those groups. The phrasing you choose when reporting such a coefficient carries a claim about where the difference comes from, and it is worth choosing deliberately rather than by habit.
+
+We will return to this repeatedly. It is not a disclaimer to add at the end of a results section; it is a constraint on what the results section can say.
+
+## What to carry into the demonstration
+
+Three things.
+
+First, a coefficient is a statement about a particular model, not a property of the world. It changes when the model changes, and watching how it changes is informative.
+
+Second, an interaction means there is no single effect to report, and centering makes the surrounding coefficients interpretable again.
+
+Third, and most importantly: independence is the assumption that fails, and it fails in almost every dataset you will care about. Everything after Module 2 is about what to do instead.

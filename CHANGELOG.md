@@ -117,6 +117,28 @@ Logged as chapters are executed for the first time. Each entry is a place where 
 
 **Also added:** A callout on the general hazard. `tibble()` accepting a `NULL` column silently means a variable can go missing far from where the error appears. The habit worth teaching is to look upstream at where the object was created, and to run `str()` on unfamiliar objects before building data frames from them.
 
+### Added a Module 2 reading chapter
+
+**Added:** `02-reading-regression.qmd`, "Regression and Where It Runs Out," written to replace the two Sage readings currently assigned for Module 2 (Sim, 2018, on multiple linear regression; Schroeder et al., 2018, Chapter 1). Roughly 3,200 words, no code, placed immediately before the Module 2 demonstration chapter.
+
+**Why replace them.** Both readings are competent, and Schroeder has one real advantage: it uses the same food-and-income example as the Module 2 demo, so reading and demonstration already align. That connection is preserved in the new chapter.
+
+The gaps were these:
+
+- Neither reading sets up multilevel modeling. Sim's Assumption 4, that residuals are independent, receives one sentence, and it is the assumption the entire course exists to relax.
+- Neither covers interactions, although the Module 2 demonstration fits one.
+- Neither covers centering, which Module 5 depends on.
+- Sim devotes roughly a third of the entry to stepwise, forward, and backward selection, procedures the course does not use.
+- Schroeder Chapter 1 covers bivariate regression only, across 23 pages, which is slow for students who have completed EDUS 608.
+
+**What the new chapter covers:** the purpose of regression and its asymmetry with correlation; the food example; intercept, slope, and residual; why least squares squares; what $R^2$ is and is not; multiple predictors and the limits of "controlling for"; watching coefficients move as models are built; scale dependence of coefficients; categorical predictors and the factor trap; interactions and their power problems; centering; assumptions ordered by how much trouble they cause rather than as a flat list; and then, at length, the independence assumption and the two consequences of violating it.
+
+Those two consequences are the hinge of the chapter: standard errors that are too small, and a coefficient that silently blends within-group and between-group comparisons. The second point is the conceptual bridge into Module 3.
+
+Also included: a short section on why the course does not use automated variable selection, and a closing caution on causal language and on describing group differences, connecting back to the Module 1 QuantCrit reading.
+
+**Notation is light**, per the chosen approach: the regression equation and its parts, nothing further.
+
 ### All remaining chapters aligned to the demonstration handouts
 
 The remaining eight handouts were supplied. Every chapter except 6 now follows its handout's code, with explanation added around it. Verified programmatically: datasets, model object names, and outcome variables all match.

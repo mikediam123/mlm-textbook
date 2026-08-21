@@ -25,6 +25,7 @@ book:
     - part: "Foundations"
       chapters:
         - 01-getting-started.qmd
+        - 02-reading-regression.qmd
         - 02-regression-review.qmd
     - part: "Two-Level Models"
       chapters:

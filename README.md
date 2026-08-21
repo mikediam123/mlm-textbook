@@ -13,7 +13,8 @@ Every chapter except 6 follows the corresponding demonstration handout in `Video
 | Chapter | Topic | Data | Source |
 |---|---|---|---|
 | 1 | Getting Started with R and RStudio | `descriptive_gss.dta` | `MLM_Module_1_Handout.Qmd` |
-| 2 | Review of Linear Regression | `food.csv` | `Module_2_Handout.Rmd` |
+| 2 (reading) | Regression and Where It Runs Out | none | written for this book |
+| 2 (demo) | Review of Linear Regression | `food.csv` | `Module_2_Handout.Rmd` |
 | 3 | Intro to MLM and the Null Model | `hsbmerged.csv` | `MLM_Week_3_Handout.Rmd` |
 | 4 | Conditional Random Intercept Models | `lq2002.csv` | `MLM_Week_4_Handout.Rmd` |
 | 5 | Random Slope Models | `lq2002.csv` | `MLM_Module_5_Handout.Rmd` |

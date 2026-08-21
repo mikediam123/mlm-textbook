@@ -117,6 +117,30 @@ Logged as chapters are executed for the first time. Each entry is a place where 
 
 **Also added:** A callout on the general hazard. `tibble()` accepting a `NULL` column silently means a variable can go missing far from where the error appears. The habit worth teaching is to look upstream at where the object was created, and to run `str()` on unfamiliar objects before building data frames from them.
 
+### Rebuilt the student companion file generator
+
+`make_student_files.R` was written before the chapters were rewritten and split, and it had two silent failures.
+
+**Bug 1: the growth chapters were skipped entirely.** The file pattern was `^[0-9]{2}-`, which requires two digits followed by a hyphen. `08a-growth-intro.qmd` and `08b-growth-advanced.qmd` have a letter in between, so neither matched. The script would have run without error and produced nothing for Module 8. Pattern is now `^[0-9]{2}[a-z]?-`.
+
+**Bug 2: `lm()` models were never blanked.** The YOUR TURN heuristic looked only for `lmer`, `glmer`, `lme`, and `rlmer`. Chapter 2 is built entirely on `lm()`, so it produced a follow-along file with nothing for students to type, and Chapter 3's `model.regular` was missed too. The pattern now includes `lm` and `glm`, ordered longest-name-first so that `lmer(` does not match the shorter `lm` alternative.
+
+Blanked model calls per chapter after the fix: 0, 4, 2, 6, 5, 4, 6, 7, 7, 6, 7, 9. Sixty-three total. Chapter 1 correctly has none, since it covers descriptives only.
+
+**Added: Quarto follow-along worksheets.** Each chapter now produces three files rather than one.
+
+- `code/<chapter>-code.R` — complete reference code
+- `followalong/<chapter>-followalong.qmd` — a Quarto worksheet with YAML, callout-styled YOUR TURN prompts, and the book's version hidden in an HTML comment so it does not appear in rendered output
+- `followalong/<chapter>-followalong.R` — the same idea as a plain script
+
+The `.qmd` version matters because assignments are submitted as rendered Quarto documents, so the worksheet doubles as practice with the submission format.
+
+**Also handled:** prose-only chapters. The new Module 2 reading has no code chunks and would have produced an empty file; it is now skipped with a message. Blank lines are trimmed from the start and end of each generated chunk.
+
+**Note added to the worksheet preamble:** the document will not render until every YOUR TURN chunk is filled in, because later code depends on the models. That is deliberate, and saying so prevents students from reading it as a broken file.
+
+**Verification:** the script cannot be executed here, so its parsing and blanking logic was ported to Python and run against all 13 chapters to confirm file matching, chunk counts, and blank placement. The R source was separately checked for balanced delimiters after stripping string literals and comments.
+
 ### Added a Module 2 reading chapter
 
 **Added:** `02-reading-regression.qmd`, "Regression and Where It Runs Out," written to replace the two Sage readings currently assigned for Module 2 (Sim, 2018, on multiple linear regression; Schroeder et al., 2018, Chapter 1). Roughly 3,200 words, no code, placed immediately before the Module 2 demonstration chapter.

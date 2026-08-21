@@ -13,7 +13,7 @@ book:
     An online companion to Dr. Broda's Multilevel Modeling course (EDUS 664)
     at Virginia Commonwealth University. Each chapter works through the R code
     for one course module.
-  repo-url: https://github.com/YOURUSERNAME/mlm-textbook
+  repo-url: https://github.com/mikediam123/mlm-textbook
   repo-actions: [issue]
   sharing: [twitter, linkedin]
   search: true

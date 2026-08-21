@@ -236,6 +236,16 @@ The live site updates within a minute or two. Note that you must commit the `doc
 
 **If the site appears unstyled.** This is almost always the missing `.nojekyll` file from step 3.
 
+**If images show as broken icons on the published site but look fine locally.** The figure folders are not in the repository. Quarto writes plots to `docs/<chapter>_files/`, and a `.gitignore` rule like `*_files/` matches those as well as the knitr intermediates it was meant for. The rule needs a leading slash (`/*_files/`) so it applies only at the project root.
+
+Check with:
+
+```bash
+git check-ignore -v docs/01-getting-started_files
+```
+
+Silence means the folder will be committed. Any output names the offending rule and the line it sits on. After fixing the rule, `git add .` will pick the figures up.
+
 **Check for third-party scripts before publishing.** Pandoc's MathJax template historically injected a reference to `polyfill.io`, a CDN that was sold in 2024 and briefly served malware before the domain was suspended. This project uses KaTeX instead, which avoids it. After any render, it is worth confirming that nothing external crept back in:
 
 ```bash

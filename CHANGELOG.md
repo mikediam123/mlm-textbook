@@ -251,6 +251,18 @@ Both are generated from the `.qmd` files and cannot drift out of sync. Regenerat
 
 **Deliberately not done:** handing students the chapter `.qmd` files as-is. They are mostly prose and callouts, which is noise during a video, and a complete runnable file makes following along a matter of pressing Ctrl+Enter.
 
+### Broken images on the published site
+
+**Symptom:** Every plot showed as a broken image icon on GitHub Pages, while the same pages looked correct locally.
+
+**Cause:** My error in the original `.gitignore`. The rule `*_files/` was intended for knitr's intermediate folders at the project root, but with no leading slash it matches at any depth, including `docs/01-getting-started_files/` and every other figure folder Quarto generates. All 39 rendered plots were silently excluded from every commit. `git check-ignore -v docs/01-getting-started_files` reported `.gitignore:3:*_files/`, which confirmed it.
+
+The local/published split is the diagnostic signature: the files exist on disk, so local viewing works, and they were never committed, so the published site has nothing to serve.
+
+**Fix:** Anchored the rules to the project root as `/*_files/` and `/*_cache/`, so knitr intermediates are still ignored while the output figures are tracked. Also added `/_freeze/` explicitly.
+
+**Also added:** A troubleshooting entry in `SETUP.md` describing the symptom and the `git check-ignore -v` check, since this failure mode gives no error message anywhere.
+
 ### Rendered pages referenced polyfill.io
 
 **Symptom:** Clicking through the rendered book occasionally produced a login prompt from `polyfill.io`.

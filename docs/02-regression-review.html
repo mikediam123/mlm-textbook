@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
-<title>Applied Multilevel Modeling in R - 2&nbsp; Review of Linear Regression</title>
+<title>Applied Multilevel Modeling in R - 3&nbsp; Review of Linear Regression</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -62,7 +62,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./03-null-model.html" rel="next">
-<link href="./01-getting-started.html" rel="prev">
+<link href="./02-reading-regression.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -112,7 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-getting-started.html">Foundations</a></li><li class="breadcrumb-item"><a href="./02-regression-review.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-getting-started.html">Foundations</a></li><li class="breadcrumb-item"><a href="./02-regression-review.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -176,8 +176,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./02-reading-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Reading: Regression and Where It Runs Out</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./02-regression-review.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -194,25 +200,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-null-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-random-intercept.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-random-slopes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-fit-effect-sizes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
   </div>
 </li>
       </ul>
@@ -229,25 +235,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-three-level.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08a-growth-intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08b-growth-advanced.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-binary-outcomes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -264,13 +270,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-cross-classified.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -289,22 +295,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#load-a-few-packages" id="toc-load-a-few-packages" class="nav-link active" data-scroll-target="#load-a-few-packages"><span class="header-section-number">2.1</span> Load a few packages</a></li>
-  <li><a href="#input-the-food-dataset" id="toc-input-the-food-dataset" class="nav-link" data-scroll-target="#input-the-food-dataset"><span class="header-section-number">2.2</span> Input the food dataset</a></li>
-  <li><a href="#data-cleaning-and-coding" id="toc-data-cleaning-and-coding" class="nav-link" data-scroll-target="#data-cleaning-and-coding"><span class="header-section-number">2.3</span> Data cleaning and coding</a></li>
-  <li><a href="#use-skim-for-a-nice-summary" id="toc-use-skim-for-a-nice-summary" class="nav-link" data-scroll-target="#use-skim-for-a-nice-summary"><span class="header-section-number">2.4</span> Use <code>skim</code> for a nice summary</a></li>
-  <li><a href="#a-simple-linear-regression-does-income-predict-food-consumption" id="toc-a-simple-linear-regression-does-income-predict-food-consumption" class="nav-link" data-scroll-target="#a-simple-linear-regression-does-income-predict-food-consumption"><span class="header-section-number">2.5</span> A simple linear regression: does income predict food consumption?</a></li>
-  <li><a href="#what-about-kids-do-things-change-when-we-account-for-them" id="toc-what-about-kids-do-things-change-when-we-account-for-them" class="nav-link" data-scroll-target="#what-about-kids-do-things-change-when-we-account-for-them"><span class="header-section-number">2.6</span> What about kids? Do things change when we account for them?</a></li>
-  <li><a href="#now-what-about-families-who-have-a-garden" id="toc-now-what-about-families-who-have-a-garden" class="nav-link" data-scroll-target="#now-what-about-families-who-have-a-garden"><span class="header-section-number">2.7</span> Now, what about families who have a garden?</a></li>
-  <li><a href="#does-the-number-of-children-moderate-the-income-food-relationship" id="toc-does-the-number-of-children-moderate-the-income-food-relationship" class="nav-link" data-scroll-target="#does-the-number-of-children-moderate-the-income-food-relationship"><span class="header-section-number">2.8</span> Does the number of children moderate the income-food relationship?</a></li>
-  <li><a href="#organizing-your-results" id="toc-organizing-your-results" class="nav-link" data-scroll-target="#organizing-your-results"><span class="header-section-number">2.9</span> Organizing your results</a></li>
-  <li><a href="#where-this-goes-next" id="toc-where-this-goes-next" class="nav-link" data-scroll-target="#where-this-goes-next"><span class="header-section-number">2.10</span> Where this goes next</a></li>
+<li><a href="#load-a-few-packages" id="toc-load-a-few-packages" class="nav-link active" data-scroll-target="#load-a-few-packages"><span class="header-section-number">3.1</span> Load a few packages</a></li>
+  <li><a href="#input-the-food-dataset" id="toc-input-the-food-dataset" class="nav-link" data-scroll-target="#input-the-food-dataset"><span class="header-section-number">3.2</span> Input the food dataset</a></li>
+  <li><a href="#data-cleaning-and-coding" id="toc-data-cleaning-and-coding" class="nav-link" data-scroll-target="#data-cleaning-and-coding"><span class="header-section-number">3.3</span> Data cleaning and coding</a></li>
+  <li><a href="#use-skim-for-a-nice-summary" id="toc-use-skim-for-a-nice-summary" class="nav-link" data-scroll-target="#use-skim-for-a-nice-summary"><span class="header-section-number">3.4</span> Use <code>skim</code> for a nice summary</a></li>
+  <li><a href="#a-simple-linear-regression-does-income-predict-food-consumption" id="toc-a-simple-linear-regression-does-income-predict-food-consumption" class="nav-link" data-scroll-target="#a-simple-linear-regression-does-income-predict-food-consumption"><span class="header-section-number">3.5</span> A simple linear regression: does income predict food consumption?</a></li>
+  <li><a href="#what-about-kids-do-things-change-when-we-account-for-them" id="toc-what-about-kids-do-things-change-when-we-account-for-them" class="nav-link" data-scroll-target="#what-about-kids-do-things-change-when-we-account-for-them"><span class="header-section-number">3.6</span> What about kids? Do things change when we account for them?</a></li>
+  <li><a href="#now-what-about-families-who-have-a-garden" id="toc-now-what-about-families-who-have-a-garden" class="nav-link" data-scroll-target="#now-what-about-families-who-have-a-garden"><span class="header-section-number">3.7</span> Now, what about families who have a garden?</a></li>
+  <li><a href="#does-the-number-of-children-moderate-the-income-food-relationship" id="toc-does-the-number-of-children-moderate-the-income-food-relationship" class="nav-link" data-scroll-target="#does-the-number-of-children-moderate-the-income-food-relationship"><span class="header-section-number">3.8</span> Does the number of children moderate the income-food relationship?</a></li>
+  <li><a href="#organizing-your-results" id="toc-organizing-your-results" class="nav-link" data-scroll-target="#organizing-your-results"><span class="header-section-number">3.9</span> Organizing your results</a></li>
+  <li><a href="#where-this-goes-next" id="toc-where-this-goes-next" class="nav-link" data-scroll-target="#where-this-goes-next"><span class="header-section-number">3.10</span> Where this goes next</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOURUSERNAME/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
-<span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span>
+<span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
@@ -333,8 +339,8 @@ Data file needed
 </div>
 </div>
 <p>Multilevel models are an extension of regression, so it is worth making sure the foundation is solid before building on it. This chapter reviews simple and multiple regression, interactions, and how to present a series of models. The data come from the reading: 50 families, with information on food expenditures, income, children, and whether the family keeps a garden.</p>
-<section id="load-a-few-packages" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="load-a-few-packages">
-<span class="header-section-number">2.1</span> Load a few packages</h2>
+<section id="load-a-few-packages" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="load-a-few-packages">
+<span class="header-section-number">3.1</span> Load a few packages</h2>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -348,8 +354,8 @@ Data file needed
 </div>
 </div>
 <p><code>ggplot2</code> is part of the tidyverse, so loading it separately is not strictly necessary, but naming it explicitly makes clear that we plan to plot. <code>broom</code> tidies model output into data frames. <code>skimr</code> gives a compact and readable summary of a dataset.</p>
-</section><section id="input-the-food-dataset" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="input-the-food-dataset">
-<span class="header-section-number">2.2</span> Input the food dataset</h2>
+</section><section id="input-the-food-dataset" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="input-the-food-dataset">
+<span class="header-section-number">3.2</span> Input the food dataset</h2>
 <div class="cell">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">food</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"food.csv"</span><span class="op">)</span></span>
 <span></span>
@@ -364,8 +370,8 @@ $ HAVEGARDEN      &lt;chr&gt; "NO", "NO", "NO", "YES", "YES", "NO", "YES", "NO",
 </div>
 </div>
 <p><code>view(food)</code> opens the data in a spreadsheet-style window, which is useful while exploring but does nothing in a rendered document, so it is left out here.</p>
-</section><section id="data-cleaning-and-coding" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="data-cleaning-and-coding">
-<span class="header-section-number">2.3</span> Data cleaning and coding</h2>
+</section><section id="data-cleaning-and-coding" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="data-cleaning-and-coding">
+<span class="header-section-number">3.3</span> Data cleaning and coding</h2>
 <p>Three functions do the work. The first two come from <code>dplyr</code>, and the third from base R.</p>
 <p><strong><code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code></strong> changes the name of any variable in your dataset. The formula is <code>newname = oldname</code>. Here we are getting rid of capital letters and putting underscores between words, which makes everything easier to type and read. (Notice that the original file has a typo in one of the column names. Renaming is a good moment to quietly fix that.)</p>
 <p><strong><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code></strong> is another function I use constantly. It creates a new variable based on a transformation of an existing one. Here I take the renamed <code>have_garden</code> and create <code>have_garden_fac</code>, equal to the old variable but converted to a factor, which is what <code><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor()</a></code> does. Now R recognizes that “Yes” and “No” are two levels of a categorical variable, which it can use in frequency tables, regression models, and so on.</p>
@@ -403,8 +409,8 @@ $ have_garden_fac  &lt;fct&gt; NO, NO, NO, YES, YES, NO, YES, NO, NO, YES, NO, N
 </div>
 </div>
 <p>Running that comparison every time you clean a dataset is a habit worth forming. A drop of one row is what we expected here. A drop of forty would mean something very different, and you want to find that out now rather than in the results section.</p>
-</section><section id="use-skim-for-a-nice-summary" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="use-skim-for-a-nice-summary">
-<span class="header-section-number">2.4</span> Use <code>skim</code> for a nice summary</h2>
+</section><section id="use-skim-for-a-nice-summary" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="use-skim-for-a-nice-summary">
+<span class="header-section-number">3.4</span> Use <code>skim</code> for a nice summary</h2>
 <div class="cell">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="va">food.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -586,8 +592,8 @@ $ have_garden_fac  &lt;fct&gt; NO, NO, NO, YES, YES, NO, YES, NO, NO, YES, NO, N
 </div>
 </div>
 <p><code><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim()</a></code> splits the output by variable type, so numeric variables get means and quartiles while factors get counts of each level. It also shows a completion rate per variable, which is a quick check for missingness.</p>
-</section><section id="a-simple-linear-regression-does-income-predict-food-consumption" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="a-simple-linear-regression-does-income-predict-food-consumption">
-<span class="header-section-number">2.5</span> A simple linear regression: does income predict food consumption?</h2>
+</section><section id="a-simple-linear-regression-does-income-predict-food-consumption" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="a-simple-linear-regression-does-income-predict-food-consumption">
+<span class="header-section-number">3.5</span> A simple linear regression: does income predict food consumption?</h2>
 <div class="cell">
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">foodreg1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">food_consumption</span> <span class="op">~</span> <span class="va">family_income</span>, data <span class="op">=</span> <span class="va">food.clean</span><span class="op">)</span></span>
 <span></span>
@@ -615,8 +621,8 @@ F-statistic: 63.93 on 1 and 48 DF,  p-value: 2.236e-10</code></pre>
 </div>
 <p>The short answer is yes. Family income significantly predicts food expenditures, and the two are positively related. For each additional dollar of income, a family would be expected to spend an additional six cents on food. The relationship is highly significant. The adjusted <span class="math inline">R^2</span> is about .56, meaning family income by itself explains roughly 56 percent of the variation in food expenditures.</p>
 <p>A note on language while we are here. “Predicts” is the right word; “causes” is not. Nobody assigned these families their incomes, and plenty of things that travel with income could be doing the work. Regression describes association, and research design is what licenses causal claims.</p>
-</section><section id="what-about-kids-do-things-change-when-we-account-for-them" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="what-about-kids-do-things-change-when-we-account-for-them">
-<span class="header-section-number">2.6</span> What about kids? Do things change when we account for them?</h2>
+</section><section id="what-about-kids-do-things-change-when-we-account-for-them" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="what-about-kids-do-things-change-when-we-account-for-them">
+<span class="header-section-number">3.6</span> What about kids? Do things change when we account for them?</h2>
 <div class="cell">
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">foodreg2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">food_consumption</span> <span class="op">~</span> <span class="va">family_income</span> <span class="op">+</span> <span class="va">num_children</span>, data <span class="op">=</span> <span class="va">food.clean</span><span class="op">)</span></span>
 <span></span>
@@ -647,8 +653,8 @@ F-statistic: 37.98 on 2 and 47 DF,  p-value: 1.528e-10</code></pre>
 <p>Kids make a big difference too. For each additional child, we would expect a family to spend about $826 more per year on food. Because <code>family_income</code> is also in the model, we can say this holds while controlling for family income. Another way to put it: take two families with the same income, and the one with one more child is predicted to spend roughly $827 more per year.</p>
 <p>Notice also that the estimate for <code>family_income</code> has not changed much, from about .06 down to .05. The adjusted <span class="math inline">R^2</span> rose from .56 to .60, so adding number of children explained about four percent more of the variation.</p>
 <p>That stability in the income coefficient is itself informative. When a coefficient moves substantially after adding a variable, the two predictors are entangled and the first model was attributing to income something that belonged elsewhere. When it barely moves, as here, the two are telling you fairly separate things.</p>
-</section><section id="now-what-about-families-who-have-a-garden" class="level2" data-number="2.7"><h2 data-number="2.7" class="anchored" data-anchor-id="now-what-about-families-who-have-a-garden">
-<span class="header-section-number">2.7</span> Now, what about families who have a garden?</h2>
+</section><section id="now-what-about-families-who-have-a-garden" class="level2" data-number="3.7"><h2 data-number="3.7" class="anchored" data-anchor-id="now-what-about-families-who-have-a-garden">
+<span class="header-section-number">3.7</span> Now, what about families who have a garden?</h2>
 <div class="cell">
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">foodreg3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">food_consumption</span> <span class="op">~</span> <span class="va">family_income</span> <span class="op">+</span> <span class="va">num_children</span> <span class="op">+</span> <span class="va">have_garden_fac</span>,</span>
 <span>               data <span class="op">=</span> <span class="va">food.clean</span><span class="op">)</span></span>
@@ -680,8 +686,8 @@ F-statistic:    25 on 3 and 46 DF,  p-value: 9.576e-10</code></pre>
 </div>
 <p>Short answer: no, not after controlling for family income and number of children. As a side note, we could test whether gardens relate to food expenditures on their own by running a simple regression with only <code>have_garden_fac</code> as the predictor. But here, owning a garden does not appear significantly related to food expenditures once the other two variables are in the model.</p>
 <p>Notice how R handled the factor. It picked a reference category and reports the coefficient as a difference from it. This is exactly why converting to a factor mattered. Left as a raw number, a two-category variable would give the same answer, but a three-category variable would have produced one nonsensical slope instead of two comparisons.</p>
-</section><section id="does-the-number-of-children-moderate-the-income-food-relationship" class="level2" data-number="2.8"><h2 data-number="2.8" class="anchored" data-anchor-id="does-the-number-of-children-moderate-the-income-food-relationship">
-<span class="header-section-number">2.8</span> Does the number of children moderate the income-food relationship?</h2>
+</section><section id="does-the-number-of-children-moderate-the-income-food-relationship" class="level2" data-number="3.8"><h2 data-number="3.8" class="anchored" data-anchor-id="does-the-number-of-children-moderate-the-income-food-relationship">
+<span class="header-section-number">3.8</span> Does the number of children moderate the income-food relationship?</h2>
 <div class="cell">
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">foodreg4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">food_consumption</span> <span class="op">~</span> <span class="va">family_income</span> <span class="op">+</span> <span class="va">num_children</span> <span class="op">+</span></span>
 <span>                 <span class="va">family_income</span><span class="op">:</span><span class="va">num_children</span>,</span>
@@ -716,8 +722,8 @@ F-statistic: 26.64 on 3 and 46 DF,  p-value: 3.875e-10</code></pre>
 <p>That is fine as a first step, but another hypothesis is that these two variables <em>interact</em>, or moderate one another, so that the slope of one depends on the value of the other. We specify an interaction with the <code>:</code> symbol, and we include both main effects as well as the interaction term. If the interaction estimate is significant, some moderation is likely happening.</p>
 <p>In this case we do not have enough evidence to say an interaction exists. Power is likely an issue as well. We have only 50 observations, and interaction effects are notoriously underpowered, meaning you usually need a much larger sample to detect a true effect with any regularity.</p>
 <p>That last point deserves emphasis, because it is the difference between two very different sentences. “There is no interaction” is a claim about the world. “We did not detect an interaction with 50 families” is a claim about this study. Only the second one is supported here.</p>
-</section><section id="organizing-your-results" class="level2" data-number="2.9"><h2 data-number="2.9" class="anchored" data-anchor-id="organizing-your-results">
-<span class="header-section-number">2.9</span> Organizing your results</h2>
+</section><section id="organizing-your-results" class="level2" data-number="3.9"><h2 data-number="3.9" class="anchored" data-anchor-id="organizing-your-results">
+<span class="header-section-number">3.9</span> Organizing your results</h2>
 <p>Last thing: let’s make the results presentable. Reporting four models one <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> at a time is unreadable, and a single comparison table is how this belongs in a paper. We named our models along the way (<code>foodreg1</code>, <code>foodreg2</code>, and so on), so collecting them is easy.</p>
 <div class="cell">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -905,8 +911,8 @@ A note on <code>stargazer</code>
 <p>The demonstration video uses the <code>stargazer</code> package for this table, with an <code>out = "test.html"</code> option that does the same job. <code>stargazer</code> is no longer actively maintained and can fail with current versions of R, so this book uses <code>modelsummary</code> instead. The idea is identical, and <code><a href="https://modelsummary.com/man/modelsummary.html">modelsummary()</a></code> also handles the multilevel models we fit later, which <code>stargazer</code> does not.</p>
 </div>
 </div>
-</section><section id="where-this-goes-next" class="level2" data-number="2.10"><h2 data-number="2.10" class="anchored" data-anchor-id="where-this-goes-next">
-<span class="header-section-number">2.10</span> Where this goes next</h2>
+</section><section id="where-this-goes-next" class="level2" data-number="3.10"><h2 data-number="3.10" class="anchored" data-anchor-id="where-this-goes-next">
+<span class="header-section-number">3.10</span> Where this goes next</h2>
 <p>Every standard error in this chapter was computed as though these 50 families were 50 independent observations, which for these data is reasonable. But a great deal of social science data is not like that. Students sit in schools, patients in hospitals, employees in firms, and repeated measures inside people. When observations come in groups, treating them as independent produces standard errors that are too small and p-values that are too optimistic.</p>
 <p>It also raises a question ordinary regression cannot answer cleanly. A regression using everyone at once blends the comparison between two people in the same group with the comparison between two groups, and returns a single number that is neither.</p>
 <p>The next chapter takes up both problems, using 7,185 students nested within 160 schools.</p>
@@ -1198,13 +1204,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./01-getting-started.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started with R and RStudio</span></span>
+      <a href="./02-reading-regression.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Reading: Regression and Where It Runs Out</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./03-null-model.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">

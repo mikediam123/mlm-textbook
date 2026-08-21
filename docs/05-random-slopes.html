@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
-<title>Applied Multilevel Modeling in R - 5&nbsp; Random Slope Models</title>
+<title>Applied Multilevel Modeling in R - 6&nbsp; Random Slope Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -99,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-null-model.html">Two-Level Models</a></li><li class="breadcrumb-item"><a href="./05-random-slopes.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-null-model.html">Two-Level Models</a></li><li class="breadcrumb-item"><a href="./05-random-slopes.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Random Slope Models</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -163,8 +163,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./02-reading-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Reading: Regression and Where It Runs Out</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./02-regression-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -181,25 +187,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-null-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-random-intercept.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-random-slopes.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-fit-effect-sizes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
   </div>
 </li>
       </ul>
@@ -216,25 +222,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-three-level.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08a-growth-intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08b-growth-advanced.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-binary-outcomes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -251,13 +257,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-cross-classified.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -276,38 +282,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#load-some-packages-to-help-with-the-analysis-and-data-management" id="toc-load-some-packages-to-help-with-the-analysis-and-data-management" class="nav-link active" data-scroll-target="#load-some-packages-to-help-with-the-analysis-and-data-management"><span class="header-section-number">5.1</span> Load some packages to help with the analysis and data management</a></li>
-  <li><a href="#load-and-explore-the-data" id="toc-load-and-explore-the-data" class="nav-link" data-scroll-target="#load-and-explore-the-data"><span class="header-section-number">5.2</span> Load and explore the data</a></li>
-  <li><a href="#data-management-tip-of-the-week-calculating-group-cluster-means" id="toc-data-management-tip-of-the-week-calculating-group-cluster-means" class="nav-link" data-scroll-target="#data-management-tip-of-the-week-calculating-group-cluster-means"><span class="header-section-number">5.3</span> Data management tip of the week: calculating group (cluster) means</a></li>
+<li><a href="#load-some-packages-to-help-with-the-analysis-and-data-management" id="toc-load-some-packages-to-help-with-the-analysis-and-data-management" class="nav-link active" data-scroll-target="#load-some-packages-to-help-with-the-analysis-and-data-management"><span class="header-section-number">6.1</span> Load some packages to help with the analysis and data management</a></li>
+  <li><a href="#load-and-explore-the-data" id="toc-load-and-explore-the-data" class="nav-link" data-scroll-target="#load-and-explore-the-data"><span class="header-section-number">6.2</span> Load and explore the data</a></li>
+  <li><a href="#data-management-tip-of-the-week-calculating-group-cluster-means" id="toc-data-management-tip-of-the-week-calculating-group-cluster-means" class="nav-link" data-scroll-target="#data-management-tip-of-the-week-calculating-group-cluster-means"><span class="header-section-number">6.3</span> Data management tip of the week: calculating group (cluster) means</a></li>
   <li>
-<a href="#running-random-slopes-models" id="toc-running-random-slopes-models" class="nav-link" data-scroll-target="#running-random-slopes-models"><span class="header-section-number">5.4</span> Running random slopes models</a>
+<a href="#running-random-slopes-models" id="toc-running-random-slopes-models" class="nav-link" data-scroll-target="#running-random-slopes-models"><span class="header-section-number">6.4</span> Running random slopes models</a>
   <ul class="collapse">
-<li><a href="#step-one-run-your-preferred-model-without-random-slopes" id="toc-step-one-run-your-preferred-model-without-random-slopes" class="nav-link" data-scroll-target="#step-one-run-your-preferred-model-without-random-slopes"><span class="header-section-number">5.4.1</span> Step one: run your preferred model <em>without</em> random slopes</a></li>
-  <li><a href="#step-two-add-a-random-slope-for-tsig" id="toc-step-two-add-a-random-slope-for-tsig" class="nav-link" data-scroll-target="#step-two-add-a-random-slope-for-tsig"><span class="header-section-number">5.4.2</span> Step two: add a random slope for TSIG</a></li>
-  <li><a href="#using-lmertest-to-evaluate-random-slope" id="toc-using-lmertest-to-evaluate-random-slope" class="nav-link" data-scroll-target="#using-lmertest-to-evaluate-random-slope"><span class="header-section-number">5.4.3</span> Using <code>lmerTest</code> to evaluate random slope</a></li>
-  <li><a href="#step-three-add-a-random-slope-for-lead" id="toc-step-three-add-a-random-slope-for-lead" class="nav-link" data-scroll-target="#step-three-add-a-random-slope-for-lead"><span class="header-section-number">5.4.4</span> Step three: add a random slope for LEAD</a></li>
-  <li><a href="#using-lmertest-to-evaluate-random-slope-1" id="toc-using-lmertest-to-evaluate-random-slope-1" class="nav-link" data-scroll-target="#using-lmertest-to-evaluate-random-slope-1"><span class="header-section-number">5.4.5</span> Using <code>lmerTest</code> to evaluate random slope</a></li>
+<li><a href="#step-one-run-your-preferred-model-without-random-slopes" id="toc-step-one-run-your-preferred-model-without-random-slopes" class="nav-link" data-scroll-target="#step-one-run-your-preferred-model-without-random-slopes"><span class="header-section-number">6.4.1</span> Step one: run your preferred model <em>without</em> random slopes</a></li>
+  <li><a href="#step-two-add-a-random-slope-for-tsig" id="toc-step-two-add-a-random-slope-for-tsig" class="nav-link" data-scroll-target="#step-two-add-a-random-slope-for-tsig"><span class="header-section-number">6.4.2</span> Step two: add a random slope for TSIG</a></li>
+  <li><a href="#using-lmertest-to-evaluate-random-slope" id="toc-using-lmertest-to-evaluate-random-slope" class="nav-link" data-scroll-target="#using-lmertest-to-evaluate-random-slope"><span class="header-section-number">6.4.3</span> Using <code>lmerTest</code> to evaluate random slope</a></li>
+  <li><a href="#step-three-add-a-random-slope-for-lead" id="toc-step-three-add-a-random-slope-for-lead" class="nav-link" data-scroll-target="#step-three-add-a-random-slope-for-lead"><span class="header-section-number">6.4.4</span> Step three: add a random slope for LEAD</a></li>
+  <li><a href="#using-lmertest-to-evaluate-random-slope-1" id="toc-using-lmertest-to-evaluate-random-slope-1" class="nav-link" data-scroll-target="#using-lmertest-to-evaluate-random-slope-1"><span class="header-section-number">6.4.5</span> Using <code>lmerTest</code> to evaluate random slope</a></li>
   </ul>
 </li>
   <li>
-<a href="#getting-fancy-modeling-a-cross-level-interaction" id="toc-getting-fancy-modeling-a-cross-level-interaction" class="nav-link" data-scroll-target="#getting-fancy-modeling-a-cross-level-interaction"><span class="header-section-number">5.5</span> Getting fancy: modeling a cross-level interaction</a>
+<a href="#getting-fancy-modeling-a-cross-level-interaction" id="toc-getting-fancy-modeling-a-cross-level-interaction" class="nav-link" data-scroll-target="#getting-fancy-modeling-a-cross-level-interaction"><span class="header-section-number">6.5</span> Getting fancy: modeling a cross-level interaction</a>
   <ul class="collapse">
-<li><a href="#step-one-create-centered-versions-of-your-two-predictors" id="toc-step-one-create-centered-versions-of-your-two-predictors" class="nav-link" data-scroll-target="#step-one-create-centered-versions-of-your-two-predictors"><span class="header-section-number">5.5.1</span> Step one: create centered versions of your two predictors</a></li>
-  <li><a href="#step-two-run-the-mlm-and-interpret-the-results" id="toc-step-two-run-the-mlm-and-interpret-the-results" class="nav-link" data-scroll-target="#step-two-run-the-mlm-and-interpret-the-results"><span class="header-section-number">5.5.2</span> Step two: run the MLM and interpret the results</a></li>
+<li><a href="#step-one-create-centered-versions-of-your-two-predictors" id="toc-step-one-create-centered-versions-of-your-two-predictors" class="nav-link" data-scroll-target="#step-one-create-centered-versions-of-your-two-predictors"><span class="header-section-number">6.5.1</span> Step one: create centered versions of your two predictors</a></li>
+  <li><a href="#step-two-run-the-mlm-and-interpret-the-results" id="toc-step-two-run-the-mlm-and-interpret-the-results" class="nav-link" data-scroll-target="#step-two-run-the-mlm-and-interpret-the-results"><span class="header-section-number">6.5.2</span> Step two: run the MLM and interpret the results</a></li>
   </ul>
 </li>
-  <li><a href="#interaction-effects-model" id="toc-interaction-effects-model" class="nav-link" data-scroll-target="#interaction-effects-model"><span class="header-section-number">5.6</span> Interaction effects model</a></li>
-  <li><a href="#should-we-include-that-interaction-comparing-model.4-with-model.5" id="toc-should-we-include-that-interaction-comparing-model.4-with-model.5" class="nav-link" data-scroll-target="#should-we-include-that-interaction-comparing-model.4-with-model.5"><span class="header-section-number">5.7</span> Should we include that interaction? Comparing <code>model.4</code> with <code>model.5</code></a></li>
-  <li><a href="#step-three-use-interplot-to-obtain-more-easily-interpretable-results" id="toc-step-three-use-interplot-to-obtain-more-easily-interpretable-results" class="nav-link" data-scroll-target="#step-three-use-interplot-to-obtain-more-easily-interpretable-results"><span class="header-section-number">5.8</span> Step three: use <code>interplot</code> to obtain more easily interpretable results</a></li>
-  <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">5.9</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
-  <li><a href="#html-version-that-you-can-open-in-word" id="toc-html-version-that-you-can-open-in-word" class="nav-link" data-scroll-target="#html-version-that-you-can-open-in-word"><span class="header-section-number">5.10</span> HTML version that you can open in Word</a></li>
-  <li><a href="#a-note-on-your-content-review" id="toc-a-note-on-your-content-review" class="nav-link" data-scroll-target="#a-note-on-your-content-review"><span class="header-section-number">5.11</span> A note on your content review</a></li>
+  <li><a href="#interaction-effects-model" id="toc-interaction-effects-model" class="nav-link" data-scroll-target="#interaction-effects-model"><span class="header-section-number">6.6</span> Interaction effects model</a></li>
+  <li><a href="#should-we-include-that-interaction-comparing-model.4-with-model.5" id="toc-should-we-include-that-interaction-comparing-model.4-with-model.5" class="nav-link" data-scroll-target="#should-we-include-that-interaction-comparing-model.4-with-model.5"><span class="header-section-number">6.7</span> Should we include that interaction? Comparing <code>model.4</code> with <code>model.5</code></a></li>
+  <li><a href="#step-three-use-interplot-to-obtain-more-easily-interpretable-results" id="toc-step-three-use-interplot-to-obtain-more-easily-interpretable-results" class="nav-link" data-scroll-target="#step-three-use-interplot-to-obtain-more-easily-interpretable-results"><span class="header-section-number">6.8</span> Step three: use <code>interplot</code> to obtain more easily interpretable results</a></li>
+  <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">6.9</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
+  <li><a href="#html-version-that-you-can-open-in-word" id="toc-html-version-that-you-can-open-in-word" class="nav-link" data-scroll-target="#html-version-that-you-can-open-in-word"><span class="header-section-number">6.10</span> HTML version that you can open in Word</a></li>
+  <li><a href="#a-note-on-your-content-review" id="toc-a-note-on-your-content-review" class="nav-link" data-scroll-target="#a-note-on-your-content-review"><span class="header-section-number">6.11</span> A note on your content review</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOURUSERNAME/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
-<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span>
+<span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Random Slope Models</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
@@ -324,15 +330,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header><p><strong>Data for this chapter:</strong> <code>lq2002.csv</code></p>
 <p>This week, we are going to continue using data from Gavin and Hofmann (2002), a study on organizational climate and attitudes published in <em>Leadership Quarterly</em>. Here, we have individual soldiers nested within companies. This is the same dataset that Garson uses in Chapter 7, so you can recreate his analysis.</p>
 <p>Every model so far has assumed that a predictor relates to the outcome the same way in every company. The slope was fixed; only the intercept was allowed to vary. This chapter relaxes that assumption.</p>
-<section id="load-some-packages-to-help-with-the-analysis-and-data-management" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="load-some-packages-to-help-with-the-analysis-and-data-management">
-<span class="header-section-number">5.1</span> Load some packages to help with the analysis and data management</h2>
+<section id="load-some-packages-to-help-with-the-analysis-and-data-management" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="load-some-packages-to-help-with-the-analysis-and-data-management">
+<span class="header-section-number">6.1</span> Load some packages to help with the analysis and data management</h2>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages()</a></code> hides the loading banners these packages print. Those messages are informative the first few times, particularly the tidyverse conflict list, and clutter after that.</p>
-</section><section id="load-and-explore-the-data" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="load-and-explore-the-data">
-<span class="header-section-number">5.2</span> Load and explore the data</h2>
+</section><section id="load-and-explore-the-data" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="load-and-explore-the-data">
+<span class="header-section-number">6.2</span> Load and explore the data</h2>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lq2002</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"lq2002.csv"</span><span class="op">)</span></span>
 <span></span>
@@ -370,8 +376,8 @@ $ GTSIG    &lt;dbl&gt; 3.541667, 3.541667, 3.541667, 3.541667, 3.541667, 3.54166
 $ GHOSTILE &lt;dbl&gt; 1.0416667, 1.0416667, 1.0416667, 1.0416667, 1.0416667, 1.0416…</code></pre>
 </div>
 </div>
-</section><section id="data-management-tip-of-the-week-calculating-group-cluster-means" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="data-management-tip-of-the-week-calculating-group-cluster-means">
-<span class="header-section-number">5.3</span> Data management tip of the week: calculating group (cluster) means</h2>
+</section><section id="data-management-tip-of-the-week-calculating-group-cluster-means" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="data-management-tip-of-the-week-calculating-group-cluster-means">
+<span class="header-section-number">6.3</span> Data management tip of the week: calculating group (cluster) means</h2>
 <p>Here is something that comes up a lot in MLM. Often, you want to take an individual-level measure and calculate the cluster, or group, mean. This is “aggregating up” an individual measure to see if it is a significant predictor at level 2. We did this last week with the task significance measure (<code>TSIG</code>). My own sense of task significance is important, but it is probably also important to consider how my colleagues feel about their work as well.</p>
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lq2002.1</span> <span class="op">&lt;-</span> <span class="va">lq2002</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -448,10 +454,10 @@ Do not forget <code><a href="https://dplyr.tidyverse.org/reference/group_by.html
 </div>
 </div>
 <p>Differences on the order of 1e-15 are floating point noise, not disagreement. Anything larger would mean the aggregation did not do what we thought.</p>
-</section><section id="running-random-slopes-models" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="running-random-slopes-models">
-<span class="header-section-number">5.4</span> Running random slopes models</h2>
-<section id="step-one-run-your-preferred-model-without-random-slopes" class="level3" data-number="5.4.1"><h3 data-number="5.4.1" class="anchored" data-anchor-id="step-one-run-your-preferred-model-without-random-slopes">
-<span class="header-section-number">5.4.1</span> Step one: run your preferred model <em>without</em> random slopes</h3>
+</section><section id="running-random-slopes-models" class="level2" data-number="6.4"><h2 data-number="6.4" class="anchored" data-anchor-id="running-random-slopes-models">
+<span class="header-section-number">6.4</span> Running random slopes models</h2>
+<section id="step-one-run-your-preferred-model-without-random-slopes" class="level3" data-number="6.4.1"><h3 data-number="6.4.1" class="anchored" data-anchor-id="step-one-run-your-preferred-model-without-random-slopes">
+<span class="header-section-number">6.4.1</span> Step one: run your preferred model <em>without</em> random slopes</h3>
 <p>Let’s assume that we ran a bunch of models with this army data (which we did, last week!), and arrived at a model that we thought best represented our data and matched our research questions. That is the model below, with a random intercept, two level-1 predictors (<code>LEAD</code> and <code>TSIG</code>), and one level-2 predictor (<code>GTSIG</code>). Let’s rerun that model to remind ourselves and also get measures of model fit (<code>AIC</code> and <code>BIC</code>) that we can use as we go along.</p>
 <div class="cell">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">GTSIG</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.1</span><span class="op">)</span></span>
@@ -489,8 +495,8 @@ LEAD  -0.205 -0.511
 GTSIG -0.942 -0.227  0.010</code></pre>
 </div>
 </div>
-</section><section id="step-two-add-a-random-slope-for-tsig" class="level3" data-number="5.4.2"><h3 data-number="5.4.2" class="anchored" data-anchor-id="step-two-add-a-random-slope-for-tsig">
-<span class="header-section-number">5.4.2</span> Step two: add a random slope for TSIG</h3>
+</section><section id="step-two-add-a-random-slope-for-tsig" class="level3" data-number="6.4.2"><h3 data-number="6.4.2" class="anchored" data-anchor-id="step-two-add-a-random-slope-for-tsig">
+<span class="header-section-number">6.4.2</span> Step two: add a random slope for TSIG</h3>
 <p>Now, the next logical step after testing predictors is to see whether or not any predictors should be treated as random at level-2. Here, we are going to test a random slope for <code>TSIG</code>. This is effectively allowing the slope of <code>TSIG</code> (which was overall negative) to vary according to which company a soldier is in. In some companies, that slope could now be higher, in some companies, it could be lower.</p>
 <p>In terms of coding, to add a random slope, you just list the predictor name again after the colon. Notice now that <code>TSIG</code> appears twice in the code: once to the left of the <code>~</code>, and once on the right side of the pipe operator (<code>|</code>).</p>
 <div class="cell">
@@ -551,8 +557,8 @@ Reading a singular fit
 <p>A singular fit does not invalidate the fixed effects, which are usually what you report. It does mean the random effects structure should be treated with suspicion. One standard response is to drop the correlation, fitting <code>(1|COMPID) + (0 + TSIG|COMPID)</code>, which asks for a slope that varies by company but is uncorrelated with the intercept.</p>
 </div>
 </div>
-</section><section id="using-lmertest-to-evaluate-random-slope" class="level3" data-number="5.4.3"><h3 data-number="5.4.3" class="anchored" data-anchor-id="using-lmertest-to-evaluate-random-slope">
-<span class="header-section-number">5.4.3</span> Using <code>lmerTest</code> to evaluate random slope</h3>
+</section><section id="using-lmertest-to-evaluate-random-slope" class="level3" data-number="6.4.3"><h3 data-number="6.4.3" class="anchored" data-anchor-id="using-lmertest-to-evaluate-random-slope">
+<span class="header-section-number">6.4.3</span> Using <code>lmerTest</code> to evaluate random slope</h3>
 <div class="cell">
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">lmerTest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">rand</a></span><span class="op">(</span><span class="va">model.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -569,8 +575,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>The likelihood ratio test gives you statistical evidence. It should not be the only thing you consult. A random slope that improves fit but has no substantive rationale is worth questioning, and a slope with a strong theoretical rationale that narrowly misses significance may still deserve to stay, particularly with a modest number of level-2 units.</p>
 <p>One technical note on reading this p-value. Testing whether a variance equals zero puts the null hypothesis on the boundary of the parameter space, which makes the usual chi-square reference distribution conservative. A significant result is therefore trustworthy. A marginal one deserves more caution than the number suggests.</p>
-</section><section id="step-three-add-a-random-slope-for-lead" class="level3" data-number="5.4.4"><h3 data-number="5.4.4" class="anchored" data-anchor-id="step-three-add-a-random-slope-for-lead">
-<span class="header-section-number">5.4.4</span> Step three: add a random slope for LEAD</h3>
+</section><section id="step-three-add-a-random-slope-for-lead" class="level3" data-number="6.4.4"><h3 data-number="6.4.4" class="anchored" data-anchor-id="step-three-add-a-random-slope-for-lead">
+<span class="header-section-number">6.4.4</span> Step three: add a random slope for LEAD</h3>
 <p>Same thing here, except now we are testing a random slope for <code>LEAD</code>:</p>
 <div class="cell">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">GTSIG</span> <span class="op">+</span> <span class="op">(</span><span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -614,8 +620,8 @@ optimizer (nloptwrap) convergence code: 0 (OK)
 boundary (singular) fit: see help('isSingular')</code></pre>
 </div>
 </div>
-</section><section id="using-lmertest-to-evaluate-random-slope-1" class="level3" data-number="5.4.5"><h3 data-number="5.4.5" class="anchored" data-anchor-id="using-lmertest-to-evaluate-random-slope-1">
-<span class="header-section-number">5.4.5</span> Using <code>lmerTest</code> to evaluate random slope</h3>
+</section><section id="using-lmertest-to-evaluate-random-slope-1" class="level3" data-number="6.4.5"><h3 data-number="6.4.5" class="anchored" data-anchor-id="using-lmertest-to-evaluate-random-slope-1">
+<span class="header-section-number">6.4.5</span> Using <code>lmerTest</code> to evaluate random slope</h3>
 <div class="cell">
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">lmerTest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">rand</a></span><span class="op">(</span><span class="va">model.3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -637,12 +643,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>Read this output carefully. <code>rand()</code> tests each random term separately, so the two slopes can come out differently: one may earn its place while the other does not. That is a more useful result than a single verdict on the whole random structure.</p>
 <p>Notice also how quickly the number of parameters grows. Two random slopes plus an intercept means three variances and three correlations, all estimated from 49 companies. This is the most common reason MLM models fail to converge, and it is worth doing the arithmetic before fitting rather than after.</p>
-</section></section><section id="getting-fancy-modeling-a-cross-level-interaction" class="level2" data-number="5.5"><h2 data-number="5.5" class="anchored" data-anchor-id="getting-fancy-modeling-a-cross-level-interaction">
-<span class="header-section-number">5.5</span> Getting fancy: modeling a cross-level interaction</h2>
+</section></section><section id="getting-fancy-modeling-a-cross-level-interaction" class="level2" data-number="6.5"><h2 data-number="6.5" class="anchored" data-anchor-id="getting-fancy-modeling-a-cross-level-interaction">
+<span class="header-section-number">6.5</span> Getting fancy: modeling a cross-level interaction</h2>
 <p>This is more advanced stuff, but I want to show you how you might model a cross-level interaction. Last week, we looked at the interaction between <code>LEAD</code> and <code>TSIG</code>, which is an interaction between two level-1 (soldier) covariates. In MLM, it is really easy to look at cross-level interactions, as well. So, let’s say we want to test whether there is an interaction between <code>TSIG</code> (level-1) and <code>GTSIG</code> (level-2). Put another way, is there an interaction between how I feel about the importance of my job, and how my peers feel about the importance of their job? Probably, and it is worth testing.</p>
 <p>Note the difference from a random slope. A random slope says slopes vary across companies but does not say why. A cross-level interaction tries to <em>explain</em> that variation using a level-2 variable.</p>
-<section id="step-one-create-centered-versions-of-your-two-predictors" class="level3" data-number="5.5.1"><h3 data-number="5.5.1" class="anchored" data-anchor-id="step-one-create-centered-versions-of-your-two-predictors">
-<span class="header-section-number">5.5.1</span> Step one: create centered versions of your two predictors</h3>
+<section id="step-one-create-centered-versions-of-your-two-predictors" class="level3" data-number="6.5.1"><h3 data-number="6.5.1" class="anchored" data-anchor-id="step-one-create-centered-versions-of-your-two-predictors">
+<span class="header-section-number">6.5.1</span> Step one: create centered versions of your two predictors</h3>
 <p>Centering a variable means to subtract the mean from every observation. So now that variable has a mean of 0 (0 now means average). When we look at interaction effects, it is usually a good idea to center any continuous predictors before analyzing. This facilitates easier interpretation of the results, and it ensures that the interaction is being evaluated near the sample mean.</p>
 <p>Centering works like this: you use the <code>mutate</code> function from <code>dplyr</code> to create a new variable that is equal to the original variable minus the mean (which we get using the <code>mean</code> function). Just to check our work, we can call the <code>describe</code> function from <code>psych</code> and make sure that the means of those new variables are 0.</p>
 <div class="cell">
@@ -723,8 +729,8 @@ tsig_cent     -0.47  0.02
 gtsig_cent    -1.05  0.01</code></pre>
 </div>
 </div>
-</section><section id="step-two-run-the-mlm-and-interpret-the-results" class="level3" data-number="5.5.2"><h3 data-number="5.5.2" class="anchored" data-anchor-id="step-two-run-the-mlm-and-interpret-the-results">
-<span class="header-section-number">5.5.2</span> Step two: run the MLM and interpret the results</h3>
+</section><section id="step-two-run-the-mlm-and-interpret-the-results" class="level3" data-number="6.5.2"><h3 data-number="6.5.2" class="anchored" data-anchor-id="step-two-run-the-mlm-and-interpret-the-results">
+<span class="header-section-number">6.5.2</span> Step two: run the MLM and interpret the results</h3>
 <div class="cell">
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">tsig_cent</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">gtsig_cent</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.2</span><span class="op">)</span></span>
 <span></span>
@@ -762,8 +768,8 @@ gtsig_cent -0.020 -0.227  0.010</code></pre>
 </div>
 </div>
 <p>Compare this to <code>model.1</code>. The coefficients on the predictors are identical, and only the intercept changed. That is centering working exactly as advertised: it relocates the origin without altering any relationship. What it buys you is an interpretable intercept, now the predicted hostility for a soldier of average task significance in a company of average task significance, which is a sentence you can put in a paper.</p>
-</section></section><section id="interaction-effects-model" class="level2" data-number="5.6"><h2 data-number="5.6" class="anchored" data-anchor-id="interaction-effects-model">
-<span class="header-section-number">5.6</span> Interaction effects model</h2>
+</section></section><section id="interaction-effects-model" class="level2" data-number="6.6"><h2 data-number="6.6" class="anchored" data-anchor-id="interaction-effects-model">
+<span class="header-section-number">6.6</span> Interaction effects model</h2>
 <div class="cell">
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">tsig_cent</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">gtsig_cent</span> <span class="op">+</span> <span class="va">tsig_cent</span><span class="op">:</span><span class="va">gtsig_cent</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.2</span><span class="op">)</span></span>
 <span></span>
@@ -803,8 +809,8 @@ gtsig_cent  -0.012 -0.232  0.008
 tsg_cnt:gt_ -0.107  0.070  0.032 -0.071</code></pre>
 </div>
 </div>
-</section><section id="should-we-include-that-interaction-comparing-model.4-with-model.5" class="level2" data-number="5.7"><h2 data-number="5.7" class="anchored" data-anchor-id="should-we-include-that-interaction-comparing-model.4-with-model.5">
-<span class="header-section-number">5.7</span> Should we include that interaction? Comparing <code>model.4</code> with <code>model.5</code>
+</section><section id="should-we-include-that-interaction-comparing-model.4-with-model.5" class="level2" data-number="6.7"><h2 data-number="6.7" class="anchored" data-anchor-id="should-we-include-that-interaction-comparing-model.4-with-model.5">
+<span class="header-section-number">6.7</span> Should we include that interaction? Comparing <code>model.4</code> with <code>model.5</code>
 </h2>
 <div class="cell">
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model.5</span>, <span class="va">model.4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -820,15 +826,15 @@ model.5    7 5530.2 5569.6 -2758.1    5516.2 5.4564  1     0.0195 *
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-</section><section id="step-three-use-interplot-to-obtain-more-easily-interpretable-results" class="level2" data-number="5.8"><h2 data-number="5.8" class="anchored" data-anchor-id="step-three-use-interplot-to-obtain-more-easily-interpretable-results">
-<span class="header-section-number">5.8</span> Step three: use <code>interplot</code> to obtain more easily interpretable results</h2>
+</section><section id="step-three-use-interplot-to-obtain-more-easily-interpretable-results" class="level2" data-number="6.8"><h2 data-number="6.8" class="anchored" data-anchor-id="step-three-use-interplot-to-obtain-more-easily-interpretable-results">
+<span class="header-section-number">6.8</span> Step three: use <code>interplot</code> to obtain more easily interpretable results</h2>
 <p>Interpreting significant interactions is hard, there’s no way around it. But the <code>margins</code> command can be super useful for this. We will use margins to compare hypothetical soldiers with different levels of <code>TSIG</code> who are in companies that have different levels of <code>GTSIG</code>. And then we will plot the results to create a nice visual.</p>
 <div class="cell">
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">interplot</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/interplot/man/interplot.html">interplot</a></span><span class="op">(</span><span class="va">model.5</span>, var1 <span class="op">=</span> <span class="st">"gtsig_cent"</span>, var2 <span class="op">=</span> <span class="st">"tsig_cent"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-interplot" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="05-random-slopes_files/figure-html/fig-interplot-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.1: The estimated effect of company task significance across levels of individual task significance.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;6.1: The estimated effect of company task significance across levels of individual task significance.</figcaption></figure>
 </div>
 </div>
 </div>
@@ -849,8 +855,8 @@ If <code>interplot</code> will not install
 <p>That version plots predicted hostility across task significance at three levels of company task significance, which many people find easier to read.</p>
 </div>
 </div>
-</section><section id="using-modelsummary-and-broom.mixed-to-organize-your-results" class="level2" data-number="5.9"><h2 data-number="5.9" class="anchored" data-anchor-id="using-modelsummary-and-broom.mixed-to-organize-your-results">
-<span class="header-section-number">5.9</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</h2>
+</section><section id="using-modelsummary-and-broom.mixed-to-organize-your-results" class="level2" data-number="6.9"><h2 data-number="6.9" class="anchored" data-anchor-id="using-modelsummary-and-broom.mixed-to-organize-your-results">
+<span class="header-section-number">6.9</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</h2>
 <div class="cell">
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bbolker/broom.mixed">broom.mixed</a></span><span class="op">)</span></span>
@@ -974,13 +980,13 @@ If <code>interplot</code> will not install
 </table>
 </div>
 </div>
-</section><section id="html-version-that-you-can-open-in-word" class="level2" data-number="5.10"><h2 data-number="5.10" class="anchored" data-anchor-id="html-version-that-you-can-open-in-word">
-<span class="header-section-number">5.10</span> HTML version that you can open in Word</h2>
+</section><section id="html-version-that-you-can-open-in-word" class="level2" data-number="6.10"><h2 data-number="6.10" class="anchored" data-anchor-id="html-version-that-you-can-open-in-word">
+<span class="header-section-number">6.10</span> HTML version that you can open in Word</h2>
 <div class="cell">
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>, output <span class="op">=</span> <span class="st">'msum.html'</span>, title <span class="op">=</span> <span class="st">'MLM Estimates'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="a-note-on-your-content-review" class="level2" data-number="5.11"><h2 data-number="5.11" class="anchored" data-anchor-id="a-note-on-your-content-review">
-<span class="header-section-number">5.11</span> A note on your content review</h2>
+</section><section id="a-note-on-your-content-review" class="level2" data-number="6.11"><h2 data-number="6.11" class="anchored" data-anchor-id="a-note-on-your-content-review">
+<span class="header-section-number">6.11</span> A note on your content review</h2>
 <p>The Module 5 content review uses the Best in Class data rather than these Army data. The steps are identical: fit a random intercept model, add a random slope, evaluate it with <code>rand()</code>, then test a cross-level interaction. What changes is the substance of the question, not the code.</p>
 
 
@@ -1271,12 +1277,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./04-random-intercept.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./06-fit-effect-sizes.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">

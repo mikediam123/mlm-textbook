@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
-<title>Applied Multilevel Modeling in R - 6&nbsp; Goodness-of-Fit and Effect Sizes</title>
+<title>Applied Multilevel Modeling in R - 7&nbsp; Goodness-of-Fit and Effect Sizes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -112,7 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-null-model.html">Two-Level Models</a></li><li class="breadcrumb-item"><a href="./06-fit-effect-sizes.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-null-model.html">Two-Level Models</a></li><li class="breadcrumb-item"><a href="./06-fit-effect-sizes.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -176,8 +176,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./02-reading-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Reading: Regression and Where It Runs Out</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./02-regression-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -194,25 +200,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-null-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-random-intercept.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-random-slopes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-fit-effect-sizes.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
   </div>
 </li>
       </ul>
@@ -229,25 +235,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-three-level.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08a-growth-intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08b-growth-advanced.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-binary-outcomes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -264,13 +270,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-cross-classified.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -289,29 +295,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#two-models-to-compare" id="toc-two-models-to-compare" class="nav-link active" data-scroll-target="#two-models-to-compare"><span class="header-section-number">6.1</span> Two models to compare</a></li>
+<li><a href="#two-models-to-compare" id="toc-two-models-to-compare" class="nav-link active" data-scroll-target="#two-models-to-compare"><span class="header-section-number">7.1</span> Two models to compare</a></li>
   <li>
-<a href="#proportional-reduction-in-variance" id="toc-proportional-reduction-in-variance" class="nav-link" data-scroll-target="#proportional-reduction-in-variance"><span class="header-section-number">6.2</span> Proportional reduction in variance</a>
+<a href="#proportional-reduction-in-variance" id="toc-proportional-reduction-in-variance" class="nav-link" data-scroll-target="#proportional-reduction-in-variance"><span class="header-section-number">7.2</span> Proportional reduction in variance</a>
   <ul class="collapse">
-<li><a href="#when-prv-comes-out-negative" id="toc-when-prv-comes-out-negative" class="nav-link" data-scroll-target="#when-prv-comes-out-negative"><span class="header-section-number">6.2.1</span> When PRV comes out negative</a></li>
+<li><a href="#when-prv-comes-out-negative" id="toc-when-prv-comes-out-negative" class="nav-link" data-scroll-target="#when-prv-comes-out-negative"><span class="header-section-number">7.2.1</span> When PRV comes out negative</a></li>
   </ul>
 </li>
-  <li><a href="#the-performance-package-version" id="toc-the-performance-package-version" class="nav-link" data-scroll-target="#the-performance-package-version"><span class="header-section-number">6.3</span> The <code>performance</code> package version</a></li>
-  <li><a href="#translating-for-a-non-technical-audience" id="toc-translating-for-a-non-technical-audience" class="nav-link" data-scroll-target="#translating-for-a-non-technical-audience"><span class="header-section-number">6.4</span> Translating for a non-technical audience</a></li>
+  <li><a href="#the-performance-package-version" id="toc-the-performance-package-version" class="nav-link" data-scroll-target="#the-performance-package-version"><span class="header-section-number">7.3</span> The <code>performance</code> package version</a></li>
+  <li><a href="#translating-for-a-non-technical-audience" id="toc-translating-for-a-non-technical-audience" class="nav-link" data-scroll-target="#translating-for-a-non-technical-audience"><span class="header-section-number">7.4</span> Translating for a non-technical audience</a></li>
   <li>
-<a href="#model-comparison-with-information-criteria" id="toc-model-comparison-with-information-criteria" class="nav-link" data-scroll-target="#model-comparison-with-information-criteria"><span class="header-section-number">6.5</span> Model comparison with information criteria</a>
+<a href="#model-comparison-with-information-criteria" id="toc-model-comparison-with-information-criteria" class="nav-link" data-scroll-target="#model-comparison-with-information-criteria"><span class="header-section-number">7.5</span> Model comparison with information criteria</a>
   <ul class="collapse">
-<li><a href="#when-the-criteria-disagree" id="toc-when-the-criteria-disagree" class="nav-link" data-scroll-target="#when-the-criteria-disagree"><span class="header-section-number">6.5.1</span> When the criteria disagree</a></li>
+<li><a href="#when-the-criteria-disagree" id="toc-when-the-criteria-disagree" class="nav-link" data-scroll-target="#when-the-criteria-disagree"><span class="header-section-number">7.5.1</span> When the criteria disagree</a></li>
   </ul>
 </li>
-  <li><a href="#when-a-model-will-not-converge" id="toc-when-a-model-will-not-converge" class="nav-link" data-scroll-target="#when-a-model-will-not-converge"><span class="header-section-number">6.6</span> When a model will not converge</a></li>
-  <li><a href="#putting-it-together" id="toc-putting-it-together" class="nav-link" data-scroll-target="#putting-it-together"><span class="header-section-number">6.7</span> Putting it together</a></li>
+  <li><a href="#when-a-model-will-not-converge" id="toc-when-a-model-will-not-converge" class="nav-link" data-scroll-target="#when-a-model-will-not-converge"><span class="header-section-number">7.6</span> When a model will not converge</a></li>
+  <li><a href="#putting-it-together" id="toc-putting-it-together" class="nav-link" data-scroll-target="#putting-it-together"><span class="header-section-number">7.7</span> Putting it together</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOURUSERNAME/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
-<span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span>
+<span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
@@ -377,8 +383,8 @@ dbl (7): ID, strs3, creg23, conflict_pre, conflict_post, closeness_pre, clos...
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 </div>
-<section id="two-models-to-compare" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="two-models-to-compare">
-<span class="header-section-number">6.1</span> Two models to compare</h2>
+<section id="two-models-to-compare" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="two-models-to-compare">
+<span class="header-section-number">7.1</span> Two models to compare</h2>
 <div class="cell">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m_null</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">conflict_post</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">strs3</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">strs</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
@@ -422,8 +428,8 @@ cnflct_pr_c -0.051  0.049
 clsnss_pr_c -0.082  0.088  0.303</code></pre>
 </div>
 </div>
-</section><section id="proportional-reduction-in-variance" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="proportional-reduction-in-variance">
-<span class="header-section-number">6.2</span> Proportional reduction in variance</h2>
+</section><section id="proportional-reduction-in-variance" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="proportional-reduction-in-variance">
+<span class="header-section-number">7.2</span> Proportional reduction in variance</h2>
 <p>The most interpretable multilevel effect sizes ask how much variance a model explains relative to the null model, computed separately at each level. Extract the variance components first:</p>
 <div class="cell">
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">vc_null</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/nlme/man/VarCorr.html">VarCorr</a></span><span class="op">(</span><span class="va">m_null</span><span class="op">)</span><span class="op">)</span></span>
@@ -470,11 +476,11 @@ clsnss_pr_c -0.082  0.088  0.303</code></pre>
 </div>
 </div>
 <p>Be precise about what each denominator refers to when you write these up. WG-PRV is the proportion of <em>student-level</em> variance explained, not the proportion of all variance. Reporting it as though it were an overall <span class="math inline">R^2</span> overstates your model considerably.</p>
-<section id="when-prv-comes-out-negative" class="level3" data-number="6.2.1"><h3 data-number="6.2.1" class="anchored" data-anchor-id="when-prv-comes-out-negative">
-<span class="header-section-number">6.2.1</span> When PRV comes out negative</h3>
+<section id="when-prv-comes-out-negative" class="level3" data-number="7.2.1"><h3 data-number="7.2.1" class="anchored" data-anchor-id="when-prv-comes-out-negative">
+<span class="header-section-number">7.2.1</span> When PRV comes out negative</h3>
 <p>A negative PRV looks like an arithmetic mistake and usually is not. Adding a level-one predictor can increase the estimated level-two variance, because the level-two variance is estimated conditional on everything else in the model. If a student-level predictor is unevenly distributed across teachers, controlling for it can reveal teacher differences that were previously masked. Report the negative value and explain it. Deleting it from your table is the one clearly wrong response.</p>
-</section></section><section id="the-performance-package-version" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="the-performance-package-version">
-<span class="header-section-number">6.3</span> The <code>performance</code> package version</h2>
+</section></section><section id="the-performance-package-version" class="level2" data-number="7.3"><h2 data-number="7.3" class="anchored" data-anchor-id="the-performance-package-version">
+<span class="header-section-number">7.3</span> The <code>performance</code> package version</h2>
 <div class="cell">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/performance/reference/r2.html">r2</a></span><span class="op">(</span><span class="va">m_cond</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -485,8 +491,8 @@ clsnss_pr_c -0.082  0.088  0.303</code></pre>
 </div>
 </div>
 <p>This reports marginal <span class="math inline">R^2</span>, the variance explained by fixed effects alone, and conditional <span class="math inline">R^2</span>, the variance explained by fixed and random effects together. These are Nakagawa’s measures, and they answer a slightly different question than the PRV statistics above. Both are defensible. Say which you used.</p>
-</section><section id="translating-for-a-non-technical-audience" class="level2" data-number="6.4"><h2 data-number="6.4" class="anchored" data-anchor-id="translating-for-a-non-technical-audience">
-<span class="header-section-number">6.4</span> Translating for a non-technical audience</h2>
+</section><section id="translating-for-a-non-technical-audience" class="level2" data-number="7.4"><h2 data-number="7.4" class="anchored" data-anchor-id="translating-for-a-non-technical-audience">
+<span class="header-section-number">7.4</span> Translating for a non-technical audience</h2>
 <p>Suppose a district administrator asks how big the program effect is. Effect sizes in variance units rarely land. Predicted values usually do:</p>
 <div class="cell">
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://strengejacke.github.io/ggeffects/">ggeffects</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -509,8 +515,8 @@ Adjusted for:
 </div>
 </div>
 <p>Reporting that the predicted conflict score is some specific amount lower in treated classrooms, on a scale that runs from 1 to 5, communicates more than a proportional reduction in variance ever will. A standardized mean difference is another good option when your audience is used to reading them.</p>
-</section><section id="model-comparison-with-information-criteria" class="level2" data-number="6.5"><h2 data-number="6.5" class="anchored" data-anchor-id="model-comparison-with-information-criteria">
-<span class="header-section-number">6.5</span> Model comparison with information criteria</h2>
+</section><section id="model-comparison-with-information-criteria" class="level2" data-number="7.5"><h2 data-number="7.5" class="anchored" data-anchor-id="model-comparison-with-information-criteria">
+<span class="header-section-number">7.5</span> Model comparison with information criteria</h2>
 <p>Now a different question: which model should we report? Start by adding a random slope for pretest conflict.</p>
 <div class="cell">
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m_slope</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">conflict_post</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">conflict_pre_c</span> <span class="op">+</span> <span class="va">closeness_pre_c</span> <span class="op">+</span></span>
@@ -561,13 +567,13 @@ m_cond   6 1338.128
 m_slope  8 1256.784</code></pre>
 </div>
 </div>
-<section id="when-the-criteria-disagree" class="level3" data-number="6.5.1"><h3 data-number="6.5.1" class="anchored" data-anchor-id="when-the-criteria-disagree">
-<span class="header-section-number">6.5.1</span> When the criteria disagree</h3>
+<section id="when-the-criteria-disagree" class="level3" data-number="7.5.1"><h3 data-number="7.5.1" class="anchored" data-anchor-id="when-the-criteria-disagree">
+<span class="header-section-number">7.5.1</span> When the criteria disagree</h3>
 <p>They often will, and understanding why is more useful than memorizing a rule. AIC and BIC both penalize complexity, but BIC’s penalty grows with sample size while AIC’s does not. With a large sample, BIC prefers simpler models more aggressively than AIC does. The likelihood ratio test is a third thing again: a hypothesis test with a null of no improvement, which inherits all the usual sensitivities to sample size.</p>
 <p>For random effects there is an additional wrinkle. Testing whether a variance component equals zero puts the null on the boundary of the parameter space, which makes the usual chi-square reference distribution conservative. The <code><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova()</a></code> function handles this, but it is a reason not to treat a p-value of .06 on a variance component as decisive.</p>
 <p>When the criteria disagree, say so, state which you weighted and why, and check whether your substantive conclusions change between the two models. If the treatment effect is essentially identical either way, the model choice matters less than it appears to.</p>
-</section></section><section id="when-a-model-will-not-converge" class="level2" data-number="6.6"><h2 data-number="6.6" class="anchored" data-anchor-id="when-a-model-will-not-converge">
-<span class="header-section-number">6.6</span> When a model will not converge</h2>
+</section></section><section id="when-a-model-will-not-converge" class="level2" data-number="7.6"><h2 data-number="7.6" class="anchored" data-anchor-id="when-a-model-will-not-converge">
+<span class="header-section-number">7.6</span> When a model will not converge</h2>
 <p>Ask for two random slopes and the data may refuse:</p>
 <div class="cell">
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m_two_slopes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">conflict_post</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">conflict_pre_c</span> <span class="op">+</span> <span class="va">closeness_pre_c</span> <span class="op">+</span></span>
@@ -587,8 +593,8 @@ m_slope  8 1256.784</code></pre>
 <span>                   <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">strs3</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">0</span> <span class="op">+</span> <span class="va">conflict_pre_c</span> <span class="op">|</span> <span class="va">strs3</span><span class="op">)</span>,</span>
 <span>                 data <span class="op">=</span> <span class="va">strs</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="putting-it-together" class="level2" data-number="6.7"><h2 data-number="6.7" class="anchored" data-anchor-id="putting-it-together">
-<span class="header-section-number">6.7</span> Putting it together</h2>
+</section><section id="putting-it-together" class="level2" data-number="7.7"><h2 data-number="7.7" class="anchored" data-anchor-id="putting-it-together">
+<span class="header-section-number">7.7</span> Putting it together</h2>
 <div class="cell">
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"Null"</span> <span class="op">=</span> <span class="va">m_null</span>, <span class="st">"Conditional"</span> <span class="op">=</span> <span class="va">m_cond</span>, <span class="st">"+ Random slope"</span> <span class="op">=</span> <span class="va">m_slope</span><span class="op">)</span>,</span>
@@ -1032,12 +1038,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./05-random-slopes.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./07-three-level.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">

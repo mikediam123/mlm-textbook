@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
-<title>Applied Multilevel Modeling in R - 4&nbsp; Conditional Random Intercept Models</title>
+<title>Applied Multilevel Modeling in R - 5&nbsp; Conditional Random Intercept Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -99,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-null-model.html">Two-Level Models</a></li><li class="breadcrumb-item"><a href="./04-random-intercept.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-null-model.html">Two-Level Models</a></li><li class="breadcrumb-item"><a href="./04-random-intercept.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -163,8 +163,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./02-reading-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Reading: Regression and Where It Runs Out</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./02-regression-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -181,25 +187,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-null-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-random-intercept.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-random-slopes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-fit-effect-sizes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
   </div>
 </li>
       </ul>
@@ -216,25 +222,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-three-level.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08a-growth-intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08b-growth-advanced.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-binary-outcomes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -251,13 +257,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-cross-classified.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -276,34 +282,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#load-some-packages-to-help-with-the-analysis-and-data-management" id="toc-load-some-packages-to-help-with-the-analysis-and-data-management" class="nav-link active" data-scroll-target="#load-some-packages-to-help-with-the-analysis-and-data-management"><span class="header-section-number">4.1</span> Load some packages to help with the analysis and data management</a></li>
-  <li><a href="#load-and-explore-the-data" id="toc-load-and-explore-the-data" class="nav-link" data-scroll-target="#load-and-explore-the-data"><span class="header-section-number">4.2</span> Load and explore the data</a></li>
-  <li><a href="#calculating-scale-scores-and-cronbachs-alpha" id="toc-calculating-scale-scores-and-cronbachs-alpha" class="nav-link" data-scroll-target="#calculating-scale-scores-and-cronbachs-alpha"><span class="header-section-number">4.3</span> Calculating scale scores and Cronbach’s alpha</a></li>
-  <li><a href="#scale-reliability-estimates-for-likert-type-scales" id="toc-scale-reliability-estimates-for-likert-type-scales" class="nav-link" data-scroll-target="#scale-reliability-estimates-for-likert-type-scales"><span class="header-section-number">4.4</span> Scale reliability estimates for Likert-type scales</a></li>
-  <li><a href="#save-scored-scales-as-new-variables" id="toc-save-scored-scales-as-new-variables" class="nav-link" data-scroll-target="#save-scored-scales-as-new-variables"><span class="header-section-number">4.5</span> Save scored scales as new variables</a></li>
-  <li><a href="#attach-the-new-variable-to-the-old-dataset" id="toc-attach-the-new-variable-to-the-old-dataset" class="nav-link" data-scroll-target="#attach-the-new-variable-to-the-old-dataset"><span class="header-section-number">4.6</span> Attach the new variable to the old dataset</a></li>
-  <li><a href="#visualizing-the-key-variables" id="toc-visualizing-the-key-variables" class="nav-link" data-scroll-target="#visualizing-the-key-variables"><span class="header-section-number">4.7</span> Visualizing the key variables</a></li>
+<li><a href="#load-some-packages-to-help-with-the-analysis-and-data-management" id="toc-load-some-packages-to-help-with-the-analysis-and-data-management" class="nav-link active" data-scroll-target="#load-some-packages-to-help-with-the-analysis-and-data-management"><span class="header-section-number">5.1</span> Load some packages to help with the analysis and data management</a></li>
+  <li><a href="#load-and-explore-the-data" id="toc-load-and-explore-the-data" class="nav-link" data-scroll-target="#load-and-explore-the-data"><span class="header-section-number">5.2</span> Load and explore the data</a></li>
+  <li><a href="#calculating-scale-scores-and-cronbachs-alpha" id="toc-calculating-scale-scores-and-cronbachs-alpha" class="nav-link" data-scroll-target="#calculating-scale-scores-and-cronbachs-alpha"><span class="header-section-number">5.3</span> Calculating scale scores and Cronbach’s alpha</a></li>
+  <li><a href="#scale-reliability-estimates-for-likert-type-scales" id="toc-scale-reliability-estimates-for-likert-type-scales" class="nav-link" data-scroll-target="#scale-reliability-estimates-for-likert-type-scales"><span class="header-section-number">5.4</span> Scale reliability estimates for Likert-type scales</a></li>
+  <li><a href="#save-scored-scales-as-new-variables" id="toc-save-scored-scales-as-new-variables" class="nav-link" data-scroll-target="#save-scored-scales-as-new-variables"><span class="header-section-number">5.5</span> Save scored scales as new variables</a></li>
+  <li><a href="#attach-the-new-variable-to-the-old-dataset" id="toc-attach-the-new-variable-to-the-old-dataset" class="nav-link" data-scroll-target="#attach-the-new-variable-to-the-old-dataset"><span class="header-section-number">5.6</span> Attach the new variable to the old dataset</a></li>
+  <li><a href="#visualizing-the-key-variables" id="toc-visualizing-the-key-variables" class="nav-link" data-scroll-target="#visualizing-the-key-variables"><span class="header-section-number">5.7</span> Visualizing the key variables</a></li>
   <li>
-<a href="#running-the-multilevel-models" id="toc-running-the-multilevel-models" class="nav-link" data-scroll-target="#running-the-multilevel-models"><span class="header-section-number">4.8</span> Running the multilevel models</a>
+<a href="#running-the-multilevel-models" id="toc-running-the-multilevel-models" class="nav-link" data-scroll-target="#running-the-multilevel-models"><span class="header-section-number">5.8</span> Running the multilevel models</a>
   <ul class="collapse">
-<li><a href="#step-one-the-null-model" id="toc-step-one-the-null-model" class="nav-link" data-scroll-target="#step-one-the-null-model"><span class="header-section-number">4.8.1</span> Step one: the null model</a></li>
-  <li><a href="#step-two-adding-a-level-one-predictor-tsig" id="toc-step-two-adding-a-level-one-predictor-tsig" class="nav-link" data-scroll-target="#step-two-adding-a-level-one-predictor-tsig"><span class="header-section-number">4.8.2</span> Step two: adding a level-one predictor, <code>TSIG</code></a></li>
-  <li><a href="#step-three-adding-an-additional-level-one-predictor-lead" id="toc-step-three-adding-an-additional-level-one-predictor-lead" class="nav-link" data-scroll-target="#step-three-adding-an-additional-level-one-predictor-lead"><span class="header-section-number">4.8.3</span> Step three: adding an additional level-one predictor, <code>LEAD</code></a></li>
-  <li><a href="#step-four-testing-the-interaction-of-lead-and-tsig" id="toc-step-four-testing-the-interaction-of-lead-and-tsig" class="nav-link" data-scroll-target="#step-four-testing-the-interaction-of-lead-and-tsig"><span class="header-section-number">4.8.4</span> Step four: testing the interaction of <code>LEAD</code> and <code>TSIG</code></a></li>
-  <li><a href="#step-five-adding-a-level-two-predictor-gtsig" id="toc-step-five-adding-a-level-two-predictor-gtsig" class="nav-link" data-scroll-target="#step-five-adding-a-level-two-predictor-gtsig"><span class="header-section-number">4.8.5</span> Step five: adding a level-two predictor, <code>GTSIG</code></a></li>
-  <li><a href="#step-six-adding-a-second-level-two-predictor-glead" id="toc-step-six-adding-a-second-level-two-predictor-glead" class="nav-link" data-scroll-target="#step-six-adding-a-second-level-two-predictor-glead"><span class="header-section-number">4.8.6</span> Step six: adding a second level-two predictor, <code>GLEAD</code></a></li>
+<li><a href="#step-one-the-null-model" id="toc-step-one-the-null-model" class="nav-link" data-scroll-target="#step-one-the-null-model"><span class="header-section-number">5.8.1</span> Step one: the null model</a></li>
+  <li><a href="#step-two-adding-a-level-one-predictor-tsig" id="toc-step-two-adding-a-level-one-predictor-tsig" class="nav-link" data-scroll-target="#step-two-adding-a-level-one-predictor-tsig"><span class="header-section-number">5.8.2</span> Step two: adding a level-one predictor, <code>TSIG</code></a></li>
+  <li><a href="#step-three-adding-an-additional-level-one-predictor-lead" id="toc-step-three-adding-an-additional-level-one-predictor-lead" class="nav-link" data-scroll-target="#step-three-adding-an-additional-level-one-predictor-lead"><span class="header-section-number">5.8.3</span> Step three: adding an additional level-one predictor, <code>LEAD</code></a></li>
+  <li><a href="#step-four-testing-the-interaction-of-lead-and-tsig" id="toc-step-four-testing-the-interaction-of-lead-and-tsig" class="nav-link" data-scroll-target="#step-four-testing-the-interaction-of-lead-and-tsig"><span class="header-section-number">5.8.4</span> Step four: testing the interaction of <code>LEAD</code> and <code>TSIG</code></a></li>
+  <li><a href="#step-five-adding-a-level-two-predictor-gtsig" id="toc-step-five-adding-a-level-two-predictor-gtsig" class="nav-link" data-scroll-target="#step-five-adding-a-level-two-predictor-gtsig"><span class="header-section-number">5.8.5</span> Step five: adding a level-two predictor, <code>GTSIG</code></a></li>
+  <li><a href="#step-six-adding-a-second-level-two-predictor-glead" id="toc-step-six-adding-a-second-level-two-predictor-glead" class="nav-link" data-scroll-target="#step-six-adding-a-second-level-two-predictor-glead"><span class="header-section-number">5.8.6</span> Step six: adding a second level-two predictor, <code>GLEAD</code></a></li>
   </ul>
 </li>
-  <li><a href="#should-we-include-that-interaction-comparing-model.2-with-model.3" id="toc-should-we-include-that-interaction-comparing-model.2-with-model.3" class="nav-link" data-scroll-target="#should-we-include-that-interaction-comparing-model.2-with-model.3"><span class="header-section-number">4.9</span> Should we include that interaction? Comparing <code>model.2</code> with <code>model.3</code></a></li>
-  <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">4.10</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
-  <li><a href="#html-version-that-you-can-open-in-word" id="toc-html-version-that-you-can-open-in-word" class="nav-link" data-scroll-target="#html-version-that-you-can-open-in-word"><span class="header-section-number">4.11</span> HTML version that you can open in Word</a></li>
-  <li><a href="#what-to-take-from-this-chapter" id="toc-what-to-take-from-this-chapter" class="nav-link" data-scroll-target="#what-to-take-from-this-chapter"><span class="header-section-number">4.12</span> What to take from this chapter</a></li>
+  <li><a href="#should-we-include-that-interaction-comparing-model.2-with-model.3" id="toc-should-we-include-that-interaction-comparing-model.2-with-model.3" class="nav-link" data-scroll-target="#should-we-include-that-interaction-comparing-model.2-with-model.3"><span class="header-section-number">5.9</span> Should we include that interaction? Comparing <code>model.2</code> with <code>model.3</code></a></li>
+  <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">5.10</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
+  <li><a href="#html-version-that-you-can-open-in-word" id="toc-html-version-that-you-can-open-in-word" class="nav-link" data-scroll-target="#html-version-that-you-can-open-in-word"><span class="header-section-number">5.11</span> HTML version that you can open in Word</a></li>
+  <li><a href="#what-to-take-from-this-chapter" id="toc-what-to-take-from-this-chapter" class="nav-link" data-scroll-target="#what-to-take-from-this-chapter"><span class="header-section-number">5.12</span> What to take from this chapter</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOURUSERNAME/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
-<span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span>
+<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
@@ -320,15 +326,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header><p><strong>Data for this chapter:</strong> <code>lq2002.csv</code></p>
 <p>This week, we are going to use data from Gavin and Hofmann (2002), a study on organizational climate and attitudes published in <em>Leadership Quarterly</em>. Here, we have individual soldiers nested within companies. This is the same dataset that Garson uses in Chapter 6, so you can recreate his analysis.</p>
 <p>The structure is the same as students within schools, which is a useful reminder that multilevel modeling is not about education specifically. Anywhere individuals are grouped, these methods apply.</p>
-<section id="load-some-packages-to-help-with-the-analysis-and-data-management" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="load-some-packages-to-help-with-the-analysis-and-data-management">
-<span class="header-section-number">4.1</span> Load some packages to help with the analysis and data management</h2>
+<section id="load-some-packages-to-help-with-the-analysis-and-data-management" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="load-some-packages-to-help-with-the-analysis-and-data-management">
+<span class="header-section-number">5.1</span> Load some packages to help with the analysis and data management</h2>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="load-and-explore-the-data" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="load-and-explore-the-data">
-<span class="header-section-number">4.2</span> Load and explore the data</h2>
+</section><section id="load-and-explore-the-data" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="load-and-explore-the-data">
+<span class="header-section-number">5.2</span> Load and explore the data</h2>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lq2002</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"lq2002.csv"</span><span class="op">)</span></span>
 <span></span>
@@ -433,8 +439,8 @@ GHOSTILE  0.01</code></pre>
 </div>
 <p>Writing <code><a href="https://rdrr.io/pkg/psych/man/describe.html">psych::describe()</a></code> rather than just <code><a href="https://rdrr.io/pkg/psych/man/describe.html">describe()</a></code> is a small habit worth adopting. Several packages define a function by that name, and the <code>package::function()</code> form says exactly which one you mean. If you have <code>Hmisc</code> loaded, as we did last week, the unqualified version may not be the one you expect.</p>
 <p>The variables we care about are <code>HOSTILE</code> (a hostility scale score, our outcome), <code>TSIG</code> (task significance), <code>LEAD</code> (leadership climate), and <code>COMPID</code> (company, our clustering variable). The variables beginning with <code>G</code> are group-level aggregates, which matter later in this chapter.</p>
-</section><section id="calculating-scale-scores-and-cronbachs-alpha" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="calculating-scale-scores-and-cronbachs-alpha">
-<span class="header-section-number">4.3</span> Calculating scale scores and Cronbach’s alpha</h2>
+</section><section id="calculating-scale-scores-and-cronbachs-alpha" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="calculating-scale-scores-and-cronbachs-alpha">
+<span class="header-section-number">5.3</span> Calculating scale scores and Cronbach’s alpha</h2>
 <p>This week, we are going to get a crash course in how to calculate reliability using Cronbach’s alpha. The <code>alpha</code> function in the <code>psych</code> package is a quick and easy way to calculate alpha:</p>
 <div class="cell">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hostile_items</span> <span class="op">&lt;-</span> <span class="va">lq2002</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -492,8 +498,8 @@ HOSTIL05 0.66 0.18 0.08 0.04 0.03    0</code></pre>
 <span><span class="va">my.scales</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/score.items.html">scoreItems</a></span><span class="op">(</span><span class="va">my.keys.list</span>, <span class="va">lq2002</span>, impute <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>impute = "none"</code> means a respondent missing any item gets a missing scale score rather than having the gap filled in. That is the conservative choice and the right default when you are learning; imputation is a decision that deserves its own justification.</p>
-</section><section id="scale-reliability-estimates-for-likert-type-scales" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="scale-reliability-estimates-for-likert-type-scales">
-<span class="header-section-number">4.4</span> Scale reliability estimates for Likert-type scales</h2>
+</section><section id="scale-reliability-estimates-for-likert-type-scales" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="scale-reliability-estimates-for-likert-type-scales">
+<span class="header-section-number">5.4</span> Scale reliability estimates for Likert-type scales</h2>
 <div class="cell">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">my.scales</span>, short <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -560,13 +566,13 @@ HOSTIL04 0.60 0.15 0.08 0.07 0.10    0
 HOSTIL05 0.66 0.18 0.08 0.04 0.03    0</code></pre>
 </div>
 </div>
-</section><section id="save-scored-scales-as-new-variables" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="save-scored-scales-as-new-variables">
-<span class="header-section-number">4.5</span> Save scored scales as new variables</h2>
+</section><section id="save-scored-scales-as-new-variables" class="level2" data-number="5.5"><h2 data-number="5.5" class="anchored" data-anchor-id="save-scored-scales-as-new-variables">
+<span class="header-section-number">5.5</span> Save scored scales as new variables</h2>
 <div class="cell">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my.scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">my.scales</span><span class="op">$</span><span class="va">scores</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="attach-the-new-variable-to-the-old-dataset" class="level2" data-number="4.6"><h2 data-number="4.6" class="anchored" data-anchor-id="attach-the-new-variable-to-the-old-dataset">
-<span class="header-section-number">4.6</span> Attach the new variable to the old dataset</h2>
+</section><section id="attach-the-new-variable-to-the-old-dataset" class="level2" data-number="5.6"><h2 data-number="5.6" class="anchored" data-anchor-id="attach-the-new-variable-to-the-old-dataset">
+<span class="header-section-number">5.6</span> Attach the new variable to the old dataset</h2>
 <div class="cell">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lq2002.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html">bind_cols</a></span><span class="op">(</span><span class="va">lq2002</span>, <span class="va">my.scores</span><span class="op">)</span></span>
 <span></span>
@@ -606,8 +612,8 @@ $ hostile  &lt;dbl&gt; 0.0, 1.2, 0.4, 1.8, 0.4, 0.0, 0.8, 0.0, 3.2, 0.2, 0.2, 1.
 </div>
 </div>
 <p><code><a href="https://dplyr.tidyverse.org/reference/bind_cols.html">bind_cols()</a></code> glues the new column onto the original data by position, so it assumes the rows are in the same order and that nothing was dropped along the way. That holds here because <code><a href="https://rdrr.io/pkg/psych/man/score.items.html">scoreItems()</a></code> returned one score per original row. It is worth being aware of, since a join by ID is safer whenever rows might have been reordered or filtered.</p>
-</section><section id="visualizing-the-key-variables" class="level2" data-number="4.7"><h2 data-number="4.7" class="anchored" data-anchor-id="visualizing-the-key-variables">
-<span class="header-section-number">4.7</span> Visualizing the key variables</h2>
+</section><section id="visualizing-the-key-variables" class="level2" data-number="5.7"><h2 data-number="5.7" class="anchored" data-anchor-id="visualizing-the-key-variables">
+<span class="header-section-number">5.7</span> Visualizing the key variables</h2>
 <p>Let’s take a look at some of the key variables for our analysis. We have three variables, all of which are scale scores constructed just like the example above.</p>
 <div class="cell">
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">lq2002</span><span class="op">$</span><span class="va">HOSTILE</span>,</span>
@@ -617,7 +623,7 @@ $ hostile  &lt;dbl&gt; 0.0, 1.2, 0.4, 1.8, 0.4, 0.0, 0.8, 0.0, 3.2, 0.2, 0.2, 1.
 <div class="cell-output-display">
 <div id="fig-hostile" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="04-random-intercept_files/figure-html/fig-hostile-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;4.1: Distribution of hostility scores.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;5.1: Distribution of hostility scores.</figcaption></figure>
 </div>
 </div>
 </div>
@@ -629,7 +635,7 @@ $ hostile  &lt;dbl&gt; 0.0, 1.2, 0.4, 1.8, 0.4, 0.0, 0.8, 0.0, 3.2, 0.2, 0.2, 1.
 <div class="cell-output-display">
 <div id="fig-tsig" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="04-random-intercept_files/figure-html/fig-tsig-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;4.2: Distribution of task significance scores.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;5.2: Distribution of task significance scores.</figcaption></figure>
 </div>
 </div>
 </div>
@@ -641,15 +647,15 @@ $ hostile  &lt;dbl&gt; 0.0, 1.2, 0.4, 1.8, 0.4, 0.0, 0.8, 0.0, 3.2, 0.2, 0.2, 1.
 <div class="cell-output-display">
 <div id="fig-lead" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="04-random-intercept_files/figure-html/fig-lead-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;4.3: Distribution of leadership climate scores.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;5.3: Distribution of leadership climate scores.</figcaption></figure>
 </div>
 </div>
 </div>
 <p>Notice the shape of the hostility distribution in particular. It piles up near the low end, which is what you would expect for a measure where most people report very little of the thing. That floor will matter when we interpret coefficients later, because there is limited room to move downward.</p>
-</section><section id="running-the-multilevel-models" class="level2" data-number="4.8"><h2 data-number="4.8" class="anchored" data-anchor-id="running-the-multilevel-models">
-<span class="header-section-number">4.8</span> Running the multilevel models</h2>
-<section id="step-one-the-null-model" class="level3" data-number="4.8.1"><h3 data-number="4.8.1" class="anchored" data-anchor-id="step-one-the-null-model">
-<span class="header-section-number">4.8.1</span> Step one: the null model</h3>
+</section><section id="running-the-multilevel-models" class="level2" data-number="5.8"><h2 data-number="5.8" class="anchored" data-anchor-id="running-the-multilevel-models">
+<span class="header-section-number">5.8</span> Running the multilevel models</h2>
+<section id="step-one-the-null-model" class="level3" data-number="5.8.1"><h3 data-number="5.8.1" class="anchored" data-anchor-id="step-one-the-null-model">
+<span class="header-section-number">5.8.1</span> Step one: the null model</h3>
 <div class="cell">
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.1</span><span class="op">)</span></span>
 <span></span>
@@ -678,8 +684,8 @@ Fixed effects:
 </div>
 </div>
 <p>The <code>(1|COMPID)</code> term is what makes this multilevel. Everything else follows from it.</p>
-<section id="post-estimation-task-calculate-icc" class="level4" data-number="4.8.1.1"><h4 data-number="4.8.1.1" class="anchored" data-anchor-id="post-estimation-task-calculate-icc">
-<span class="header-section-number">4.8.1.1</span> Post-estimation task: calculate ICC</h4>
+<section id="post-estimation-task-calculate-icc" class="level4" data-number="5.8.1.1"><h4 data-number="5.8.1.1" class="anchored" data-anchor-id="post-estimation-task-calculate-icc">
+<span class="header-section-number">5.8.1.1</span> Post-estimation task: calculate ICC</h4>
 <p>Here’s a quick and easy way to get our friend the ICC!</p>
 <div class="cell">
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">null.ICC</span> <span class="op">&lt;-</span> <span class="fl">0.05765</span><span class="op">/</span><span class="op">(</span><span class="fl">0.05765</span> <span class="op">+</span> <span class="fl">1.01668</span><span class="op">)</span></span>
@@ -690,8 +696,8 @@ Fixed effects:
 </div>
 <p>Note how much smaller this is than the ICC we found for schools and math achievement in the last chapter. That is substantively interesting rather than a problem. Soldiers’ hostility is mostly an individual matter, with companies accounting for a modest share of the variation.</p>
 <p>A small ICC does not mean you should abandon multilevel modeling. It still corrects the standard errors, and it still lets you ask questions about company-level predictors, which is exactly where this chapter is heading.</p>
-</section><section id="using-lmertest-to-evaluate-random-effects" class="level4" data-number="4.8.1.2"><h4 data-number="4.8.1.2" class="anchored" data-anchor-id="using-lmertest-to-evaluate-random-effects">
-<span class="header-section-number">4.8.1.2</span> Using <code>lmerTest</code> to evaluate random effects</h4>
+</section><section id="using-lmertest-to-evaluate-random-effects" class="level4" data-number="5.8.1.2"><h4 data-number="5.8.1.2" class="anchored" data-anchor-id="using-lmertest-to-evaluate-random-effects">
+<span class="header-section-number">5.8.1.2</span> Using <code>lmerTest</code> to evaluate random effects</h4>
 <div class="cell">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">lmerTest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">rand</a></span><span class="op">(</span><span class="va">model.0</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -719,8 +725,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p><code><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">lmerTest::rand()</a></code> has been renamed <code>ranova()</code> in current versions of the package. The old name still works, and it is what the demonstration video shows, so it is kept here. If you see <code>ranova()</code> in newer documentation, it is the same function.</p>
 </div>
 </div>
-</section></section><section id="step-two-adding-a-level-one-predictor-tsig" class="level3" data-number="4.8.2"><h3 data-number="4.8.2" class="anchored" data-anchor-id="step-two-adding-a-level-one-predictor-tsig">
-<span class="header-section-number">4.8.2</span> Step two: adding a level-one predictor, <code>TSIG</code>
+</section></section><section id="step-two-adding-a-level-one-predictor-tsig" class="level3" data-number="5.8.2"><h3 data-number="5.8.2" class="anchored" data-anchor-id="step-two-adding-a-level-one-predictor-tsig">
+<span class="header-section-number">5.8.2</span> Step two: adding a level-one predictor, <code>TSIG</code>
 </h3>
 <div class="cell">
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.1</span><span class="op">)</span></span>
@@ -755,8 +761,8 @@ TSIG -0.894</code></pre>
 </div>
 </div>
 <p>The coefficient for <code>TSIG</code> describes how hostility differs between two soldiers who differ by one unit in task significance. Because <code>TSIG</code> varies both within companies and between them, this single estimate blends two different comparisons. We separate them in step five.</p>
-</section><section id="step-three-adding-an-additional-level-one-predictor-lead" class="level3" data-number="4.8.3"><h3 data-number="4.8.3" class="anchored" data-anchor-id="step-three-adding-an-additional-level-one-predictor-lead">
-<span class="header-section-number">4.8.3</span> Step three: adding an additional level-one predictor, <code>LEAD</code>
+</section><section id="step-three-adding-an-additional-level-one-predictor-lead" class="level3" data-number="5.8.3"><h3 data-number="5.8.3" class="anchored" data-anchor-id="step-three-adding-an-additional-level-one-predictor-lead">
+<span class="header-section-number">5.8.3</span> Step three: adding an additional level-one predictor, <code>LEAD</code>
 </h3>
 <div class="cell">
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.1</span><span class="op">)</span></span>
@@ -793,8 +799,8 @@ LEAD -0.577 -0.523</code></pre>
 </div>
 </div>
 <p>Watch what happens to the <code>TSIG</code> coefficient when <code>LEAD</code> enters. Soldiers who find their work meaningful also tend to report better leadership climate, so some of what model 1 attributed to task significance was partly leadership.</p>
-</section><section id="step-four-testing-the-interaction-of-lead-and-tsig" class="level3" data-number="4.8.4"><h3 data-number="4.8.4" class="anchored" data-anchor-id="step-four-testing-the-interaction-of-lead-and-tsig">
-<span class="header-section-number">4.8.4</span> Step four: testing the interaction of <code>LEAD</code> and <code>TSIG</code>
+</section><section id="step-four-testing-the-interaction-of-lead-and-tsig" class="level3" data-number="5.8.4"><h3 data-number="5.8.4" class="anchored" data-anchor-id="step-four-testing-the-interaction-of-lead-and-tsig">
+<span class="header-section-number">5.8.4</span> Step four: testing the interaction of <code>LEAD</code> and <code>TSIG</code>
 </h3>
 <div class="cell">
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">TSIG</span><span class="op">:</span><span class="va">LEAD</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.1</span><span class="op">)</span></span>
@@ -834,8 +840,8 @@ TSIG:LEAD  0.901 -0.928 -0.915</code></pre>
 </div>
 <p>The <code>:</code> operator specifies an interaction. Writing <code>TSIG + LEAD + TSIG:LEAD</code> includes both main effects plus their interaction. The shorthand <code>TSIG*LEAD</code> does the same thing, and the longer form makes the structure visible, which is why it is worth writing out while you are learning.</p>
 <p>An interaction here asks whether the relationship between task significance and hostility depends on leadership climate. Both predictors are at level 1, so this is a <em>within-level</em> interaction. In the next chapter we look at cross-level interactions, where a level-2 variable moderates a level-1 slope.</p>
-</section><section id="step-five-adding-a-level-two-predictor-gtsig" class="level3" data-number="4.8.5"><h3 data-number="4.8.5" class="anchored" data-anchor-id="step-five-adding-a-level-two-predictor-gtsig">
-<span class="header-section-number">4.8.5</span> Step five: adding a level-two predictor, <code>GTSIG</code>
+</section><section id="step-five-adding-a-level-two-predictor-gtsig" class="level3" data-number="5.8.5"><h3 data-number="5.8.5" class="anchored" data-anchor-id="step-five-adding-a-level-two-predictor-gtsig">
+<span class="header-section-number">5.8.5</span> Step five: adding a level-two predictor, <code>GTSIG</code>
 </h3>
 <div class="cell">
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">GTSIG</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.1</span><span class="op">)</span></span>
@@ -875,8 +881,8 @@ GTSIG -0.942 -0.227  0.010</code></pre>
 </div>
 <p><code>GTSIG</code> is the company average of task significance. Having both <code>TSIG</code> and <code>GTSIG</code> in the model is not redundancy, even though it looks that way at first. The two coefficients answer different questions.</p>
 <p>The individual-level coefficient asks: within a given company, do soldiers who report higher task significance report less hostility? The group-level coefficient asks: do companies where task significance is high on average have lower hostility overall? A soldier can be high on task significance in a company where everyone is low, or low in a company where everyone is high. Those are genuinely different situations and can have different consequences.</p>
-</section><section id="step-six-adding-a-second-level-two-predictor-glead" class="level3" data-number="4.8.6"><h3 data-number="4.8.6" class="anchored" data-anchor-id="step-six-adding-a-second-level-two-predictor-glead">
-<span class="header-section-number">4.8.6</span> Step six: adding a second level-two predictor, <code>GLEAD</code>
+</section><section id="step-six-adding-a-second-level-two-predictor-glead" class="level3" data-number="5.8.6"><h3 data-number="5.8.6" class="anchored" data-anchor-id="step-six-adding-a-second-level-two-predictor-glead">
+<span class="header-section-number">5.8.6</span> Step six: adding a second level-two predictor, <code>GLEAD</code>
 </h3>
 <div class="cell">
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">GTSIG</span> <span class="op">+</span> <span class="va">GLEAD</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.1</span><span class="op">)</span></span>
@@ -917,8 +923,8 @@ GLEAD -0.559  0.154 -0.292 -0.460</code></pre>
 </div>
 </div>
 <p>Track the company-level variance as you move from the null model through model 5. It should shrink as level-2 predictors enter, because those predictors are explaining between-company differences the null model could only describe. That shrinkage is the clearest signal that a level-2 predictor is doing real work.</p>
-</section></section><section id="should-we-include-that-interaction-comparing-model.2-with-model.3" class="level2" data-number="4.9"><h2 data-number="4.9" class="anchored" data-anchor-id="should-we-include-that-interaction-comparing-model.2-with-model.3">
-<span class="header-section-number">4.9</span> Should we include that interaction? Comparing <code>model.2</code> with <code>model.3</code>
+</section></section><section id="should-we-include-that-interaction-comparing-model.2-with-model.3" class="level2" data-number="5.9"><h2 data-number="5.9" class="anchored" data-anchor-id="should-we-include-that-interaction-comparing-model.2-with-model.3">
+<span class="header-section-number">5.9</span> Should we include that interaction? Comparing <code>model.2</code> with <code>model.3</code>
 </h2>
 <div class="cell">
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model.2</span>, <span class="va">model.3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -935,8 +941,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 <p><code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> on two <code>lmer</code> objects performs a likelihood ratio test. It is valid here because both models were fit with <code>REML = FALSE</code>, that is, with maximum likelihood. Comparing REML-fitted models that differ in their fixed effects is not valid, which is one reason we use ML throughout this book.</p>
-</section><section id="using-modelsummary-and-broom.mixed-to-organize-your-results" class="level2" data-number="4.10"><h2 data-number="4.10" class="anchored" data-anchor-id="using-modelsummary-and-broom.mixed-to-organize-your-results">
-<span class="header-section-number">4.10</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</h2>
+</section><section id="using-modelsummary-and-broom.mixed-to-organize-your-results" class="level2" data-number="5.10"><h2 data-number="5.10" class="anchored" data-anchor-id="using-modelsummary-and-broom.mixed-to-organize-your-results">
+<span class="header-section-number">5.10</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</h2>
 <div class="cell">
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bbolker/broom.mixed">broom.mixed</a></span><span class="op">)</span></span>
@@ -1192,14 +1198,14 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>Reporting six models one <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> at a time is unreadable. A single comparison table is how this belongs in a paper, and reading across the columns is how you see what each addition changed.</p>
 <p><code>broom.mixed</code> is what makes this work. <code>modelsummary</code> knows how to format tables, but it relies on <code>broom.mixed</code> to translate <code>lmer</code> objects into tidy data frames first. Load it even though you never call it directly.</p>
-</section><section id="html-version-that-you-can-open-in-word" class="level2" data-number="4.11"><h2 data-number="4.11" class="anchored" data-anchor-id="html-version-that-you-can-open-in-word">
-<span class="header-section-number">4.11</span> HTML version that you can open in Word</h2>
+</section><section id="html-version-that-you-can-open-in-word" class="level2" data-number="5.11"><h2 data-number="5.11" class="anchored" data-anchor-id="html-version-that-you-can-open-in-word">
+<span class="header-section-number">5.11</span> HTML version that you can open in Word</h2>
 <div class="cell">
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>, output <span class="op">=</span> <span class="st">'msum.html'</span>, title <span class="op">=</span> <span class="st">'MLM Estimates'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This writes the table to a file in your working directory. Word opens HTML tables directly, so you can generate this, open it in Word, and paste it into a manuscript. <code>modelsummary</code> will also write <code>.docx</code> directly if you prefer: change the extension to <code>msum.docx</code>.</p>
-</section><section id="what-to-take-from-this-chapter" class="level2" data-number="4.12"><h2 data-number="4.12" class="anchored" data-anchor-id="what-to-take-from-this-chapter">
-<span class="header-section-number">4.12</span> What to take from this chapter</h2>
+</section><section id="what-to-take-from-this-chapter" class="level2" data-number="5.12"><h2 data-number="5.12" class="anchored" data-anchor-id="what-to-take-from-this-chapter">
+<span class="header-section-number">5.12</span> What to take from this chapter</h2>
 <p>Three ideas carry forward. Level-1 and level-2 versions of the same construct answer different questions and belong in the model together. Variance components tell a story as you build up models, and watching them shrink shows where your predictors are doing work. And a series of models belongs in one table, not six.</p>
 <p>The next chapter relaxes an assumption we have been making all along: that the relationship between a predictor and the outcome is the same in every company.</p>
 
@@ -1491,12 +1497,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./03-null-model.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./05-random-slopes.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">

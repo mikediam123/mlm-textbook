@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
-<title>Applied Multilevel Modeling in R - 11&nbsp; Checking Assumptions for MLMs</title>
+<title>Applied Multilevel Modeling in R - 12&nbsp; Checking Assumptions for MLMs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -99,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10-assumptions.html">Checking and Complicating</a></li><li class="breadcrumb-item"><a href="./10-assumptions.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10-assumptions.html">Checking and Complicating</a></li><li class="breadcrumb-item"><a href="./10-assumptions.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -163,8 +163,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./02-reading-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Reading: Regression and Where It Runs Out</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./02-regression-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -181,25 +187,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-null-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-random-intercept.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-random-slopes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-fit-effect-sizes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
   </div>
 </li>
       </ul>
@@ -216,25 +222,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-three-level.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08a-growth-intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08b-growth-advanced.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-binary-outcomes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -251,13 +257,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-assumptions.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-cross-classified.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -276,51 +282,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#load-in-our-mvp-packages" id="toc-load-in-our-mvp-packages" class="nav-link active" data-scroll-target="#load-in-our-mvp-packages"><span class="header-section-number">11.1</span> Load in our MVP packages</a></li>
+<li><a href="#load-in-our-mvp-packages" id="toc-load-in-our-mvp-packages" class="nav-link active" data-scroll-target="#load-in-our-mvp-packages"><span class="header-section-number">12.1</span> Load in our MVP packages</a></li>
   <li>
-<a href="#part-1-loading-in-the-data-and-then-recoding-variables" id="toc-part-1-loading-in-the-data-and-then-recoding-variables" class="nav-link" data-scroll-target="#part-1-loading-in-the-data-and-then-recoding-variables"><span class="header-section-number">11.2</span> Part 1: loading in the data, and then recoding variables</a>
+<a href="#part-1-loading-in-the-data-and-then-recoding-variables" id="toc-part-1-loading-in-the-data-and-then-recoding-variables" class="nav-link" data-scroll-target="#part-1-loading-in-the-data-and-then-recoding-variables"><span class="header-section-number">12.2</span> Part 1: loading in the data, and then recoding variables</a>
   <ul class="collapse">
-<li><a href="#load-in-the-data" id="toc-load-in-the-data" class="nav-link" data-scroll-target="#load-in-the-data"><span class="header-section-number">11.2.1</span> Load in the data</a></li>
-  <li><a href="#the-describe-function-from-hmisc-is-a-nice-codebook" id="toc-the-describe-function-from-hmisc-is-a-nice-codebook" class="nav-link" data-scroll-target="#the-describe-function-from-hmisc-is-a-nice-codebook"><span class="header-section-number">11.2.2</span> The <code>describe</code> function from <code>Hmisc</code> is a nice codebook</a></li>
+<li><a href="#load-in-the-data" id="toc-load-in-the-data" class="nav-link" data-scroll-target="#load-in-the-data"><span class="header-section-number">12.2.1</span> Load in the data</a></li>
+  <li><a href="#the-describe-function-from-hmisc-is-a-nice-codebook" id="toc-the-describe-function-from-hmisc-is-a-nice-codebook" class="nav-link" data-scroll-target="#the-describe-function-from-hmisc-is-a-nice-codebook"><span class="header-section-number">12.2.2</span> The <code>describe</code> function from <code>Hmisc</code> is a nice codebook</a></li>
   </ul>
 </li>
-  <li><a href="#a-little-quick-cleaning" id="toc-a-little-quick-cleaning" class="nav-link" data-scroll-target="#a-little-quick-cleaning"><span class="header-section-number">11.3</span> A little quick cleaning</a></li>
+  <li><a href="#a-little-quick-cleaning" id="toc-a-little-quick-cleaning" class="nav-link" data-scroll-target="#a-little-quick-cleaning"><span class="header-section-number">12.3</span> A little quick cleaning</a></li>
   <li>
-<a href="#part-2-find-your-final-or-preferred-model" id="toc-part-2-find-your-final-or-preferred-model" class="nav-link" data-scroll-target="#part-2-find-your-final-or-preferred-model"><span class="header-section-number">11.4</span> Part 2: find your “final” or preferred model</a>
+<a href="#part-2-find-your-final-or-preferred-model" id="toc-part-2-find-your-final-or-preferred-model" class="nav-link" data-scroll-target="#part-2-find-your-final-or-preferred-model"><span class="header-section-number">12.4</span> Part 2: find your “final” or preferred model</a>
   <ul class="collapse">
-<li><a href="#start-with-a-null-growth-model-since-this-is-longitudinal-data" id="toc-start-with-a-null-growth-model-since-this-is-longitudinal-data" class="nav-link" data-scroll-target="#start-with-a-null-growth-model-since-this-is-longitudinal-data"><span class="header-section-number">11.4.1</span> Start with a null growth model since this is longitudinal data</a></li>
-  <li><a href="#add-in-quadratic-effects" id="toc-add-in-quadratic-effects" class="nav-link" data-scroll-target="#add-in-quadratic-effects"><span class="header-section-number">11.4.2</span> Add in quadratic effects</a></li>
-  <li><a href="#add-in-cubic-effects" id="toc-add-in-cubic-effects" class="nav-link" data-scroll-target="#add-in-cubic-effects"><span class="header-section-number">11.4.3</span> Add in cubic effects</a></li>
-  <li><a href="#both-quadratic-and-cubic-effects" id="toc-both-quadratic-and-cubic-effects" class="nav-link" data-scroll-target="#both-quadratic-and-cubic-effects"><span class="header-section-number">11.4.4</span> Both quadratic and cubic effects</a></li>
-  <li><a href="#now-for-some-more-predictors" id="toc-now-for-some-more-predictors" class="nav-link" data-scroll-target="#now-for-some-more-predictors"><span class="header-section-number">11.4.5</span> Now for some more predictors</a></li>
+<li><a href="#start-with-a-null-growth-model-since-this-is-longitudinal-data" id="toc-start-with-a-null-growth-model-since-this-is-longitudinal-data" class="nav-link" data-scroll-target="#start-with-a-null-growth-model-since-this-is-longitudinal-data"><span class="header-section-number">12.4.1</span> Start with a null growth model since this is longitudinal data</a></li>
+  <li><a href="#add-in-quadratic-effects" id="toc-add-in-quadratic-effects" class="nav-link" data-scroll-target="#add-in-quadratic-effects"><span class="header-section-number">12.4.2</span> Add in quadratic effects</a></li>
+  <li><a href="#add-in-cubic-effects" id="toc-add-in-cubic-effects" class="nav-link" data-scroll-target="#add-in-cubic-effects"><span class="header-section-number">12.4.3</span> Add in cubic effects</a></li>
+  <li><a href="#both-quadratic-and-cubic-effects" id="toc-both-quadratic-and-cubic-effects" class="nav-link" data-scroll-target="#both-quadratic-and-cubic-effects"><span class="header-section-number">12.4.4</span> Both quadratic and cubic effects</a></li>
+  <li><a href="#now-for-some-more-predictors" id="toc-now-for-some-more-predictors" class="nav-link" data-scroll-target="#now-for-some-more-predictors"><span class="header-section-number">12.4.5</span> Now for some more predictors</a></li>
   </ul>
 </li>
-  <li><a href="#use-the-augment-function-from-the-broom.mixed-package" id="toc-use-the-augment-function-from-the-broom.mixed-package" class="nav-link" data-scroll-target="#use-the-augment-function-from-the-broom.mixed-package"><span class="header-section-number">11.5</span> Use the <code>augment</code> function from the <code>broom.mixed</code> package</a></li>
+  <li><a href="#use-the-augment-function-from-the-broom.mixed-package" id="toc-use-the-augment-function-from-the-broom.mixed-package" class="nav-link" data-scroll-target="#use-the-augment-function-from-the-broom.mixed-package"><span class="header-section-number">12.5</span> Use the <code>augment</code> function from the <code>broom.mixed</code> package</a></li>
   <li>
-<a href="#step-1-assess-normality-of-residuals" id="toc-step-1-assess-normality-of-residuals" class="nav-link" data-scroll-target="#step-1-assess-normality-of-residuals"><span class="header-section-number">11.6</span> Step 1: assess normality of residuals</a>
+<a href="#step-1-assess-normality-of-residuals" id="toc-step-1-assess-normality-of-residuals" class="nav-link" data-scroll-target="#step-1-assess-normality-of-residuals"><span class="header-section-number">12.6</span> Step 1: assess normality of residuals</a>
   <ul class="collapse">
-<li><a href="#visually-with-a-histogram" id="toc-visually-with-a-histogram" class="nav-link" data-scroll-target="#visually-with-a-histogram"><span class="header-section-number">11.6.1</span> Visually, with a histogram</a></li>
-  <li><a href="#statistically-with-the-shapiro-wilk-test" id="toc-statistically-with-the-shapiro-wilk-test" class="nav-link" data-scroll-target="#statistically-with-the-shapiro-wilk-test"><span class="header-section-number">11.6.2</span> Statistically, with the Shapiro-Wilk test</a></li>
+<li><a href="#visually-with-a-histogram" id="toc-visually-with-a-histogram" class="nav-link" data-scroll-target="#visually-with-a-histogram"><span class="header-section-number">12.6.1</span> Visually, with a histogram</a></li>
+  <li><a href="#statistically-with-the-shapiro-wilk-test" id="toc-statistically-with-the-shapiro-wilk-test" class="nav-link" data-scroll-target="#statistically-with-the-shapiro-wilk-test"><span class="header-section-number">12.6.2</span> Statistically, with the Shapiro-Wilk test</a></li>
   </ul>
 </li>
   <li>
-<a href="#step-2-use-a-residuals-vs.-fitted-rvf-plot-to-assess-homoskedasticity-of-errors" id="toc-step-2-use-a-residuals-vs.-fitted-rvf-plot-to-assess-homoskedasticity-of-errors" class="nav-link" data-scroll-target="#step-2-use-a-residuals-vs.-fitted-rvf-plot-to-assess-homoskedasticity-of-errors"><span class="header-section-number">11.7</span> Step 2: use a residuals vs.&nbsp;fitted (RVF) plot to assess homoskedasticity of errors</a>
+<a href="#step-2-use-a-residuals-vs.-fitted-rvf-plot-to-assess-homoskedasticity-of-errors" id="toc-step-2-use-a-residuals-vs.-fitted-rvf-plot-to-assess-homoskedasticity-of-errors" class="nav-link" data-scroll-target="#step-2-use-a-residuals-vs.-fitted-rvf-plot-to-assess-homoskedasticity-of-errors"><span class="header-section-number">12.7</span> Step 2: use a residuals vs.&nbsp;fitted (RVF) plot to assess homoskedasticity of errors</a>
   <ul class="collapse">
-<li><a href="#basic-rvf-plot-without-groups" id="toc-basic-rvf-plot-without-groups" class="nav-link" data-scroll-target="#basic-rvf-plot-without-groups"><span class="header-section-number">11.7.1</span> Basic RVF plot, without groups</a></li>
-  <li><a href="#same-thing-but-with-added-color-by-year0" id="toc-same-thing-but-with-added-color-by-year0" class="nav-link" data-scroll-target="#same-thing-but-with-added-color-by-year0"><span class="header-section-number">11.7.2</span> Same thing, but with added color by year0</a></li>
+<li><a href="#basic-rvf-plot-without-groups" id="toc-basic-rvf-plot-without-groups" class="nav-link" data-scroll-target="#basic-rvf-plot-without-groups"><span class="header-section-number">12.7.1</span> Basic RVF plot, without groups</a></li>
+  <li><a href="#same-thing-but-with-added-color-by-year0" id="toc-same-thing-but-with-added-color-by-year0" class="nav-link" data-scroll-target="#same-thing-but-with-added-color-by-year0"><span class="header-section-number">12.7.2</span> Same thing, but with added color by year0</a></li>
   </ul>
 </li>
-  <li><a href="#step-3-use-cooks-distance-to-identify-outliers" id="toc-step-3-use-cooks-distance-to-identify-outliers" class="nav-link" data-scroll-target="#step-3-use-cooks-distance-to-identify-outliers"><span class="header-section-number">11.8</span> Step 3: use Cook’s distance to identify outliers</a></li>
-  <li><a href="#step-4-re-run-model-with-robust-standard-errors" id="toc-step-4-re-run-model-with-robust-standard-errors" class="nav-link" data-scroll-target="#step-4-re-run-model-with-robust-standard-errors"><span class="header-section-number">11.9</span> Step 4: re-run model with robust standard errors</a></li>
-  <li><a href="#step-5-re-run-model-with-outliers-removed-cooks-distance-.10" id="toc-step-5-re-run-model-with-outliers-removed-cooks-distance-.10" class="nav-link" data-scroll-target="#step-5-re-run-model-with-outliers-removed-cooks-distance-.10"><span class="header-section-number">11.10</span> Step 5: re-run model with outliers removed (Cook’s distance &gt; .10)</a></li>
-  <li><a href="#step-6-compare-original-final-model-robust-model-and-trimmed-model" id="toc-step-6-compare-original-final-model-robust-model-and-trimmed-model" class="nav-link" data-scroll-target="#step-6-compare-original-final-model-robust-model-and-trimmed-model"><span class="header-section-number">11.11</span> Step 6: compare original “final” model, robust model, and trimmed model</a></li>
-  <li><a href="#writing-it-up" id="toc-writing-it-up" class="nav-link" data-scroll-target="#writing-it-up"><span class="header-section-number">11.12</span> Writing it up</a></li>
+  <li><a href="#step-3-use-cooks-distance-to-identify-outliers" id="toc-step-3-use-cooks-distance-to-identify-outliers" class="nav-link" data-scroll-target="#step-3-use-cooks-distance-to-identify-outliers"><span class="header-section-number">12.8</span> Step 3: use Cook’s distance to identify outliers</a></li>
+  <li><a href="#step-4-re-run-model-with-robust-standard-errors" id="toc-step-4-re-run-model-with-robust-standard-errors" class="nav-link" data-scroll-target="#step-4-re-run-model-with-robust-standard-errors"><span class="header-section-number">12.9</span> Step 4: re-run model with robust standard errors</a></li>
+  <li><a href="#step-5-re-run-model-with-outliers-removed-cooks-distance-.10" id="toc-step-5-re-run-model-with-outliers-removed-cooks-distance-.10" class="nav-link" data-scroll-target="#step-5-re-run-model-with-outliers-removed-cooks-distance-.10"><span class="header-section-number">12.10</span> Step 5: re-run model with outliers removed (Cook’s distance &gt; .10)</a></li>
+  <li><a href="#step-6-compare-original-final-model-robust-model-and-trimmed-model" id="toc-step-6-compare-original-final-model-robust-model-and-trimmed-model" class="nav-link" data-scroll-target="#step-6-compare-original-final-model-robust-model-and-trimmed-model"><span class="header-section-number">12.11</span> Step 6: compare original “final” model, robust model, and trimmed model</a></li>
+  <li><a href="#writing-it-up" id="toc-writing-it-up" class="nav-link" data-scroll-target="#writing-it-up"><span class="header-section-number">12.12</span> Writing it up</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOURUSERNAME/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
-<span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span>
+<span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
@@ -350,17 +356,17 @@ Data file needed
 </div>
 <p>This week, we will use the <code>productivity</code> dataset from Stata, developed by Dr.&nbsp;Alicia Munnell and published by the Federal Reserve Bank of Boston (1990). It tracks US states over time, so observations are years nested within states.</p>
 <p>Diagnostics are not a pass-fail checklist. They are evidence you weigh, and the useful question is never “was an assumption violated” but “is this violation bad enough to change what I conclude.” This chapter runs the standard checks and then does the thing that actually settles the question: refits the model under different assumptions and sees whether the answer moves.</p>
-<section id="load-in-our-mvp-packages" class="level2" data-number="11.1"><h2 data-number="11.1" class="anchored" data-anchor-id="load-in-our-mvp-packages">
-<span class="header-section-number">11.1</span> Load in our MVP packages</h2>
+<section id="load-in-our-mvp-packages" class="level2" data-number="12.1"><h2 data-number="12.1" class="anchored" data-anchor-id="load-in-our-mvp-packages">
+<span class="header-section-number">12.1</span> Load in our MVP packages</h2>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://hbiostat.org/R/Hmisc/">Hmisc</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="part-1-loading-in-the-data-and-then-recoding-variables" class="level2" data-number="11.2"><h2 data-number="11.2" class="anchored" data-anchor-id="part-1-loading-in-the-data-and-then-recoding-variables">
-<span class="header-section-number">11.2</span> Part 1: loading in the data, and then recoding variables</h2>
-<section id="load-in-the-data" class="level3" data-number="11.2.1"><h3 data-number="11.2.1" class="anchored" data-anchor-id="load-in-the-data">
-<span class="header-section-number">11.2.1</span> Load in the data</h3>
+</section><section id="part-1-loading-in-the-data-and-then-recoding-variables" class="level2" data-number="12.2"><h2 data-number="12.2" class="anchored" data-anchor-id="part-1-loading-in-the-data-and-then-recoding-variables">
+<span class="header-section-number">12.2</span> Part 1: loading in the data, and then recoding variables</h2>
+<section id="load-in-the-data" class="level3" data-number="12.2.1"><h3 data-number="12.2.1" class="anchored" data-anchor-id="load-in-the-data">
+<span class="header-section-number">12.2.1</span> Load in the data</h3>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">productivity</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"productivity.dta"</span><span class="op">)</span></span>
 <span></span>
@@ -381,8 +387,8 @@ $ emp     &lt;dbl&gt; 7.715793, 7.325742, 6.620340, 8.195582, 6.984160, 6.940803
 $ unemp   &lt;dbl&gt; 4.6, 3.4, 4.4, 4.4, 9.1, 6.6, 5.2, 6.7, 3.1, 4.1, 4.8, 4.8, 3.…</code></pre>
 </div>
 </div>
-</section><section id="the-describe-function-from-hmisc-is-a-nice-codebook" class="level3" data-number="11.2.2"><h3 data-number="11.2.2" class="anchored" data-anchor-id="the-describe-function-from-hmisc-is-a-nice-codebook">
-<span class="header-section-number">11.2.2</span> The <code>describe</code> function from <code>Hmisc</code> is a nice codebook</h3>
+</section><section id="the-describe-function-from-hmisc-is-a-nice-codebook" class="level3" data-number="12.2.2"><h3 data-number="12.2.2" class="anchored" data-anchor-id="the-describe-function-from-hmisc-is-a-nice-codebook">
+<span class="header-section-number">12.2.2</span> The <code>describe</code> function from <code>Hmisc</code> is a nice codebook</h3>
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">Hmisc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/describe.html">describe</a></span><span class="op">(</span><span class="va">productivity</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -493,8 +499,8 @@ lowest : 2.8 2.9 3   3.1 3.2, highest: 13  14  15  16  18
 --------------------------------------------------------------------------------</code></pre>
 </div>
 </div>
-</section></section><section id="a-little-quick-cleaning" class="level2" data-number="11.3"><h2 data-number="11.3" class="anchored" data-anchor-id="a-little-quick-cleaning">
-<span class="header-section-number">11.3</span> A little quick cleaning</h2>
+</section></section><section id="a-little-quick-cleaning" class="level2" data-number="12.3"><h2 data-number="12.3" class="anchored" data-anchor-id="a-little-quick-cleaning">
+<span class="header-section-number">12.3</span> A little quick cleaning</h2>
 <p>Convert region to a factor variable, rescale public capital stock, “zero out” year, and create nonlinear terms.</p>
 <div class="cell">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">prod.clean</span> <span class="op">&lt;-</span> <span class="va">productivity</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -530,10 +536,10 @@ $ pub_cap_1000 &lt;dbl&gt; 21.92328, 20.73256, 11.40252, 53.63988, 25.75149, 19.
 <p>Two of these deserve a note.</p>
 <p>Subtracting 1970 from <code>year</code> puts the intercept at the start of the observation window rather than at year zero of the common era, which is both meaningless and thousands of units away from any data we have. Polynomial terms built from the recentered variable are also far less collinear with each other than they would be otherwise.</p>
 <p>Dividing public capital by 1,000 is rescaling, and it changes nothing about the model’s fit. What it changes is readability: a coefficient expressed per thousand dollars is easier to report than one carrying several leading zeros. Rescaling a predictor is always safe. Rescaling only <em>some</em> predictors and forgetting which is where people get into trouble, so a name like <code>pub_cap_1000</code> that records the units is worth the extra characters.</p>
-</section><section id="part-2-find-your-final-or-preferred-model" class="level2" data-number="11.4"><h2 data-number="11.4" class="anchored" data-anchor-id="part-2-find-your-final-or-preferred-model">
-<span class="header-section-number">11.4</span> Part 2: find your “final” or preferred model</h2>
-<section id="start-with-a-null-growth-model-since-this-is-longitudinal-data" class="level3" data-number="11.4.1"><h3 data-number="11.4.1" class="anchored" data-anchor-id="start-with-a-null-growth-model-since-this-is-longitudinal-data">
-<span class="header-section-number">11.4.1</span> Start with a null growth model since this is longitudinal data</h3>
+</section><section id="part-2-find-your-final-or-preferred-model" class="level2" data-number="12.4"><h2 data-number="12.4" class="anchored" data-anchor-id="part-2-find-your-final-or-preferred-model">
+<span class="header-section-number">12.4</span> Part 2: find your “final” or preferred model</h2>
+<section id="start-with-a-null-growth-model-since-this-is-longitudinal-data" class="level3" data-number="12.4.1"><h3 data-number="12.4.1" class="anchored" data-anchor-id="start-with-a-null-growth-model-since-this-is-longitudinal-data">
+<span class="header-section-number">12.4.1</span> Start with a null growth model since this is longitudinal data</h3>
 <div class="cell">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.null.growth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">unemp</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">state</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">prod.clean</span><span class="op">)</span></span>
 <span></span>
@@ -567,8 +573,8 @@ year0 -0.464</code></pre>
 </div>
 </div>
 <p>The outcome is state unemployment rate, and the clustering variable is state. This is the same structure as the growth models from Module 8, with states in place of children and years in place of grades.</p>
-</section><section id="add-in-quadratic-effects" class="level3" data-number="11.4.2"><h3 data-number="11.4.2" class="anchored" data-anchor-id="add-in-quadratic-effects">
-<span class="header-section-number">11.4.2</span> Add in quadratic effects</h3>
+</section><section id="add-in-quadratic-effects" class="level3" data-number="12.4.2"><h3 data-number="12.4.2" class="anchored" data-anchor-id="add-in-quadratic-effects">
+<span class="header-section-number">12.4.2</span> Add in quadratic effects</h3>
 <div class="cell">
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">unemp</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_sq</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">state</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">prod.clean</span><span class="op">)</span></span>
 <span></span>
@@ -603,8 +609,8 @@ year0   -0.558
 year_sq  0.467 -0.965</code></pre>
 </div>
 </div>
-</section><section id="add-in-cubic-effects" class="level3" data-number="11.4.3"><h3 data-number="11.4.3" class="anchored" data-anchor-id="add-in-cubic-effects">
-<span class="header-section-number">11.4.3</span> Add in cubic effects</h3>
+</section><section id="add-in-cubic-effects" class="level3" data-number="12.4.3"><h3 data-number="12.4.3" class="anchored" data-anchor-id="add-in-cubic-effects">
+<span class="header-section-number">12.4.3</span> Add in cubic effects</h3>
 <div class="cell">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">unemp</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_cube</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">state</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">prod.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -645,8 +651,8 @@ Some predictor variables are on very different scales: consider rescaling.
 You may also use (g)lmerControl(autoscale = TRUE) to improve numerical stability.</code></pre>
 </div>
 </div>
-</section><section id="both-quadratic-and-cubic-effects" class="level3" data-number="11.4.4"><h3 data-number="11.4.4" class="anchored" data-anchor-id="both-quadratic-and-cubic-effects">
-<span class="header-section-number">11.4.4</span> Both quadratic and cubic effects</h3>
+</section><section id="both-quadratic-and-cubic-effects" class="level3" data-number="12.4.4"><h3 data-number="12.4.4" class="anchored" data-anchor-id="both-quadratic-and-cubic-effects">
+<span class="header-section-number">12.4.4</span> Both quadratic and cubic effects</h3>
 <div class="cell">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">unemp</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_sq</span> <span class="op">+</span> <span class="va">year_cube</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">state</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">prod.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -690,8 +696,8 @@ You may also use (g)lmerControl(autoscale = TRUE) to improve numerical stability
 </div>
 </div>
 <p>Unemployment over the 1970s and 1980s went through recessions and recoveries, so a straight line is unlikely to describe it well. The polynomial terms give the trajectory room to bend more than once.</p>
-</section><section id="now-for-some-more-predictors" class="level3" data-number="11.4.5"><h3 data-number="11.4.5" class="anchored" data-anchor-id="now-for-some-more-predictors">
-<span class="header-section-number">11.4.5</span> Now for some more predictors</h3>
+</section><section id="now-for-some-more-predictors" class="level3" data-number="12.4.5"><h3 data-number="12.4.5" class="anchored" data-anchor-id="now-for-some-more-predictors">
+<span class="header-section-number">12.4.5</span> Now for some more predictors</h3>
 <div class="cell">
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">unemp</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_sq</span> <span class="op">+</span> <span class="va">year_cube</span> <span class="op">+</span> <span class="va">gsp</span> <span class="op">+</span> <span class="va">private</span> <span class="op">+</span> <span class="va">pub_cap_1000</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">state</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">prod.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -742,8 +748,8 @@ You may also use (g)lmerControl(autoscale = TRUE) to improve numerical stability
 </div>
 </div>
 <p>This is our “final” model, and everything that follows examines it rather than building further.</p>
-</section></section><section id="use-the-augment-function-from-the-broom.mixed-package" class="level2" data-number="11.5"><h2 data-number="11.5" class="anchored" data-anchor-id="use-the-augment-function-from-the-broom.mixed-package">
-<span class="header-section-number">11.5</span> Use the <code>augment</code> function from the <code>broom.mixed</code> package</h2>
+</section></section><section id="use-the-augment-function-from-the-broom.mixed-package" class="level2" data-number="12.5"><h2 data-number="12.5" class="anchored" data-anchor-id="use-the-augment-function-from-the-broom.mixed-package">
+<span class="header-section-number">12.5</span> Use the <code>augment</code> function from the <code>broom.mixed</code> package</h2>
 <p>This gets predictions, residuals, Cook’s distances, and more.</p>
 <div class="cell">
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bbolker/broom.mixed">broom.mixed</a></span><span class="op">)</span></span>
@@ -752,10 +758,10 @@ You may also use (g)lmerControl(autoscale = TRUE) to improve numerical stability
 </div>
 <p><code><a href="https://generics.r-lib.org/reference/augment.html">augment()</a></code> returns the original data plus a set of new columns whose names begin with a dot: <code>.fitted</code>, <code>.resid</code>, <code>.cooksd</code>, and others. Everything in this chapter works from that data frame.</p>
 <p>One thing worth knowing: <code>diagnostics</code> contains one row per observation <em>the model actually used</em>. If any rows were dropped for missing data, this frame is smaller than <code>prod.clean</code>. That is a feature, since it means residuals and fitted values always line up, but it does mean you should use <code>diagnostics</code> rather than the original data for anything downstream.</p>
-</section><section id="step-1-assess-normality-of-residuals" class="level2" data-number="11.6"><h2 data-number="11.6" class="anchored" data-anchor-id="step-1-assess-normality-of-residuals">
-<span class="header-section-number">11.6</span> Step 1: assess normality of residuals</h2>
-<section id="visually-with-a-histogram" class="level3" data-number="11.6.1"><h3 data-number="11.6.1" class="anchored" data-anchor-id="visually-with-a-histogram">
-<span class="header-section-number">11.6.1</span> Visually, with a histogram</h3>
+</section><section id="step-1-assess-normality-of-residuals" class="level2" data-number="12.6"><h2 data-number="12.6" class="anchored" data-anchor-id="step-1-assess-normality-of-residuals">
+<span class="header-section-number">12.6</span> Step 1: assess normality of residuals</h2>
+<section id="visually-with-a-histogram" class="level3" data-number="12.6.1"><h3 data-number="12.6.1" class="anchored" data-anchor-id="visually-with-a-histogram">
+<span class="header-section-number">12.6.1</span> Visually, with a histogram</h3>
 <div class="cell">
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diagnostics</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">.resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">.25</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -765,13 +771,13 @@ You may also use (g)lmerControl(autoscale = TRUE) to improve numerical stability
 <div class="cell-output-display">
 <div id="fig-resid-hist" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="10-assumptions_files/figure-html/fig-resid-hist-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;11.1: Histogram of residuals with reference lines at ±2.5.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;12.1: Histogram of residuals with reference lines at ±2.5.</figcaption></figure>
 </div>
 </div>
 </div>
 <p>The dotted reference lines mark ±2.5, a rough boundary beyond which residuals are worth a closer look. What you are checking for is severe skew, heavy tails, or obvious multimodality, not perfect symmetry.</p>
-</section><section id="statistically-with-the-shapiro-wilk-test" class="level3" data-number="11.6.2"><h3 data-number="11.6.2" class="anchored" data-anchor-id="statistically-with-the-shapiro-wilk-test">
-<span class="header-section-number">11.6.2</span> Statistically, with the Shapiro-Wilk test</h3>
+</section><section id="statistically-with-the-shapiro-wilk-test" class="level3" data-number="12.6.2"><h3 data-number="12.6.2" class="anchored" data-anchor-id="statistically-with-the-shapiro-wilk-test">
+<span class="header-section-number">12.6.2</span> Statistically, with the Shapiro-Wilk test</h3>
 <div class="cell">
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="va">diagnostics</span><span class="op">$</span><span class="va">.resid</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -799,10 +805,10 @@ A size limit on this test
 <span><span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">diagnostics</span><span class="op">$</span><span class="va">.resid</span>, <span class="fl">5000</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-</section></section><section id="step-2-use-a-residuals-vs.-fitted-rvf-plot-to-assess-homoskedasticity-of-errors" class="level2" data-number="11.7"><h2 data-number="11.7" class="anchored" data-anchor-id="step-2-use-a-residuals-vs.-fitted-rvf-plot-to-assess-homoskedasticity-of-errors">
-<span class="header-section-number">11.7</span> Step 2: use a residuals vs.&nbsp;fitted (RVF) plot to assess homoskedasticity of errors</h2>
-<section id="basic-rvf-plot-without-groups" class="level3" data-number="11.7.1"><h3 data-number="11.7.1" class="anchored" data-anchor-id="basic-rvf-plot-without-groups">
-<span class="header-section-number">11.7.1</span> Basic RVF plot, without groups</h3>
+</section></section><section id="step-2-use-a-residuals-vs.-fitted-rvf-plot-to-assess-homoskedasticity-of-errors" class="level2" data-number="12.7"><h2 data-number="12.7" class="anchored" data-anchor-id="step-2-use-a-residuals-vs.-fitted-rvf-plot-to-assess-homoskedasticity-of-errors">
+<span class="header-section-number">12.7</span> Step 2: use a residuals vs.&nbsp;fitted (RVF) plot to assess homoskedasticity of errors</h2>
+<section id="basic-rvf-plot-without-groups" class="level3" data-number="12.7.1"><h3 data-number="12.7.1" class="anchored" data-anchor-id="basic-rvf-plot-without-groups">
+<span class="header-section-number">12.7.1</span> Basic RVF plot, without groups</h3>
 <div class="cell">
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diagnostics</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">.fitted</span>, y <span class="op">=</span> <span class="va">.resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"RVF Plot for State Unemployment Model"</span>,</span>
@@ -811,14 +817,14 @@ A size limit on this test
 <div class="cell-output-display">
 <div id="fig-rvf" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="10-assumptions_files/figure-html/fig-rvf-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;11.2: Residuals versus fitted values.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;12.2: Residuals versus fitted values.</figcaption></figure>
 </div>
 </div>
 </div>
 <p>Read this plot for shape rather than for scatter. A fan or funnel means the residual variance depends on the fitted value, which is heteroskedasticity. A curve means the relationship is not linear in the predictors as specified. An even, shapeless cloud is what you want.</p>
 <p>Be specific in your write-up about <em>where</em> in the fitted range any problem appears. A violation confined to a sparse tail is a different matter from one across the whole range.</p>
-</section><section id="same-thing-but-with-added-color-by-year0" class="level3" data-number="11.7.2"><h3 data-number="11.7.2" class="anchored" data-anchor-id="same-thing-but-with-added-color-by-year0">
-<span class="header-section-number">11.7.2</span> Same thing, but with added color by year0</h3>
+</section><section id="same-thing-but-with-added-color-by-year0" class="level3" data-number="12.7.2"><h3 data-number="12.7.2" class="anchored" data-anchor-id="same-thing-but-with-added-color-by-year0">
+<span class="header-section-number">12.7.2</span> Same thing, but with added color by year0</h3>
 <div class="cell">
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diagnostics</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">.fitted</span>, y <span class="op">=</span> <span class="va">.resid</span>, color <span class="op">=</span> <span class="va">year0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"RVF Plot for State Unemployment Model, by Year"</span>,</span>
@@ -827,13 +833,13 @@ A size limit on this test
 <div class="cell-output-display">
 <div id="fig-rvf-year" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="10-assumptions_files/figure-html/fig-rvf-year-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;11.3: The same plot, colored by year.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;12.3: The same plot, colored by year.</figcaption></figure>
 </div>
 </div>
 </div>
 <p>Adding color turns a general diagnostic into a specific one. If residuals cluster by year, with all the dark points high and the light ones low, the model is systematically missing something about time. That is far more actionable than knowing the residuals are merely uneven, and it is the kind of pattern longitudinal data produces routinely.</p>
-</section></section><section id="step-3-use-cooks-distance-to-identify-outliers" class="level2" data-number="11.8"><h2 data-number="11.8" class="anchored" data-anchor-id="step-3-use-cooks-distance-to-identify-outliers">
-<span class="header-section-number">11.8</span> Step 3: use Cook’s distance to identify outliers</h2>
+</section></section><section id="step-3-use-cooks-distance-to-identify-outliers" class="level2" data-number="12.8"><h2 data-number="12.8" class="anchored" data-anchor-id="step-3-use-cooks-distance-to-identify-outliers">
+<span class="header-section-number">12.8</span> Step 3: use Cook’s distance to identify outliers</h2>
 <div class="cell">
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diagnostics</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">.fitted</span>, y <span class="op">=</span> <span class="va">.cooksd</span>, label <span class="op">=</span> <span class="va">state</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span>nudge_x <span class="op">=</span> <span class="fl">.25</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -844,15 +850,15 @@ A size limit on this test
 <div class="cell-output-display">
 <div id="fig-cooks" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="10-assumptions_files/figure-html/fig-cooks-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;11.4: Cook’s distance by fitted value, labelled by state.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;12.4: Cook’s distance by fitted value, labelled by state.</figcaption></figure>
 </div>
 </div>
 </div>
 <p>Labelling the points is what makes this plot useful rather than decorative. An unlabelled outlier is a puzzle; a labelled one is a case you can go look at.</p>
 <p>The reference line at 4/816 is the conventional 4/n cutoff, where 816 is the number of observations. It is a flag, not a verdict.</p>
 <p>When a case is flagged, look at it before doing anything. An observation with an impossible value is a data error and should be fixed or removed. An observation that is simply unusual, a state with a genuinely severe recession, is data. Deleting inconvenient observations because a statistic flagged them is not a diagnostic procedure; it is a way of guaranteeing the result you already wanted.</p>
-</section><section id="step-4-re-run-model-with-robust-standard-errors" class="level2" data-number="11.9"><h2 data-number="11.9" class="anchored" data-anchor-id="step-4-re-run-model-with-robust-standard-errors">
-<span class="header-section-number">11.9</span> Step 4: re-run model with robust standard errors</h2>
+</section><section id="step-4-re-run-model-with-robust-standard-errors" class="level2" data-number="12.9"><h2 data-number="12.9" class="anchored" data-anchor-id="step-4-re-run-model-with-robust-standard-errors">
+<span class="header-section-number">12.9</span> Step 4: re-run model with robust standard errors</h2>
 <div class="cell">
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/kollerma/robustlmm">robustlmm</a></span><span class="op">)</span></span>
 <span></span>
@@ -918,8 +924,8 @@ Rho functions used for fitting:
 </div>
 <p><code><a href="https://rdrr.io/pkg/robustlmm/man/rlmer.html">rlmer()</a></code> from <code>robustlmm</code> fits the same model but downweights observations with large residuals rather than letting them exert full influence. If the estimates barely move relative to <code>model.5</code>, outliers were not driving your results.</p>
 <p>This model can take a while to fit, since it works iteratively.</p>
-</section><section id="step-5-re-run-model-with-outliers-removed-cooks-distance-.10" class="level2" data-number="11.10"><h2 data-number="11.10" class="anchored" data-anchor-id="step-5-re-run-model-with-outliers-removed-cooks-distance-.10">
-<span class="header-section-number">11.10</span> Step 5: re-run model with outliers removed (Cook’s distance &gt; .10)</h2>
+</section><section id="step-5-re-run-model-with-outliers-removed-cooks-distance-.10" class="level2" data-number="12.10"><h2 data-number="12.10" class="anchored" data-anchor-id="step-5-re-run-model-with-outliers-removed-cooks-distance-.10">
+<span class="header-section-number">12.10</span> Step 5: re-run model with outliers removed (Cook’s distance &gt; .10)</h2>
 <div class="cell">
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">prod.trimmed</span> <span class="op">&lt;-</span> <span class="va">diagnostics</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">.cooksd</span> <span class="op">&lt;</span> <span class="fl">.10</span><span class="op">)</span></span>
@@ -983,8 +989,8 @@ You may also use (g)lmerControl(autoscale = TRUE) to improve numerical stability
 </div>
 </div>
 <p>Reporting how many observations came out is not optional. A reader needs to know whether the robustness check dropped three cases or three hundred.</p>
-</section><section id="step-6-compare-original-final-model-robust-model-and-trimmed-model" class="level2" data-number="11.11"><h2 data-number="11.11" class="anchored" data-anchor-id="step-6-compare-original-final-model-robust-model-and-trimmed-model">
-<span class="header-section-number">11.11</span> Step 6: compare original “final” model, robust model, and trimmed model</h2>
+</section><section id="step-6-compare-original-final-model-robust-model-and-trimmed-model" class="level2" data-number="12.11"><h2 data-number="12.11" class="anchored" data-anchor-id="step-6-compare-original-final-model-robust-model-and-trimmed-model">
+<span class="header-section-number">12.11</span> Step 6: compare original “final” model, robust model, and trimmed model</h2>
 <p>This is the sensitivity analysis.</p>
 <div class="cell">
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span>
@@ -1130,8 +1136,8 @@ You may also use (g)lmerControl(autoscale = TRUE) to improve numerical stability
 </div>
 <p>This is the part that actually settles the question. Rather than arguing about whether assumptions hold, refit under different assumptions and compare.</p>
 <p>Read across the columns for the coefficient you care about most. If it holds steady in magnitude, direction, and significance, you have an answer to the reviewer worried about your residuals: the conclusion does not depend on the assumption in question. That is a much stronger response than asserting the assumption was met.</p>
-</section><section id="writing-it-up" class="level2" data-number="11.12"><h2 data-number="11.12" class="anchored" data-anchor-id="writing-it-up">
-<span class="header-section-number">11.12</span> Writing it up</h2>
+</section><section id="writing-it-up" class="level2" data-number="12.12"><h2 data-number="12.12" class="anchored" data-anchor-id="writing-it-up">
+<span class="header-section-number">12.12</span> Writing it up</h2>
 <p>A sensitivity analysis paragraph belongs in nearly every quantitative paper, and it has a predictable shape. State which diagnostics you examined. Report what they showed, honestly, including the parts that looked imperfect. Describe the robustness checks you ran. Then state whether your substantive conclusion held.</p>
 <p>The version that reads as defensive says the assumptions were met and moves on. The version that reads as competent concedes that residuals showed mild skew and a handful of state-years exceeded the conventional Cook’s distance threshold, then reports that the coefficients changed negligibly under robust estimation and with those cases excluded. The second is more honest and considerably more persuasive.</p>
 
@@ -1423,12 +1429,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./09-binary-outcomes.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./11-cross-classified.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">

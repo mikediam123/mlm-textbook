@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
-<title>Applied Multilevel Modeling in R - 8&nbsp; Intro to Growth Models</title>
+<title>Applied Multilevel Modeling in R - 9&nbsp; Intro to Growth Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -99,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-three-level.html">Extending the Model</a></li><li class="breadcrumb-item"><a href="./08a-growth-intro.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-three-level.html">Extending the Model</a></li><li class="breadcrumb-item"><a href="./08a-growth-intro.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -163,8 +163,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./02-reading-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Reading: Regression and Where It Runs Out</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./02-regression-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -181,25 +187,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-null-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-random-intercept.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-random-slopes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-fit-effect-sizes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
   </div>
 </li>
       </ul>
@@ -216,25 +222,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-three-level.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08a-growth-intro.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08b-growth-advanced.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-binary-outcomes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -251,13 +257,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-cross-classified.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -276,48 +282,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#load-in-our-mvp-packages" id="toc-load-in-our-mvp-packages" class="nav-link active" data-scroll-target="#load-in-our-mvp-packages"><span class="header-section-number">8.1</span> Load in our MVP packages</a></li>
-  <li><a href="#load-in-the-data" id="toc-load-in-the-data" class="nav-link" data-scroll-target="#load-in-the-data"><span class="header-section-number">8.2</span> Load in the data</a></li>
-  <li><a href="#explore-the-data-and-id-variables-using-describe-from-the-hmisc-package" id="toc-explore-the-data-and-id-variables-using-describe-from-the-hmisc-package" class="nav-link" data-scroll-target="#explore-the-data-and-id-variables-using-describe-from-the-hmisc-package"><span class="header-section-number">8.3</span> Explore the data and ID variables using <code>describe</code> from the <code>Hmisc</code> package</a></li>
-  <li><a href="#a-little-recoding-create-factor-versions-of-categorical-variables" id="toc-a-little-recoding-create-factor-versions-of-categorical-variables" class="nav-link" data-scroll-target="#a-little-recoding-create-factor-versions-of-categorical-variables"><span class="header-section-number">8.4</span> A little recoding: create factor versions of categorical variables</a></li>
-  <li><a href="#use-arrange-to-examine-variables-that-vary-by-student-year-and-school" id="toc-use-arrange-to-examine-variables-that-vary-by-student-year-and-school" class="nav-link" data-scroll-target="#use-arrange-to-examine-variables-that-vary-by-student-year-and-school"><span class="header-section-number">8.5</span> Use <code>arrange</code> to examine variables that vary by student, year, and school</a></li>
-  <li><a href="#summarize-math-score-by-year-to-look-for-preliminary-changes-over-time" id="toc-summarize-math-score-by-year-to-look-for-preliminary-changes-over-time" class="nav-link" data-scroll-target="#summarize-math-score-by-year-to-look-for-preliminary-changes-over-time"><span class="header-section-number">8.6</span> Summarize math score by year, to look for preliminary changes over time</a></li>
-  <li><a href="#same-thing-by-grade-the-only-difference-should-be-missing-or-retained-students" id="toc-same-thing-by-grade-the-only-difference-should-be-missing-or-retained-students" class="nav-link" data-scroll-target="#same-thing-by-grade-the-only-difference-should-be-missing-or-retained-students"><span class="header-section-number">8.7</span> Same thing, by grade: the only difference should be missing or retained students</a></li>
-  <li><a href="#create-summary-data-frame-of-student-level-variables" id="toc-create-summary-data-frame-of-student-level-variables" class="nav-link" data-scroll-target="#create-summary-data-frame-of-student-level-variables"><span class="header-section-number">8.8</span> Create summary data frame of student-level variables</a></li>
-  <li><a href="#table-1-for-student-level-variables" id="toc-table-1-for-student-level-variables" class="nav-link" data-scroll-target="#table-1-for-student-level-variables"><span class="header-section-number">8.9</span> Table 1 for student-level variables</a></li>
-  <li><a href="#create-summary-data-frame-of-school-level-variables" id="toc-create-summary-data-frame-of-school-level-variables" class="nav-link" data-scroll-target="#create-summary-data-frame-of-school-level-variables"><span class="header-section-number">8.10</span> Create summary data frame of school-level variables</a></li>
-  <li><a href="#table-1-for-school-level-variables" id="toc-table-1-for-school-level-variables" class="nav-link" data-scroll-target="#table-1-for-school-level-variables"><span class="header-section-number">8.11</span> Table 1 for school-level variables</a></li>
-  <li><a href="#distribution-of-the-outcome" id="toc-distribution-of-the-outcome" class="nav-link" data-scroll-target="#distribution-of-the-outcome"><span class="header-section-number">8.12</span> Distribution of the outcome</a></li>
-  <li><a href="#getting-fancy-maybe-plot-over-time" id="toc-getting-fancy-maybe-plot-over-time" class="nav-link" data-scroll-target="#getting-fancy-maybe-plot-over-time"><span class="header-section-number">8.13</span> Getting fancy: maybe plot over time?</a></li>
+<li><a href="#load-in-our-mvp-packages" id="toc-load-in-our-mvp-packages" class="nav-link active" data-scroll-target="#load-in-our-mvp-packages"><span class="header-section-number">9.1</span> Load in our MVP packages</a></li>
+  <li><a href="#load-in-the-data" id="toc-load-in-the-data" class="nav-link" data-scroll-target="#load-in-the-data"><span class="header-section-number">9.2</span> Load in the data</a></li>
+  <li><a href="#explore-the-data-and-id-variables-using-describe-from-the-hmisc-package" id="toc-explore-the-data-and-id-variables-using-describe-from-the-hmisc-package" class="nav-link" data-scroll-target="#explore-the-data-and-id-variables-using-describe-from-the-hmisc-package"><span class="header-section-number">9.3</span> Explore the data and ID variables using <code>describe</code> from the <code>Hmisc</code> package</a></li>
+  <li><a href="#a-little-recoding-create-factor-versions-of-categorical-variables" id="toc-a-little-recoding-create-factor-versions-of-categorical-variables" class="nav-link" data-scroll-target="#a-little-recoding-create-factor-versions-of-categorical-variables"><span class="header-section-number">9.4</span> A little recoding: create factor versions of categorical variables</a></li>
+  <li><a href="#use-arrange-to-examine-variables-that-vary-by-student-year-and-school" id="toc-use-arrange-to-examine-variables-that-vary-by-student-year-and-school" class="nav-link" data-scroll-target="#use-arrange-to-examine-variables-that-vary-by-student-year-and-school"><span class="header-section-number">9.5</span> Use <code>arrange</code> to examine variables that vary by student, year, and school</a></li>
+  <li><a href="#summarize-math-score-by-year-to-look-for-preliminary-changes-over-time" id="toc-summarize-math-score-by-year-to-look-for-preliminary-changes-over-time" class="nav-link" data-scroll-target="#summarize-math-score-by-year-to-look-for-preliminary-changes-over-time"><span class="header-section-number">9.6</span> Summarize math score by year, to look for preliminary changes over time</a></li>
+  <li><a href="#same-thing-by-grade-the-only-difference-should-be-missing-or-retained-students" id="toc-same-thing-by-grade-the-only-difference-should-be-missing-or-retained-students" class="nav-link" data-scroll-target="#same-thing-by-grade-the-only-difference-should-be-missing-or-retained-students"><span class="header-section-number">9.7</span> Same thing, by grade: the only difference should be missing or retained students</a></li>
+  <li><a href="#create-summary-data-frame-of-student-level-variables" id="toc-create-summary-data-frame-of-student-level-variables" class="nav-link" data-scroll-target="#create-summary-data-frame-of-student-level-variables"><span class="header-section-number">9.8</span> Create summary data frame of student-level variables</a></li>
+  <li><a href="#table-1-for-student-level-variables" id="toc-table-1-for-student-level-variables" class="nav-link" data-scroll-target="#table-1-for-student-level-variables"><span class="header-section-number">9.9</span> Table 1 for student-level variables</a></li>
+  <li><a href="#create-summary-data-frame-of-school-level-variables" id="toc-create-summary-data-frame-of-school-level-variables" class="nav-link" data-scroll-target="#create-summary-data-frame-of-school-level-variables"><span class="header-section-number">9.10</span> Create summary data frame of school-level variables</a></li>
+  <li><a href="#table-1-for-school-level-variables" id="toc-table-1-for-school-level-variables" class="nav-link" data-scroll-target="#table-1-for-school-level-variables"><span class="header-section-number">9.11</span> Table 1 for school-level variables</a></li>
+  <li><a href="#distribution-of-the-outcome" id="toc-distribution-of-the-outcome" class="nav-link" data-scroll-target="#distribution-of-the-outcome"><span class="header-section-number">9.12</span> Distribution of the outcome</a></li>
+  <li><a href="#getting-fancy-maybe-plot-over-time" id="toc-getting-fancy-maybe-plot-over-time" class="nav-link" data-scroll-target="#getting-fancy-maybe-plot-over-time"><span class="header-section-number">9.13</span> Getting fancy: maybe plot over time?</a></li>
   <li>
-<a href="#run-a-regular-null-model-for-math-scores" id="toc-run-a-regular-null-model-for-math-scores" class="nav-link" data-scroll-target="#run-a-regular-null-model-for-math-scores"><span class="header-section-number">8.14</span> Run a regular null model for math scores</a>
+<a href="#run-a-regular-null-model-for-math-scores" id="toc-run-a-regular-null-model-for-math-scores" class="nav-link" data-scroll-target="#run-a-regular-null-model-for-math-scores"><span class="header-section-number">9.14</span> Run a regular null model for math scores</a>
   <ul class="collapse">
-<li><a href="#calculate-icc" id="toc-calculate-icc" class="nav-link" data-scroll-target="#calculate-icc"><span class="header-section-number">8.14.1</span> Calculate ICC</a></li>
+<li><a href="#calculate-icc" id="toc-calculate-icc" class="nav-link" data-scroll-target="#calculate-icc"><span class="header-section-number">9.14.1</span> Calculate ICC</a></li>
   </ul>
 </li>
   <li>
-<a href="#now-run-a-growth-null-model-for-math-scores-with-year-included" id="toc-now-run-a-growth-null-model-for-math-scores-with-year-included" class="nav-link" data-scroll-target="#now-run-a-growth-null-model-for-math-scores-with-year-included"><span class="header-section-number">8.15</span> Now, run a GROWTH null model for math scores (with year included)</a>
+<a href="#now-run-a-growth-null-model-for-math-scores-with-year-included" id="toc-now-run-a-growth-null-model-for-math-scores-with-year-included" class="nav-link" data-scroll-target="#now-run-a-growth-null-model-for-math-scores-with-year-included"><span class="header-section-number">9.15</span> Now, run a GROWTH null model for math scores (with year included)</a>
   <ul class="collapse">
-<li><a href="#calculate-growth-icc" id="toc-calculate-growth-icc" class="nav-link" data-scroll-target="#calculate-growth-icc"><span class="header-section-number">8.15.1</span> Calculate GROWTH ICC</a></li>
+<li><a href="#calculate-growth-icc" id="toc-calculate-growth-icc" class="nav-link" data-scroll-target="#calculate-growth-icc"><span class="header-section-number">9.15.1</span> Calculate GROWTH ICC</a></li>
   </ul>
 </li>
-  <li><a href="#add-a-student-level-predictor-female" id="toc-add-a-student-level-predictor-female" class="nav-link" data-scroll-target="#add-a-student-level-predictor-female"><span class="header-section-number">8.16</span> Add a student-level predictor, female</a></li>
-  <li><a href="#add-predictors-for-raceethnicity-this-is-just-for-the-intercept" id="toc-add-predictors-for-raceethnicity-this-is-just-for-the-intercept" class="nav-link" data-scroll-target="#add-predictors-for-raceethnicity-this-is-just-for-the-intercept"><span class="header-section-number">8.17</span> Add predictors for race/ethnicity: this is just for the intercept</a></li>
-  <li><a href="#do-students-differ-in-their-growth-by-raceethnicity-this-is-an-interaction-effect" id="toc-do-students-differ-in-their-growth-by-raceethnicity-this-is-an-interaction-effect" class="nav-link" data-scroll-target="#do-students-differ-in-their-growth-by-raceethnicity-this-is-an-interaction-effect"><span class="header-section-number">8.18</span> Do students differ in their growth by race/ethnicity? This is an interaction effect</a></li>
-  <li><a href="#add-a-random-slope-for-year-at-the-child-level" id="toc-add-a-random-slope-for-year-at-the-child-level" class="nav-link" data-scroll-target="#add-a-random-slope-for-year-at-the-child-level"><span class="header-section-number">8.19</span> Add a random slope for year at the child level</a></li>
-  <li><a href="#should-we-keep-that-random-slope-for-time-use-rand-to-test" id="toc-should-we-keep-that-random-slope-for-time-use-rand-to-test" class="nav-link" data-scroll-target="#should-we-keep-that-random-slope-for-time-use-rand-to-test"><span class="header-section-number">8.20</span> Should we keep that random slope for time? Use <code>rand</code> to test</a></li>
-  <li><a href="#put-it-all-together-random-slope-interactions-not-for-latinx-students" id="toc-put-it-all-together-random-slope-interactions-not-for-latinx-students" class="nav-link" data-scroll-target="#put-it-all-together-random-slope-interactions-not-for-latinx-students"><span class="header-section-number">8.21</span> Put it all together: random slope, interactions (not for Latinx students)</a></li>
-  <li><a href="#visualize-our-model-by-predicting-scores" id="toc-visualize-our-model-by-predicting-scores" class="nav-link" data-scroll-target="#visualize-our-model-by-predicting-scores"><span class="header-section-number">8.22</span> Visualize our model by predicting scores</a></li>
-  <li><a href="#and-then-plotting-them" id="toc-and-then-plotting-them" class="nav-link" data-scroll-target="#and-then-plotting-them"><span class="header-section-number">8.23</span> And then plotting them</a></li>
-  <li><a href="#random-slopes-for-a-sample-of-50-students" id="toc-random-slopes-for-a-sample-of-50-students" class="nav-link" data-scroll-target="#random-slopes-for-a-sample-of-50-students"><span class="header-section-number">8.24</span> Random slopes for a sample of 50 students</a></li>
-  <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">8.25</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
-  <li><a href="#html-version-that-you-can-open-in-word" id="toc-html-version-that-you-can-open-in-word" class="nav-link" data-scroll-target="#html-version-that-you-can-open-in-word"><span class="header-section-number">8.26</span> HTML version that you can open in Word</a></li>
+  <li><a href="#add-a-student-level-predictor-female" id="toc-add-a-student-level-predictor-female" class="nav-link" data-scroll-target="#add-a-student-level-predictor-female"><span class="header-section-number">9.16</span> Add a student-level predictor, female</a></li>
+  <li><a href="#add-predictors-for-raceethnicity-this-is-just-for-the-intercept" id="toc-add-predictors-for-raceethnicity-this-is-just-for-the-intercept" class="nav-link" data-scroll-target="#add-predictors-for-raceethnicity-this-is-just-for-the-intercept"><span class="header-section-number">9.17</span> Add predictors for race/ethnicity: this is just for the intercept</a></li>
+  <li><a href="#do-students-differ-in-their-growth-by-raceethnicity-this-is-an-interaction-effect" id="toc-do-students-differ-in-their-growth-by-raceethnicity-this-is-an-interaction-effect" class="nav-link" data-scroll-target="#do-students-differ-in-their-growth-by-raceethnicity-this-is-an-interaction-effect"><span class="header-section-number">9.18</span> Do students differ in their growth by race/ethnicity? This is an interaction effect</a></li>
+  <li><a href="#add-a-random-slope-for-year-at-the-child-level" id="toc-add-a-random-slope-for-year-at-the-child-level" class="nav-link" data-scroll-target="#add-a-random-slope-for-year-at-the-child-level"><span class="header-section-number">9.19</span> Add a random slope for year at the child level</a></li>
+  <li><a href="#should-we-keep-that-random-slope-for-time-use-rand-to-test" id="toc-should-we-keep-that-random-slope-for-time-use-rand-to-test" class="nav-link" data-scroll-target="#should-we-keep-that-random-slope-for-time-use-rand-to-test"><span class="header-section-number">9.20</span> Should we keep that random slope for time? Use <code>rand</code> to test</a></li>
+  <li><a href="#put-it-all-together-random-slope-interactions-not-for-latinx-students" id="toc-put-it-all-together-random-slope-interactions-not-for-latinx-students" class="nav-link" data-scroll-target="#put-it-all-together-random-slope-interactions-not-for-latinx-students"><span class="header-section-number">9.21</span> Put it all together: random slope, interactions (not for Latinx students)</a></li>
+  <li><a href="#visualize-our-model-by-predicting-scores" id="toc-visualize-our-model-by-predicting-scores" class="nav-link" data-scroll-target="#visualize-our-model-by-predicting-scores"><span class="header-section-number">9.22</span> Visualize our model by predicting scores</a></li>
+  <li><a href="#and-then-plotting-them" id="toc-and-then-plotting-them" class="nav-link" data-scroll-target="#and-then-plotting-them"><span class="header-section-number">9.23</span> And then plotting them</a></li>
+  <li><a href="#random-slopes-for-a-sample-of-50-students" id="toc-random-slopes-for-a-sample-of-50-students" class="nav-link" data-scroll-target="#random-slopes-for-a-sample-of-50-students"><span class="header-section-number">9.24</span> Random slopes for a sample of 50 students</a></li>
+  <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">9.25</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
+  <li><a href="#html-version-that-you-can-open-in-word" id="toc-html-version-that-you-can-open-in-word" class="nav-link" data-scroll-target="#html-version-that-you-can-open-in-word"><span class="header-section-number">9.26</span> HTML version that you can open in Word</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOURUSERNAME/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
-<span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span>
+<span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
@@ -347,8 +353,8 @@ Data file needed
 </div>
 <p>This week, we go to a dataset collected as part of the US Sustaining Effects Study (Carter 1984), which attempted to assess the sustaining impacts of compensatory schooling for students over time.</p>
 <p>The nesting changes character here. Instead of students within schools, we have <em>observations within students</em>: repeated measures over time. The mathematics barely changes. The interpretation changes completely, and it is worth slowing down for that shift.</p>
-<section id="load-in-our-mvp-packages" class="level2" data-number="8.1"><h2 data-number="8.1" class="anchored" data-anchor-id="load-in-our-mvp-packages">
-<span class="header-section-number">8.1</span> Load in our MVP packages</h2>
+<section id="load-in-our-mvp-packages" class="level2" data-number="9.1"><h2 data-number="9.1" class="anchored" data-anchor-id="load-in-our-mvp-packages">
+<span class="header-section-number">9.1</span> Load in our MVP packages</h2>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -365,8 +371,8 @@ Attaching package: 'Matrix'</code></pre>
     expand, pack, unpack</code></pre>
 </div>
 </div>
-</section><section id="load-in-the-data" class="level2" data-number="8.2"><h2 data-number="8.2" class="anchored" data-anchor-id="load-in-the-data">
-<span class="header-section-number">8.2</span> Load in the data</h2>
+</section><section id="load-in-the-data" class="level2" data-number="9.2"><h2 data-number="9.2" class="anchored" data-anchor-id="load-in-the-data">
+<span class="header-section-number">9.2</span> Load in the data</h2>
 <div class="cell">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">egmerged</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"egmerged.dta"</span><span class="op">)</span></span>
 <span></span>
@@ -389,8 +395,8 @@ $ mobility &lt;dbl&gt; 38.2, 26.8, 44.4, 18.7, 47.4, 55.4, 25.4, 20.9, 26.8, 26.
 </div>
 </div>
 <p>Notice the shape. There is one row per student <em>per year</em>, not one row per student. This is called long format, and it is what growth models require. A student who was measured six times appears in six rows, with their time-invariant characteristics repeated on each one.</p>
-</section><section id="explore-the-data-and-id-variables-using-describe-from-the-hmisc-package" class="level2" data-number="8.3"><h2 data-number="8.3" class="anchored" data-anchor-id="explore-the-data-and-id-variables-using-describe-from-the-hmisc-package">
-<span class="header-section-number">8.3</span> Explore the data and ID variables using <code>describe</code> from the <code>Hmisc</code> package</h2>
+</section><section id="explore-the-data-and-id-variables-using-describe-from-the-hmisc-package" class="level2" data-number="9.3"><h2 data-number="9.3" class="anchored" data-anchor-id="explore-the-data-and-id-variables-using-describe-from-the-hmisc-package">
+<span class="header-section-number">9.3</span> Explore the data and ID variables using <code>describe</code> from the <code>Hmisc</code> package</h2>
 <div class="cell">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">Hmisc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/describe.html">describe</a></span><span class="op">(</span><span class="va">egmerged</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -485,8 +491,8 @@ lowest : 8.8  10.5 12.5 14.3 16.4, highest: 54.4 55.4 56.4 62.3 67
 --------------------------------------------------------------------------------</code></pre>
 </div>
 </div>
-</section><section id="a-little-recoding-create-factor-versions-of-categorical-variables" class="level2" data-number="8.4"><h2 data-number="8.4" class="anchored" data-anchor-id="a-little-recoding-create-factor-versions-of-categorical-variables">
-<span class="header-section-number">8.4</span> A little recoding: create factor versions of categorical variables</h2>
+</section><section id="a-little-recoding-create-factor-versions-of-categorical-variables" class="level2" data-number="9.4"><h2 data-number="9.4" class="anchored" data-anchor-id="a-little-recoding-create-factor-versions-of-categorical-variables">
+<span class="header-section-number">9.4</span> A little recoding: create factor versions of categorical variables</h2>
 <p>Our model is easier to interpret if time starts at 0.</p>
 <div class="cell">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">egmerged.clean</span> <span class="op">&lt;-</span> <span class="va">egmerged</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -498,8 +504,8 @@ lowest : 8.8  10.5 12.5 14.3 16.4, highest: 54.4 55.4 56.4 62.3 67
 <span>         year0 <span class="op">=</span> <span class="va">year</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>That last line is doing more work than it appears to. The intercept in any regression is the predicted outcome when every predictor equals zero, including time. Left as <code>year</code> running from 1, the intercept would describe a hypothetical measurement occasion before the study began. Recoded so the first wave is 0, the intercept becomes the predicted score at the start of the study, which is a quantity you can defend in print.</p>
-</section><section id="use-arrange-to-examine-variables-that-vary-by-student-year-and-school" class="level2" data-number="8.5"><h2 data-number="8.5" class="anchored" data-anchor-id="use-arrange-to-examine-variables-that-vary-by-student-year-and-school">
-<span class="header-section-number">8.5</span> Use <code>arrange</code> to examine variables that vary by student, year, and school</h2>
+</section><section id="use-arrange-to-examine-variables-that-vary-by-student-year-and-school" class="level2" data-number="9.5"><h2 data-number="9.5" class="anchored" data-anchor-id="use-arrange-to-examine-variables-that-vary-by-student-year-and-school">
+<span class="header-section-number">9.5</span> Use <code>arrange</code> to examine variables that vary by student, year, and school</h2>
 <div class="cell">
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">egmerged</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">childid</span>, <span class="va">year</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -522,8 +528,8 @@ lowest : 8.8  10.5 12.5 14.3 16.4, highest: 54.4 55.4 56.4 62.3 67
 </div>
 </div>
 <p>Sorting by student and then by year lets you read one child’s trajectory across consecutive rows. Do this before modeling. You will see immediately whether every student has the same number of observations, whether years are consecutive, and whether the outcome moves in a plausible way.</p>
-</section><section id="summarize-math-score-by-year-to-look-for-preliminary-changes-over-time" class="level2" data-number="8.6"><h2 data-number="8.6" class="anchored" data-anchor-id="summarize-math-score-by-year-to-look-for-preliminary-changes-over-time">
-<span class="header-section-number">8.6</span> Summarize math score by year, to look for preliminary changes over time</h2>
+</section><section id="summarize-math-score-by-year-to-look-for-preliminary-changes-over-time" class="level2" data-number="9.6"><h2 data-number="9.6" class="anchored" data-anchor-id="summarize-math-score-by-year-to-look-for-preliminary-changes-over-time">
+<span class="header-section-number">9.6</span> Summarize math score by year, to look for preliminary changes over time</h2>
 <div class="cell">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">egmerged</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -541,8 +547,8 @@ lowest : 8.8  10.5 12.5 14.3 16.4, highest: 54.4 55.4 56.4 62.3 67
 6     6          1.05 </code></pre>
 </div>
 </div>
-</section><section id="same-thing-by-grade-the-only-difference-should-be-missing-or-retained-students" class="level2" data-number="8.7"><h2 data-number="8.7" class="anchored" data-anchor-id="same-thing-by-grade-the-only-difference-should-be-missing-or-retained-students">
-<span class="header-section-number">8.7</span> Same thing, by grade: the only difference should be missing or retained students</h2>
+</section><section id="same-thing-by-grade-the-only-difference-should-be-missing-or-retained-students" class="level2" data-number="9.7"><h2 data-number="9.7" class="anchored" data-anchor-id="same-thing-by-grade-the-only-difference-should-be-missing-or-retained-students">
+<span class="header-section-number">9.7</span> Same thing, by grade: the only difference should be missing or retained students</h2>
 <div class="cell">
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">egmerged</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">grade</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -561,8 +567,8 @@ lowest : 8.8  10.5 12.5 14.3 16.4, highest: 54.4 55.4 56.4 62.3 67
 </div>
 </div>
 <p>Comparing these two tables is a nice diagnostic. Year counts time since the study started; grade counts progress through school. For most students they move together, so the two tables should look nearly identical. Where they diverge, you are seeing students who were retained and therefore fell out of step, which is exactly what the <code>retained</code> variable records.</p>
-</section><section id="create-summary-data-frame-of-student-level-variables" class="level2" data-number="8.8"><h2 data-number="8.8" class="anchored" data-anchor-id="create-summary-data-frame-of-student-level-variables">
-<span class="header-section-number">8.8</span> Create summary data frame of student-level variables</h2>
+</section><section id="create-summary-data-frame-of-student-level-variables" class="level2" data-number="9.8"><h2 data-number="9.8" class="anchored" data-anchor-id="create-summary-data-frame-of-student-level-variables">
+<span class="header-section-number">9.8</span> Create summary data frame of student-level variables</h2>
 <div class="cell">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">student.level</span> <span class="op">&lt;-</span><span class="va">egmerged.clean</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">childid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -586,8 +592,8 @@ $ math     &lt;dbl&gt; -0.4517500, 1.1223333, -0.8530000, 0.5643333, -2.5121667,
 </div>
 </div>
 <p>This collapses the long dataset down to one row per student, which is what you need for a descriptive table. Note the different summary functions: <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> for characteristics that are constant within a student, so the mean just returns that constant; <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code> for <code>retained</code>, which flags a student who was ever retained; and <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> for math, which here gives each student’s average across waves.</p>
-</section><section id="table-1-for-student-level-variables" class="level2" data-number="8.9"><h2 data-number="8.9" class="anchored" data-anchor-id="table-1-for-student-level-variables">
-<span class="header-section-number">8.9</span> Table 1 for student-level variables</h2>
+</section><section id="table-1-for-student-level-variables" class="level2" data-number="9.9"><h2 data-number="9.9" class="anchored" data-anchor-id="table-1-for-student-level-variables">
+<span class="header-section-number">9.9</span> Table 1 for student-level variables</h2>
 <div class="cell">
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/benjaminrich/table1">table1</a></span><span class="op">)</span></span>
 <span></span>
@@ -659,8 +665,8 @@ $ math     &lt;dbl&gt; -0.4517500, 1.1223333, -0.8530000, 0.5643333, -2.5121667,
 </div>
 </div>
 <p>The <code>table1</code> package produces the descriptive table that opens nearly every quantitative paper. Building it from the collapsed student-level data rather than the long data matters: run it on the long file and every student would be counted once per year, inflating your N and misstating the proportions.</p>
-</section><section id="create-summary-data-frame-of-school-level-variables" class="level2" data-number="8.10"><h2 data-number="8.10" class="anchored" data-anchor-id="create-summary-data-frame-of-school-level-variables">
-<span class="header-section-number">8.10</span> Create summary data frame of school-level variables</h2>
+</section><section id="create-summary-data-frame-of-school-level-variables" class="level2" data-number="9.10"><h2 data-number="9.10" class="anchored" data-anchor-id="create-summary-data-frame-of-school-level-variables">
+<span class="header-section-number">9.10</span> Create summary data frame of school-level variables</h2>
 <div class="cell">
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">school.level</span> <span class="op">&lt;-</span><span class="va">egmerged.clean</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">schoolid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -679,8 +685,8 @@ $ mobility &lt;dbl&gt; 12.5, 18.6, 44.4, 31.7, 67.0, 39.3, 39.9, 37.1, 25.8, 10.
 $ size     &lt;dbl&gt; 380, 502, 777, 800, 1133, 439, 566, 767, 113, 828, 339, 511, …</code></pre>
 </div>
 </div>
-</section><section id="table-1-for-school-level-variables" class="level2" data-number="8.11"><h2 data-number="8.11" class="anchored" data-anchor-id="table-1-for-school-level-variables">
-<span class="header-section-number">8.11</span> Table 1 for school-level variables</h2>
+</section><section id="table-1-for-school-level-variables" class="level2" data-number="9.11"><h2 data-number="9.11" class="anchored" data-anchor-id="table-1-for-school-level-variables">
+<span class="header-section-number">9.11</span> Table 1 for school-level variables</h2>
 <div class="cell">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/benjaminrich/table1">table1</a></span><span class="op">)</span></span>
 <span></span>
@@ -740,21 +746,21 @@ $ size     &lt;dbl&gt; 380, 502, 777, 800, 1133, 439, 566, 767, 113, 828, 339, 5
 </div>
 </div>
 <p>Same logic one level up. School characteristics get described across schools, not across student-years.</p>
-</section><section id="distribution-of-the-outcome" class="level2" data-number="8.12"><h2 data-number="8.12" class="anchored" data-anchor-id="distribution-of-the-outcome">
-<span class="header-section-number">8.12</span> Distribution of the outcome</h2>
+</section><section id="distribution-of-the-outcome" class="level2" data-number="9.12"><h2 data-number="9.12" class="anchored" data-anchor-id="distribution-of-the-outcome">
+<span class="header-section-number">9.12</span> Distribution of the outcome</h2>
 <div class="cell">
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/density.html">density</a></span><span class="op">(</span><span class="va">egmerged.clean</span><span class="op">$</span><span class="va">math</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">.</span>, main <span class="op">=</span> <span class="st">"Distribution of Math Scores"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-density" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="08a-growth-intro_files/figure-html/fig-density-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;8.1: Distribution of math scores across all observations.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;9.1: Distribution of math scores across all observations.</figcaption></figure>
 </div>
 </div>
 </div>
 <p>A density plot is a smoothed alternative to a histogram, useful when you care about the shape rather than the exact bin counts.</p>
-</section><section id="getting-fancy-maybe-plot-over-time" class="level2" data-number="8.13"><h2 data-number="8.13" class="anchored" data-anchor-id="getting-fancy-maybe-plot-over-time">
-<span class="header-section-number">8.13</span> Getting fancy: maybe plot over time?</h2>
+</section><section id="getting-fancy-maybe-plot-over-time" class="level2" data-number="9.13"><h2 data-number="9.13" class="anchored" data-anchor-id="getting-fancy-maybe-plot-over-time">
+<span class="header-section-number">9.13</span> Getting fancy: maybe plot over time?</h2>
 <p><code>scatter.smooth</code> is a nice way to get a sense of the trend in the data. But keep in mind, this type of plot does NOT account for observations nested within students, so it should be treated as exploratory.</p>
 <div class="cell">
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/scatter.smooth.html">scatter.smooth</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">$</span><span class="va">year</span>,</span>
@@ -763,13 +769,13 @@ $ size     &lt;dbl&gt; 380, 502, 777, 800, 1133, 439, 566, 767, 113, 828, 339, 5
 <div class="cell-output-display">
 <div id="fig-scatter" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="08a-growth-intro_files/figure-html/fig-scatter-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;8.2: Math scores over time, ignoring the nesting.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;9.2: Math scores over time, ignoring the nesting.</figcaption></figure>
 </div>
 </div>
 </div>
 <p>That caveat is the whole reason for the rest of this chapter. The smoother here treats every point as independent, so it describes the average trend across all observations without knowing that groups of them belong to the same child. It is a good first look and a bad final answer.</p>
-</section><section id="run-a-regular-null-model-for-math-scores" class="level2" data-number="8.14"><h2 data-number="8.14" class="anchored" data-anchor-id="run-a-regular-null-model-for-math-scores">
-<span class="header-section-number">8.14</span> Run a regular null model for math scores</h2>
+</section><section id="run-a-regular-null-model-for-math-scores" class="level2" data-number="9.14"><h2 data-number="9.14" class="anchored" data-anchor-id="run-a-regular-null-model-for-math-scores">
+<span class="header-section-number">9.14</span> Run a regular null model for math scores</h2>
 <div class="cell">
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.null</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
 <span></span>
@@ -796,8 +802,8 @@ Fixed effects:
 (Intercept) -0.56065    0.02668  -21.02</code></pre>
 </div>
 </div>
-<section id="calculate-icc" class="level3" data-number="8.14.1"><h3 data-number="8.14.1" class="anchored" data-anchor-id="calculate-icc">
-<span class="header-section-number">8.14.1</span> Calculate ICC</h3>
+<section id="calculate-icc" class="level3" data-number="9.14.1"><h3 data-number="9.14.1" class="anchored" data-anchor-id="calculate-icc">
+<span class="header-section-number">9.14.1</span> Calculate ICC</h3>
 <div class="cell">
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">null.icc</span> <span class="op">&lt;-</span> <span class="fl">0.8483</span><span class="op">/</span><span class="op">(</span><span class="fl">0.8483</span> <span class="op">+</span> <span class="fl">1.5247</span><span class="op">)</span></span>
 <span><span class="va">null.icc</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -806,8 +812,8 @@ Fixed effects:
 </div>
 </div>
 <p>Interpret this the way you would any ICC, but notice what the levels now mean. The between-cluster variance is between <em>students</em>, and the within-cluster variance is within a student across occasions. So the ICC answers: how much of the variation in math scores is stable differences between children, versus fluctuation within a child over time?</p>
-</section></section><section id="now-run-a-growth-null-model-for-math-scores-with-year-included" class="level2" data-number="8.15"><h2 data-number="8.15" class="anchored" data-anchor-id="now-run-a-growth-null-model-for-math-scores-with-year-included">
-<span class="header-section-number">8.15</span> Now, run a GROWTH null model for math scores (with year included)</h2>
+</section></section><section id="now-run-a-growth-null-model-for-math-scores-with-year-included" class="level2" data-number="9.15"><h2 data-number="9.15" class="anchored" data-anchor-id="now-run-a-growth-null-model-for-math-scores-with-year-included">
+<span class="header-section-number">9.15</span> Now, run a GROWTH null model for math scores (with year included)</h2>
 <div class="cell">
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.null.growth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
 <span></span>
@@ -839,8 +845,8 @@ Correlation of Fixed Effects:
 year0 -0.548</code></pre>
 </div>
 </div>
-<section id="calculate-growth-icc" class="level3" data-number="8.15.1"><h3 data-number="8.15.1" class="anchored" data-anchor-id="calculate-growth-icc">
-<span class="header-section-number">8.15.1</span> Calculate GROWTH ICC</h3>
+<section id="calculate-growth-icc" class="level3" data-number="9.15.1"><h3 data-number="9.15.1" class="anchored" data-anchor-id="calculate-growth-icc">
+<span class="header-section-number">9.15.1</span> Calculate GROWTH ICC</h3>
 <div class="cell">
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">null.growth.icc</span> <span class="op">&lt;-</span> <span class="fl">0.8683</span><span class="op">/</span><span class="op">(</span><span class="fl">0.8683</span> <span class="op">+</span> <span class="fl">0.3470</span><span class="op">)</span></span>
 <span><span class="va">null.growth.icc</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -851,8 +857,8 @@ year0 -0.548</code></pre>
 <p>Compare the two residual variances: roughly 1.52 in the null model, roughly 0.35 once time is included. That is a large drop, and the reason is worth stating carefully.</p>
 <p>In the first model, “within-student variance” lumped together everything that made a child’s scores differ across occasions, including the fact that they were <em>growing</em>. In the second, growth has been pulled out into a fixed effect, so the residual now represents deviation from a student’s own trajectory rather than deviation from their own average.</p>
 <p>This is the conceptual heart of growth modeling. The level-1 units are occasions, and what varies at level 1 is how far a particular measurement sits from where the model expected that student to be at that time.</p>
-</section></section><section id="add-a-student-level-predictor-female" class="level2" data-number="8.16"><h2 data-number="8.16" class="anchored" data-anchor-id="add-a-student-level-predictor-female">
-<span class="header-section-number">8.16</span> Add a student-level predictor, female</h2>
+</section></section><section id="add-a-student-level-predictor-female" class="level2" data-number="9.16"><h2 data-number="9.16" class="anchored" data-anchor-id="add-a-student-level-predictor-female">
+<span class="header-section-number">9.16</span> Add a student-level predictor, female</h2>
 <div class="cell">
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">female</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
 <span></span>
@@ -887,8 +893,8 @@ female -0.646 -0.007</code></pre>
 </div>
 </div>
 <p><code>female</code> is measured once per student, so it is a level-2 predictor even though it appears on every row of the long dataset. It can shift a student’s whole trajectory up or down, but on its own it cannot change the slope.</p>
-</section><section id="add-predictors-for-raceethnicity-this-is-just-for-the-intercept" class="level2" data-number="8.17"><h2 data-number="8.17" class="anchored" data-anchor-id="add-predictors-for-raceethnicity-this-is-just-for-the-intercept">
-<span class="header-section-number">8.17</span> Add predictors for race/ethnicity: this is just for the intercept</h2>
+</section><section id="add-predictors-for-raceethnicity-this-is-just-for-the-intercept" class="level2" data-number="9.17"><h2 data-number="9.17" class="anchored" data-anchor-id="add-predictors-for-raceethnicity-this-is-just-for-the-intercept">
+<span class="header-section-number">9.17</span> Add predictors for race/ethnicity: this is just for the intercept</h2>
 <div class="cell">
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">female</span> <span class="op">+</span> <span class="va">black</span> <span class="op">+</span> <span class="va">hispanic</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
 <span></span>
@@ -927,8 +933,8 @@ hispanic -0.623 -0.006  0.030  0.620</code></pre>
 </div>
 </div>
 <p>The section heading is the important part. These coefficients describe differences in where students <em>start</em>, not differences in how fast they grow. Everything so far assumes a single common growth rate.</p>
-</section><section id="do-students-differ-in-their-growth-by-raceethnicity-this-is-an-interaction-effect" class="level2" data-number="8.18"><h2 data-number="8.18" class="anchored" data-anchor-id="do-students-differ-in-their-growth-by-raceethnicity-this-is-an-interaction-effect">
-<span class="header-section-number">8.18</span> Do students differ in their growth by race/ethnicity? This is an interaction effect</h2>
+</section><section id="do-students-differ-in-their-growth-by-raceethnicity-this-is-an-interaction-effect" class="level2" data-number="9.18"><h2 data-number="9.18" class="anchored" data-anchor-id="do-students-differ-in-their-growth-by-raceethnicity-this-is-an-interaction-effect">
+<span class="header-section-number">9.18</span> Do students differ in their growth by race/ethnicity? This is an interaction effect</h2>
 <div class="cell">
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">female</span> <span class="op">+</span> <span class="va">black</span> <span class="op">+</span> <span class="va">hispanic</span> <span class="op">+</span> <span class="va">year0</span><span class="op">:</span><span class="va">black</span> <span class="op">+</span> <span class="va">year0</span><span class="op">:</span><span class="va">hispanic</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
 <span></span>
@@ -974,8 +980,8 @@ year0:hspnc  0.331 -0.654  0.001 -0.316 -0.563  0.581</code></pre>
 </div>
 <p>Interacting a student-level characteristic with time is how you ask whether trajectories diverge. The main effect is a difference in starting point; the interaction is a difference in slope. Those are separate claims, and conflating them is one of the most common errors in write-ups of growth models.</p>
 <p>A gap that is constant over time and a gap that widens over time call for very different responses, and only the interaction can tell them apart.</p>
-</section><section id="add-a-random-slope-for-year-at-the-child-level" class="level2" data-number="8.19"><h2 data-number="8.19" class="anchored" data-anchor-id="add-a-random-slope-for-year-at-the-child-level">
-<span class="header-section-number">8.19</span> Add a random slope for year at the child level</h2>
+</section><section id="add-a-random-slope-for-year-at-the-child-level" class="level2" data-number="9.19"><h2 data-number="9.19" class="anchored" data-anchor-id="add-a-random-slope-for-year-at-the-child-level">
+<span class="header-section-number">9.19</span> Add a random slope for year at the child level</h2>
 <p>Each child has their own slope.</p>
 <div class="cell">
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">female</span> <span class="op">+</span> <span class="va">black</span> <span class="op">+</span> <span class="va">hispanic</span> <span class="op">+</span>  <span class="op">(</span><span class="va">year0</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
@@ -1016,8 +1022,8 @@ hispanic -0.625 -0.016  0.032  0.615</code></pre>
 </div>
 </div>
 <p>Note the difference from the previous model. The interaction asked whether <em>groups</em> of students grow at different rates. This asks whether <em>individual</em> students do, without trying to explain why. Picture two children with identical third-grade scores: one climbs steadily, the other plateaus. A random intercept model cannot tell them apart. This one can.</p>
-</section><section id="should-we-keep-that-random-slope-for-time-use-rand-to-test" class="level2" data-number="8.20"><h2 data-number="8.20" class="anchored" data-anchor-id="should-we-keep-that-random-slope-for-time-use-rand-to-test">
-<span class="header-section-number">8.20</span> Should we keep that random slope for time? Use <code>rand</code> to test</h2>
+</section><section id="should-we-keep-that-random-slope-for-time-use-rand-to-test" class="level2" data-number="9.20"><h2 data-number="9.20" class="anchored" data-anchor-id="should-we-keep-that-random-slope-for-time-use-rand-to-test">
+<span class="header-section-number">9.20</span> Should we keep that random slope for time? Use <code>rand</code> to test</h2>
 <div class="cell">
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">lmerTest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">rand</a></span><span class="op">(</span><span class="va">model.4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1032,8 +1038,8 @@ year0 in (year0 | childid)    7 -8447.0 16908 248.4  2  &lt; 2.2e-16 ***
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-</section><section id="put-it-all-together-random-slope-interactions-not-for-latinx-students" class="level2" data-number="8.21"><h2 data-number="8.21" class="anchored" data-anchor-id="put-it-all-together-random-slope-interactions-not-for-latinx-students">
-<span class="header-section-number">8.21</span> Put it all together: random slope, interactions (not for Latinx students)</h2>
+</section><section id="put-it-all-together-random-slope-interactions-not-for-latinx-students" class="level2" data-number="9.21"><h2 data-number="9.21" class="anchored" data-anchor-id="put-it-all-together-random-slope-interactions-not-for-latinx-students">
+<span class="header-section-number">9.21</span> Put it all together: random slope, interactions (not for Latinx students)</h2>
 <div class="cell">
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">female</span> <span class="op">+</span> <span class="va">black</span> <span class="op">+</span> <span class="va">hispanic</span> <span class="op">+</span> <span class="va">year0</span><span class="op">:</span><span class="va">black</span> <span class="op">+</span> <span class="op">(</span><span class="va">year0</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
 <span></span>
@@ -1075,8 +1081,8 @@ hispanic    -0.597 -0.028  0.031  0.561
 year0:black  0.266 -0.827  0.000 -0.378  0.023</code></pre>
 </div>
 </div>
-</section><section id="visualize-our-model-by-predicting-scores" class="level2" data-number="8.22"><h2 data-number="8.22" class="anchored" data-anchor-id="visualize-our-model-by-predicting-scores">
-<span class="header-section-number">8.22</span> Visualize our model by predicting scores</h2>
+</section><section id="visualize-our-model-by-predicting-scores" class="level2" data-number="9.22"><h2 data-number="9.22" class="anchored" data-anchor-id="visualize-our-model-by-predicting-scores">
+<span class="header-section-number">9.22</span> Visualize our model by predicting scores</h2>
 <div class="cell">
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">predicted.vals</span> <span class="op">&lt;-</span> <span class="fu">broom.mixed</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/augment.html">augment</a></span><span class="op">(</span><span class="va">model.5</span>, effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ran_pars"</span>, <span class="st">"fixed"</span><span class="op">)</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
@@ -1104,8 +1110,8 @@ $ .wtres   &lt;dbl&gt; -0.30129073, -0.05231038, -1.15618618, -0.65556371, -0.50
 </div>
 </div>
 <p><code><a href="https://generics.r-lib.org/reference/augment.html">augment()</a></code> returns the original data plus fitted values, residuals, and related quantities in a tidy data frame. Asking for both <code>"ran_pars"</code> and <code>"fixed"</code> means the fitted values incorporate each child’s own random effects, not just the average trajectory, which is what makes the next plot show individual variation.</p>
-</section><section id="and-then-plotting-them" class="level2" data-number="8.23"><h2 data-number="8.23" class="anchored" data-anchor-id="and-then-plotting-them">
-<span class="header-section-number">8.23</span> And then plotting them</h2>
+</section><section id="and-then-plotting-them" class="level2" data-number="9.23"><h2 data-number="9.23" class="anchored" data-anchor-id="and-then-plotting-them">
+<span class="header-section-number">9.23</span> And then plotting them</h2>
 <div class="cell">
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">predicted.vals</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year0</span>, y <span class="op">=</span> <span class="va">.fitted</span>, color <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">black</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.50</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1119,13 +1125,13 @@ $ .wtres   &lt;dbl&gt; -0.30129073, -0.05231038, -1.15618618, -0.65556371, -0.50
 <div class="cell-output-display">
 <div id="fig-predicted" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="08a-growth-intro_files/figure-html/fig-predicted-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;8.3: Predicted math trajectories, Black students compared with all others.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;9.3: Predicted math trajectories, Black students compared with all others.</figcaption></figure>
 </div>
 </div>
 </div>
 <p>The two lines are the interaction made visible. If they run parallel, the growth rates are the same and only the starting points differ. If they diverge, the gap is widening. Reading the coefficient tells you which; seeing the plot tells you how much it matters.</p>
-</section><section id="random-slopes-for-a-sample-of-50-students" class="level2" data-number="8.24"><h2 data-number="8.24" class="anchored" data-anchor-id="random-slopes-for-a-sample-of-50-students">
-<span class="header-section-number">8.24</span> Random slopes for a sample of 50 students</h2>
+</section><section id="random-slopes-for-a-sample-of-50-students" class="level2" data-number="9.24"><h2 data-number="9.24" class="anchored" data-anchor-id="random-slopes-for-a-sample-of-50-students">
+<span class="header-section-number">9.24</span> Random slopes for a sample of 50 students</h2>
 <p>This gives a sense of the variability in slopes.</p>
 <div class="cell">
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">predicted.vals50</span> <span class="op">&lt;-</span> <span class="va">predicted.vals</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -1143,14 +1149,14 @@ $ .wtres   &lt;dbl&gt; -0.30129073, -0.05231038, -1.15618618, -0.65556371, -0.50
 <div class="cell-output-display">
 <div id="fig-fifty" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="08a-growth-intro_files/figure-html/fig-fifty-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;8.4: Predicted trajectories for a subset of students.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;9.4: Predicted trajectories for a subset of students.</figcaption></figure>
 </div>
 </div>
 </div>
 <p>This is the picture the random slope variance is summarizing. Each line is one child. The spread of their angles <em>is</em> the slope variance, and seeing it directly is more convincing than any number in the output.</p>
 <p>Slicing the first 252 rows is a quick way to grab roughly the first 50 students once the data are sorted, since most contribute several observations each.</p>
-</section><section id="using-modelsummary-and-broom.mixed-to-organize-your-results" class="level2" data-number="8.25"><h2 data-number="8.25" class="anchored" data-anchor-id="using-modelsummary-and-broom.mixed-to-organize-your-results">
-<span class="header-section-number">8.25</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</h2>
+</section><section id="using-modelsummary-and-broom.mixed-to-organize-your-results" class="level2" data-number="9.25"><h2 data-number="9.25" class="anchored" data-anchor-id="using-modelsummary-and-broom.mixed-to-organize-your-results">
+<span class="header-section-number">9.25</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</h2>
 <div class="cell">
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bbolker/broom.mixed">broom.mixed</a></span><span class="op">)</span></span>
@@ -1466,8 +1472,8 @@ $ .wtres   &lt;dbl&gt; -0.30129073, -0.05231038, -1.15618618, -0.65556371, -0.50
 <!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
-</section><section id="html-version-that-you-can-open-in-word" class="level2" data-number="8.26"><h2 data-number="8.26" class="anchored" data-anchor-id="html-version-that-you-can-open-in-word">
-<span class="header-section-number">8.26</span> HTML version that you can open in Word</h2>
+</section><section id="html-version-that-you-can-open-in-word" class="level2" data-number="9.26"><h2 data-number="9.26" class="anchored" data-anchor-id="html-version-that-you-can-open-in-word">
+<span class="header-section-number">9.26</span> HTML version that you can open in Word</h2>
 <div class="cell">
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>, output <span class="op">=</span> <span class="st">'msum.html'</span>, title <span class="op">=</span> <span class="st">'MLM Estimates'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1761,12 +1767,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./07-three-level.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./08b-growth-advanced.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">

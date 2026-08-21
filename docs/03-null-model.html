@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
-<title>Applied Multilevel Modeling in R - 3&nbsp; Intro to MLM and the Null Model</title>
+<title>Applied Multilevel Modeling in R - 4&nbsp; Intro to MLM and the Null Model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -112,7 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-null-model.html">Two-Level Models</a></li><li class="breadcrumb-item"><a href="./03-null-model.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-null-model.html">Two-Level Models</a></li><li class="breadcrumb-item"><a href="./03-null-model.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -176,8 +176,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./02-reading-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Reading: Regression and Where It Runs Out</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./02-regression-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -194,25 +200,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-null-model.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-random-intercept.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-random-slopes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-fit-effect-sizes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
   </div>
 </li>
       </ul>
@@ -229,25 +235,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-three-level.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08a-growth-intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08b-growth-advanced.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-binary-outcomes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -264,13 +270,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-cross-classified.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -289,29 +295,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#load-some-packages-to-help-with-the-analysis-and-data-management" id="toc-load-some-packages-to-help-with-the-analysis-and-data-management" class="nav-link active" data-scroll-target="#load-some-packages-to-help-with-the-analysis-and-data-management"><span class="header-section-number">3.1</span> Load some packages to help with the analysis and data management</a></li>
-  <li><a href="#load-in-the-data-and-use-glimpse-to-summarize-the-structure" id="toc-load-in-the-data-and-use-glimpse-to-summarize-the-structure" class="nav-link" data-scroll-target="#load-in-the-data-and-use-glimpse-to-summarize-the-structure"><span class="header-section-number">3.2</span> Load in the data and use <code>glimpse</code> to summarize the structure</a></li>
+<li><a href="#load-some-packages-to-help-with-the-analysis-and-data-management" id="toc-load-some-packages-to-help-with-the-analysis-and-data-management" class="nav-link active" data-scroll-target="#load-some-packages-to-help-with-the-analysis-and-data-management"><span class="header-section-number">4.1</span> Load some packages to help with the analysis and data management</a></li>
+  <li><a href="#load-in-the-data-and-use-glimpse-to-summarize-the-structure" id="toc-load-in-the-data-and-use-glimpse-to-summarize-the-structure" class="nav-link" data-scroll-target="#load-in-the-data-and-use-glimpse-to-summarize-the-structure"><span class="header-section-number">4.2</span> Load in the data and use <code>glimpse</code> to summarize the structure</a></li>
   <li>
-<a href="#quick-data-cleaning-and-coding-tips" id="toc-quick-data-cleaning-and-coding-tips" class="nav-link" data-scroll-target="#quick-data-cleaning-and-coding-tips"><span class="header-section-number">3.3</span> Quick data cleaning and coding tips</a>
+<a href="#quick-data-cleaning-and-coding-tips" id="toc-quick-data-cleaning-and-coding-tips" class="nav-link" data-scroll-target="#quick-data-cleaning-and-coding-tips"><span class="header-section-number">4.3</span> Quick data cleaning and coding tips</a>
   <ul class="collapse">
-<li><a href="#the-summary-command-from-base-r-is-a-quick-and-easy-way-to-explore-a-new-dataset" id="toc-the-summary-command-from-base-r-is-a-quick-and-easy-way-to-explore-a-new-dataset" class="nav-link" data-scroll-target="#the-summary-command-from-base-r-is-a-quick-and-easy-way-to-explore-a-new-dataset"><span class="header-section-number">3.3.1</span> The <code>summary</code> command from base R is a quick and easy way to explore a new dataset</a></li>
-  <li><a href="#lets-give-some-variables-a-label" id="toc-lets-give-some-variables-a-label" class="nav-link" data-scroll-target="#lets-give-some-variables-a-label"><span class="header-section-number">3.3.2</span> Let’s give some variables a label</a></li>
-  <li><a href="#lets-create-a-factor-version-of-sector-and-label-its-values" id="toc-lets-create-a-factor-version-of-sector-and-label-its-values" class="nav-link" data-scroll-target="#lets-create-a-factor-version-of-sector-and-label-its-values"><span class="header-section-number">3.3.3</span> Let’s create a factor version of <code>sector</code> and label its values</a></li>
-  <li><a href="#run-summary-again-and-notice-how-it-handles-factors" id="toc-run-summary-again-and-notice-how-it-handles-factors" class="nav-link" data-scroll-target="#run-summary-again-and-notice-how-it-handles-factors"><span class="header-section-number">3.3.4</span> Run <code>summary</code> again and notice how it handles factors</a></li>
+<li><a href="#the-summary-command-from-base-r-is-a-quick-and-easy-way-to-explore-a-new-dataset" id="toc-the-summary-command-from-base-r-is-a-quick-and-easy-way-to-explore-a-new-dataset" class="nav-link" data-scroll-target="#the-summary-command-from-base-r-is-a-quick-and-easy-way-to-explore-a-new-dataset"><span class="header-section-number">4.3.1</span> The <code>summary</code> command from base R is a quick and easy way to explore a new dataset</a></li>
+  <li><a href="#lets-give-some-variables-a-label" id="toc-lets-give-some-variables-a-label" class="nav-link" data-scroll-target="#lets-give-some-variables-a-label"><span class="header-section-number">4.3.2</span> Let’s give some variables a label</a></li>
+  <li><a href="#lets-create-a-factor-version-of-sector-and-label-its-values" id="toc-lets-create-a-factor-version-of-sector-and-label-its-values" class="nav-link" data-scroll-target="#lets-create-a-factor-version-of-sector-and-label-its-values"><span class="header-section-number">4.3.3</span> Let’s create a factor version of <code>sector</code> and label its values</a></li>
+  <li><a href="#run-summary-again-and-notice-how-it-handles-factors" id="toc-run-summary-again-and-notice-how-it-handles-factors" class="nav-link" data-scroll-target="#run-summary-again-and-notice-how-it-handles-factors"><span class="header-section-number">4.3.4</span> Run <code>summary</code> again and notice how it handles factors</a></li>
   </ul>
 </li>
-  <li><a href="#exploring-our-outcome-math-achievement" id="toc-exploring-our-outcome-math-achievement" class="nav-link" data-scroll-target="#exploring-our-outcome-math-achievement"><span class="header-section-number">3.4</span> Exploring our outcome, math achievement</a></li>
-  <li><a href="#running-a-null-model" id="toc-running-a-null-model" class="nav-link" data-scroll-target="#running-a-null-model"><span class="header-section-number">3.5</span> Running a null model</a></li>
-  <li><a href="#post-estimation-task-calculate-the-icc" id="toc-post-estimation-task-calculate-the-icc" class="nav-link" data-scroll-target="#post-estimation-task-calculate-the-icc"><span class="header-section-number">3.6</span> Post-estimation task: calculate the ICC</a></li>
-  <li><a href="#using-lmertest-to-evaluate-random-effects" id="toc-using-lmertest-to-evaluate-random-effects" class="nav-link" data-scroll-target="#using-lmertest-to-evaluate-random-effects"><span class="header-section-number">3.7</span> Using <code>lmerTest</code> to evaluate random effects</a></li>
-  <li><a href="#always-interesting-compare-our-mlm-to-a-regular-regression" id="toc-always-interesting-compare-our-mlm-to-a-regular-regression" class="nav-link" data-scroll-target="#always-interesting-compare-our-mlm-to-a-regular-regression"><span class="header-section-number">3.8</span> Always interesting: compare our MLM to a regular regression</a></li>
-  <li><a href="#what-comes-next" id="toc-what-comes-next" class="nav-link" data-scroll-target="#what-comes-next"><span class="header-section-number">3.9</span> What comes next</a></li>
+  <li><a href="#exploring-our-outcome-math-achievement" id="toc-exploring-our-outcome-math-achievement" class="nav-link" data-scroll-target="#exploring-our-outcome-math-achievement"><span class="header-section-number">4.4</span> Exploring our outcome, math achievement</a></li>
+  <li><a href="#running-a-null-model" id="toc-running-a-null-model" class="nav-link" data-scroll-target="#running-a-null-model"><span class="header-section-number">4.5</span> Running a null model</a></li>
+  <li><a href="#post-estimation-task-calculate-the-icc" id="toc-post-estimation-task-calculate-the-icc" class="nav-link" data-scroll-target="#post-estimation-task-calculate-the-icc"><span class="header-section-number">4.6</span> Post-estimation task: calculate the ICC</a></li>
+  <li><a href="#using-lmertest-to-evaluate-random-effects" id="toc-using-lmertest-to-evaluate-random-effects" class="nav-link" data-scroll-target="#using-lmertest-to-evaluate-random-effects"><span class="header-section-number">4.7</span> Using <code>lmerTest</code> to evaluate random effects</a></li>
+  <li><a href="#always-interesting-compare-our-mlm-to-a-regular-regression" id="toc-always-interesting-compare-our-mlm-to-a-regular-regression" class="nav-link" data-scroll-target="#always-interesting-compare-our-mlm-to-a-regular-regression"><span class="header-section-number">4.8</span> Always interesting: compare our MLM to a regular regression</a></li>
+  <li><a href="#what-comes-next" id="toc-what-comes-next" class="nav-link" data-scroll-target="#what-comes-next"><span class="header-section-number">4.9</span> What comes next</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOURUSERNAME/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
-<span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span>
+<span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
@@ -327,8 +333,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header><p><strong>Data for this chapter:</strong> <code>hsbmerged.csv</code></p>
 <p>This week we use a larger version of the HSB dataset from 1988. Same structure as before: students nested within schools. This is the same dataset Garson uses in Chapter 3, so you can recreate what he has as well.</p>
-<section id="load-some-packages-to-help-with-the-analysis-and-data-management" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="load-some-packages-to-help-with-the-analysis-and-data-management">
-<span class="header-section-number">3.1</span> Load some packages to help with the analysis and data management</h2>
+<section id="load-some-packages-to-help-with-the-analysis-and-data-management" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="load-some-packages-to-help-with-the-analysis-and-data-management">
+<span class="header-section-number">4.1</span> Load some packages to help with the analysis and data management</h2>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -361,8 +367,8 @@ Package conflicts
 <p><code>Hmisc</code> and <code>dplyr</code> both define functions named <code>summarize</code> and <code>src</code>. Loading <code>Hmisc</code> after the tidyverse means its versions win, and you may see masking messages at load. If a tidyverse function starts behaving oddly, call it explicitly as <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">dplyr::summarize()</a></code>.</p>
 </div>
 </div>
-</section><section id="load-in-the-data-and-use-glimpse-to-summarize-the-structure" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="load-in-the-data-and-use-glimpse-to-summarize-the-structure">
-<span class="header-section-number">3.2</span> Load in the data and use <code>glimpse</code> to summarize the structure</h2>
+</section><section id="load-in-the-data-and-use-glimpse-to-summarize-the-structure" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="load-in-the-data-and-use-glimpse-to-summarize-the-structure">
+<span class="header-section-number">4.2</span> Load in the data and use <code>glimpse</code> to summarize the structure</h2>
 <div class="cell">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hsb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"hsbmerged.csv"</span><span class="op">)</span></span>
 <span></span>
@@ -384,10 +390,10 @@ $ meanses  &lt;dbl&gt; -0.428, -0.428, -0.428, -0.428, -0.428, -0.428, -0.428, -
 </div>
 </div>
 <p>7,185 students across 160 schools. <code>mathach</code> is our outcome, a standardized math achievement score, and <code>schoolid</code> identifies the school each student attends. That second variable is what makes multilevel modeling possible here.</p>
-</section><section id="quick-data-cleaning-and-coding-tips" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="quick-data-cleaning-and-coding-tips">
-<span class="header-section-number">3.3</span> Quick data cleaning and coding tips</h2>
-<section id="the-summary-command-from-base-r-is-a-quick-and-easy-way-to-explore-a-new-dataset" class="level3" data-number="3.3.1"><h3 data-number="3.3.1" class="anchored" data-anchor-id="the-summary-command-from-base-r-is-a-quick-and-easy-way-to-explore-a-new-dataset">
-<span class="header-section-number">3.3.1</span> The <code>summary</code> command from base R is a quick and easy way to explore a new dataset</h3>
+</section><section id="quick-data-cleaning-and-coding-tips" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="quick-data-cleaning-and-coding-tips">
+<span class="header-section-number">4.3</span> Quick data cleaning and coding tips</h2>
+<section id="the-summary-command-from-base-r-is-a-quick-and-easy-way-to-explore-a-new-dataset" class="level3" data-number="4.3.1"><h3 data-number="4.3.1" class="anchored" data-anchor-id="the-summary-command-from-base-r-is-a-quick-and-easy-way-to-explore-a-new-dataset">
+<span class="header-section-number">4.3.1</span> The <code>summary</code> command from base R is a quick and easy way to explore a new dataset</h3>
 <div class="cell">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">hsb</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -416,8 +422,8 @@ $ meanses  &lt;dbl&gt; -0.428, -0.428, -0.428, -0.428, -0.428, -0.428, -0.428, -
 </div>
 <p>Summary gives you a quick, high-level look at every variable in a dataset. It is also useful for your own records: copy and paste it into a Word file and you have something to refer back to.</p>
 <p>Read it critically, though. Every column here gets a mean and quartiles, including <code>sector</code>, <code>female</code>, and <code>minority</code>, which are categories rather than quantities. The mean of <code>sector</code> is the proportion of students in one sector, which is mildly useful, but its quartiles are meaningless. This is the same issue from Chapter 1, and we are about to fix it.</p>
-</section><section id="lets-give-some-variables-a-label" class="level3" data-number="3.3.2"><h3 data-number="3.3.2" class="anchored" data-anchor-id="lets-give-some-variables-a-label">
-<span class="header-section-number">3.3.2</span> Let’s give some variables a label</h3>
+</section><section id="lets-give-some-variables-a-label" class="level3" data-number="4.3.2"><h3 data-number="4.3.2" class="anchored" data-anchor-id="lets-give-some-variables-a-label">
+<span class="header-section-number">4.3.2</span> Let’s give some variables a label</h3>
 <p>Now, data cleaning and coding. We will apply labels to two things: the variables themselves, and the values within a given variable. Both are good practice for keeping your data readable.</p>
 <div class="cell">
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/label.html">label</a></span><span class="op">(</span><span class="va">hsb</span><span class="op">$</span><span class="va">mathach</span><span class="op">)</span> <span class="op">=</span> <span class="st">"Std. Math Score"</span></span>
@@ -430,8 +436,8 @@ $ meanses  &lt;dbl&gt; -0.428, -0.428, -0.428, -0.428, -0.428, -0.428, -0.428, -
 </div>
 </div>
 <p>The <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> output now shows the label attached to the variable. This carries through to <code><a href="https://rdrr.io/pkg/Hmisc/man/describe.html">Hmisc::describe()</a></code> output and to some plotting functions, which means a table six months from now still says “Std. Math Score” rather than <code>mathach</code>.</p>
-</section><section id="lets-create-a-factor-version-of-sector-and-label-its-values" class="level3" data-number="3.3.3"><h3 data-number="3.3.3" class="anchored" data-anchor-id="lets-create-a-factor-version-of-sector-and-label-its-values">
-<span class="header-section-number">3.3.3</span> Let’s create a factor version of <code>sector</code> and label its values</h3>
+</section><section id="lets-create-a-factor-version-of-sector-and-label-its-values" class="level3" data-number="4.3.3"><h3 data-number="4.3.3" class="anchored" data-anchor-id="lets-create-a-factor-version-of-sector-and-label-its-values">
+<span class="header-section-number">4.3.3</span> Let’s create a factor version of <code>sector</code> and label its values</h3>
 <div class="cell">
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hsb.clean</span> <span class="op">&lt;-</span> <span class="va">hsb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
@@ -459,8 +465,8 @@ $ meanses  &lt;dbl&gt; -0.428, -0.428, -0.428, -0.428, -0.428, -0.428, -0.428, -
 </div>
 </div>
 <p>3,642 public and 3,543 Parochial. If those counts had come out reversed from what you expected, the labels went on backwards, and every result from here forward would be silently mislabeled.</p>
-</section><section id="run-summary-again-and-notice-how-it-handles-factors" class="level3" data-number="3.3.4"><h3 data-number="3.3.4" class="anchored" data-anchor-id="run-summary-again-and-notice-how-it-handles-factors">
-<span class="header-section-number">3.3.4</span> Run <code>summary</code> again and notice how it handles factors</h3>
+</section><section id="run-summary-again-and-notice-how-it-handles-factors" class="level3" data-number="4.3.4"><h3 data-number="4.3.4" class="anchored" data-anchor-id="run-summary-again-and-notice-how-it-handles-factors">
+<span class="header-section-number">4.3.4</span> Run <code>summary</code> again and notice how it handles factors</h3>
 <div class="cell">
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">hsb.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -495,8 +501,8 @@ $ meanses  &lt;dbl&gt; -0.428, -0.428, -0.428, -0.428, -0.428, -0.428, -0.428, -
 </div>
 </div>
 <p>Compare this to the earlier output. The factor versions of the variables no longer report meaningless means and quartiles. Instead they report counts per category, which is what you actually want to know. Same data, same function, but R now understands what kind of variable it is looking at.</p>
-</section></section><section id="exploring-our-outcome-math-achievement" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="exploring-our-outcome-math-achievement">
-<span class="header-section-number">3.4</span> Exploring our outcome, math achievement</h2>
+</section></section><section id="exploring-our-outcome-math-achievement" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="exploring-our-outcome-math-achievement">
+<span class="header-section-number">4.4</span> Exploring our outcome, math achievement</h2>
 <p>Now let’s look at <code>mathach</code> using the <code>describe</code> function from the <code>Hmisc</code> package:</p>
 <div class="cell">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/describe.html">describe</a></span><span class="op">(</span><span class="va">hsb.clean</span><span class="op">$</span><span class="va">mathach</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -519,7 +525,7 @@ lowest : -2.832 -2.83  -2.721 -2.658 -2.657, highest: 24.677 24.707 24.812 24.86
 <div class="cell-output-display">
 <div id="fig-mathach" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="03-null-model_files/figure-html/fig-mathach-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.1: Distribution of math achievement scores.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;4.1: Distribution of math achievement scores.</figcaption></figure>
 </div>
 </div>
 </div>
@@ -536,13 +542,13 @@ lowest : -2.832 -2.83  -2.721 -2.658 -2.657, highest: 24.677 24.707 24.812 24.86
 <div class="cell-output-display">
 <div id="fig-schoolmeans" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="03-null-model_files/figure-html/fig-schoolmeans-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3.2: Average math achievement across the 160 schools.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;4.2: Average math achievement across the 160 schools.</figcaption></figure>
 </div>
 </div>
 </div>
 <p>If every school had the same average, this would be a single narrow spike. It is not, and that spread is exactly what the null model is about to quantify.</p>
-</section><section id="running-a-null-model" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="running-a-null-model">
-<span class="header-section-number">3.5</span> Running a null model</h2>
+</section><section id="running-a-null-model" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="running-a-null-model">
+<span class="header-section-number">4.5</span> Running a null model</h2>
 <div class="cell">
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.null</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">mathach</span> <span class="op">~</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">hsb.clean</span><span class="op">)</span></span>
 <span></span>
@@ -608,8 +614,8 @@ Why <code>REML = FALSE</code>?
 <p>This book uses ML throughout so that numbers stay consistent from one page to the next and model comparisons are always valid. With 160 schools, the difference between the two is small.</p>
 </div>
 </div>
-</section><section id="post-estimation-task-calculate-the-icc" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="post-estimation-task-calculate-the-icc">
-<span class="header-section-number">3.6</span> Post-estimation task: calculate the ICC</h2>
+</section><section id="post-estimation-task-calculate-the-icc" class="level2" data-number="4.6"><h2 data-number="4.6" class="anchored" data-anchor-id="post-estimation-task-calculate-the-icc">
+<span class="header-section-number">4.6</span> Post-estimation task: calculate the ICC</h2>
 <p>These commands are run after any kind of MLM. They are called post-estimation commands because they require that the model be saved in memory. If you do something else and then try to run them, you will likely get an error.</p>
 <p>The intraclass correlation is the proportion of total variance lying between schools:</p>
 <p><span class="math display">\text{ICC} = \frac{\tau_{00}}{\tau_{00} + \sigma^2}</span></p>
@@ -647,8 +653,8 @@ Pulling the numbers out rather than typing them
 <p>The <code>performance</code> package will also compute it directly with <code>performance::icc(model.null)</code>.</p>
 </div>
 </div>
-</section><section id="using-lmertest-to-evaluate-random-effects" class="level2" data-number="3.7"><h2 data-number="3.7" class="anchored" data-anchor-id="using-lmertest-to-evaluate-random-effects">
-<span class="header-section-number">3.7</span> Using <code>lmerTest</code> to evaluate random effects</h2>
+</section><section id="using-lmertest-to-evaluate-random-effects" class="level2" data-number="4.7"><h2 data-number="4.7" class="anchored" data-anchor-id="using-lmertest-to-evaluate-random-effects">
+<span class="header-section-number">4.7</span> Using <code>lmerTest</code> to evaluate random effects</h2>
 <div class="cell">
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova</a></span><span class="op">(</span><span class="va">model.null</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -678,8 +684,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>Older handouts call <code><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">lmerTest::rand()</a></code>. The function was renamed to <code><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova()</a></code> several versions ago. The old name may still work but is no longer the documented one.</p>
 </div>
 </div>
-</section><section id="always-interesting-compare-our-mlm-to-a-regular-regression" class="level2" data-number="3.8"><h2 data-number="3.8" class="anchored" data-anchor-id="always-interesting-compare-our-mlm-to-a-regular-regression">
-<span class="header-section-number">3.8</span> Always interesting: compare our MLM to a regular regression</h2>
+</section><section id="always-interesting-compare-our-mlm-to-a-regular-regression" class="level2" data-number="4.8"><h2 data-number="4.8" class="anchored" data-anchor-id="always-interesting-compare-our-mlm-to-a-regular-regression">
+<span class="header-section-number">4.8</span> Always interesting: compare our MLM to a regular regression</h2>
 <div class="cell">
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.regular</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mathach</span> <span class="op">~</span> <span class="cn">NULL</span>, data <span class="op">=</span> <span class="va">hsb.clean</span><span class="op">)</span></span>
 <span></span>
@@ -716,8 +722,8 @@ Residual standard error: 6.878 on 7184 degrees of freedom</code></pre>
    12.63707 </code></pre>
 </div>
 </div>
-</section><section id="what-comes-next" class="level2" data-number="3.9"><h2 data-number="3.9" class="anchored" data-anchor-id="what-comes-next">
-<span class="header-section-number">3.9</span> What comes next</h2>
+</section><section id="what-comes-next" class="level2" data-number="4.9"><h2 data-number="4.9" class="anchored" data-anchor-id="what-comes-next">
+<span class="header-section-number">4.9</span> What comes next</h2>
 <p>The null model tells us schools differ. It does not tell us why. The next chapter starts adding predictors, at both the student and school levels, to explain some of the variance we just found.</p>
 
 
@@ -1008,12 +1014,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./02-regression-review.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./04-random-intercept.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">

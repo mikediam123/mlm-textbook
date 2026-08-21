@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
-<title>Applied Multilevel Modeling in R - 7&nbsp; Three-Level Models</title>
+<title>Applied Multilevel Modeling in R - 8&nbsp; Three-Level Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -99,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-three-level.html">Extending the Model</a></li><li class="breadcrumb-item"><a href="./07-three-level.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Three-Level Models</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-three-level.html">Extending the Model</a></li><li class="breadcrumb-item"><a href="./07-three-level.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -163,8 +163,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./02-reading-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Reading: Regression and Where It Runs Out</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./02-regression-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -181,25 +187,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-null-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-random-intercept.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-random-slopes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-fit-effect-sizes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
   </div>
 </li>
       </ul>
@@ -216,25 +222,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-three-level.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08a-growth-intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08b-growth-advanced.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-binary-outcomes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -251,13 +257,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-cross-classified.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -276,47 +282,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#load-some-packages-to-help-with-the-analysis-and-data-management" id="toc-load-some-packages-to-help-with-the-analysis-and-data-management" class="nav-link active" data-scroll-target="#load-some-packages-to-help-with-the-analysis-and-data-management"><span class="header-section-number">7.1</span> Load some packages to help with the analysis and data management</a></li>
-  <li><a href="#load-and-explore-the-data" id="toc-load-and-explore-the-data" class="nav-link" data-scroll-target="#load-and-explore-the-data"><span class="header-section-number">7.2</span> Load and explore the data</a></li>
+<li><a href="#load-some-packages-to-help-with-the-analysis-and-data-management" id="toc-load-some-packages-to-help-with-the-analysis-and-data-management" class="nav-link active" data-scroll-target="#load-some-packages-to-help-with-the-analysis-and-data-management"><span class="header-section-number">8.1</span> Load some packages to help with the analysis and data management</a></li>
+  <li><a href="#load-and-explore-the-data" id="toc-load-and-explore-the-data" class="nav-link" data-scroll-target="#load-and-explore-the-data"><span class="header-section-number">8.2</span> Load and explore the data</a></li>
   <li>
-<a href="#part-one-data-exploration-and-management" id="toc-part-one-data-exploration-and-management" class="nav-link" data-scroll-target="#part-one-data-exploration-and-management"><span class="header-section-number">7.3</span> Part one: data exploration and management</a>
+<a href="#part-one-data-exploration-and-management" id="toc-part-one-data-exploration-and-management" class="nav-link" data-scroll-target="#part-one-data-exploration-and-management"><span class="header-section-number">8.3</span> Part one: data exploration and management</a>
   <ul class="collapse">
-<li><a href="#use-str-to-figure-out-the-21-coding-scheme-and-variable-labels" id="toc-use-str-to-figure-out-the-21-coding-scheme-and-variable-labels" class="nav-link" data-scroll-target="#use-str-to-figure-out-the-21-coding-scheme-and-variable-labels"><span class="header-section-number">7.3.1</span> Use <code>str</code> to figure out the 2/1 coding scheme and variable labels</a></li>
-  <li><a href="#create-a-clean-dataset-ready-for-modeling" id="toc-create-a-clean-dataset-ready-for-modeling" class="nav-link" data-scroll-target="#create-a-clean-dataset-ready-for-modeling"><span class="header-section-number">7.3.2</span> Create a clean dataset ready for modeling</a></li>
+<li><a href="#use-str-to-figure-out-the-21-coding-scheme-and-variable-labels" id="toc-use-str-to-figure-out-the-21-coding-scheme-and-variable-labels" class="nav-link" data-scroll-target="#use-str-to-figure-out-the-21-coding-scheme-and-variable-labels"><span class="header-section-number">8.3.1</span> Use <code>str</code> to figure out the 2/1 coding scheme and variable labels</a></li>
+  <li><a href="#create-a-clean-dataset-ready-for-modeling" id="toc-create-a-clean-dataset-ready-for-modeling" class="nav-link" data-scroll-target="#create-a-clean-dataset-ready-for-modeling"><span class="header-section-number">8.3.2</span> Create a clean dataset ready for modeling</a></li>
   </ul>
 </li>
   <li>
-<a href="#part-two-the-null-3-level-model" id="toc-part-two-the-null-3-level-model" class="nav-link" data-scroll-target="#part-two-the-null-3-level-model"><span class="header-section-number">7.4</span> Part two: the null 3-level model</a>
+<a href="#part-two-the-null-3-level-model" id="toc-part-two-the-null-3-level-model" class="nav-link" data-scroll-target="#part-two-the-null-3-level-model"><span class="header-section-number">8.4</span> Part two: the null 3-level model</a>
   <ul class="collapse">
-<li><a href="#run-a-null-3-level-model-for-reading-scores" id="toc-run-a-null-3-level-model-for-reading-scores" class="nav-link" data-scroll-target="#run-a-null-3-level-model-for-reading-scores"><span class="header-section-number">7.4.1</span> Run a null 3-level model for reading scores</a></li>
-  <li><a href="#calculate-l2-icc-classroom" id="toc-calculate-l2-icc-classroom" class="nav-link" data-scroll-target="#calculate-l2-icc-classroom"><span class="header-section-number">7.4.2</span> Calculate L2 ICC (classroom)</a></li>
-  <li><a href="#calculate-l3-icc-school" id="toc-calculate-l3-icc-school" class="nav-link" data-scroll-target="#calculate-l3-icc-school"><span class="header-section-number">7.4.3</span> Calculate L3 ICC (school)</a></li>
+<li><a href="#run-a-null-3-level-model-for-reading-scores" id="toc-run-a-null-3-level-model-for-reading-scores" class="nav-link" data-scroll-target="#run-a-null-3-level-model-for-reading-scores"><span class="header-section-number">8.4.1</span> Run a null 3-level model for reading scores</a></li>
+  <li><a href="#calculate-l2-icc-classroom" id="toc-calculate-l2-icc-classroom" class="nav-link" data-scroll-target="#calculate-l2-icc-classroom"><span class="header-section-number">8.4.2</span> Calculate L2 ICC (classroom)</a></li>
+  <li><a href="#calculate-l3-icc-school" id="toc-calculate-l3-icc-school" class="nav-link" data-scroll-target="#calculate-l3-icc-school"><span class="header-section-number">8.4.3</span> Calculate L3 ICC (school)</a></li>
   </ul>
 </li>
   <li>
-<a href="#part-three-add-predictors-at-each-level" id="toc-part-three-add-predictors-at-each-level" class="nav-link" data-scroll-target="#part-three-add-predictors-at-each-level"><span class="header-section-number">7.5</span> Part three: add predictors at each level</a>
+<a href="#part-three-add-predictors-at-each-level" id="toc-part-three-add-predictors-at-each-level" class="nav-link" data-scroll-target="#part-three-add-predictors-at-each-level"><span class="header-section-number">8.5</span> Part three: add predictors at each level</a>
   <ul class="collapse">
-<li><a href="#add-a-student-level-predictor-frl" id="toc-add-a-student-level-predictor-frl" class="nav-link" data-scroll-target="#add-a-student-level-predictor-frl"><span class="header-section-number">7.5.1</span> Add a student-level predictor, FRL</a></li>
-  <li><a href="#add-teacher-level-predictors-years-of-experience-and-class-type" id="toc-add-teacher-level-predictors-years-of-experience-and-class-type" class="nav-link" data-scroll-target="#add-teacher-level-predictors-years-of-experience-and-class-type"><span class="header-section-number">7.5.2</span> Add teacher-level predictors: years of experience and class type</a></li>
-  <li><a href="#add-a-school-level-predictor-urbanicity-of-school" id="toc-add-a-school-level-predictor-urbanicity-of-school" class="nav-link" data-scroll-target="#add-a-school-level-predictor-urbanicity-of-school"><span class="header-section-number">7.5.3</span> Add a school-level predictor, urbanicity of school</a></li>
-  <li><a href="#add-in-frl-at-all-three-levels-student-teacher-school" id="toc-add-in-frl-at-all-three-levels-student-teacher-school" class="nav-link" data-scroll-target="#add-in-frl-at-all-three-levels-student-teacher-school"><span class="header-section-number">7.5.4</span> Add in FRL at all three levels (student, teacher, school)</a></li>
+<li><a href="#add-a-student-level-predictor-frl" id="toc-add-a-student-level-predictor-frl" class="nav-link" data-scroll-target="#add-a-student-level-predictor-frl"><span class="header-section-number">8.5.1</span> Add a student-level predictor, FRL</a></li>
+  <li><a href="#add-teacher-level-predictors-years-of-experience-and-class-type" id="toc-add-teacher-level-predictors-years-of-experience-and-class-type" class="nav-link" data-scroll-target="#add-teacher-level-predictors-years-of-experience-and-class-type"><span class="header-section-number">8.5.2</span> Add teacher-level predictors: years of experience and class type</a></li>
+  <li><a href="#add-a-school-level-predictor-urbanicity-of-school" id="toc-add-a-school-level-predictor-urbanicity-of-school" class="nav-link" data-scroll-target="#add-a-school-level-predictor-urbanicity-of-school"><span class="header-section-number">8.5.3</span> Add a school-level predictor, urbanicity of school</a></li>
+  <li><a href="#add-in-frl-at-all-three-levels-student-teacher-school" id="toc-add-in-frl-at-all-three-levels-student-teacher-school" class="nav-link" data-scroll-target="#add-in-frl-at-all-three-levels-student-teacher-school"><span class="header-section-number">8.5.4</span> Add in FRL at all three levels (student, teacher, school)</a></li>
   </ul>
 </li>
   <li>
-<a href="#part-four-try-adding-a-random-slope" id="toc-part-four-try-adding-a-random-slope" class="nav-link" data-scroll-target="#part-four-try-adding-a-random-slope"><span class="header-section-number">7.6</span> Part four: try adding a random slope</a>
+<a href="#part-four-try-adding-a-random-slope" id="toc-part-four-try-adding-a-random-slope" class="nav-link" data-scroll-target="#part-four-try-adding-a-random-slope"><span class="header-section-number">8.6</span> Part four: try adding a random slope</a>
   <ul class="collapse">
-<li><a href="#add-a-random-slope-for-years-of-experience-at-level-3-school" id="toc-add-a-random-slope-for-years-of-experience-at-level-3-school" class="nav-link" data-scroll-target="#add-a-random-slope-for-years-of-experience-at-level-3-school"><span class="header-section-number">7.6.1</span> Add a random slope for years of experience at level 3 (school)</a></li>
+<li><a href="#add-a-random-slope-for-years-of-experience-at-level-3-school" id="toc-add-a-random-slope-for-years-of-experience-at-level-3-school" class="nav-link" data-scroll-target="#add-a-random-slope-for-years-of-experience-at-level-3-school"><span class="header-section-number">8.6.1</span> Add a random slope for years of experience at level 3 (school)</a></li>
   </ul>
 </li>
-  <li><a href="#should-we-include-that-random-slope-comparing-model.4-with-model.5" id="toc-should-we-include-that-random-slope-comparing-model.4-with-model.5" class="nav-link" data-scroll-target="#should-we-include-that-random-slope-comparing-model.4-with-model.5"><span class="header-section-number">7.7</span> Should we include that random slope? Comparing <code>model.4</code> with <code>model.5</code></a></li>
-  <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">7.8</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
-  <li><a href="#html-version-that-you-can-open-in-word" id="toc-html-version-that-you-can-open-in-word" class="nav-link" data-scroll-target="#html-version-that-you-can-open-in-word"><span class="header-section-number">7.9</span> HTML version that you can open in Word</a></li>
+  <li><a href="#should-we-include-that-random-slope-comparing-model.4-with-model.5" id="toc-should-we-include-that-random-slope-comparing-model.4-with-model.5" class="nav-link" data-scroll-target="#should-we-include-that-random-slope-comparing-model.4-with-model.5"><span class="header-section-number">8.7</span> Should we include that random slope? Comparing <code>model.4</code> with <code>model.5</code></a></li>
+  <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">8.8</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
+  <li><a href="#html-version-that-you-can-open-in-word" id="toc-html-version-that-you-can-open-in-word" class="nav-link" data-scroll-target="#html-version-that-you-can-open-in-word"><span class="header-section-number">8.9</span> HTML version that you can open in Word</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOURUSERNAME/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
-<span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Three-Level Models</span>
+<span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
@@ -333,14 +339,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header><p><strong>Data for this chapter:</strong> <code>projectSTAR.dta</code></p>
 <p>This week, we are going to use the Kindergarten data from Project STAR, the Tennessee Class Size Experiment conducted from 1985 to 1990.</p>
 <p>Real data often nest more than two levels deep. Students sit in classrooms, classrooms sit in schools, and each layer can contribute its own variation.</p>
-<section id="load-some-packages-to-help-with-the-analysis-and-data-management" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="load-some-packages-to-help-with-the-analysis-and-data-management">
-<span class="header-section-number">7.1</span> Load some packages to help with the analysis and data management</h2>
+<section id="load-some-packages-to-help-with-the-analysis-and-data-management" class="level2" data-number="8.1"><h2 data-number="8.1" class="anchored" data-anchor-id="load-some-packages-to-help-with-the-analysis-and-data-management">
+<span class="header-section-number">8.1</span> Load some packages to help with the analysis and data management</h2>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="load-and-explore-the-data" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="load-and-explore-the-data">
-<span class="header-section-number">7.2</span> Load and explore the data</h2>
+</section><section id="load-and-explore-the-data" class="level2" data-number="8.2"><h2 data-number="8.2" class="anchored" data-anchor-id="load-and-explore-the-data">
+<span class="header-section-number">8.2</span> Load and explore the data</h2>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">projectSTAR</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"projectSTAR.dta"</span><span class="op">)</span></span>
 <span></span>
@@ -378,10 +384,10 @@ $ gkselfconcraw &lt;dbl&gt; 52, 53, 56, 61, 54, 55, NA, NA, 52, 61, 55, 49, 49, 
 </div>
 </div>
 <p>Note the <code>haven::</code> prefix. We never load <code>haven</code> with <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> here, so calling the function with its package name attached is what makes it available. This works for any installed package and is handy when you need one function and do not want the whole namespace.</p>
-</section><section id="part-one-data-exploration-and-management" class="level2" data-number="7.3"><h2 data-number="7.3" class="anchored" data-anchor-id="part-one-data-exploration-and-management">
-<span class="header-section-number">7.3</span> Part one: data exploration and management</h2>
-<section id="use-str-to-figure-out-the-21-coding-scheme-and-variable-labels" class="level3" data-number="7.3.1"><h3 data-number="7.3.1" class="anchored" data-anchor-id="use-str-to-figure-out-the-21-coding-scheme-and-variable-labels">
-<span class="header-section-number">7.3.1</span> Use <code>str</code> to figure out the 2/1 coding scheme and variable labels</h3>
+</section><section id="part-one-data-exploration-and-management" class="level2" data-number="8.3"><h2 data-number="8.3" class="anchored" data-anchor-id="part-one-data-exploration-and-management">
+<span class="header-section-number">8.3</span> Part one: data exploration and management</h2>
+<section id="use-str-to-figure-out-the-21-coding-scheme-and-variable-labels" class="level3" data-number="8.3.1"><h3 data-number="8.3.1" class="anchored" data-anchor-id="use-str-to-figure-out-the-21-coding-scheme-and-variable-labels">
+<span class="header-section-number">8.3.1</span> Use <code>str</code> to figure out the 2/1 coding scheme and variable labels</h3>
 <p>The <code>str</code> function (short for structure) will show us any variable labels or values that have been attached to a variable. You can use this to find out how variables have been coded.</p>
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">projectSTAR</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -499,8 +505,8 @@ $ gkselfconcraw &lt;dbl&gt; 52, 53, 56, 61, 54, 55, NA, NA, 52, 61, 55, 49, 49, 
 </div>
 </div>
 <p>This output is long, and it is worth scrolling. Project STAR variables carry Stata labels, and the coding is not always what you would guess. Several variables here use 1/2 coding rather than the 0/1 that regression conventions assume, which is exactly the sort of thing that produces a coefficient with a baffling sign if you do not check first.</p>
-</section><section id="create-a-clean-dataset-ready-for-modeling" class="level3" data-number="7.3.2"><h3 data-number="7.3.2" class="anchored" data-anchor-id="create-a-clean-dataset-ready-for-modeling">
-<span class="header-section-number">7.3.2</span> Create a clean dataset ready for modeling</h3>
+</section><section id="create-a-clean-dataset-ready-for-modeling" class="level3" data-number="8.3.2"><h3 data-number="8.3.2" class="anchored" data-anchor-id="create-a-clean-dataset-ready-for-modeling">
+<span class="header-section-number">8.3.2</span> Create a clean dataset ready for modeling</h3>
 <div class="cell">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">star.clean</span> <span class="op">&lt;-</span> <span class="va">projectSTAR</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
@@ -569,10 +575,10 @@ Why the <code>- 1</code> trick works, and when it does not
 </div>
 </div>
 <p>Worth pausing on one more thing: <code>read</code> here is <code>gktreadss</code>, the kindergarten reading scale score. This is our outcome for the whole chapter.</p>
-</section></section><section id="part-two-the-null-3-level-model" class="level2" data-number="7.4"><h2 data-number="7.4" class="anchored" data-anchor-id="part-two-the-null-3-level-model">
-<span class="header-section-number">7.4</span> Part two: the null 3-level model</h2>
-<section id="run-a-null-3-level-model-for-reading-scores" class="level3" data-number="7.4.1"><h3 data-number="7.4.1" class="anchored" data-anchor-id="run-a-null-3-level-model-for-reading-scores">
-<span class="header-section-number">7.4.1</span> Run a null 3-level model for reading scores</h3>
+</section></section><section id="part-two-the-null-3-level-model" class="level2" data-number="8.4"><h2 data-number="8.4" class="anchored" data-anchor-id="part-two-the-null-3-level-model">
+<span class="header-section-number">8.4</span> Part two: the null 3-level model</h2>
+<section id="run-a-null-3-level-model-for-reading-scores" class="level3" data-number="8.4.1"><h3 data-number="8.4.1" class="anchored" data-anchor-id="run-a-null-3-level-model-for-reading-scores">
+<span class="header-section-number">8.4.1</span> Run a null 3-level model for reading scores</h3>
 <div class="cell">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
 <span></span>
@@ -616,8 +622,8 @@ Why this syntax works here
 <p>If you are ever unsure, check with <code>n_distinct(star.clean$classid)</code> and compare it to what you would expect. If two schools genuinely shared a classroom ID, the counts would be too low.</p>
 </div>
 </div>
-</section><section id="calculate-l2-icc-classroom" class="level3" data-number="7.4.2"><h3 data-number="7.4.2" class="anchored" data-anchor-id="calculate-l2-icc-classroom">
-<span class="header-section-number">7.4.2</span> Calculate L2 ICC (classroom)</h3>
+</section><section id="calculate-l2-icc-classroom" class="level3" data-number="8.4.2"><h3 data-number="8.4.2" class="anchored" data-anchor-id="calculate-l2-icc-classroom">
+<span class="header-section-number">8.4.2</span> Calculate L2 ICC (classroom)</h3>
 <div class="cell">
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ICC.class</span> <span class="op">&lt;-</span> <span class="fl">114.9</span><span class="op">/</span><span class="op">(</span><span class="fl">728.2</span> <span class="op">+</span> <span class="fl">169.8</span> <span class="op">+</span> <span class="fl">114.9</span><span class="op">)</span></span>
 <span><span class="va">ICC.class</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -625,8 +631,8 @@ Why this syntax works here
 <pre><code>[1] 0.1134367</code></pre>
 </div>
 </div>
-</section><section id="calculate-l3-icc-school" class="level3" data-number="7.4.3"><h3 data-number="7.4.3" class="anchored" data-anchor-id="calculate-l3-icc-school">
-<span class="header-section-number">7.4.3</span> Calculate L3 ICC (school)</h3>
+</section><section id="calculate-l3-icc-school" class="level3" data-number="8.4.3"><h3 data-number="8.4.3" class="anchored" data-anchor-id="calculate-l3-icc-school">
+<span class="header-section-number">8.4.3</span> Calculate L3 ICC (school)</h3>
 <div class="cell">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ICC.school</span> <span class="op">&lt;-</span> <span class="fl">169.8</span><span class="op">/</span><span class="op">(</span><span class="fl">728.2</span> <span class="op">+</span> <span class="fl">169.8</span> <span class="op">+</span> <span class="fl">114.9</span><span class="op">)</span></span>
 <span><span class="va">ICC.school</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -636,10 +642,10 @@ Why this syntax works here
 </div>
 <p>These two proportions, plus the student-level share, sum to one and describe where the variation in kindergarten reading achievement lives. Read the comparison between them rather than the absolute numbers: it speaks to whether the classroom a child lands in matters more than the school they attend, which is one of the more consequential questions in education research.</p>
 <p>The denominator is the same in both calculations, and it is the total variance across all three levels. Getting that denominator right is where students most often slip.</p>
-</section></section><section id="part-three-add-predictors-at-each-level" class="level2" data-number="7.5"><h2 data-number="7.5" class="anchored" data-anchor-id="part-three-add-predictors-at-each-level">
-<span class="header-section-number">7.5</span> Part three: add predictors at each level</h2>
-<section id="add-a-student-level-predictor-frl" class="level3" data-number="7.5.1"><h3 data-number="7.5.1" class="anchored" data-anchor-id="add-a-student-level-predictor-frl">
-<span class="header-section-number">7.5.1</span> Add a student-level predictor, FRL</h3>
+</section></section><section id="part-three-add-predictors-at-each-level" class="level2" data-number="8.5"><h2 data-number="8.5" class="anchored" data-anchor-id="part-three-add-predictors-at-each-level">
+<span class="header-section-number">8.5</span> Part three: add predictors at each level</h2>
+<section id="add-a-student-level-predictor-frl" class="level3" data-number="8.5.1"><h3 data-number="8.5.1" class="anchored" data-anchor-id="add-a-student-level-predictor-frl">
+<span class="header-section-number">8.5.1</span> Add a student-level predictor, FRL</h3>
 <div class="cell">
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
 <span></span>
@@ -672,8 +678,8 @@ Correlation of Fixed Effects:
 s_NON-FREEL -0.278</code></pre>
 </div>
 </div>
-</section><section id="add-teacher-level-predictors-years-of-experience-and-class-type" class="level3" data-number="7.5.2"><h3 data-number="7.5.2" class="anchored" data-anchor-id="add-teacher-level-predictors-years-of-experience-and-class-type">
-<span class="header-section-number">7.5.2</span> Add teacher-level predictors: years of experience and class type</h3>
+</section><section id="add-teacher-level-predictors-years-of-experience-and-class-type" class="level3" data-number="8.5.2"><h3 data-number="8.5.2" class="anchored" data-anchor-id="add-teacher-level-predictors-years-of-experience-and-class-type">
+<span class="header-section-number">8.5.2</span> Add teacher-level predictors: years of experience and class type</h3>
 <div class="cell">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span> <span class="va">years_exp</span> <span class="op">+</span> <span class="va">classtype</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
 <span></span>
@@ -714,8 +720,8 @@ cREGULAR+AC -0.324  0.009 -0.065  0.464</code></pre>
 </div>
 </div>
 <p>Both of these are properties of the classroom, not the student, so they are level-2 predictors. They can shift a whole classroom up or down relative to others.</p>
-</section><section id="add-a-school-level-predictor-urbanicity-of-school" class="level3" data-number="7.5.3"><h3 data-number="7.5.3" class="anchored" data-anchor-id="add-a-school-level-predictor-urbanicity-of-school">
-<span class="header-section-number">7.5.3</span> Add a school-level predictor, urbanicity of school</h3>
+</section><section id="add-a-school-level-predictor-urbanicity-of-school" class="level3" data-number="8.5.3"><h3 data-number="8.5.3" class="anchored" data-anchor-id="add-a-school-level-predictor-urbanicity-of-school">
+<span class="header-section-number">8.5.3</span> Add a school-level predictor, urbanicity of school</h3>
 <div class="cell">
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span> <span class="va">years_exp</span> <span class="op">+</span> <span class="va">classtype</span> <span class="op">+</span> <span class="va">urbanicity</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
 <span></span>
@@ -763,8 +769,8 @@ urbnctURBAN -0.505 -0.063 -0.030  0.012  0.013  0.405  0.466</code></pre>
 </div>
 </div>
 <p>Now watch the <em>school</em>-level variance rather than the classroom-level variance. A level-3 predictor explains between-school differences, so that is where you should expect movement. A level-2 predictor should move the classroom variance. Matching each predictor to the variance component it ought to affect is a good habit and a good diagnostic: if adding a school-level variable moves nothing at the school level, that is informative.</p>
-</section><section id="add-in-frl-at-all-three-levels-student-teacher-school" class="level3" data-number="7.5.4"><h3 data-number="7.5.4" class="anchored" data-anchor-id="add-in-frl-at-all-three-levels-student-teacher-school">
-<span class="header-section-number">7.5.4</span> Add in FRL at all three levels (student, teacher, school)</h3>
+</section><section id="add-in-frl-at-all-three-levels-student-teacher-school" class="level3" data-number="8.5.4"><h3 data-number="8.5.4" class="anchored" data-anchor-id="add-in-frl-at-all-three-levels-student-teacher-school">
+<span class="header-section-number">8.5.4</span> Add in FRL at all three levels (student, teacher, school)</h3>
 <div class="cell">
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span>  <span class="va">class_frl</span> <span class="op">+</span> <span class="va">school_frl</span> <span class="op">+</span>  <span class="va">years_exp</span> <span class="op">+</span> <span class="va">classtype</span> <span class="op">+</span> <span class="va">urbanicity</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
 <span></span>
@@ -816,10 +822,10 @@ urbnctURBAN -0.242 -0.002 -0.005 -0.439 -0.022  0.016  0.010  0.641  0.669</code
 </div>
 <p>This is the same construct entered three times, at three levels, and the three coefficients answer three different questions. Does a child receiving free lunch score differently from a classmate who does not? Do classrooms with more low-income students score differently overall? Do schools serving more low-income students differ again?</p>
 <p>These can point in different directions, and often do. That is not a contradiction; it is the whole reason for separating them.</p>
-</section></section><section id="part-four-try-adding-a-random-slope" class="level2" data-number="7.6"><h2 data-number="7.6" class="anchored" data-anchor-id="part-four-try-adding-a-random-slope">
-<span class="header-section-number">7.6</span> Part four: try adding a random slope</h2>
-<section id="add-a-random-slope-for-years-of-experience-at-level-3-school" class="level3" data-number="7.6.1"><h3 data-number="7.6.1" class="anchored" data-anchor-id="add-a-random-slope-for-years-of-experience-at-level-3-school">
-<span class="header-section-number">7.6.1</span> Add a random slope for years of experience at level 3 (school)</h3>
+</section></section><section id="part-four-try-adding-a-random-slope" class="level2" data-number="8.6"><h2 data-number="8.6" class="anchored" data-anchor-id="part-four-try-adding-a-random-slope">
+<span class="header-section-number">8.6</span> Part four: try adding a random slope</h2>
+<section id="add-a-random-slope-for-years-of-experience-at-level-3-school" class="level3" data-number="8.6.1"><h3 data-number="8.6.1" class="anchored" data-anchor-id="add-a-random-slope-for-years-of-experience-at-level-3-school">
+<span class="header-section-number">8.6.1</span> Add a random slope for years of experience at level 3 (school)</h3>
 <div class="cell">
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span> <span class="va">years_exp</span> <span class="op">+</span> <span class="va">classtype</span> <span class="op">+</span> <span class="va">urbanicity</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">years_exp</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -873,8 +879,8 @@ Model failed to converge with max|grad| = 0.0188831 (tol = 0.002, component 1)
 </div>
 </div>
 <p>Say what this means before reading the output. A random slope for teacher experience at the school level says the payoff to having an experienced teacher is not the same in every school. In some schools an experienced teacher makes a large difference; in others, less. That points at something structural, perhaps how schools assign teachers to classes, or how much support new teachers receive.</p>
-</section></section><section id="should-we-include-that-random-slope-comparing-model.4-with-model.5" class="level2" data-number="7.7"><h2 data-number="7.7" class="anchored" data-anchor-id="should-we-include-that-random-slope-comparing-model.4-with-model.5">
-<span class="header-section-number">7.7</span> Should we include that random slope? Comparing <code>model.4</code> with <code>model.5</code>
+</section></section><section id="should-we-include-that-random-slope-comparing-model.4-with-model.5" class="level2" data-number="8.7"><h2 data-number="8.7" class="anchored" data-anchor-id="should-we-include-that-random-slope-comparing-model.4-with-model.5">
+<span class="header-section-number">8.7</span> Should we include that random slope? Comparing <code>model.4</code> with <code>model.5</code>
 </h2>
 <div class="cell">
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model.4</span>, <span class="va">model.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -905,8 +911,8 @@ These two models differ in more than the random slope
 <p>To isolate the slope, compare <code>model.3</code> and <code>model.5</code>, which have identical fixed effects, or use <code>lmerTest::rand(model.5)</code>, which tests each random term against the same model without it.</p>
 </div>
 </div>
-</section><section id="using-modelsummary-and-broom.mixed-to-organize-your-results" class="level2" data-number="7.8"><h2 data-number="7.8" class="anchored" data-anchor-id="using-modelsummary-and-broom.mixed-to-organize-your-results">
-<span class="header-section-number">7.8</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</h2>
+</section><section id="using-modelsummary-and-broom.mixed-to-organize-your-results" class="level2" data-number="8.8"><h2 data-number="8.8" class="anchored" data-anchor-id="using-modelsummary-and-broom.mixed-to-organize-your-results">
+<span class="header-section-number">8.8</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</h2>
 <div class="cell">
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bbolker/broom.mixed">broom.mixed</a></span><span class="op">)</span></span>
@@ -1259,8 +1265,8 @@ These two models differ in more than the random slope
 <!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
-</section><section id="html-version-that-you-can-open-in-word" class="level2" data-number="7.9"><h2 data-number="7.9" class="anchored" data-anchor-id="html-version-that-you-can-open-in-word">
-<span class="header-section-number">7.9</span> HTML version that you can open in Word</h2>
+</section><section id="html-version-that-you-can-open-in-word" class="level2" data-number="8.9"><h2 data-number="8.9" class="anchored" data-anchor-id="html-version-that-you-can-open-in-word">
+<span class="header-section-number">8.9</span> HTML version that you can open in Word</h2>
 <div class="cell">
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>, output <span class="op">=</span> <span class="st">'msum.html'</span>, title <span class="op">=</span> <span class="st">'MLM Estimates'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1554,12 +1560,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./06-fit-effect-sizes.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./08a-growth-intro.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">

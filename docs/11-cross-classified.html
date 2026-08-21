@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
-<title>Applied Multilevel Modeling in R - 12&nbsp; Cross-Classified Linear Mixed Models</title>
+<title>Applied Multilevel Modeling in R - 13&nbsp; Cross-Classified Linear Mixed Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -99,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10-assumptions.html">Checking and Complicating</a></li><li class="breadcrumb-item"><a href="./11-cross-classified.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10-assumptions.html">Checking and Complicating</a></li><li class="breadcrumb-item"><a href="./11-cross-classified.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -163,8 +163,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./02-reading-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Reading: Regression and Where It Runs Out</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./02-regression-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -181,25 +187,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-null-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-random-intercept.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-random-slopes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-fit-effect-sizes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
   </div>
 </li>
       </ul>
@@ -216,25 +222,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-three-level.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08a-growth-intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08b-growth-advanced.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-binary-outcomes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -251,13 +257,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-cross-classified.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -276,49 +282,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#load-in-our-mvp-packages" id="toc-load-in-our-mvp-packages" class="nav-link active" data-scroll-target="#load-in-our-mvp-packages"><span class="header-section-number">12.1</span> Load in our MVP packages</a></li>
+<li><a href="#load-in-our-mvp-packages" id="toc-load-in-our-mvp-packages" class="nav-link active" data-scroll-target="#load-in-our-mvp-packages"><span class="header-section-number">13.1</span> Load in our MVP packages</a></li>
   <li>
-<a href="#part-1-loading-in-the-data-and-then-recoding-variables" id="toc-part-1-loading-in-the-data-and-then-recoding-variables" class="nav-link" data-scroll-target="#part-1-loading-in-the-data-and-then-recoding-variables"><span class="header-section-number">12.2</span> Part 1: loading in the data, and then recoding variables</a>
+<a href="#part-1-loading-in-the-data-and-then-recoding-variables" id="toc-part-1-loading-in-the-data-and-then-recoding-variables" class="nav-link" data-scroll-target="#part-1-loading-in-the-data-and-then-recoding-variables"><span class="header-section-number">13.2</span> Part 1: loading in the data, and then recoding variables</a>
   <ul class="collapse">
-<li><a href="#load-in-the-data" id="toc-load-in-the-data" class="nav-link" data-scroll-target="#load-in-the-data"><span class="header-section-number">12.2.1</span> Load in the data</a></li>
-  <li><a href="#the-describe-function-from-hmisc-is-a-great-codebook" id="toc-the-describe-function-from-hmisc-is-a-great-codebook" class="nav-link" data-scroll-target="#the-describe-function-from-hmisc-is-a-great-codebook"><span class="header-section-number">12.2.2</span> The <code>describe</code> function from <code>Hmisc</code> is a great codebook</a></li>
+<li><a href="#load-in-the-data" id="toc-load-in-the-data" class="nav-link" data-scroll-target="#load-in-the-data"><span class="header-section-number">13.2.1</span> Load in the data</a></li>
+  <li><a href="#the-describe-function-from-hmisc-is-a-great-codebook" id="toc-the-describe-function-from-hmisc-is-a-great-codebook" class="nav-link" data-scroll-target="#the-describe-function-from-hmisc-is-a-great-codebook"><span class="header-section-number">13.2.2</span> The <code>describe</code> function from <code>Hmisc</code> is a great codebook</a></li>
   </ul>
 </li>
   <li>
-<a href="#part-one-data-exploration-and-codinglabelling" id="toc-part-one-data-exploration-and-codinglabelling" class="nav-link" data-scroll-target="#part-one-data-exploration-and-codinglabelling"><span class="header-section-number">12.3</span> Part one: data exploration and coding/labelling</a>
+<a href="#part-one-data-exploration-and-codinglabelling" id="toc-part-one-data-exploration-and-codinglabelling" class="nav-link" data-scroll-target="#part-one-data-exploration-and-codinglabelling"><span class="header-section-number">13.3</span> Part one: data exploration and coding/labelling</a>
   <ul class="collapse">
-<li><a href="#start-with-variable-labelling-using-the-label-function" id="toc-start-with-variable-labelling-using-the-label-function" class="nav-link" data-scroll-target="#start-with-variable-labelling-using-the-label-function"><span class="header-section-number">12.3.1</span> Start with variable labelling using the <code>label</code> function</a></li>
-  <li><a href="#explore-our-outcome-attain" id="toc-explore-our-outcome-attain" class="nav-link" data-scroll-target="#explore-our-outcome-attain"><span class="header-section-number">12.3.2</span> Explore our outcome, <code>attain</code></a></li>
-  <li><a href="#explore-a-few-other-predictors" id="toc-explore-a-few-other-predictors" class="nav-link" data-scroll-target="#explore-a-few-other-predictors"><span class="header-section-number">12.3.3</span> Explore a few other predictors</a></li>
+<li><a href="#start-with-variable-labelling-using-the-label-function" id="toc-start-with-variable-labelling-using-the-label-function" class="nav-link" data-scroll-target="#start-with-variable-labelling-using-the-label-function"><span class="header-section-number">13.3.1</span> Start with variable labelling using the <code>label</code> function</a></li>
+  <li><a href="#explore-our-outcome-attain" id="toc-explore-our-outcome-attain" class="nav-link" data-scroll-target="#explore-our-outcome-attain"><span class="header-section-number">13.3.2</span> Explore our outcome, <code>attain</code></a></li>
+  <li><a href="#explore-a-few-other-predictors" id="toc-explore-a-few-other-predictors" class="nav-link" data-scroll-target="#explore-a-few-other-predictors"><span class="header-section-number">13.3.3</span> Explore a few other predictors</a></li>
   </ul>
 </li>
   <li>
-<a href="#part-two-modeling" id="toc-part-two-modeling" class="nav-link" data-scroll-target="#part-two-modeling"><span class="header-section-number">12.4</span> Part two: modeling</a>
+<a href="#part-two-modeling" id="toc-part-two-modeling" class="nav-link" data-scroll-target="#part-two-modeling"><span class="header-section-number">13.4</span> Part two: modeling</a>
   <ul class="collapse">
-<li><a href="#first-run-two-separate-models-with-school-and-neighborhood-as-the-l2-clusters" id="toc-first-run-two-separate-models-with-school-and-neighborhood-as-the-l2-clusters" class="nav-link" data-scroll-target="#first-run-two-separate-models-with-school-and-neighborhood-as-the-l2-clusters"><span class="header-section-number">12.4.1</span> First, run two separate models with school and neighborhood as the L2 clusters</a></li>
-  <li><a href="#calculate-school-icc" id="toc-calculate-school-icc" class="nav-link" data-scroll-target="#calculate-school-icc"><span class="header-section-number">12.4.2</span> Calculate school ICC</a></li>
-  <li><a href="#calculate-neighborhood-icc" id="toc-calculate-neighborhood-icc" class="nav-link" data-scroll-target="#calculate-neighborhood-icc"><span class="header-section-number">12.4.3</span> Calculate neighborhood ICC</a></li>
-  <li><a href="#now-a-null-additive-cross-classified-model" id="toc-now-a-null-additive-cross-classified-model" class="nav-link" data-scroll-target="#now-a-null-additive-cross-classified-model"><span class="header-section-number">12.4.4</span> Now, a null additive cross-classified model</a></li>
-  <li><a href="#calculate-neighborhood-icc-in-crossed-model" id="toc-calculate-neighborhood-icc-in-crossed-model" class="nav-link" data-scroll-target="#calculate-neighborhood-icc-in-crossed-model"><span class="header-section-number">12.4.5</span> Calculate neighborhood ICC in crossed model</a></li>
-  <li><a href="#calculate-school-icc-in-crossed-model" id="toc-calculate-school-icc-in-crossed-model" class="nav-link" data-scroll-target="#calculate-school-icc-in-crossed-model"><span class="header-section-number">12.4.6</span> Calculate school ICC in crossed model</a></li>
-  <li><a href="#add-an-l1-predictor-male" id="toc-add-an-l1-predictor-male" class="nav-link" data-scroll-target="#add-an-l1-predictor-male"><span class="header-section-number">12.4.7</span> Add an L1 predictor, male</a></li>
-  <li><a href="#l1-plus-school-level-predictor-only-dadocc" id="toc-l1-plus-school-level-predictor-only-dadocc" class="nav-link" data-scroll-target="#l1-plus-school-level-predictor-only-dadocc"><span class="header-section-number">12.4.8</span> L1 plus school-level predictor only (<code>dadocc</code>)</a></li>
-  <li><a href="#l1-plus-neighborhood-level-predictors-only-deprive" id="toc-l1-plus-neighborhood-level-predictors-only-deprive" class="nav-link" data-scroll-target="#l1-plus-neighborhood-level-predictors-only-deprive"><span class="header-section-number">12.4.9</span> L1 plus neighborhood-level predictors only (<code>deprive</code>)</a></li>
-  <li><a href="#l1-plus-both-school-and-neighborhood-predictors" id="toc-l1-plus-both-school-and-neighborhood-predictors" class="nav-link" data-scroll-target="#l1-plus-both-school-and-neighborhood-predictors"><span class="header-section-number">12.4.10</span> L1 plus both school and neighborhood predictors</a></li>
-  <li><a href="#test-random-effects-for-male.fac-at-neighborhood-level-and-at-school-level" id="toc-test-random-effects-for-male.fac-at-neighborhood-level-and-at-school-level" class="nav-link" data-scroll-target="#test-random-effects-for-male.fac-at-neighborhood-level-and-at-school-level"><span class="header-section-number">12.4.11</span> Test random effects for <code>male.fac</code> at neighborhood level and at school level</a></li>
-  <li><a href="#finally-test-a-model-with-school-neighborhood-interaction" id="toc-finally-test-a-model-with-school-neighborhood-interaction" class="nav-link" data-scroll-target="#finally-test-a-model-with-school-neighborhood-interaction"><span class="header-section-number">12.4.12</span> Finally, test a model with school-neighborhood interaction</a></li>
-  <li><a href="#use-interplot-to-visualize-the-interaction-between-deprive-and-dadocc" id="toc-use-interplot-to-visualize-the-interaction-between-deprive-and-dadocc" class="nav-link" data-scroll-target="#use-interplot-to-visualize-the-interaction-between-deprive-and-dadocc"><span class="header-section-number">12.4.13</span> Use <code>interplot</code> to visualize the interaction between <code>deprive</code> and <code>dadocc</code></a></li>
+<li><a href="#first-run-two-separate-models-with-school-and-neighborhood-as-the-l2-clusters" id="toc-first-run-two-separate-models-with-school-and-neighborhood-as-the-l2-clusters" class="nav-link" data-scroll-target="#first-run-two-separate-models-with-school-and-neighborhood-as-the-l2-clusters"><span class="header-section-number">13.4.1</span> First, run two separate models with school and neighborhood as the L2 clusters</a></li>
+  <li><a href="#calculate-school-icc" id="toc-calculate-school-icc" class="nav-link" data-scroll-target="#calculate-school-icc"><span class="header-section-number">13.4.2</span> Calculate school ICC</a></li>
+  <li><a href="#calculate-neighborhood-icc" id="toc-calculate-neighborhood-icc" class="nav-link" data-scroll-target="#calculate-neighborhood-icc"><span class="header-section-number">13.4.3</span> Calculate neighborhood ICC</a></li>
+  <li><a href="#now-a-null-additive-cross-classified-model" id="toc-now-a-null-additive-cross-classified-model" class="nav-link" data-scroll-target="#now-a-null-additive-cross-classified-model"><span class="header-section-number">13.4.4</span> Now, a null additive cross-classified model</a></li>
+  <li><a href="#calculate-neighborhood-icc-in-crossed-model" id="toc-calculate-neighborhood-icc-in-crossed-model" class="nav-link" data-scroll-target="#calculate-neighborhood-icc-in-crossed-model"><span class="header-section-number">13.4.5</span> Calculate neighborhood ICC in crossed model</a></li>
+  <li><a href="#calculate-school-icc-in-crossed-model" id="toc-calculate-school-icc-in-crossed-model" class="nav-link" data-scroll-target="#calculate-school-icc-in-crossed-model"><span class="header-section-number">13.4.6</span> Calculate school ICC in crossed model</a></li>
+  <li><a href="#add-an-l1-predictor-male" id="toc-add-an-l1-predictor-male" class="nav-link" data-scroll-target="#add-an-l1-predictor-male"><span class="header-section-number">13.4.7</span> Add an L1 predictor, male</a></li>
+  <li><a href="#l1-plus-school-level-predictor-only-dadocc" id="toc-l1-plus-school-level-predictor-only-dadocc" class="nav-link" data-scroll-target="#l1-plus-school-level-predictor-only-dadocc"><span class="header-section-number">13.4.8</span> L1 plus school-level predictor only (<code>dadocc</code>)</a></li>
+  <li><a href="#l1-plus-neighborhood-level-predictors-only-deprive" id="toc-l1-plus-neighborhood-level-predictors-only-deprive" class="nav-link" data-scroll-target="#l1-plus-neighborhood-level-predictors-only-deprive"><span class="header-section-number">13.4.9</span> L1 plus neighborhood-level predictors only (<code>deprive</code>)</a></li>
+  <li><a href="#l1-plus-both-school-and-neighborhood-predictors" id="toc-l1-plus-both-school-and-neighborhood-predictors" class="nav-link" data-scroll-target="#l1-plus-both-school-and-neighborhood-predictors"><span class="header-section-number">13.4.10</span> L1 plus both school and neighborhood predictors</a></li>
+  <li><a href="#test-random-effects-for-male.fac-at-neighborhood-level-and-at-school-level" id="toc-test-random-effects-for-male.fac-at-neighborhood-level-and-at-school-level" class="nav-link" data-scroll-target="#test-random-effects-for-male.fac-at-neighborhood-level-and-at-school-level"><span class="header-section-number">13.4.11</span> Test random effects for <code>male.fac</code> at neighborhood level and at school level</a></li>
+  <li><a href="#finally-test-a-model-with-school-neighborhood-interaction" id="toc-finally-test-a-model-with-school-neighborhood-interaction" class="nav-link" data-scroll-target="#finally-test-a-model-with-school-neighborhood-interaction"><span class="header-section-number">13.4.12</span> Finally, test a model with school-neighborhood interaction</a></li>
+  <li><a href="#use-interplot-to-visualize-the-interaction-between-deprive-and-dadocc" id="toc-use-interplot-to-visualize-the-interaction-between-deprive-and-dadocc" class="nav-link" data-scroll-target="#use-interplot-to-visualize-the-interaction-between-deprive-and-dadocc"><span class="header-section-number">13.4.13</span> Use <code>interplot</code> to visualize the interaction between <code>deprive</code> and <code>dadocc</code></a></li>
   </ul>
 </li>
-  <li><a href="#comparing-the-models" id="toc-comparing-the-models" class="nav-link" data-scroll-target="#comparing-the-models"><span class="header-section-number">12.5</span> Comparing the models</a></li>
-  <li><a href="#a-caution-about-17-schools" id="toc-a-caution-about-17-schools" class="nav-link" data-scroll-target="#a-caution-about-17-schools"><span class="header-section-number">12.6</span> A caution about 17 schools</a></li>
-  <li><a href="#recognizing-this-structure-elsewhere" id="toc-recognizing-this-structure-elsewhere" class="nav-link" data-scroll-target="#recognizing-this-structure-elsewhere"><span class="header-section-number">12.7</span> Recognizing this structure elsewhere</a></li>
+  <li><a href="#comparing-the-models" id="toc-comparing-the-models" class="nav-link" data-scroll-target="#comparing-the-models"><span class="header-section-number">13.5</span> Comparing the models</a></li>
+  <li><a href="#a-caution-about-17-schools" id="toc-a-caution-about-17-schools" class="nav-link" data-scroll-target="#a-caution-about-17-schools"><span class="header-section-number">13.6</span> A caution about 17 schools</a></li>
+  <li><a href="#recognizing-this-structure-elsewhere" id="toc-recognizing-this-structure-elsewhere" class="nav-link" data-scroll-target="#recognizing-this-structure-elsewhere"><span class="header-section-number">13.7</span> Recognizing this structure elsewhere</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOURUSERNAME/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
-<span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span>
+<span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
@@ -335,17 +341,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header><p><strong>Data for this chapter:</strong> <code>scotland.dta</code></p>
 <p>This week, we will be using George Leckie’s (2009) <code>scotland</code> dataset, which includes 2,310 students, nested within 17 schools and separately nested within 500+ neighborhoods.</p>
 <p>Everything so far has assumed a strict hierarchy: each student belongs to one classroom, each classroom to one school, cleanly nested like boxes inside boxes. Real social structures often refuse to cooperate. Students from one neighborhood attend different schools, and each school draws from many neighborhoods. Schools and neighborhoods are <em>crossed</em>, not nested.</p>
-<section id="load-in-our-mvp-packages" class="level2" data-number="12.1"><h2 data-number="12.1" class="anchored" data-anchor-id="load-in-our-mvp-packages">
-<span class="header-section-number">12.1</span> Load in our MVP packages</h2>
+<section id="load-in-our-mvp-packages" class="level2" data-number="13.1"><h2 data-number="13.1" class="anchored" data-anchor-id="load-in-our-mvp-packages">
+<span class="header-section-number">13.1</span> Load in our MVP packages</h2>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://hbiostat.org/R/Hmisc/">Hmisc</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="part-1-loading-in-the-data-and-then-recoding-variables" class="level2" data-number="12.2"><h2 data-number="12.2" class="anchored" data-anchor-id="part-1-loading-in-the-data-and-then-recoding-variables">
-<span class="header-section-number">12.2</span> Part 1: loading in the data, and then recoding variables</h2>
-<section id="load-in-the-data" class="level3" data-number="12.2.1"><h3 data-number="12.2.1" class="anchored" data-anchor-id="load-in-the-data">
-<span class="header-section-number">12.2.1</span> Load in the data</h3>
+</section><section id="part-1-loading-in-the-data-and-then-recoding-variables" class="level2" data-number="13.2"><h2 data-number="13.2" class="anchored" data-anchor-id="part-1-loading-in-the-data-and-then-recoding-variables">
+<span class="header-section-number">13.2</span> Part 1: loading in the data, and then recoding variables</h2>
+<section id="load-in-the-data" class="level3" data-number="13.2.1"><h3 data-number="13.2.1" class="anchored" data-anchor-id="load-in-the-data">
+<span class="header-section-number">13.2.1</span> Load in the data</h3>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">scotland</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"scotland.dta"</span><span class="op">)</span></span>
 <span></span>
@@ -366,8 +372,8 @@ $ male     &lt;dbl&gt; 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 
 $ deprive  &lt;dbl&gt; -0.551, -0.551, -0.551, -0.551, -0.551, 0.147, -0.083, -0.083…</code></pre>
 </div>
 </div>
-</section><section id="the-describe-function-from-hmisc-is-a-great-codebook" class="level3" data-number="12.2.2"><h3 data-number="12.2.2" class="anchored" data-anchor-id="the-describe-function-from-hmisc-is-a-great-codebook">
-<span class="header-section-number">12.2.2</span> The <code>describe</code> function from <code>Hmisc</code> is a great codebook</h3>
+</section><section id="the-describe-function-from-hmisc-is-a-great-codebook" class="level3" data-number="13.2.2"><h3 data-number="13.2.2" class="anchored" data-anchor-id="the-describe-function-from-hmisc-is-a-great-codebook">
+<span class="header-section-number">13.2.2</span> The <code>describe</code> function from <code>Hmisc</code> is a great codebook</h3>
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/describe.html">describe</a></span><span class="op">(</span><span class="va">scotland</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -467,10 +473,10 @@ lowest : -1.082 -1.048 -1.03  -0.983 -0.975, highest: 2.33   2.419  2.438  2.498
 --------------------------------------------------------------------------------</code></pre>
 </div>
 </div>
-</section></section><section id="part-one-data-exploration-and-codinglabelling" class="level2" data-number="12.3"><h2 data-number="12.3" class="anchored" data-anchor-id="part-one-data-exploration-and-codinglabelling">
-<span class="header-section-number">12.3</span> Part one: data exploration and coding/labelling</h2>
-<section id="start-with-variable-labelling-using-the-label-function" class="level3" data-number="12.3.1"><h3 data-number="12.3.1" class="anchored" data-anchor-id="start-with-variable-labelling-using-the-label-function">
-<span class="header-section-number">12.3.1</span> Start with variable labelling using the <code>label</code> function</h3>
+</section></section><section id="part-one-data-exploration-and-codinglabelling" class="level2" data-number="13.3"><h2 data-number="13.3" class="anchored" data-anchor-id="part-one-data-exploration-and-codinglabelling">
+<span class="header-section-number">13.3</span> Part one: data exploration and coding/labelling</h2>
+<section id="start-with-variable-labelling-using-the-label-function" class="level3" data-number="13.3.1"><h3 data-number="13.3.1" class="anchored" data-anchor-id="start-with-variable-labelling-using-the-label-function">
+<span class="header-section-number">13.3.1</span> Start with variable labelling using the <code>label</code> function</h3>
 <div class="cell">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/label.html">label</a></span><span class="op">(</span><span class="va">scotland</span><span class="op">$</span><span class="va">neighid</span><span class="op">)</span><span class="op">=</span><span class="st">"Neighborhood ID"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/label.html">label</a></span><span class="op">(</span><span class="va">scotland</span><span class="op">$</span><span class="va">schid</span><span class="op">)</span><span class="op">=</span><span class="st">"School ID"</span></span>
@@ -652,8 +658,8 @@ Proportion 0.52 0.48
 --------------------------------------------------------------------------------</code></pre>
 </div>
 </div>
-</section><section id="explore-our-outcome-attain" class="level3" data-number="12.3.2"><h3 data-number="12.3.2" class="anchored" data-anchor-id="explore-our-outcome-attain">
-<span class="header-section-number">12.3.2</span> Explore our outcome, <code>attain</code>
+</section><section id="explore-our-outcome-attain" class="level3" data-number="13.3.2"><h3 data-number="13.3.2" class="anchored" data-anchor-id="explore-our-outcome-attain">
+<span class="header-section-number">13.3.2</span> Explore our outcome, <code>attain</code>
 </h3>
 <div class="cell">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">scot.clean</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">attain</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -664,12 +670,12 @@ Proportion 0.52 0.48
 <div class="cell-output-display">
 <div id="fig-attain" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="11-cross-classified_files/figure-html/fig-attain-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;12.1: Distribution of educational attainment scores.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;13.1: Distribution of educational attainment scores.</figcaption></figure>
 </div>
 </div>
 </div>
-</section><section id="explore-a-few-other-predictors" class="level3" data-number="12.3.3"><h3 data-number="12.3.3" class="anchored" data-anchor-id="explore-a-few-other-predictors">
-<span class="header-section-number">12.3.3</span> Explore a few other predictors</h3>
+</section><section id="explore-a-few-other-predictors" class="level3" data-number="13.3.3"><h3 data-number="13.3.3" class="anchored" data-anchor-id="explore-a-few-other-predictors">
+<span class="header-section-number">13.3.3</span> Explore a few other predictors</h3>
 <div class="cell">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">scot.clean</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dadocc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">30</span><span class="op">)</span> <span class="op">+</span></span>
@@ -679,7 +685,7 @@ Proportion 0.52 0.48
 <div class="cell-output-display">
 <div id="fig-dadocc" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="11-cross-classified_files/figure-html/fig-dadocc-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;12.2: Distribution of school-mean father’s occupation scores.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;13.2: Distribution of school-mean father’s occupation scores.</figcaption></figure>
 </div>
 </div>
 </div>
@@ -692,15 +698,15 @@ Proportion 0.52 0.48
 <div class="cell-output-display">
 <div id="fig-deprive" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="11-cross-classified_files/figure-html/fig-deprive-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;12.3: Distribution of neighborhood deprivation scores.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;13.3: Distribution of neighborhood deprivation scores.</figcaption></figure>
 </div>
 </div>
 </div>
 <p>Because <code>dadocc</code> is a school mean, its histogram has one value repeated for every student in a school. With 17 schools, that means the distribution really contains 17 distinct points, however many bars appear. <code>deprive</code> behaves similarly at the neighborhood level, though with 500-plus neighborhoods it looks much more continuous.</p>
-</section></section><section id="part-two-modeling" class="level2" data-number="12.4"><h2 data-number="12.4" class="anchored" data-anchor-id="part-two-modeling">
-<span class="header-section-number">12.4</span> Part two: modeling</h2>
-<section id="first-run-two-separate-models-with-school-and-neighborhood-as-the-l2-clusters" class="level3" data-number="12.4.1"><h3 data-number="12.4.1" class="anchored" data-anchor-id="first-run-two-separate-models-with-school-and-neighborhood-as-the-l2-clusters">
-<span class="header-section-number">12.4.1</span> First, run two separate models with school and neighborhood as the L2 clusters</h3>
+</section></section><section id="part-two-modeling" class="level2" data-number="13.4"><h2 data-number="13.4" class="anchored" data-anchor-id="part-two-modeling">
+<span class="header-section-number">13.4</span> Part two: modeling</h2>
+<section id="first-run-two-separate-models-with-school-and-neighborhood-as-the-l2-clusters" class="level3" data-number="13.4.1"><h3 data-number="13.4.1" class="anchored" data-anchor-id="first-run-two-separate-models-with-school-and-neighborhood-as-the-l2-clusters">
+<span class="header-section-number">13.4.1</span> First, run two separate models with school and neighborhood as the L2 clusters</h3>
 <div class="cell">
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.null.school</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">attain</span> <span class="op">~</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">scot.clean</span><span class="op">)</span></span>
 <span></span>
@@ -728,8 +734,8 @@ Fixed effects:
 (Intercept)  0.08227    0.07568   1.087</code></pre>
 </div>
 </div>
-</section><section id="calculate-school-icc" class="level3" data-number="12.4.2"><h3 data-number="12.4.2" class="anchored" data-anchor-id="calculate-school-icc">
-<span class="header-section-number">12.4.2</span> Calculate school ICC</h3>
+</section><section id="calculate-school-icc" class="level3" data-number="13.4.2"><h3 data-number="13.4.2" class="anchored" data-anchor-id="calculate-school-icc">
+<span class="header-section-number">13.4.2</span> Calculate school ICC</h3>
 <div class="cell">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">icc.school</span> <span class="op">&lt;-</span> <span class="fl">0.08874</span><span class="op">/</span><span class="op">(</span><span class="fl">0.08874</span> <span class="op">+</span> <span class="fl">0.93441</span><span class="op">)</span></span>
 <span><span class="va">icc.school</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -764,8 +770,8 @@ Fixed effects:
 (Intercept)  0.08202    0.02844   2.885</code></pre>
 </div>
 </div>
-</section><section id="calculate-neighborhood-icc" class="level3" data-number="12.4.3"><h3 data-number="12.4.3" class="anchored" data-anchor-id="calculate-neighborhood-icc">
-<span class="header-section-number">12.4.3</span> Calculate neighborhood ICC</h3>
+</section><section id="calculate-neighborhood-icc" class="level3" data-number="13.4.3"><h3 data-number="13.4.3" class="anchored" data-anchor-id="calculate-neighborhood-icc">
+<span class="header-section-number">13.4.3</span> Calculate neighborhood ICC</h3>
 <div class="cell">
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">icc.neigh</span> <span class="op">&lt;-</span> <span class="fl">0.2015</span><span class="op">/</span><span class="op">(</span><span class="fl">0.2015</span> <span class="op">+</span> <span class="fl">0.8044</span><span class="op">)</span></span>
 <span><span class="va">icc.neigh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -774,8 +780,8 @@ Fixed effects:
 </div>
 </div>
 <p>Fitting each grouping structure alone first is worth doing, because the comparison with the combined model below is where the main lesson of this chapter lives.</p>
-</section><section id="now-a-null-additive-cross-classified-model" class="level3" data-number="12.4.4"><h3 data-number="12.4.4" class="anchored" data-anchor-id="now-a-null-additive-cross-classified-model">
-<span class="header-section-number">12.4.4</span> Now, a null additive cross-classified model</h3>
+</section><section id="now-a-null-additive-cross-classified-model" class="level3" data-number="13.4.4"><h3 data-number="13.4.4" class="anchored" data-anchor-id="now-a-null-additive-cross-classified-model">
+<span class="header-section-number">13.4.4</span> Now, a null additive cross-classified model</h3>
 <div class="cell">
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.null.crossed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">attain</span> <span class="op">~</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">neighid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">scot.clean</span><span class="op">)</span></span>
 <span></span>
@@ -819,8 +825,8 @@ Do not use the nesting shorthand here
 <p>The diagnostic question is simple: does every neighborhood send its students to exactly one school? Here the answer is no, which is what makes the structure crossed.</p>
 </div>
 </div>
-</section><section id="calculate-neighborhood-icc-in-crossed-model" class="level3" data-number="12.4.5"><h3 data-number="12.4.5" class="anchored" data-anchor-id="calculate-neighborhood-icc-in-crossed-model">
-<span class="header-section-number">12.4.5</span> Calculate neighborhood ICC in crossed model</h3>
+</section><section id="calculate-neighborhood-icc-in-crossed-model" class="level3" data-number="13.4.5"><h3 data-number="13.4.5" class="anchored" data-anchor-id="calculate-neighborhood-icc-in-crossed-model">
+<span class="header-section-number">13.4.5</span> Calculate neighborhood ICC in crossed model</h3>
 <div class="cell">
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">icc.neigh.crossed</span> <span class="op">&lt;-</span> <span class="fl">0.14122</span><span class="op">/</span><span class="op">(</span><span class="fl">0.14122</span> <span class="op">+</span> <span class="fl">0.07545</span> <span class="op">+</span> <span class="fl">0.79902</span><span class="op">)</span></span>
 <span><span class="va">icc.neigh.crossed</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -828,8 +834,8 @@ Do not use the nesting shorthand here
 <pre><code>[1] 0.1390385</code></pre>
 </div>
 </div>
-</section><section id="calculate-school-icc-in-crossed-model" class="level3" data-number="12.4.6"><h3 data-number="12.4.6" class="anchored" data-anchor-id="calculate-school-icc-in-crossed-model">
-<span class="header-section-number">12.4.6</span> Calculate school ICC in crossed model</h3>
+</section><section id="calculate-school-icc-in-crossed-model" class="level3" data-number="13.4.6"><h3 data-number="13.4.6" class="anchored" data-anchor-id="calculate-school-icc-in-crossed-model">
+<span class="header-section-number">13.4.6</span> Calculate school ICC in crossed model</h3>
 <div class="cell">
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">icc.school.crossed</span> <span class="op">&lt;-</span> <span class="fl">0.07545</span><span class="op">/</span><span class="op">(</span><span class="fl">0.14122</span> <span class="op">+</span> <span class="fl">0.07545</span> <span class="op">+</span> <span class="fl">0.79902</span><span class="op">)</span></span>
 <span><span class="va">icc.school.crossed</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -841,8 +847,8 @@ Do not use the nesting shorthand here
 <p>A single-factor model has nowhere to put the other source of variation. Fit schools alone, and neighborhood differences get absorbed into the school variance, because students in the same school tend to come from overlapping neighborhoods. The school-only model therefore attributes to schools some variation that actually belongs to where children live. Fitting both at once lets each factor account for its own share.</p>
 <p>This has direct consequences for school accountability research. A model that ignores neighborhoods will systematically overstate how much schools matter.</p>
 <p>Note also the denominator: all three variance components, since the total variance is now split three ways.</p>
-</section><section id="add-an-l1-predictor-male" class="level3" data-number="12.4.7"><h3 data-number="12.4.7" class="anchored" data-anchor-id="add-an-l1-predictor-male">
-<span class="header-section-number">12.4.7</span> Add an L1 predictor, male</h3>
+</section><section id="add-an-l1-predictor-male" class="level3" data-number="13.4.7"><h3 data-number="13.4.7" class="anchored" data-anchor-id="add-an-l1-predictor-male">
+<span class="header-section-number">13.4.7</span> Add an L1 predictor, male</h3>
 <div class="cell">
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">attain</span> <span class="op">~</span> <span class="va">male.fac</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">neighid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">scot.clean</span><span class="op">)</span></span>
 <span></span>
@@ -876,8 +882,8 @@ Correlation of Fixed Effects:
 male.facYes -0.254</code></pre>
 </div>
 </div>
-</section><section id="l1-plus-school-level-predictor-only-dadocc" class="level3" data-number="12.4.8"><h3 data-number="12.4.8" class="anchored" data-anchor-id="l1-plus-school-level-predictor-only-dadocc">
-<span class="header-section-number">12.4.8</span> L1 plus school-level predictor only (<code>dadocc</code>)</h3>
+</section><section id="l1-plus-school-level-predictor-only-dadocc" class="level3" data-number="13.4.8"><h3 data-number="13.4.8" class="anchored" data-anchor-id="l1-plus-school-level-predictor-only-dadocc">
+<span class="header-section-number">13.4.8</span> L1 plus school-level predictor only (<code>dadocc</code>)</h3>
 <div class="cell">
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">attain</span> <span class="op">~</span> <span class="va">male.fac</span> <span class="op">+</span> <span class="va">dadocc</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">neighid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">scot.clean</span><span class="op">)</span></span>
 <span></span>
@@ -914,8 +920,8 @@ dadocc       0.012  0.008</code></pre>
 </div>
 </div>
 <p>Watch the <em>school</em> variance here rather than the neighborhood variance. A school-level predictor should explain between-school differences, so that is where the movement belongs.</p>
-</section><section id="l1-plus-neighborhood-level-predictors-only-deprive" class="level3" data-number="12.4.9"><h3 data-number="12.4.9" class="anchored" data-anchor-id="l1-plus-neighborhood-level-predictors-only-deprive">
-<span class="header-section-number">12.4.9</span> L1 plus neighborhood-level predictors only (<code>deprive</code>)</h3>
+</section><section id="l1-plus-neighborhood-level-predictors-only-deprive" class="level3" data-number="13.4.9"><h3 data-number="13.4.9" class="anchored" data-anchor-id="l1-plus-neighborhood-level-predictors-only-deprive">
+<span class="header-section-number">13.4.9</span> L1 plus neighborhood-level predictors only (<code>deprive</code>)</h3>
 <div class="cell">
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">attain</span> <span class="op">~</span> <span class="va">male.fac</span> <span class="op">+</span> <span class="va">deprive</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">neighid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">scot.clean</span><span class="op">)</span></span>
 <span></span>
@@ -953,8 +959,8 @@ deprive     -0.023  0.009</code></pre>
 </div>
 <p>And now the mirror image: a neighborhood-level predictor should move the neighborhood variance. Fitting these two separately makes it easy to see which component each predictor is accounting for.</p>
 <p>On the deprivation coefficient, a word of caution that applies well beyond these data. Families are not randomly assigned to neighborhoods, and families in more deprived areas differ from others in many ways, some measured here and most not. The coefficient describes an association. It does not establish that moving a child to a less deprived neighborhood would raise their attainment.</p>
-</section><section id="l1-plus-both-school-and-neighborhood-predictors" class="level3" data-number="12.4.10"><h3 data-number="12.4.10" class="anchored" data-anchor-id="l1-plus-both-school-and-neighborhood-predictors">
-<span class="header-section-number">12.4.10</span> L1 plus both school and neighborhood predictors</h3>
+</section><section id="l1-plus-both-school-and-neighborhood-predictors" class="level3" data-number="13.4.10"><h3 data-number="13.4.10" class="anchored" data-anchor-id="l1-plus-both-school-and-neighborhood-predictors">
+<span class="header-section-number">13.4.10</span> L1 plus both school and neighborhood predictors</h3>
 <div class="cell">
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">attain</span> <span class="op">~</span> <span class="va">male.fac</span> <span class="op">+</span> <span class="va">deprive</span> <span class="op">+</span> <span class="va">dadocc</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">neighid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">scot.clean</span><span class="op">)</span></span>
 <span></span>
@@ -992,8 +998,8 @@ deprive     -0.022  0.010
 dadocc       0.008  0.011  0.224</code></pre>
 </div>
 </div>
-</section><section id="test-random-effects-for-male.fac-at-neighborhood-level-and-at-school-level" class="level3" data-number="12.4.11"><h3 data-number="12.4.11" class="anchored" data-anchor-id="test-random-effects-for-male.fac-at-neighborhood-level-and-at-school-level">
-<span class="header-section-number">12.4.11</span> Test random effects for <code>male.fac</code> at neighborhood level and at school level</h3>
+</section><section id="test-random-effects-for-male.fac-at-neighborhood-level-and-at-school-level" class="level3" data-number="13.4.11"><h3 data-number="13.4.11" class="anchored" data-anchor-id="test-random-effects-for-male.fac-at-neighborhood-level-and-at-school-level">
+<span class="header-section-number">13.4.11</span> Test random effects for <code>male.fac</code> at neighborhood level and at school level</h3>
 <div class="cell">
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">attain</span> <span class="op">~</span> <span class="va">male.fac</span> <span class="op">+</span> <span class="va">deprive</span> <span class="op">+</span> <span class="va">dadocc</span> <span class="op">+</span> <span class="op">(</span><span class="va">male.fac</span><span class="op">|</span><span class="va">schid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">male.fac</span><span class="op">|</span><span class="va">neighid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">scot.clean</span><span class="op">)</span></span>
 <span></span>
@@ -1050,8 +1056,8 @@ male.fac in (male.fac | neighid)    9 -3020.0 6058.1 0.11792  2     0.9427</code
 </div>
 <p>This asks whether the gender gap in attainment differs across schools, across neighborhoods, or both. <code>rand()</code> tests each random term separately, so the two can come out differently.</p>
 <p>Expect trouble here, and read it as information. Estimating a slope variance across 17 schools is asking a great deal of very little data, so a singular fit or a boundary estimate would not be surprising. The neighborhood version rests on far more units and is on firmer ground.</p>
-</section><section id="finally-test-a-model-with-school-neighborhood-interaction" class="level3" data-number="12.4.12"><h3 data-number="12.4.12" class="anchored" data-anchor-id="finally-test-a-model-with-school-neighborhood-interaction">
-<span class="header-section-number">12.4.12</span> Finally, test a model with school-neighborhood interaction</h3>
+</section><section id="finally-test-a-model-with-school-neighborhood-interaction" class="level3" data-number="13.4.12"><h3 data-number="13.4.12" class="anchored" data-anchor-id="finally-test-a-model-with-school-neighborhood-interaction">
+<span class="header-section-number">13.4.12</span> Finally, test a model with school-neighborhood interaction</h3>
 <div class="cell">
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">attain</span> <span class="op">~</span> <span class="va">male.fac</span> <span class="op">+</span> <span class="va">deprive</span> <span class="op">+</span> <span class="va">dadocc</span> <span class="op">+</span> <span class="va">deprive</span><span class="op">:</span><span class="va">dadocc</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">neighid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">scot.clean</span><span class="op">)</span></span>
 <span></span>
@@ -1093,15 +1099,15 @@ depriv:ddcc  0.104  0.060  0.082  0.187</code></pre>
 </div>
 </div>
 <p>This interaction is unusual and worth stating carefully. It crosses a <em>neighborhood</em>-level variable with a <em>school</em>-level variable, asking whether the effect of neighborhood deprivation depends on the socioeconomic composition of the school a child attends. Does attending a more advantaged school buffer the association between a deprived neighborhood and attainment? That is a genuinely interesting policy question, and it is only askable in a cross-classified framework.</p>
-</section><section id="use-interplot-to-visualize-the-interaction-between-deprive-and-dadocc" class="level3" data-number="12.4.13"><h3 data-number="12.4.13" class="anchored" data-anchor-id="use-interplot-to-visualize-the-interaction-between-deprive-and-dadocc">
-<span class="header-section-number">12.4.13</span> Use <code>interplot</code> to visualize the interaction between <code>deprive</code> and <code>dadocc</code>
+</section><section id="use-interplot-to-visualize-the-interaction-between-deprive-and-dadocc" class="level3" data-number="13.4.13"><h3 data-number="13.4.13" class="anchored" data-anchor-id="use-interplot-to-visualize-the-interaction-between-deprive-and-dadocc">
+<span class="header-section-number">13.4.13</span> Use <code>interplot</code> to visualize the interaction between <code>deprive</code> and <code>dadocc</code>
 </h3>
 <div class="cell">
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">interplot</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/interplot/man/interplot.html">interplot</a></span><span class="op">(</span><span class="va">model.6</span>, var1 <span class="op">=</span> <span class="st">"deprive"</span>, var2 <span class="op">=</span> <span class="st">"dadocc"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-interplot" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="11-cross-classified_files/figure-html/fig-interplot-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;12.4: The estimated effect of neighborhood deprivation across levels of school-mean father’s occupation.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;13.4: The estimated effect of neighborhood deprivation across levels of school-mean father’s occupation.</figcaption></figure>
 </div>
 </div>
 </div>
@@ -1121,8 +1127,8 @@ If <code>interplot</code> will not install
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://strengejacke.github.io/ggeffects/reference/ggpredict.html">ggpredict</a></span><span class="op">(</span><span class="va">model.6</span>, terms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"deprive"</span>, <span class="st">"dadocc"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-</section></section><section id="comparing-the-models" class="level2" data-number="12.5"><h2 data-number="12.5" class="anchored" data-anchor-id="comparing-the-models">
-<span class="header-section-number">12.5</span> Comparing the models</h2>
+</section></section><section id="comparing-the-models" class="level2" data-number="13.5"><h2 data-number="13.5" class="anchored" data-anchor-id="comparing-the-models">
+<span class="header-section-number">13.5</span> Comparing the models</h2>
 <div class="cell">
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bbolker/broom.mixed">broom.mixed</a></span><span class="op">)</span></span>
@@ -1467,12 +1473,12 @@ If <code>interplot</code> will not install
 </table>
 </div>
 </div>
-</section><section id="a-caution-about-17-schools" class="level2" data-number="12.6"><h2 data-number="12.6" class="anchored" data-anchor-id="a-caution-about-17-schools">
-<span class="header-section-number">12.6</span> A caution about 17 schools</h2>
+</section><section id="a-caution-about-17-schools" class="level2" data-number="13.6"><h2 data-number="13.6" class="anchored" data-anchor-id="a-caution-about-17-schools">
+<span class="header-section-number">13.6</span> A caution about 17 schools</h2>
 <p>With only 17 schools, the school-level variance is estimated from very little information. Variance components need a reasonable number of higher-level units to be estimated precisely, and common rules of thumb want at least 30 to 50. The neighborhood variance, resting on 500-plus units, is on much firmer ground.</p>
 <p>This asymmetry should shape how you write up the results. Report both variances, but attach appropriate uncertainty to claims about schools. A school-level variance that appears smaller than the neighborhood variance may reflect a genuine difference, or it may reflect that 17 units cannot pin down a variance with much precision.</p>
-</section><section id="recognizing-this-structure-elsewhere" class="level2" data-number="12.7"><h2 data-number="12.7" class="anchored" data-anchor-id="recognizing-this-structure-elsewhere">
-<span class="header-section-number">12.7</span> Recognizing this structure elsewhere</h2>
+</section><section id="recognizing-this-structure-elsewhere" class="level2" data-number="13.7"><h2 data-number="13.7" class="anchored" data-anchor-id="recognizing-this-structure-elsewhere">
+<span class="header-section-number">13.7</span> Recognizing this structure elsewhere</h2>
 <p>Cross-classification is more common than it looks once you start watching for it. Students crossed with teachers across multiple years. Patients crossed with hospitals and with surgeons who operate at several hospitals. Employees crossed with firms and with occupations. Survey respondents crossed with interviewers and with geographic areas.</p>
 <p>The diagnostic question is simple. Does every unit in group A belong to exactly one unit in group B? If yes, the structure is nested. If units in A spread across multiple units in B, it is crossed, and modeling it as nested will misattribute variance between the two.</p>
 
@@ -1764,7 +1770,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./10-assumptions.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

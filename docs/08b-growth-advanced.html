@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
-<title>Applied Multilevel Modeling in R - 9&nbsp; Advanced Growth Models</title>
+<title>Applied Multilevel Modeling in R - 10&nbsp; Advanced Growth Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -99,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-three-level.html">Extending the Model</a></li><li class="breadcrumb-item"><a href="./08b-growth-advanced.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-three-level.html">Extending the Model</a></li><li class="breadcrumb-item"><a href="./08b-growth-advanced.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -163,8 +163,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./02-reading-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Reading: Regression and Where It Runs Out</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./02-regression-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -181,25 +187,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-null-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-random-intercept.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-random-slopes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-fit-effect-sizes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
   </div>
 </li>
       </ul>
@@ -216,25 +222,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-three-level.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08a-growth-intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08b-growth-advanced.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-binary-outcomes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -251,13 +257,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-cross-classified.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -276,39 +282,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#load-in-our-mvp-packages" id="toc-load-in-our-mvp-packages" class="nav-link active" data-scroll-target="#load-in-our-mvp-packages"><span class="header-section-number">9.1</span> Load in our MVP packages</a></li>
+<li><a href="#load-in-our-mvp-packages" id="toc-load-in-our-mvp-packages" class="nav-link active" data-scroll-target="#load-in-our-mvp-packages"><span class="header-section-number">10.1</span> Load in our MVP packages</a></li>
   <li>
-<a href="#part-1-loading-in-the-data-reshaping-from-long-to-wide-creating-new-variables" id="toc-part-1-loading-in-the-data-reshaping-from-long-to-wide-creating-new-variables" class="nav-link" data-scroll-target="#part-1-loading-in-the-data-reshaping-from-long-to-wide-creating-new-variables"><span class="header-section-number">9.2</span> Part 1: loading in the data, reshaping from long to wide, creating new variables</a>
+<a href="#part-1-loading-in-the-data-reshaping-from-long-to-wide-creating-new-variables" id="toc-part-1-loading-in-the-data-reshaping-from-long-to-wide-creating-new-variables" class="nav-link" data-scroll-target="#part-1-loading-in-the-data-reshaping-from-long-to-wide-creating-new-variables"><span class="header-section-number">10.2</span> Part 1: loading in the data, reshaping from long to wide, creating new variables</a>
   <ul class="collapse">
-<li><a href="#load-in-the-data" id="toc-load-in-the-data" class="nav-link" data-scroll-target="#load-in-the-data"><span class="header-section-number">9.2.1</span> Load in the data</a></li>
-  <li><a href="#super-handy-trick-reshaping-data" id="toc-super-handy-trick-reshaping-data" class="nav-link" data-scroll-target="#super-handy-trick-reshaping-data"><span class="header-section-number">9.2.2</span> Super handy trick: reshaping data</a></li>
-  <li><a href="#a-little-more-cleanup-change-year-to-numeric-drop-observations-with-missing-math-scores" id="toc-a-little-more-cleanup-change-year-to-numeric-drop-observations-with-missing-math-scores" class="nav-link" data-scroll-target="#a-little-more-cleanup-change-year-to-numeric-drop-observations-with-missing-math-scores"><span class="header-section-number">9.2.3</span> A little more cleanup: change <code>year</code> to numeric, drop observations with missing math scores</a></li>
-  <li><a href="#a-little-housekeeping-creating-squared-and-cubic-terms-for-time" id="toc-a-little-housekeeping-creating-squared-and-cubic-terms-for-time" class="nav-link" data-scroll-target="#a-little-housekeeping-creating-squared-and-cubic-terms-for-time"><span class="header-section-number">9.2.4</span> A little housekeeping: creating squared and cubic terms for time</a></li>
+<li><a href="#load-in-the-data" id="toc-load-in-the-data" class="nav-link" data-scroll-target="#load-in-the-data"><span class="header-section-number">10.2.1</span> Load in the data</a></li>
+  <li><a href="#super-handy-trick-reshaping-data" id="toc-super-handy-trick-reshaping-data" class="nav-link" data-scroll-target="#super-handy-trick-reshaping-data"><span class="header-section-number">10.2.2</span> Super handy trick: reshaping data</a></li>
+  <li><a href="#a-little-more-cleanup-change-year-to-numeric-drop-observations-with-missing-math-scores" id="toc-a-little-more-cleanup-change-year-to-numeric-drop-observations-with-missing-math-scores" class="nav-link" data-scroll-target="#a-little-more-cleanup-change-year-to-numeric-drop-observations-with-missing-math-scores"><span class="header-section-number">10.2.3</span> A little more cleanup: change <code>year</code> to numeric, drop observations with missing math scores</a></li>
+  <li><a href="#a-little-housekeeping-creating-squared-and-cubic-terms-for-time" id="toc-a-little-housekeeping-creating-squared-and-cubic-terms-for-time" class="nav-link" data-scroll-target="#a-little-housekeeping-creating-squared-and-cubic-terms-for-time"><span class="header-section-number">10.2.4</span> A little housekeeping: creating squared and cubic terms for time</a></li>
   </ul>
 </li>
   <li>
-<a href="#part-2-nonlinear-growth-models" id="toc-part-2-nonlinear-growth-models" class="nav-link" data-scroll-target="#part-2-nonlinear-growth-models"><span class="header-section-number">9.3</span> Part 2: nonlinear growth models</a>
+<a href="#part-2-nonlinear-growth-models" id="toc-part-2-nonlinear-growth-models" class="nav-link" data-scroll-target="#part-2-nonlinear-growth-models"><span class="header-section-number">10.3</span> Part 2: nonlinear growth models</a>
   <ul class="collapse">
-<li><a href="#now-run-a-growth-null-model-for-math-scores-with-year-included" id="toc-now-run-a-growth-null-model-for-math-scores-with-year-included" class="nav-link" data-scroll-target="#now-run-a-growth-null-model-for-math-scores-with-year-included"><span class="header-section-number">9.3.1</span> Now, run a GROWTH null model for math scores (with year included)</a></li>
-  <li><a href="#add-nonlinear-growth-terms-square" id="toc-add-nonlinear-growth-terms-square" class="nav-link" data-scroll-target="#add-nonlinear-growth-terms-square"><span class="header-section-number">9.3.2</span> Add nonlinear growth terms (square)</a></li>
-  <li><a href="#add-nonlinear-growth-terms-cubic" id="toc-add-nonlinear-growth-terms-cubic" class="nav-link" data-scroll-target="#add-nonlinear-growth-terms-cubic"><span class="header-section-number">9.3.3</span> Add nonlinear growth terms (cubic)</a></li>
-  <li><a href="#add-nonlinear-growth-terms-square-and-cubic" id="toc-add-nonlinear-growth-terms-square-and-cubic" class="nav-link" data-scroll-target="#add-nonlinear-growth-terms-square-and-cubic"><span class="header-section-number">9.3.4</span> Add nonlinear growth terms (square AND cubic)</a></li>
-  <li><a href="#should-we-keep-that-cubic-term-use-anova-to-test" id="toc-should-we-keep-that-cubic-term-use-anova-to-test" class="nav-link" data-scroll-target="#should-we-keep-that-cubic-term-use-anova-to-test"><span class="header-section-number">9.3.5</span> Should we keep that cubic term? Use <code>anova</code> to test</a></li>
-  <li><a href="#same-thing-plus-adding-a-random-slope-for-year0" id="toc-same-thing-plus-adding-a-random-slope-for-year0" class="nav-link" data-scroll-target="#same-thing-plus-adding-a-random-slope-for-year0"><span class="header-section-number">9.3.6</span> Same thing, PLUS adding a random slope for year0</a></li>
-  <li><a href="#should-we-keep-that-random-slope-for-time-use-rand-to-test" id="toc-should-we-keep-that-random-slope-for-time-use-rand-to-test" class="nav-link" data-scroll-target="#should-we-keep-that-random-slope-for-time-use-rand-to-test"><span class="header-section-number">9.3.7</span> Should we keep that random slope for time? Use <code>rand</code> to test</a></li>
+<li><a href="#now-run-a-growth-null-model-for-math-scores-with-year-included" id="toc-now-run-a-growth-null-model-for-math-scores-with-year-included" class="nav-link" data-scroll-target="#now-run-a-growth-null-model-for-math-scores-with-year-included"><span class="header-section-number">10.3.1</span> Now, run a GROWTH null model for math scores (with year included)</a></li>
+  <li><a href="#add-nonlinear-growth-terms-square" id="toc-add-nonlinear-growth-terms-square" class="nav-link" data-scroll-target="#add-nonlinear-growth-terms-square"><span class="header-section-number">10.3.2</span> Add nonlinear growth terms (square)</a></li>
+  <li><a href="#add-nonlinear-growth-terms-cubic" id="toc-add-nonlinear-growth-terms-cubic" class="nav-link" data-scroll-target="#add-nonlinear-growth-terms-cubic"><span class="header-section-number">10.3.3</span> Add nonlinear growth terms (cubic)</a></li>
+  <li><a href="#add-nonlinear-growth-terms-square-and-cubic" id="toc-add-nonlinear-growth-terms-square-and-cubic" class="nav-link" data-scroll-target="#add-nonlinear-growth-terms-square-and-cubic"><span class="header-section-number">10.3.4</span> Add nonlinear growth terms (square AND cubic)</a></li>
+  <li><a href="#should-we-keep-that-cubic-term-use-anova-to-test" id="toc-should-we-keep-that-cubic-term-use-anova-to-test" class="nav-link" data-scroll-target="#should-we-keep-that-cubic-term-use-anova-to-test"><span class="header-section-number">10.3.5</span> Should we keep that cubic term? Use <code>anova</code> to test</a></li>
+  <li><a href="#same-thing-plus-adding-a-random-slope-for-year0" id="toc-same-thing-plus-adding-a-random-slope-for-year0" class="nav-link" data-scroll-target="#same-thing-plus-adding-a-random-slope-for-year0"><span class="header-section-number">10.3.6</span> Same thing, PLUS adding a random slope for year0</a></li>
+  <li><a href="#should-we-keep-that-random-slope-for-time-use-rand-to-test" id="toc-should-we-keep-that-random-slope-for-time-use-rand-to-test" class="nav-link" data-scroll-target="#should-we-keep-that-random-slope-for-time-use-rand-to-test"><span class="header-section-number">10.3.7</span> Should we keep that random slope for time? Use <code>rand</code> to test</a></li>
   </ul>
 </li>
-  <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">9.4</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
-  <li><a href="#visualize-our-model-by-predicting-scores" id="toc-visualize-our-model-by-predicting-scores" class="nav-link" data-scroll-target="#visualize-our-model-by-predicting-scores"><span class="header-section-number">9.5</span> Visualize our model by predicting scores</a></li>
-  <li><a href="#and-then-plotting-them" id="toc-and-then-plotting-them" class="nav-link" data-scroll-target="#and-then-plotting-them"><span class="header-section-number">9.6</span> And then plotting them</a></li>
-  <li><a href="#random-slopes-for-a-sample-of-50-students" id="toc-random-slopes-for-a-sample-of-50-students" class="nav-link" data-scroll-target="#random-slopes-for-a-sample-of-50-students"><span class="header-section-number">9.7</span> Random slopes for a sample of 50 students</a></li>
-  <li><a href="#part-2-heterogeneous-variance-repeated-measures-model" id="toc-part-2-heterogeneous-variance-repeated-measures-model" class="nav-link" data-scroll-target="#part-2-heterogeneous-variance-repeated-measures-model"><span class="header-section-number">9.8</span> Part 2: heterogeneous variance repeated measures model</a></li>
+  <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">10.4</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
+  <li><a href="#visualize-our-model-by-predicting-scores" id="toc-visualize-our-model-by-predicting-scores" class="nav-link" data-scroll-target="#visualize-our-model-by-predicting-scores"><span class="header-section-number">10.5</span> Visualize our model by predicting scores</a></li>
+  <li><a href="#and-then-plotting-them" id="toc-and-then-plotting-them" class="nav-link" data-scroll-target="#and-then-plotting-them"><span class="header-section-number">10.6</span> And then plotting them</a></li>
+  <li><a href="#random-slopes-for-a-sample-of-50-students" id="toc-random-slopes-for-a-sample-of-50-students" class="nav-link" data-scroll-target="#random-slopes-for-a-sample-of-50-students"><span class="header-section-number">10.7</span> Random slopes for a sample of 50 students</a></li>
+  <li><a href="#part-2-heterogeneous-variance-repeated-measures-model" id="toc-part-2-heterogeneous-variance-repeated-measures-model" class="nav-link" data-scroll-target="#part-2-heterogeneous-variance-repeated-measures-model"><span class="header-section-number">10.8</span> Part 2: heterogeneous variance repeated measures model</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOURUSERNAME/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
-<span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span>
+<span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
@@ -337,8 +343,8 @@ Data file needed
 </div>
 </div>
 <p>This week, we continue with the data from the US Sustaining Effects Study (Carter 1984), which attempted to assess the sustaining impacts of compensatory schooling for students over time. We will dig into nonlinear growth patterns and heterogeneous variance models, two advanced topics in growth modeling.</p>
-<section id="load-in-our-mvp-packages" class="level2" data-number="9.1"><h2 data-number="9.1" class="anchored" data-anchor-id="load-in-our-mvp-packages">
-<span class="header-section-number">9.1</span> Load in our MVP packages</h2>
+<section id="load-in-our-mvp-packages" class="level2" data-number="10.1"><h2 data-number="10.1" class="anchored" data-anchor-id="load-in-our-mvp-packages">
+<span class="header-section-number">10.1</span> Load in our MVP packages</h2>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -355,10 +361,10 @@ Attaching package: 'Matrix'</code></pre>
     expand, pack, unpack</code></pre>
 </div>
 </div>
-</section><section id="part-1-loading-in-the-data-reshaping-from-long-to-wide-creating-new-variables" class="level2" data-number="9.2"><h2 data-number="9.2" class="anchored" data-anchor-id="part-1-loading-in-the-data-reshaping-from-long-to-wide-creating-new-variables">
-<span class="header-section-number">9.2</span> Part 1: loading in the data, reshaping from long to wide, creating new variables</h2>
-<section id="load-in-the-data" class="level3" data-number="9.2.1"><h3 data-number="9.2.1" class="anchored" data-anchor-id="load-in-the-data">
-<span class="header-section-number">9.2.1</span> Load in the data</h3>
+</section><section id="part-1-loading-in-the-data-reshaping-from-long-to-wide-creating-new-variables" class="level2" data-number="10.2"><h2 data-number="10.2" class="anchored" data-anchor-id="part-1-loading-in-the-data-reshaping-from-long-to-wide-creating-new-variables">
+<span class="header-section-number">10.2</span> Part 1: loading in the data, reshaping from long to wide, creating new variables</h2>
+<section id="load-in-the-data" class="level3" data-number="10.2.1"><h3 data-number="10.2.1" class="anchored" data-anchor-id="load-in-the-data">
+<span class="header-section-number">10.2.1</span> Load in the data</h3>
 <div class="cell">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">egmerged</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"egmerged.dta"</span><span class="op">)</span></span>
 <span></span>
@@ -380,10 +386,10 @@ $ lowinc   &lt;dbl&gt; 84.8, 97.8, 96.6, 45.3, 94.6, 100.0, 66.2, 66.4, 97.8, 97
 $ mobility &lt;dbl&gt; 38.2, 26.8, 44.4, 18.7, 47.4, 55.4, 25.4, 20.9, 26.8, 26.8, 2…</code></pre>
 </div>
 </div>
-</section><section id="super-handy-trick-reshaping-data" class="level3" data-number="9.2.2"><h3 data-number="9.2.2" class="anchored" data-anchor-id="super-handy-trick-reshaping-data">
-<span class="header-section-number">9.2.2</span> Super handy trick: reshaping data</h3>
-<section id="using-pivot_wider-to-reshape-from-long-to-wide" class="level4" data-number="9.2.2.1"><h4 data-number="9.2.2.1" class="anchored" data-anchor-id="using-pivot_wider-to-reshape-from-long-to-wide">
-<span class="header-section-number">9.2.2.1</span> Using <code>pivot_wider</code> to reshape from long to wide</h4>
+</section><section id="super-handy-trick-reshaping-data" class="level3" data-number="10.2.2"><h3 data-number="10.2.2" class="anchored" data-anchor-id="super-handy-trick-reshaping-data">
+<span class="header-section-number">10.2.2</span> Super handy trick: reshaping data</h3>
+<section id="using-pivot_wider-to-reshape-from-long-to-wide" class="level4" data-number="10.2.2.1"><h4 data-number="10.2.2.1" class="anchored" data-anchor-id="using-pivot_wider-to-reshape-from-long-to-wide">
+<span class="header-section-number">10.2.2.1</span> Using <code>pivot_wider</code> to reshape from long to wide</h4>
 <div class="cell">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">egmerged.wide</span> <span class="op">&lt;-</span> <span class="va">egmerged</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span><span class="va">.</span>,</span>
@@ -416,8 +422,8 @@ $ math_year6 &lt;dbl&gt; 0.601, -1.552, NA, NA, NA, NA, NA, NA, -0.170, -1.763, 
 <p>Reshaping is one of the most useful data management skills you will pick up, and one of the most error-prone, so it is worth understanding each argument.</p>
 <p><code>id_cols</code> lists the variables that identify a row in the new wide dataset and stay constant. <code>names_from</code> says which variable supplies the new column <em>names</em>, here <code>year</code>. <code>values_from</code> says which variable fills the cells. <code>names_prefix</code> puts readable text in front of the new column names, so you get <code>math_year1</code> rather than a column called <code>1</code>, which R would find awkward.</p>
 <p>Note what happens to the row count. The long file has one row per student-year; the wide file has one row per student. That change is the whole point, and checking it is a quick way to confirm the reshape did what you intended.</p>
-</section><section id="using-pivot_longer-to-reshape-from-wide-to-long" class="level4" data-number="9.2.2.2"><h4 data-number="9.2.2.2" class="anchored" data-anchor-id="using-pivot_longer-to-reshape-from-wide-to-long">
-<span class="header-section-number">9.2.2.2</span> Using <code>pivot_longer</code> to reshape from wide to long</h4>
+</section><section id="using-pivot_longer-to-reshape-from-wide-to-long" class="level4" data-number="10.2.2.2"><h4 data-number="10.2.2.2" class="anchored" data-anchor-id="using-pivot_longer-to-reshape-from-wide-to-long">
+<span class="header-section-number">10.2.2.2</span> Using <code>pivot_longer</code> to reshape from wide to long</h4>
 <div class="cell">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">egmerged.long</span> <span class="op">&lt;-</span> <span class="va">egmerged.wide</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="va">.</span>,</span>
@@ -445,8 +451,8 @@ $ math     &lt;dbl&gt; -3.887, -2.839, -2.596, -1.236, -0.456, 0.601, -4.055, -3
 </div>
 <p>And back again. <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer()</a></code> reverses the operation: <code>cols</code> selects which columns to stack, <code>names_to</code> names the new column holding the old column names, and <code>values_to</code> names the column holding the values. Stripping <code>names_prefix</code> on the way back recovers the bare year numbers.</p>
 <p>Being able to go both directions matters because different tools want different shapes. Growth models need long format. Many descriptive tables and correlation matrices want wide.</p>
-</section></section><section id="a-little-more-cleanup-change-year-to-numeric-drop-observations-with-missing-math-scores" class="level3" data-number="9.2.3"><h3 data-number="9.2.3" class="anchored" data-anchor-id="a-little-more-cleanup-change-year-to-numeric-drop-observations-with-missing-math-scores">
-<span class="header-section-number">9.2.3</span> A little more cleanup: change <code>year</code> to numeric, drop observations with missing math scores</h3>
+</section></section><section id="a-little-more-cleanup-change-year-to-numeric-drop-observations-with-missing-math-scores" class="level3" data-number="10.2.3"><h3 data-number="10.2.3" class="anchored" data-anchor-id="a-little-more-cleanup-change-year-to-numeric-drop-observations-with-missing-math-scores">
+<span class="header-section-number">10.2.3</span> A little more cleanup: change <code>year</code> to numeric, drop observations with missing math scores</h3>
 <div class="cell">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">egmerged.long.clean</span> <span class="op">&lt;-</span> <span class="va">egmerged.long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
@@ -471,8 +477,8 @@ $ math     &lt;dbl&gt; -3.887, -2.839, -2.596, -1.236, -0.456, 0.601, -4.055, -3
 </div>
 <p>The <code><a href="https://rdrr.io/r/base/numeric.html">as.numeric()</a></code> step is easy to forget and consequential. Column names are text, so after reshaping, <code>year</code> arrives as a character variable. Left that way, R would treat it as a categorical variable with six unrelated levels rather than as a quantity you can fit a slope to.</p>
 <p><code><a href="https://rdrr.io/r/stats/na.fail.html">na.omit()</a></code> here removes the empty cells created by the reshape: students who were not measured in every year got <code>NA</code> in the wide file, and those became rows with missing math scores when we went back to long. As always, this function deserves care, since it drops any row missing on <em>any</em> variable.</p>
-</section><section id="a-little-housekeeping-creating-squared-and-cubic-terms-for-time" class="level3" data-number="9.2.4"><h3 data-number="9.2.4" class="anchored" data-anchor-id="a-little-housekeeping-creating-squared-and-cubic-terms-for-time">
-<span class="header-section-number">9.2.4</span> A little housekeeping: creating squared and cubic terms for time</h3>
+</section><section id="a-little-housekeeping-creating-squared-and-cubic-terms-for-time" class="level3" data-number="10.2.4"><h3 data-number="10.2.4" class="anchored" data-anchor-id="a-little-housekeeping-creating-squared-and-cubic-terms-for-time">
+<span class="header-section-number">10.2.4</span> A little housekeeping: creating squared and cubic terms for time</h3>
 <div class="cell">
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">egmerged.clean</span> <span class="op">&lt;-</span> <span class="va">egmerged</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
@@ -511,10 +517,10 @@ $ year_cube    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 </div>
 <p>Note that this builds from the original <code>egmerged</code>, not from the reshaped version. The reshaping above was a demonstration of a technique; the modeling that follows uses the data as they came.</p>
 <p>Building the polynomial terms from <code>year0</code> rather than <code>year</code> matters. Squaring a variable that starts at 0 keeps the terms interpretable and keeps them less correlated with one another than they would otherwise be.</p>
-</section></section><section id="part-2-nonlinear-growth-models" class="level2" data-number="9.3"><h2 data-number="9.3" class="anchored" data-anchor-id="part-2-nonlinear-growth-models">
-<span class="header-section-number">9.3</span> Part 2: nonlinear growth models</h2>
-<section id="now-run-a-growth-null-model-for-math-scores-with-year-included" class="level3" data-number="9.3.1"><h3 data-number="9.3.1" class="anchored" data-anchor-id="now-run-a-growth-null-model-for-math-scores-with-year-included">
-<span class="header-section-number">9.3.1</span> Now, run a GROWTH null model for math scores (with year included)</h3>
+</section></section><section id="part-2-nonlinear-growth-models" class="level2" data-number="10.3"><h2 data-number="10.3" class="anchored" data-anchor-id="part-2-nonlinear-growth-models">
+<span class="header-section-number">10.3</span> Part 2: nonlinear growth models</h2>
+<section id="now-run-a-growth-null-model-for-math-scores-with-year-included" class="level3" data-number="10.3.1"><h3 data-number="10.3.1" class="anchored" data-anchor-id="now-run-a-growth-null-model-for-math-scores-with-year-included">
+<span class="header-section-number">10.3.1</span> Now, run a GROWTH null model for math scores (with year included)</h3>
 <div class="cell">
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.null.growth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
 <span></span>
@@ -546,8 +552,8 @@ Correlation of Fixed Effects:
 year0 -0.548</code></pre>
 </div>
 </div>
-<section id="calculate-growth-icc" class="level4" data-number="9.3.1.1"><h4 data-number="9.3.1.1" class="anchored" data-anchor-id="calculate-growth-icc">
-<span class="header-section-number">9.3.1.1</span> Calculate GROWTH ICC</h4>
+<section id="calculate-growth-icc" class="level4" data-number="10.3.1.1"><h4 data-number="10.3.1.1" class="anchored" data-anchor-id="calculate-growth-icc">
+<span class="header-section-number">10.3.1.1</span> Calculate GROWTH ICC</h4>
 <div class="cell">
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">null.growth.icc</span> <span class="op">&lt;-</span> <span class="fl">0.8683</span><span class="op">/</span><span class="op">(</span><span class="fl">0.8683</span> <span class="op">+</span> <span class="fl">0.3470</span><span class="op">)</span></span>
 <span><span class="va">null.growth.icc</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -555,8 +561,8 @@ year0 -0.548</code></pre>
 <pre><code>[1] 0.7144738</code></pre>
 </div>
 </div>
-</section></section><section id="add-nonlinear-growth-terms-square" class="level3" data-number="9.3.2"><h3 data-number="9.3.2" class="anchored" data-anchor-id="add-nonlinear-growth-terms-square">
-<span class="header-section-number">9.3.2</span> Add nonlinear growth terms (square)</h3>
+</section></section><section id="add-nonlinear-growth-terms-square" class="level3" data-number="10.3.2"><h3 data-number="10.3.2" class="anchored" data-anchor-id="add-nonlinear-growth-terms-square">
+<span class="header-section-number">10.3.2</span> Add nonlinear growth terms (square)</h3>
 <div class="cell">
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.square</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_sq</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
 <span></span>
@@ -592,8 +598,8 @@ year_sq  0.662 -0.972</code></pre>
 </div>
 <p>A quadratic term lets the trajectory bend. A negative coefficient means growth decelerates, with gains getting smaller in later years. A positive one means it accelerates.</p>
 <p>Be careful with the language here. Deceleration does <em>not</em> mean scores decline. Scores decline only if the curve actually turns over within the range of the data, which is a separate question you answer by looking at the plot. That misreading appears constantly in published work.</p>
-</section><section id="add-nonlinear-growth-terms-cubic" class="level3" data-number="9.3.3"><h3 data-number="9.3.3" class="anchored" data-anchor-id="add-nonlinear-growth-terms-cubic">
-<span class="header-section-number">9.3.3</span> Add nonlinear growth terms (cubic)</h3>
+</section><section id="add-nonlinear-growth-terms-cubic" class="level3" data-number="10.3.3"><h3 data-number="10.3.3" class="anchored" data-anchor-id="add-nonlinear-growth-terms-cubic">
+<span class="header-section-number">10.3.3</span> Add nonlinear growth terms (cubic)</h3>
 <div class="cell">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.cube</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_cube</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
 <span></span>
@@ -627,8 +633,8 @@ year0     -0.693
 year_cube  0.562 -0.923</code></pre>
 </div>
 </div>
-</section><section id="add-nonlinear-growth-terms-square-and-cubic" class="level3" data-number="9.3.4"><h3 data-number="9.3.4" class="anchored" data-anchor-id="add-nonlinear-growth-terms-square-and-cubic">
-<span class="header-section-number">9.3.4</span> Add nonlinear growth terms (square AND cubic)</h3>
+</section><section id="add-nonlinear-growth-terms-square-and-cubic" class="level3" data-number="10.3.4"><h3 data-number="10.3.4" class="anchored" data-anchor-id="add-nonlinear-growth-terms-square-and-cubic">
+<span class="header-section-number">10.3.4</span> Add nonlinear growth terms (square AND cubic)</h3>
 <div class="cell">
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.both</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_sq</span> <span class="op">+</span> <span class="va">year_cube</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
 <span></span>
@@ -666,8 +672,8 @@ year_cube -0.682  0.930 -0.988</code></pre>
 </div>
 </div>
 <p>A cubic term allows one more change of direction: growth that decelerates and then picks back up, or the reverse. Each additional polynomial term buys flexibility and costs a degree of freedom, and beyond cubic the terms rarely correspond to anything you can describe substantively.</p>
-</section><section id="should-we-keep-that-cubic-term-use-anova-to-test" class="level3" data-number="9.3.5"><h3 data-number="9.3.5" class="anchored" data-anchor-id="should-we-keep-that-cubic-term-use-anova-to-test">
-<span class="header-section-number">9.3.5</span> Should we keep that cubic term? Use <code>anova</code> to test</h3>
+</section><section id="should-we-keep-that-cubic-term-use-anova-to-test" class="level3" data-number="10.3.5"><h3 data-number="10.3.5" class="anchored" data-anchor-id="should-we-keep-that-cubic-term-use-anova-to-test">
+<span class="header-section-number">10.3.5</span> Should we keep that cubic term? Use <code>anova</code> to test</h3>
 <div class="cell">
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model.square</span>, <span class="va">model.both</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -699,8 +705,8 @@ Estimator matters for this comparison
 <p><code>model.both</code> was fit with <code>REML = FALSE</code>, but <code>model.square</code> above was not, so it used the REML default. R handles this by silently refitting both with ML before comparing, and it will usually print a message saying so. The result is correct, but it is better to set <code>REML = FALSE</code> on every model you intend to compare so that nothing happens behind your back.</p>
 </div>
 </div>
-</section><section id="same-thing-plus-adding-a-random-slope-for-year0" class="level3" data-number="9.3.6"><h3 data-number="9.3.6" class="anchored" data-anchor-id="same-thing-plus-adding-a-random-slope-for-year0">
-<span class="header-section-number">9.3.6</span> Same thing, PLUS adding a random slope for year0</h3>
+</section><section id="same-thing-plus-adding-a-random-slope-for-year0" class="level3" data-number="10.3.6"><h3 data-number="10.3.6" class="anchored" data-anchor-id="same-thing-plus-adding-a-random-slope-for-year0">
+<span class="header-section-number">10.3.6</span> Same thing, PLUS adding a random slope for year0</h3>
 <div class="cell">
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.both.rand</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_sq</span> <span class="op">+</span> <span class="va">year_cube</span> <span class="op">+</span> <span class="op">(</span><span class="va">year0</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
 <span></span>
@@ -739,8 +745,8 @@ year_cube -0.706  0.930 -0.988</code></pre>
 </div>
 </div>
 <p>Note what is random and what is not. The linear component of time varies across children; the quadratic and cubic terms are fixed, so the <em>shape</em> of the curve is assumed common while its steepness varies. Letting the higher-order terms vary too is possible but demands far more data.</p>
-</section><section id="should-we-keep-that-random-slope-for-time-use-rand-to-test" class="level3" data-number="9.3.7"><h3 data-number="9.3.7" class="anchored" data-anchor-id="should-we-keep-that-random-slope-for-time-use-rand-to-test">
-<span class="header-section-number">9.3.7</span> Should we keep that random slope for time? Use <code>rand</code> to test</h3>
+</section><section id="should-we-keep-that-random-slope-for-time-use-rand-to-test" class="level3" data-number="10.3.7"><h3 data-number="10.3.7" class="anchored" data-anchor-id="should-we-keep-that-random-slope-for-time-use-rand-to-test">
+<span class="header-section-number">10.3.7</span> Should we keep that random slope for time? Use <code>rand</code> to test</h3>
 <div class="cell">
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">lmerTest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">rand</a></span><span class="op">(</span><span class="va">model.both.rand</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -755,8 +761,8 @@ year0 in (year0 | childid)    6 -8435.3 16882 357.22  2  &lt; 2.2e-16 ***
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-</section></section><section id="using-modelsummary-and-broom.mixed-to-organize-your-results" class="level2" data-number="9.4"><h2 data-number="9.4" class="anchored" data-anchor-id="using-modelsummary-and-broom.mixed-to-organize-your-results">
-<span class="header-section-number">9.4</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</h2>
+</section></section><section id="using-modelsummary-and-broom.mixed-to-organize-your-results" class="level2" data-number="10.4"><h2 data-number="10.4" class="anchored" data-anchor-id="using-modelsummary-and-broom.mixed-to-organize-your-results">
+<span class="header-section-number">10.4</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</h2>
 <div class="cell">
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bbolker/broom.mixed">broom.mixed</a></span><span class="op">)</span></span>
@@ -972,8 +978,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
-</section><section id="visualize-our-model-by-predicting-scores" class="level2" data-number="9.5"><h2 data-number="9.5" class="anchored" data-anchor-id="visualize-our-model-by-predicting-scores">
-<span class="header-section-number">9.5</span> Visualize our model by predicting scores</h2>
+</section><section id="visualize-our-model-by-predicting-scores" class="level2" data-number="10.5"><h2 data-number="10.5" class="anchored" data-anchor-id="visualize-our-model-by-predicting-scores">
+<span class="header-section-number">10.5</span> Visualize our model by predicting scores</h2>
 <div class="cell">
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">predicted.vals</span> <span class="op">&lt;-</span> <span class="fu">broom.mixed</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/augment.html">augment</a></span><span class="op">(</span><span class="va">model.both.rand</span>, effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ran_pars"</span>, <span class="st">"fixed"</span><span class="op">)</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
@@ -999,8 +1005,8 @@ $ .weights  &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 $ .wtres    &lt;dbl&gt; 0.17104854, 0.36383866, -0.71251725, -0.22686787, -0.0680501…</code></pre>
 </div>
 </div>
-</section><section id="and-then-plotting-them" class="level2" data-number="9.6"><h2 data-number="9.6" class="anchored" data-anchor-id="and-then-plotting-them">
-<span class="header-section-number">9.6</span> And then plotting them</h2>
+</section><section id="and-then-plotting-them" class="level2" data-number="10.6"><h2 data-number="10.6" class="anchored" data-anchor-id="and-then-plotting-them">
+<span class="header-section-number">10.6</span> And then plotting them</h2>
 <div class="cell">
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">predicted.vals</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year0</span>, y <span class="op">=</span> <span class="va">.fitted</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.40</span>, color <span class="op">=</span> <span class="st">"seagreen1"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1014,13 +1020,13 @@ $ .wtres    &lt;dbl&gt; 0.17104854, 0.36383866, -0.71251725, -0.22686787, -0.068
 <div class="cell-output-display">
 <div id="fig-nonlinear" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="08b-growth-advanced_files/figure-html/fig-nonlinear-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;9.1: Predicted math scores over time with quadratic and cubic terms.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;10.1: Predicted math scores over time with quadratic and cubic terms.</figcaption></figure>
 </div>
 </div>
 </div>
 <p>This is where you check whether the polynomial terms describe something real. Look at whether the curve bends within the range of the observed years, and in which direction. A curve that only bends beyond your last measurement occasion is extrapolation, not a finding.</p>
-</section><section id="random-slopes-for-a-sample-of-50-students" class="level2" data-number="9.7"><h2 data-number="9.7" class="anchored" data-anchor-id="random-slopes-for-a-sample-of-50-students">
-<span class="header-section-number">9.7</span> Random slopes for a sample of 50 students</h2>
+</section><section id="random-slopes-for-a-sample-of-50-students" class="level2" data-number="10.7"><h2 data-number="10.7" class="anchored" data-anchor-id="random-slopes-for-a-sample-of-50-students">
+<span class="header-section-number">10.7</span> Random slopes for a sample of 50 students</h2>
 <p>This gives a sense of the variability in slopes.</p>
 <div class="cell">
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">predicted.vals50</span> <span class="op">&lt;-</span> <span class="va">predicted.vals</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -1039,13 +1045,13 @@ $ .wtres    &lt;dbl&gt; 0.17104854, 0.36383866, -0.71251725, -0.22686787, -0.068
 <div class="cell-output-display">
 <div id="fig-fifty" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="08b-growth-advanced_files/figure-html/fig-fifty-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;9.2: Individual predicted trajectories for a subset of students.</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;10.2: Individual predicted trajectories for a subset of students.</figcaption></figure>
 </div>
 </div>
 </div>
 <p>Here <code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code> connects each child’s own predicted points rather than fitting a smoother through everything, so you see the actual curves the model assigns to individuals.</p>
-</section><section id="part-2-heterogeneous-variance-repeated-measures-model" class="level2" data-number="9.8"><h2 data-number="9.8" class="anchored" data-anchor-id="part-2-heterogeneous-variance-repeated-measures-model">
-<span class="header-section-number">9.8</span> Part 2: heterogeneous variance repeated measures model</h2>
+</section><section id="part-2-heterogeneous-variance-repeated-measures-model" class="level2" data-number="10.8"><h2 data-number="10.8" class="anchored" data-anchor-id="part-2-heterogeneous-variance-repeated-measures-model">
+<span class="header-section-number">10.8</span> Part 2: heterogeneous variance repeated measures model</h2>
 <div class="cell">
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://svn.r-project.org/R-packages/trunk/nlme/">nlme</a></span><span class="op">)</span></span>
 <span></span>
@@ -1438,12 +1444,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./08a-growth-intro.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./09-binary-outcomes.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">

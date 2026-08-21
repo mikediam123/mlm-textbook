@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
-<title>Applied Multilevel Modeling in R - 10&nbsp; Binary and Generalized Linear Mixed Models</title>
+<title>Applied Multilevel Modeling in R - 11&nbsp; Binary and Generalized Linear Mixed Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -112,7 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-three-level.html">Extending the Model</a></li><li class="breadcrumb-item"><a href="./09-binary-outcomes.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-three-level.html">Extending the Model</a></li><li class="breadcrumb-item"><a href="./09-binary-outcomes.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -176,8 +176,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./02-reading-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Reading: Regression and Where It Runs Out</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./02-regression-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -194,25 +200,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-null-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to MLM and the Null Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-random-intercept.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Conditional Random Intercept Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-random-slopes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-fit-effect-sizes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span></a>
   </div>
 </li>
       </ul>
@@ -229,25 +235,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-three-level.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08a-growth-intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08b-growth-advanced.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-binary-outcomes.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -264,13 +270,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-cross-classified.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -289,36 +295,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#load-in-our-mvp-packages" id="toc-load-in-our-mvp-packages" class="nav-link active" data-scroll-target="#load-in-our-mvp-packages"><span class="header-section-number">10.1</span> Load in our MVP packages</a></li>
+<li><a href="#load-in-our-mvp-packages" id="toc-load-in-our-mvp-packages" class="nav-link active" data-scroll-target="#load-in-our-mvp-packages"><span class="header-section-number">11.1</span> Load in our MVP packages</a></li>
   <li>
-<a href="#part-1-loading-in-the-data-and-then-recoding-variables" id="toc-part-1-loading-in-the-data-and-then-recoding-variables" class="nav-link" data-scroll-target="#part-1-loading-in-the-data-and-then-recoding-variables"><span class="header-section-number">10.2</span> Part 1: loading in the data, and then recoding variables</a>
+<a href="#part-1-loading-in-the-data-and-then-recoding-variables" id="toc-part-1-loading-in-the-data-and-then-recoding-variables" class="nav-link" data-scroll-target="#part-1-loading-in-the-data-and-then-recoding-variables"><span class="header-section-number">11.2</span> Part 1: loading in the data, and then recoding variables</a>
   <ul class="collapse">
-<li><a href="#load-in-the-data" id="toc-load-in-the-data" class="nav-link" data-scroll-target="#load-in-the-data"><span class="header-section-number">10.2.1</span> Load in the data</a></li>
-  <li><a href="#the-select-function-is-really-useful-especially-with-really-big-datasets" id="toc-the-select-function-is-really-useful-especially-with-really-big-datasets" class="nav-link" data-scroll-target="#the-select-function-is-really-useful-especially-with-really-big-datasets"><span class="header-section-number">10.2.2</span> The <code>select</code> function is really useful, especially with really big datasets</a></li>
-  <li><a href="#the-table-function-is-a-great-way-to-figure-out-how-variables-are-labelled" id="toc-the-table-function-is-a-great-way-to-figure-out-how-variables-are-labelled" class="nav-link" data-scroll-target="#the-table-function-is-a-great-way-to-figure-out-how-variables-are-labelled"><span class="header-section-number">10.2.3</span> The <code>table</code> function is a great way to figure out how variables are labelled</a></li>
-  <li><a href="#now-we-can-use-filter-to-only-keep-observations-that-have-valid-categories" id="toc-now-we-can-use-filter-to-only-keep-observations-that-have-valid-categories" class="nav-link" data-scroll-target="#now-we-can-use-filter-to-only-keep-observations-that-have-valid-categories"><span class="header-section-number">10.2.4</span> Now, we can use <code>filter</code> to only keep observations that have valid categories</a></li>
-  <li><a href="#the-describe-function-from-hmisc-is-a-nice-codebook" id="toc-the-describe-function-from-hmisc-is-a-nice-codebook" class="nav-link" data-scroll-target="#the-describe-function-from-hmisc-is-a-nice-codebook"><span class="header-section-number">10.2.5</span> The <code>describe</code> function from <code>Hmisc</code> is a nice codebook</a></li>
+<li><a href="#load-in-the-data" id="toc-load-in-the-data" class="nav-link" data-scroll-target="#load-in-the-data"><span class="header-section-number">11.2.1</span> Load in the data</a></li>
+  <li><a href="#the-select-function-is-really-useful-especially-with-really-big-datasets" id="toc-the-select-function-is-really-useful-especially-with-really-big-datasets" class="nav-link" data-scroll-target="#the-select-function-is-really-useful-especially-with-really-big-datasets"><span class="header-section-number">11.2.2</span> The <code>select</code> function is really useful, especially with really big datasets</a></li>
+  <li><a href="#the-table-function-is-a-great-way-to-figure-out-how-variables-are-labelled" id="toc-the-table-function-is-a-great-way-to-figure-out-how-variables-are-labelled" class="nav-link" data-scroll-target="#the-table-function-is-a-great-way-to-figure-out-how-variables-are-labelled"><span class="header-section-number">11.2.3</span> The <code>table</code> function is a great way to figure out how variables are labelled</a></li>
+  <li><a href="#now-we-can-use-filter-to-only-keep-observations-that-have-valid-categories" id="toc-now-we-can-use-filter-to-only-keep-observations-that-have-valid-categories" class="nav-link" data-scroll-target="#now-we-can-use-filter-to-only-keep-observations-that-have-valid-categories"><span class="header-section-number">11.2.4</span> Now, we can use <code>filter</code> to only keep observations that have valid categories</a></li>
+  <li><a href="#the-describe-function-from-hmisc-is-a-nice-codebook" id="toc-the-describe-function-from-hmisc-is-a-nice-codebook" class="nav-link" data-scroll-target="#the-describe-function-from-hmisc-is-a-nice-codebook"><span class="header-section-number">11.2.5</span> The <code>describe</code> function from <code>Hmisc</code> is a nice codebook</a></li>
   </ul>
 </li>
   <li>
-<a href="#part-2-multilevel-logistic-regression-models" id="toc-part-2-multilevel-logistic-regression-models" class="nav-link" data-scroll-target="#part-2-multilevel-logistic-regression-models"><span class="header-section-number">10.3</span> Part 2: multilevel logistic regression models</a>
+<a href="#part-2-multilevel-logistic-regression-models" id="toc-part-2-multilevel-logistic-regression-models" class="nav-link" data-scroll-target="#part-2-multilevel-logistic-regression-models"><span class="header-section-number">11.3</span> Part 2: multilevel logistic regression models</a>
   <ul class="collapse">
-<li><a href="#we-use-glmer-instead-of-lmer-now-that-we-have-a-binary-outcome" id="toc-we-use-glmer-instead-of-lmer-now-that-we-have-a-binary-outcome" class="nav-link" data-scroll-target="#we-use-glmer-instead-of-lmer-now-that-we-have-a-binary-outcome"><span class="header-section-number">10.3.1</span> We use <code>glmer</code> instead of <code>lmer</code> now that we have a binary outcome</a></li>
-  <li><a href="#lets-add-a-l1-predictor-whether-anyone-smokes-in-the-house" id="toc-lets-add-a-l1-predictor-whether-anyone-smokes-in-the-house" class="nav-link" data-scroll-target="#lets-add-a-l1-predictor-whether-anyone-smokes-in-the-house"><span class="header-section-number">10.3.2</span> Let’s add a L1 predictor, whether anyone smokes in the house</a></li>
-  <li><a href="#now-add-another-l1-predictor-mold" id="toc-now-add-another-l1-predictor-mold" class="nav-link" data-scroll-target="#now-add-another-l1-predictor-mold"><span class="header-section-number">10.3.3</span> Now add another L1 predictor, <code>mold</code></a></li>
-  <li><a href="#now-add-a-third-l1-predictor-physactiv" id="toc-now-add-a-third-l1-predictor-physactiv" class="nav-link" data-scroll-target="#now-add-a-third-l1-predictor-physactiv"><span class="header-section-number">10.3.4</span> Now add a third L1 predictor, <code>physactiv</code></a></li>
-  <li><a href="#how-about-a-mold-by-smoke_house-interaction" id="toc-how-about-a-mold-by-smoke_house-interaction" class="nav-link" data-scroll-target="#how-about-a-mold-by-smoke_house-interaction"><span class="header-section-number">10.3.5</span> How about a <code>mold</code> by <code>smoke_house</code> interaction?</a></li>
-  <li><a href="#same-thing-plus-adding-a-random-slope-for-mold" id="toc-same-thing-plus-adding-a-random-slope-for-mold" class="nav-link" data-scroll-target="#same-thing-plus-adding-a-random-slope-for-mold"><span class="header-section-number">10.3.6</span> Same thing, PLUS adding a random slope for <code>mold</code></a></li>
-  <li><a href="#should-we-keep-that-random-slope-rand-wont-work-with-glmms-but-we-can-compare-aic-and-bic" id="toc-should-we-keep-that-random-slope-rand-wont-work-with-glmms-but-we-can-compare-aic-and-bic" class="nav-link" data-scroll-target="#should-we-keep-that-random-slope-rand-wont-work-with-glmms-but-we-can-compare-aic-and-bic"><span class="header-section-number">10.3.7</span> Should we keep that random slope? <code>rand</code> won’t work with GLMMs, but we can compare AIC and BIC</a></li>
+<li><a href="#we-use-glmer-instead-of-lmer-now-that-we-have-a-binary-outcome" id="toc-we-use-glmer-instead-of-lmer-now-that-we-have-a-binary-outcome" class="nav-link" data-scroll-target="#we-use-glmer-instead-of-lmer-now-that-we-have-a-binary-outcome"><span class="header-section-number">11.3.1</span> We use <code>glmer</code> instead of <code>lmer</code> now that we have a binary outcome</a></li>
+  <li><a href="#lets-add-a-l1-predictor-whether-anyone-smokes-in-the-house" id="toc-lets-add-a-l1-predictor-whether-anyone-smokes-in-the-house" class="nav-link" data-scroll-target="#lets-add-a-l1-predictor-whether-anyone-smokes-in-the-house"><span class="header-section-number">11.3.2</span> Let’s add a L1 predictor, whether anyone smokes in the house</a></li>
+  <li><a href="#now-add-another-l1-predictor-mold" id="toc-now-add-another-l1-predictor-mold" class="nav-link" data-scroll-target="#now-add-another-l1-predictor-mold"><span class="header-section-number">11.3.3</span> Now add another L1 predictor, <code>mold</code></a></li>
+  <li><a href="#now-add-a-third-l1-predictor-physactiv" id="toc-now-add-a-third-l1-predictor-physactiv" class="nav-link" data-scroll-target="#now-add-a-third-l1-predictor-physactiv"><span class="header-section-number">11.3.4</span> Now add a third L1 predictor, <code>physactiv</code></a></li>
+  <li><a href="#how-about-a-mold-by-smoke_house-interaction" id="toc-how-about-a-mold-by-smoke_house-interaction" class="nav-link" data-scroll-target="#how-about-a-mold-by-smoke_house-interaction"><span class="header-section-number">11.3.5</span> How about a <code>mold</code> by <code>smoke_house</code> interaction?</a></li>
+  <li><a href="#same-thing-plus-adding-a-random-slope-for-mold" id="toc-same-thing-plus-adding-a-random-slope-for-mold" class="nav-link" data-scroll-target="#same-thing-plus-adding-a-random-slope-for-mold"><span class="header-section-number">11.3.6</span> Same thing, PLUS adding a random slope for <code>mold</code></a></li>
+  <li><a href="#should-we-keep-that-random-slope-rand-wont-work-with-glmms-but-we-can-compare-aic-and-bic" id="toc-should-we-keep-that-random-slope-rand-wont-work-with-glmms-but-we-can-compare-aic-and-bic" class="nav-link" data-scroll-target="#should-we-keep-that-random-slope-rand-wont-work-with-glmms-but-we-can-compare-aic-and-bic"><span class="header-section-number">11.3.7</span> Should we keep that random slope? <code>rand</code> won’t work with GLMMs, but we can compare AIC and BIC</a></li>
   </ul>
 </li>
-  <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">10.4</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
+  <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">11.4</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOURUSERNAME/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
-<span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span>
+<span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
@@ -348,17 +354,17 @@ Data file needed
 </div>
 <p>This week, we will look at the 2018 National Survey of Children’s Health, available at <a href="https://www.census.gov/data/datasets/2018/demo/nsch/nsch2018.html" class="uri">https://www.census.gov/data/datasets/2018/demo/nsch/nsch2018.html</a>.</p>
 <p>Not every outcome is continuous. When the thing you are predicting is yes or no, the linear model is the wrong tool, and we move to generalized linear mixed models. Here the outcome is whether a child has asthma, and children are nested within states.</p>
-<section id="load-in-our-mvp-packages" class="level2" data-number="10.1"><h2 data-number="10.1" class="anchored" data-anchor-id="load-in-our-mvp-packages">
-<span class="header-section-number">10.1</span> Load in our MVP packages</h2>
+<section id="load-in-our-mvp-packages" class="level2" data-number="11.1"><h2 data-number="11.1" class="anchored" data-anchor-id="load-in-our-mvp-packages">
+<span class="header-section-number">11.1</span> Load in our MVP packages</h2>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://hbiostat.org/R/Hmisc/">Hmisc</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="part-1-loading-in-the-data-and-then-recoding-variables" class="level2" data-number="10.2"><h2 data-number="10.2" class="anchored" data-anchor-id="part-1-loading-in-the-data-and-then-recoding-variables">
-<span class="header-section-number">10.2</span> Part 1: loading in the data, and then recoding variables</h2>
-<section id="load-in-the-data" class="level3" data-number="10.2.1"><h3 data-number="10.2.1" class="anchored" data-anchor-id="load-in-the-data">
-<span class="header-section-number">10.2.1</span> Load in the data</h3>
+</section><section id="part-1-loading-in-the-data-and-then-recoding-variables" class="level2" data-number="11.2"><h2 data-number="11.2" class="anchored" data-anchor-id="part-1-loading-in-the-data-and-then-recoding-variables">
+<span class="header-section-number">11.2</span> Part 1: loading in the data, and then recoding variables</h2>
+<section id="load-in-the-data" class="level3" data-number="11.2.1"><h3 data-number="11.2.1" class="anchored" data-anchor-id="load-in-the-data">
+<span class="header-section-number">11.2.1</span> Load in the data</h3>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nsch</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"nsch_2018_topical.dta"</span><span class="op">)</span></span>
 <span></span>
@@ -811,8 +817,8 @@ $ fwc                &lt;dbl+lbl&gt;  6132.6177, 12203.8996,  3124.5496,  2935.6
 </div>
 </div>
 <p>This is a large file with a great many variables, which is typical of national survey data. You will almost never use more than a handful, which is what the next step is for.</p>
-</section><section id="the-select-function-is-really-useful-especially-with-really-big-datasets" class="level3" data-number="10.2.2"><h3 data-number="10.2.2" class="anchored" data-anchor-id="the-select-function-is-really-useful-especially-with-really-big-datasets">
-<span class="header-section-number">10.2.2</span> The <code>select</code> function is really useful, especially with really big datasets</h3>
+</section><section id="the-select-function-is-really-useful-especially-with-really-big-datasets" class="level3" data-number="11.2.2"><h3 data-number="11.2.2" class="anchored" data-anchor-id="the-select-function-is-really-useful-especially-with-really-big-datasets">
+<span class="header-section-number">11.2.2</span> The <code>select</code> function is really useful, especially with really big datasets</h3>
 <p>First, we narrow down the data by selecting only the variables we need. Then, we use the <code>as_factor</code> function to convert all variables to factors ahead of time.</p>
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nsch.2</span> <span class="op">&lt;-</span> <span class="va">nsch</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -839,8 +845,8 @@ $ physactiv &lt;fct&gt; Not in universe, 1 - 3 days, 4 - 6 days, Not in universe
 </div>
 <p>Two things worth noting. Survey variables often carry uninformative names like <code>k2q40a</code>, which is why the codebook is essential and why we rename them shortly. And applying <code><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor()</a></code> to the whole data frame at once converts every labelled variable using the labels that came with the file, which saves doing it one at a time.</p>
 <p><code>fipsst</code> is the state FIPS code, and it is our clustering variable. <code>hhid</code> identifies households.</p>
-</section><section id="the-table-function-is-a-great-way-to-figure-out-how-variables-are-labelled" class="level3" data-number="10.2.3"><h3 data-number="10.2.3" class="anchored" data-anchor-id="the-table-function-is-a-great-way-to-figure-out-how-variables-are-labelled">
-<span class="header-section-number">10.2.3</span> The <code>table</code> function is a great way to figure out how variables are labelled</h3>
+</section><section id="the-table-function-is-a-great-way-to-figure-out-how-variables-are-labelled" class="level3" data-number="11.2.3"><h3 data-number="11.2.3" class="anchored" data-anchor-id="the-table-function-is-a-great-way-to-figure-out-how-variables-are-labelled">
+<span class="header-section-number">11.2.3</span> The <code>table</code> function is a great way to figure out how variables are labelled</h3>
 <div class="cell">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">nsch.2</span><span class="op">$</span><span class="va">k2q40a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -886,8 +892,8 @@ $ physactiv &lt;fct&gt; Not in universe, 1 - 3 days, 4 - 6 days, Not in universe
 </div>
 </div>
 <p>Do this before anything else. Large surveys encode several kinds of non-response as ordinary categories, and if you skip this step those categories quietly become levels in your model.</p>
-</section><section id="now-we-can-use-filter-to-only-keep-observations-that-have-valid-categories" class="level3" data-number="10.2.4"><h3 data-number="10.2.4" class="anchored" data-anchor-id="now-we-can-use-filter-to-only-keep-observations-that-have-valid-categories">
-<span class="header-section-number">10.2.4</span> Now, we can use <code>filter</code> to only keep observations that have valid categories</h3>
+</section><section id="now-we-can-use-filter-to-only-keep-observations-that-have-valid-categories" class="level3" data-number="11.2.4"><h3 data-number="11.2.4" class="anchored" data-anchor-id="now-we-can-use-filter-to-only-keep-observations-that-have-valid-categories">
+<span class="header-section-number">11.2.4</span> Now, we can use <code>filter</code> to only keep observations that have valid categories</h3>
 <div class="cell">
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nsch.2.clean</span> <span class="op">&lt;-</span> <span class="va">nsch.2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">k2q40a</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span></span>
@@ -940,8 +946,8 @@ $ asthma.recode &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
 </div>
 <p>A cross-tabulation of the original against the recoded version is the fastest way to confirm the mapping went the direction you intended. Reversed coding here would flip the sign of every coefficient in the chapter.</p>
 <p>Note also how many rows the filtering removed. Listwise dropping across four variables adds up, and the analysis sample is what your results describe.</p>
-</section><section id="the-describe-function-from-hmisc-is-a-nice-codebook" class="level3" data-number="10.2.5"><h3 data-number="10.2.5" class="anchored" data-anchor-id="the-describe-function-from-hmisc-is-a-nice-codebook">
-<span class="header-section-number">10.2.5</span> The <code>describe</code> function from <code>Hmisc</code> is a nice codebook</h3>
+</section><section id="the-describe-function-from-hmisc-is-a-nice-codebook" class="level3" data-number="11.2.5"><h3 data-number="11.2.5" class="anchored" data-anchor-id="the-describe-function-from-hmisc-is-a-nice-codebook">
+<span class="header-section-number">11.2.5</span> The <code>describe</code> function from <code>Hmisc</code> is a nice codebook</h3>
 <div class="cell">
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">Hmisc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/describe.html">describe</a></span><span class="op">(</span><span class="va">nsch.2.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1010,10 +1016,10 @@ asthma.recode
 --------------------------------------------------------------------------------</code></pre>
 </div>
 </div>
-</section></section><section id="part-2-multilevel-logistic-regression-models" class="level2" data-number="10.3"><h2 data-number="10.3" class="anchored" data-anchor-id="part-2-multilevel-logistic-regression-models">
-<span class="header-section-number">10.3</span> Part 2: multilevel logistic regression models</h2>
-<section id="we-use-glmer-instead-of-lmer-now-that-we-have-a-binary-outcome" class="level3" data-number="10.3.1"><h3 data-number="10.3.1" class="anchored" data-anchor-id="we-use-glmer-instead-of-lmer-now-that-we-have-a-binary-outcome">
-<span class="header-section-number">10.3.1</span> We use <code>glmer</code> instead of <code>lmer</code> now that we have a binary outcome</h3>
+</section></section><section id="part-2-multilevel-logistic-regression-models" class="level2" data-number="11.3"><h2 data-number="11.3" class="anchored" data-anchor-id="part-2-multilevel-logistic-regression-models">
+<span class="header-section-number">11.3</span> Part 2: multilevel logistic regression models</h2>
+<section id="we-use-glmer-instead-of-lmer-now-that-we-have-a-binary-outcome" class="level3" data-number="11.3.1"><h3 data-number="11.3.1" class="anchored" data-anchor-id="we-use-glmer-instead-of-lmer-now-that-we-have-a-binary-outcome">
+<span class="header-section-number">11.3.1</span> We use <code>glmer</code> instead of <code>lmer</code> now that we have a binary outcome</h3>
 <div class="cell">
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.null</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/glmer.html">glmer</a></span><span class="op">(</span><span class="va">asthma.recode</span> <span class="op">~</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">fipsst</span><span class="op">)</span>, family <span class="op">=</span> <span class="va">binomial</span>, data <span class="op">=</span> <span class="va">nsch.2.clean</span><span class="op">)</span></span>
 <span></span>
@@ -1045,8 +1051,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 <p>Two changes from everything so far: the function is <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html">glmer()</a></code> rather than <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer()</a></code>, and we specify <code>family = binomial</code>, which tells R the outcome is 0/1 and to use a logit link. Everything else about the syntax is the same.</p>
-<section id="calculate-icc-for-logistic-regression-l1-random-variance-is-fixed" class="level4" data-number="10.3.1.1"><h4 data-number="10.3.1.1" class="anchored" data-anchor-id="calculate-icc-for-logistic-regression-l1-random-variance-is-fixed">
-<span class="header-section-number">10.3.1.1</span> Calculate ICC for logistic regression (L1 random variance is fixed)</h4>
+<section id="calculate-icc-for-logistic-regression-l1-random-variance-is-fixed" class="level4" data-number="11.3.1.1"><h4 data-number="11.3.1.1" class="anchored" data-anchor-id="calculate-icc-for-logistic-regression-l1-random-variance-is-fixed">
+<span class="header-section-number">11.3.1.1</span> Calculate ICC for logistic regression (L1 random variance is fixed)</h4>
 <div class="cell">
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">null.icc</span> <span class="op">&lt;-</span> <span class="fl">0.01808</span><span class="op">/</span><span class="op">(</span><span class="fl">0.01808</span> <span class="op">+</span> <span class="op">(</span><span class="va">pi</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">null.icc</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1056,8 +1062,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>The parenthetical in that heading is the important part. In a linear model we compute the ICC from two <em>estimated</em> variances. In a logistic model there is no estimated level-1 variance, because for a binary outcome the variance is determined by the mean. The standard solution fixes it at <span class="math inline">\pi^2/3</span>, roughly 3.29, which is the variance of the standard logistic distribution.</p>
 <p>Because that denominator term is assumed rather than estimated, the logistic ICC lives on a latent scale and is not directly comparable to an ICC from a linear model. Treat it as a rough indication of clustering rather than a precise proportion of variance in the observed outcome.</p>
-</section></section><section id="lets-add-a-l1-predictor-whether-anyone-smokes-in-the-house" class="level3" data-number="10.3.2"><h3 data-number="10.3.2" class="anchored" data-anchor-id="lets-add-a-l1-predictor-whether-anyone-smokes-in-the-house">
-<span class="header-section-number">10.3.2</span> Let’s add a L1 predictor, whether anyone smokes in the house</h3>
+</section></section><section id="lets-add-a-l1-predictor-whether-anyone-smokes-in-the-house" class="level3" data-number="11.3.2"><h3 data-number="11.3.2" class="anchored" data-anchor-id="lets-add-a-l1-predictor-whether-anyone-smokes-in-the-house">
+<span class="header-section-number">11.3.2</span> Let’s add a L1 predictor, whether anyone smokes in the house</h3>
 <div class="cell">
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/glmer.html">glmer</a></span><span class="op">(</span><span class="va">asthma.recode</span> <span class="op">~</span> <span class="va">smoke_house</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">fipsst</span><span class="op">)</span>, family <span class="op">=</span> <span class="va">binomial</span>, data <span class="op">=</span> <span class="va">nsch.2.clean</span><span class="op">)</span></span>
 <span></span>
@@ -1139,8 +1145,8 @@ Odds are not probabilities
 <p>For a child in a house without a smoker, the predicted probability of having asthma is 16%.</p>
 <p>That formula, <span class="math inline">e^x/(1+e^x)</span>, is the inverse logit. It converts a log-odds back into a probability. R has it built in as <code><a href="https://rdrr.io/r/stats/Logistic.html">plogis()</a></code>, so <code>plogis(-1.6257)</code> gives the same answer, but writing it out once makes clear what is happening.</p>
 <p>Notice the arithmetic in the comment: you build the logit for a profile by <em>adding up</em> the relevant coefficients, starting from the intercept. The intercept alone describes a child in the reference category on every predictor.</p>
-</section><section id="now-add-another-l1-predictor-mold" class="level3" data-number="10.3.3"><h3 data-number="10.3.3" class="anchored" data-anchor-id="now-add-another-l1-predictor-mold">
-<span class="header-section-number">10.3.3</span> Now add another L1 predictor, <code>mold</code>
+</section><section id="now-add-another-l1-predictor-mold" class="level3" data-number="11.3.3"><h3 data-number="11.3.3" class="anchored" data-anchor-id="now-add-another-l1-predictor-mold">
+<span class="header-section-number">11.3.3</span> Now add another L1 predictor, <code>mold</code>
 </h3>
 <div class="cell">
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/glmer.html">glmer</a></span><span class="op">(</span><span class="va">asthma.recode</span> <span class="op">~</span> <span class="va">smoke_house</span> <span class="op">+</span> <span class="va">mold</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">fipsst</span><span class="op">)</span>, family <span class="op">=</span> <span class="va">binomial</span>, data <span class="op">=</span> <span class="va">nsch.2.clean</span><span class="op">)</span></span>
@@ -1210,8 +1216,8 @@ moldNo      -0.653 -0.064</code></pre>
 </div>
 <p>For a child in a house without a smoker OR mold, the predicted probability of having asthma is 15%. Other combinations can be found by adding or removing the logits for each coefficient.</p>
 <p>That contrast, 29% against 15%, is the number to lead with when talking to a non-technical audience. It says what fraction of children in each situation we expect to have asthma, in units anyone can act on. No audience outside a statistics seminar will do anything useful with an odds ratio.</p>
-</section><section id="now-add-a-third-l1-predictor-physactiv" class="level3" data-number="10.3.4"><h3 data-number="10.3.4" class="anchored" data-anchor-id="now-add-a-third-l1-predictor-physactiv">
-<span class="header-section-number">10.3.4</span> Now add a third L1 predictor, <code>physactiv</code>
+</section><section id="now-add-a-third-l1-predictor-physactiv" class="level3" data-number="11.3.4"><h3 data-number="11.3.4" class="anchored" data-anchor-id="now-add-a-third-l1-predictor-physactiv">
+<span class="header-section-number">11.3.4</span> Now add a third L1 predictor, <code>physactiv</code>
 </h3>
 <div class="cell">
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/glmer.html">glmer</a></span><span class="op">(</span><span class="va">asthma.recode</span> <span class="op">~</span> <span class="va">smoke_house</span> <span class="op">+</span> <span class="va">mold</span> <span class="op">+</span> <span class="va">physactiv</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">fipsst</span><span class="op">)</span>, family <span class="op">=</span> <span class="va">binomial</span>, data <span class="op">=</span> <span class="va">nsch.2.clean</span><span class="op">)</span></span>
@@ -1256,8 +1262,8 @@ physctv4-6d -0.506 -0.116 -0.037  0.716
 physctvEvrd -0.517 -0.089 -0.030  0.707  0.654</code></pre>
 </div>
 </div>
-</section><section id="how-about-a-mold-by-smoke_house-interaction" class="level3" data-number="10.3.5"><h3 data-number="10.3.5" class="anchored" data-anchor-id="how-about-a-mold-by-smoke_house-interaction">
-<span class="header-section-number">10.3.5</span> How about a <code>mold</code> by <code>smoke_house</code> interaction?</h3>
+</section><section id="how-about-a-mold-by-smoke_house-interaction" class="level3" data-number="11.3.5"><h3 data-number="11.3.5" class="anchored" data-anchor-id="how-about-a-mold-by-smoke_house-interaction">
+<span class="header-section-number">11.3.5</span> How about a <code>mold</code> by <code>smoke_house</code> interaction?</h3>
 <div class="cell">
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/glmer.html">glmer</a></span><span class="op">(</span><span class="va">asthma.recode</span> <span class="op">~</span> <span class="va">smoke_house</span> <span class="op">+</span> <span class="va">mold</span> <span class="op">+</span> <span class="va">smoke_house</span><span class="op">:</span><span class="va">mold</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">fipsst</span><span class="op">)</span>, family <span class="op">=</span> <span class="va">binomial</span>, data <span class="op">=</span> <span class="va">nsch.2.clean</span><span class="op">)</span></span>
 <span></span>
@@ -1299,8 +1305,8 @@ smk_hsN:mlN  0.785 -0.894 -0.887</code></pre>
 </div>
 </div>
 <p>Interactions in logistic models carry an extra wrinkle worth knowing about. Because the logit scale is nonlinear, two predictors can interact on the probability scale even when the interaction coefficient is zero, and vice versa. If the substantive question is about probabilities, check predicted probabilities for each combination rather than relying on the coefficient alone.</p>
-</section><section id="same-thing-plus-adding-a-random-slope-for-mold" class="level3" data-number="10.3.6"><h3 data-number="10.3.6" class="anchored" data-anchor-id="same-thing-plus-adding-a-random-slope-for-mold">
-<span class="header-section-number">10.3.6</span> Same thing, PLUS adding a random slope for <code>mold</code>
+</section><section id="same-thing-plus-adding-a-random-slope-for-mold" class="level3" data-number="11.3.6"><h3 data-number="11.3.6" class="anchored" data-anchor-id="same-thing-plus-adding-a-random-slope-for-mold">
+<span class="header-section-number">11.3.6</span> Same thing, PLUS adding a random slope for <code>mold</code>
 </h3>
 <div class="cell">
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/glmer.html">glmer</a></span><span class="op">(</span><span class="va">asthma.recode</span> <span class="op">~</span> <span class="va">smoke_house</span> <span class="op">+</span> <span class="va">mold</span> <span class="op">+</span> <span class="op">(</span><span class="va">mold</span><span class="op">|</span><span class="va">fipsst</span><span class="op">)</span>, family <span class="op">=</span> <span class="va">binomial</span>, data <span class="op">=</span> <span class="va">nsch.2.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1345,8 +1351,8 @@ boundary (singular) fit: see help('isSingular')</code></pre>
 </div>
 </div>
 <p>This asks whether the association between household mold and asthma differs from state to state, which is plausible: climate, housing stock, and building codes all vary.</p>
-</section><section id="should-we-keep-that-random-slope-rand-wont-work-with-glmms-but-we-can-compare-aic-and-bic" class="level3" data-number="10.3.7"><h3 data-number="10.3.7" class="anchored" data-anchor-id="should-we-keep-that-random-slope-rand-wont-work-with-glmms-but-we-can-compare-aic-and-bic">
-<span class="header-section-number">10.3.7</span> Should we keep that random slope? <code>rand</code> won’t work with GLMMs, but we can compare AIC and BIC</h3>
+</section><section id="should-we-keep-that-random-slope-rand-wont-work-with-glmms-but-we-can-compare-aic-and-bic" class="level3" data-number="11.3.7"><h3 data-number="11.3.7" class="anchored" data-anchor-id="should-we-keep-that-random-slope-rand-wont-work-with-glmms-but-we-can-compare-aic-and-bic">
+<span class="header-section-number">11.3.7</span> Should we keep that random slope? <code>rand</code> won’t work with GLMMs, but we can compare AIC and BIC</h3>
 <p>Here, we see that both AIC and BIC went up, which is not a good sign. We probably don’t need the random slopes.</p>
 <div class="cell">
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.6.aic</span> <span class="op">&lt;-</span> <span class="fl">3045.1</span></span>
@@ -1381,8 +1387,8 @@ If <code>glmer</code> is slow or will not converge
 <span>                             optCtrl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>maxfun <span class="op">=</span> <span class="fl">100000</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-</section></section><section id="using-modelsummary-and-broom.mixed-to-organize-your-results" class="level2" data-number="10.4"><h2 data-number="10.4" class="anchored" data-anchor-id="using-modelsummary-and-broom.mixed-to-organize-your-results">
-<span class="header-section-number">10.4</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</h2>
+</section></section><section id="using-modelsummary-and-broom.mixed-to-organize-your-results" class="level2" data-number="11.4"><h2 data-number="11.4" class="anchored" data-anchor-id="using-modelsummary-and-broom.mixed-to-organize-your-results">
+<span class="header-section-number">11.4</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</h2>
 <div class="cell">
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bbolker/broom.mixed">broom.mixed</a></span><span class="op">)</span></span>
@@ -1933,12 +1939,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./08b-growth-advanced.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./10-assumptions.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">

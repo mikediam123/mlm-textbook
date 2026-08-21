@@ -35,7 +35,8 @@ book:
     - part: "Extending the Model"
       chapters:
         - 07-three-level.qmd
-        - 08-growth-curves.qmd
+        - 08a-growth-intro.qmd
+        - 08b-growth-advanced.qmd
         - 09-binary-outcomes.qmd
     - part: "Checking and Complicating"
       chapters:

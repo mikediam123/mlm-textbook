@@ -8,27 +8,36 @@ Built with [Quarto](https://quarto.org). The rendered site lives in `docs/` and 
 
 Chapters are numbered to match the course modules. With one exception, each chapter uses the same dataset as that module's content review, so the demonstration and the assignment line up.
 
-| Chapter | Topic | Data | Matches module |
+Every chapter except 6 follows the corresponding demonstration handout in `Video Links and Code Demos/`, so the book matches the code students see in the videos. Module 6 has no handout, so that chapter was written from scratch.
+
+| Chapter | Topic | Data | Source |
 |---|---|---|---|
-| 1 | Getting Started with R and RStudio | `descriptive_gss.dta` | demo yes, assignment no |
-| 2 | Review of Linear Regression | `food.csv` | demo yes, assignment no |
-| 3 | Intro to MLM and the Null Model | `hsbmerged.csv` | yes |
-| 4 | Conditional Random Intercept Models | `lq2002.csv` | no, see below |
-| 5 | Random Slope and Coefficient Models | `expanded_strs_no_miss` | yes |
-| 6 | Goodness-of-Fit and Effect Sizes | `expanded_strs_no_miss` | yes |
-| 7 | Three-Level Models | `projectSTAR.dta` | yes |
-| 8 | Longitudinal and Growth Curve Models | `STAR_long.dta`, `STAR_wide.dta` | yes |
-| 9 | Generalized Multilevel Models for Binary Outcomes | `school_belonging.csv` | yes |
-| 10 | Assessing Assumptions | `projectSTAR.dta` | yes |
-| 11 | Cross-Classified Models | `scotland.dta` | yes |
+| 1 | Getting Started with R and RStudio | `descriptive_gss.dta` | `MLM_Module_1_Handout.Qmd` |
+| 2 | Review of Linear Regression | `food.csv` | `Module_2_Handout.Rmd` |
+| 3 | Intro to MLM and the Null Model | `hsbmerged.csv` | `MLM_Week_3_Handout.Rmd` |
+| 4 | Conditional Random Intercept Models | `lq2002.csv` | `MLM_Week_4_Handout.Rmd` |
+| 5 | Random Slope Models | `lq2002.csv` | `MLM_Module_5_Handout.Rmd` |
+| 6 | Goodness-of-Fit and Effect Sizes | `expanded_strs_no_miss.csv` | no handout, written fresh |
+| 7 | Three-Level Models | `projectSTAR.dta` | `MLM_Module_7_Handout.Rmd` |
+| 8a | Intro to Growth Models | `egmerged.dta` | `MLM_Module_8_Handout_Part_1.Rmd` |
+| 8b | Advanced Growth Models | `egmerged.dta` | `MLM_Module_8_Handout_Part_2.Rmd` |
+| 9 | Binary and Generalized Linear Mixed Models | `nsch_2018_topical.dta` | `MLM_Module_9_Handout.Rmd` |
+| 10 | Checking Assumptions for MLMs | `productivity.dta` | `MLM_Module_10_Handout.Rmd` |
+| 11 | Cross-Classified Linear Mixed Models | `scotland.dta` | `MLM_Module_11_Handout.Rmd` |
 
-Chapters 1, 2, and 3 follow the existing demonstration handouts in `Video Links and Code Demos/`, so the book matches what students see in the videos. For Modules 1 and 2 that means the chapter and the content review use different datasets: the demo teaches the mechanics on one, the assignment applies them to another.
+Module 8 is split into two chapters, matching the two handouts and the two content reviews.
 
-Chapter 4 deliberately uses different data from the Module 4 assignment. The chapter demonstrates a random intercept model on soldiers nested in companies, matching Garson Chapter 6, while the assignment uses the Best in Class trial. Seeing the same technique applied outside education is useful transfer practice, and students meet the Best in Class data in chapters 5 and 6.
+Chapters and content reviews often use different datasets. That is by design: the demonstration teaches the mechanics on one dataset, and the assignment applies them to another.
 
 ## Data files
 
-`hsbmerged.csv` and `lq2002.csv` are included in this repository, so chapters 3 and 4 render as-is. Every other chapter needs a course dataset copied into this folder first. See `SETUP.md`.
+Most datasets are already in this folder. Three still need to be copied in before the book will render:
+
+- `egmerged.dta` (chapters 8a and 8b)
+- `nsch_2018_topical.dta` (chapter 9)
+- `productivity.dta` (chapter 10)
+
+See `SETUP.md`.
 
 ## Rendering
 

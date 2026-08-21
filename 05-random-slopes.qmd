@@ -1,23 +1,23 @@
-# Random Slope and Coefficient Models
+# Random Slope Models
 
 **Data for this chapter:** `lq2002.csv`
 
-Every model so far has assumed that a predictor relates to the outcome in the same way in every group. The slope was fixed; only the intercept was allowed to vary. This chapter relaxes that assumption.
+This week, we are going to continue using data from Gavin and Hofmann (2002), a study on organizational climate and attitudes published in *Leadership Quarterly*. Here, we have individual soldiers nested within companies. This is the same dataset that Garson uses in Chapter 7, so you can recreate his analysis.
 
-We continue with the Gavin and Hofmann (2002) data from the previous chapter: 2,042 U.S. Army soldiers nested within 49 companies. Staying with a dataset you already know means the new idea arrives on its own, without a new codebook attached to it. This is the same data Garson uses in Chapter 7.
+Every model so far has assumed that a predictor relates to the outcome the same way in every company. The slope was fixed; only the intercept was allowed to vary. This chapter relaxes that assumption.
+
+## Load some packages to help with the analysis and data management
 
 ```{r}
 #| label: setup
-#| message: false
 
-library(tidyverse)
-library(psych)
-library(lme4)
-library(lmerTest)
-library(performance)
-library(modelsummary)
-library(ggeffects)
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(lme4))
 ```
+
+`suppressPackageStartupMessages()` hides the loading banners these packages print. Those messages are informative the first few times, particularly the tidyverse conflict list, and clutter after that.
+
+## Load and explore the data
 
 ```{r}
 #| message: false
@@ -27,206 +27,203 @@ lq2002 <- read_csv("lq2002.csv")
 glimpse(lq2002)
 ```
 
-## Data management: calculating cluster means
+## Data management tip of the week: calculating group (cluster) means
 
-Here is something that comes up constantly in multilevel work. Often you want to take an individual-level measure and calculate the cluster, or group, mean. This is "aggregating up" an individual measure to see whether it also matters as a predictor at level 2. My own sense of task significance is important, but how my colleagues feel about their work probably matters too.
+Here is something that comes up a lot in MLM. Often, you want to take an individual-level measure and calculate the cluster, or group, mean. This is "aggregating up" an individual measure to see if it is a significant predictor at level 2. We did this last week with the task significance measure (`TSIG`). My own sense of task significance is important, but it is probably also important to consider how my colleagues feel about their work as well.
 
 ```{r}
-lq2002 <- lq2002 |>
-  group_by(COMPID) |>
-  mutate(
-    glead    = mean(LEAD),
-    gtsig    = mean(TSIG),
-    ghostile = mean(HOSTILE)
-  ) |>
+lq2002.1 <- lq2002 %>%
+  group_by(COMPID) %>%
+  mutate(.,
+            glead = mean(LEAD),
+            gtsig = mean(TSIG),
+            ghostile = mean(GHOSTILE)) %>%
   ungroup()
+
+glimpse(lq2002.1)
 ```
 
-That command has two parts. First, `group_by()` groups all responses into their respective companies as determined by `COMPID`. This declares that the operations that follow are to be performed within each cluster. Second, `mutate()` creates new variables equal to the mean of the original variables. Because we grouped by `COMPID` first, we get the mean by company rather than the overall mean.
+The above command has two parts. First, we use the `group_by` command from our friend, the `dplyr` package, to group all responses in their respective clusters/companies determined by `COMPID`. This is a first step to declare that all the operations that follow are to be performed at the cluster (company) level. Second, we use the `mutate` command, which we have used before, to create new variables that are equal to the mean of the original variables. Since we just grouped by `COMPID`, this means we get the mean of the variables by company.
 
-Do not forget `ungroup()` at the end. A grouped data frame stays grouped, and every later operation will silently run within company until you undo it. This is one of the most common sources of confusing results in tidyverse code.
+So, we calculate new variables called `glead`, `gtsig`, and `ghostile` that are equal to the mean of `LEAD`, `TSIG`, and `HOSTILE` by company. This is actually identical to what is already calculated for us in the dataset, the variables `GLEAD`, `GTSIG`, and `GHOSTILE`. I just wanted to show you how to do it so you can try it on your own!
 
-These new variables should be identical to `GLEAD`, `GTSIG`, and `GHOSTILE`, which already exist in the file. Checking that they match is a cheap way to confirm you did it right:
+::: {.callout-warning}
+## Do not forget `ungroup()`
+
+A grouped data frame stays grouped. Every operation after `group_by()` silently runs within company until you undo it, which produces results that look plausible and are wrong. `ungroup()` at the end of the chain is cheap insurance.
+
+You can check whether a data frame is still grouped with `groups(lq2002.1)`, which should return an empty list here.
+:::
+
+Since we have computed variables that should already exist in the file, we can verify our work:
 
 ```{r}
-lq2002 |>
-  summarize(
-    lead_check = max(abs(glead - GLEAD)),
-    tsig_check = max(abs(gtsig - GTSIG))
-  )
+lq2002.1 %>%
+  summarize(lead_check = max(abs(glead - GLEAD)),
+            tsig_check = max(abs(gtsig - GTSIG)))
 ```
 
-Differences on the order of 1e-15 are floating point noise, not disagreement.
+Differences on the order of 1e-15 are floating point noise, not disagreement. Anything larger would mean the aggregation did not do what we thought.
 
-## Step one: the preferred model without random slopes
+## Running random slopes models
 
-Assume we ran a series of models with these data, as we did in the previous chapter, and arrived at one that best represents the data and matches our research questions. That model has a random intercept, two level-1 predictors (`TSIG` and `LEAD`), and one level-2 predictor (`GTSIG`). Let us refit it to remind ourselves and to get fit statistics we can use as we go.
+### Step one: run your preferred model *without* random slopes
+
+Let's assume that we ran a bunch of models with this army data (which we did, last week!), and arrived at a model that we thought best represented our data and matched our research questions. That is the model below, with a random intercept, two level-1 predictors (`LEAD` and `TSIG`), and one level-2 predictor (`GTSIG`). Let's rerun that model to remind ourselves and also get measures of model fit (`AIC` and `BIC`) that we can use as we go along.
 
 ```{r}
-model.1 <- lmer(HOSTILE ~ TSIG + LEAD + GTSIG + (1 | COMPID),
-                REML = FALSE, data = lq2002)
+model.1 <- lmer(HOSTILE ~ TSIG + LEAD + GTSIG + (1|COMPID), REML = FALSE, data = lq2002.1)
 
 summary(model.1)
 ```
 
-```{r}
-performance::icc(model.1)
-```
+### Step two: add a random slope for TSIG
 
-## Step two: add a random slope for TSIG
+Now, the next logical step after testing predictors is to see whether or not any predictors should be treated as random at level-2. Here, we are going to test a random slope for `TSIG`. This is effectively allowing the slope of `TSIG` (which was overall negative) to vary according to which company a soldier is in. In some companies, that slope could now be higher, in some companies, it could be lower.
 
-The next logical step after testing predictors is to ask whether any of them should be treated as random at level 2. Here we test a random slope for `TSIG`. This allows the slope of `TSIG`, which was negative overall, to vary by company. In some companies that slope could be steeper, in others flatter.
-
-In terms of code, to add a random slope you list the predictor again inside the parentheses, on the left of the vertical bar. Notice that `TSIG` now appears twice: once among the fixed effects, and once in the random effects term.
+In terms of coding, to add a random slope, you just list the predictor name again after the colon. Notice now that `TSIG` appears twice in the code: once to the left of the `~`, and once on the right side of the pipe operator (`|`).
 
 ```{r}
-model.2 <- lmer(HOSTILE ~ TSIG + LEAD + GTSIG + (TSIG | COMPID),
-                REML = FALSE, data = lq2002)
+model.2 <- lmer(HOSTILE ~ TSIG + LEAD + GTSIG + (TSIG|COMPID), REML = FALSE, data = lq2002.1)
 
 summary(model.2)
 ```
 
-`(TSIG | COMPID)` is shorthand. It estimates a random intercept and a random slope for `TSIG`, plus the correlation between them. Writing `(1 + TSIG | COMPID)` means exactly the same thing and is more explicit about the intercept.
+The Random effects table now has three quantities rather than one: an intercept variance, a slope variance, and the correlation between them. The slope variance is the new one, and it answers a question the previous model could not ask.
 
-### Reading the singular fit
-
-You will likely see `boundary (singular) fit: see ?isSingular`, and the random effects table will show an intercept-slope correlation at or very near -1.00.
-
-This is worth stopping on rather than stepping past. A correlation of exactly -1 is not a finding about the Army. It is the model telling you it has run out of information. The estimation has pushed a parameter to the edge of the space it is allowed to occupy, which is what happens when 49 companies cannot support an intercept variance, a slope variance, and a correlation among them all at once.
-
-The practical question is what to do about it. A singular fit does not invalidate the fixed effects, which are usually what you are reporting. It does mean the random effects structure should be treated with suspicion, and it is a reason to consider dropping the correlation:
-
-```{r}
-model.2b <- lmer(HOSTILE ~ TSIG + LEAD + GTSIG +
-                   (1 | COMPID) + (0 + TSIG | COMPID),
-                 REML = FALSE, data = lq2002)
-
-summary(model.2b)
-```
-
-The `(0 + TSIG | COMPID)` term asks for a slope that varies by company but is uncorrelated with the intercept. That is one fewer parameter, and it often resolves the singularity.
-
-## Evaluating the random slope
-
-```{r}
-ranova(model.2)
-```
+Think about what teacher-to-teacher, or here company-to-company, slope variation would mean on the ground. In one company, soldiers who find their work meaningful report much less hostility than those who do not. In another, that gap is small. The average relationship might be identical in both, but the experience of being in those two companies is different.
 
 ::: {.callout-note}
-## `rand()` became `ranova()`
-Older course materials call `lmerTest::rand()`. The function was renamed to `ranova()` several versions ago. `rand()` may still work but is no longer the documented name.
+## Reading a singular fit
+
+You may see `boundary (singular) fit: see ?isSingular`, with the intercept-slope correlation at or near -1.00.
+
+This is worth stopping on rather than stepping past. A correlation of exactly -1 is not a finding about the Army. It is the model reporting that it has run out of information. Estimation has pushed a parameter to the edge of the space it is allowed to occupy, which happens when 49 companies cannot support an intercept variance, a slope variance, and a correlation between them all at once.
+
+A singular fit does not invalidate the fixed effects, which are usually what you report. It does mean the random effects structure should be treated with suspicion. One standard response is to drop the correlation, fitting `(1|COMPID) + (0 + TSIG|COMPID)`, which asks for a slope that varies by company but is uncorrelated with the intercept.
 :::
+
+### Using `lmerTest` to evaluate random slope
+
+```{r}
+lmerTest::rand(model.2)
+```
 
 The likelihood ratio test gives you statistical evidence. It should not be the only thing you consult. A random slope that improves fit but has no substantive rationale is worth questioning, and a slope with a strong theoretical rationale that narrowly misses significance may still deserve to stay, particularly with a modest number of level-2 units.
 
-Note also what a significant result here means. Testing whether a variance equals zero puts the null hypothesis on the boundary of the parameter space, which makes the usual chi-square reference distribution conservative. A significant result is therefore trustworthy; a marginal one deserves more caution than the p-value suggests.
+One technical note on reading this p-value. Testing whether a variance equals zero puts the null hypothesis on the boundary of the parameter space, which makes the usual chi-square reference distribution conservative. A significant result is therefore trustworthy. A marginal one deserves more caution than the number suggests.
 
-## Step three: add a random slope for LEAD
+### Step three: add a random slope for LEAD
 
-Same idea, now testing whether the leadership climate slope also varies by company.
+Same thing here, except now we are testing a random slope for `LEAD`:
 
 ```{r}
-model.3 <- lmer(HOSTILE ~ TSIG + LEAD + GTSIG + (TSIG + LEAD | COMPID),
-                REML = FALSE, data = lq2002)
+model.3 <- lmer(HOSTILE ~ TSIG + LEAD + GTSIG + (TSIG + LEAD|COMPID), REML = FALSE, data = lq2002.1)
 
 summary(model.3)
 ```
 
+### Using `lmerTest` to evaluate random slope
+
 ```{r}
-ranova(model.3)
+lmerTest::rand(model.3)
 ```
 
-Read the `ranova()` output carefully here. It tests each random term separately, and the two can come out differently: one slope may earn its place while the other does not. That is a more useful result than a single verdict on the whole random structure.
+Read this output carefully. `rand()` tests each random term separately, so the two slopes can come out differently: one may earn its place while the other does not. That is a more useful result than a single verdict on the whole random structure.
 
-## A cross-level interaction
+Notice also how quickly the number of parameters grows. Two random slopes plus an intercept means three variances and three correlations, all estimated from 49 companies. This is the most common reason MLM models fail to converge, and it is worth doing the arithmetic before fitting rather than after.
 
-This is more advanced, but worth showing. In the previous chapter we looked at an interaction between `LEAD` and `TSIG`, both level-1 soldier covariates. Multilevel models also let us test *cross-level* interactions, between a level-1 and a level-2 predictor.
+## Getting fancy: modeling a cross-level interaction
 
-Suppose we want to test an interaction between `TSIG` (level 1) and `GTSIG` (level 2). Put another way: is there an interaction between how I feel about the importance of my job, and how my peers feel about the importance of theirs? That seems worth testing.
+This is more advanced stuff, but I want to show you how you might model a cross-level interaction. Last week, we looked at the interaction between `LEAD` and `TSIG`, which is an interaction between two level-1 (soldier) covariates. In MLM, it is really easy to look at cross-level interactions, as well. So, let's say we want to test whether there is an interaction between `TSIG` (level-1) and `GTSIG` (level-2). Put another way, is there an interaction between how I feel about the importance of my job, and how my peers feel about the importance of their job? Probably, and it is worth testing.
 
-### Center the predictors first
+Note the difference from a random slope. A random slope says slopes vary across companies but does not say why. A cross-level interaction tries to *explain* that variation using a level-2 variable.
 
-Centering means subtracting the mean from every observation, so that zero now means average. When examining interactions it is usually a good idea to center continuous predictors first. This makes the results easier to interpret, and it ensures the interaction is evaluated near the sample mean rather than at a value that may not exist in the data.
+### Step one: create centered versions of your two predictors
+
+Centering a variable means to subtract the mean from every observation. So now that variable has a mean of 0 (0 now means average). When we look at interaction effects, it is usually a good idea to center any continuous predictors before analyzing. This facilitates easier interpretation of the results, and it ensures that the interaction is being evaluated near the sample mean.
+
+Centering works like this: you use the `mutate` function from `dplyr` to create a new variable that is equal to the original variable minus the mean (which we get using the `mean` function). Just to check our work, we can call the `describe` function from `psych` and make sure that the means of those new variables are 0.
 
 ```{r}
-lq2002 <- lq2002 |>
-  mutate(
-    tsig_cent  = TSIG - mean(TSIG),
-    gtsig_cent = GTSIG - mean(GTSIG)
-  )
+lq2002.2 <- lq2002.1 %>%
+  mutate(.,
+         tsig_cent = TSIG - mean(TSIG),
+         gtsig_cent = GTSIG - mean(GTSIG))
 
-# Check the work: both means should be 0
-psych::describe(lq2002[, c("tsig_cent", "gtsig_cent")], fast = TRUE)
+psych::describe(lq2002.2, fast = TRUE)
 ```
 
-### Fit and interpret
+### Step two: run the MLM and interpret the results
 
 ```{r}
-model.4 <- lmer(HOSTILE ~ tsig_cent + LEAD + gtsig_cent + (1 | COMPID),
-                REML = FALSE, data = lq2002)
+model.4 <- lmer(HOSTILE ~ tsig_cent + LEAD + gtsig_cent + (1|COMPID), REML = FALSE, data = lq2002.2)
 
 summary(model.4)
 ```
 
+Compare this to `model.1`. The coefficients on the predictors are identical, and only the intercept changed. That is centering working exactly as advertised: it relocates the origin without altering any relationship. What it buys you is an interpretable intercept, now the predicted hostility for a soldier of average task significance in a company of average task significance, which is a sentence you can put in a paper.
+
+## Interaction effects model
+
 ```{r}
-model.5 <- lmer(HOSTILE ~ tsig_cent + LEAD + gtsig_cent +
-                  tsig_cent:gtsig_cent + (1 | COMPID),
-                REML = FALSE, data = lq2002)
+model.5 <- lmer(HOSTILE ~ tsig_cent + LEAD + gtsig_cent + tsig_cent:gtsig_cent + (1|COMPID), REML = FALSE, data = lq2002.2)
 
 summary(model.5)
 ```
 
-Compare model.4 to model.1. The coefficients on the predictors are identical, and only the intercept changed. That is centering working exactly as advertised: it relocates the origin without altering the relationships. The intercept in model.4 is now the predicted hostility for a soldier of average task significance in a company of average task significance, which is a sentence you can actually write in a paper.
-
-### Should we keep the interaction?
+## Should we include that interaction? Comparing `model.4` with `model.5`
 
 ```{r}
-anova(model.4, model.5)
+anova(model.5, model.4)
 ```
 
-### Visualizing it
+## Step three: use `interplot` to obtain more easily interpretable results
 
-Interpreting a significant interaction from coefficients alone is hard, and there is no way around that. Plotting predicted values is what makes it legible.
+Interpreting significant interactions is hard, there's no way around it. But the `margins` command can be super useful for this. We will use margins to compare hypothetical soldiers with different levels of `TSIG` who are in companies that have different levels of `GTSIG`. And then we will plot the results to create a nice visual.
 
 ```{r}
-#| label: fig-crosslevel
-#| fig-cap: "Predicted hostility across individual task significance, at low, average, and high company task significance."
+#| label: fig-interplot
+#| fig-cap: "The estimated effect of company task significance across levels of individual task significance."
 
+interplot::interplot(model.5, var1 = "gtsig_cent", var2 = "tsig_cent")
+```
+
+Read this plot carefully, because it is not the same as the trajectory plots we make elsewhere. The vertical axis is the *coefficient* on `gtsig_cent`, not a predicted hostility score, and the horizontal axis moves across values of `tsig_cent`. So the line shows how the company-level effect changes depending on the individual-level value. If the line is flat, there is no interaction. If the confidence band excludes zero over part of the range, the moderation is meaningful there.
+
+::: {.callout-note}
+## If `interplot` will not install
+The `interplot` package has seen little maintenance recently. If it is unavailable, `ggeffects` produces a comparable picture from predicted values rather than coefficients:
+
+```r
+library(ggeffects)
 plot(ggpredict(model.5, terms = c("tsig_cent", "gtsig_cent [-0.5, 0, 0.5]")))
 ```
 
-::: {.callout-note}
-## A package change since 2020
-Earlier versions of this demonstration used `interplot::interplot()` for this plot. That package has seen little maintenance, and `ggeffects` is now the more reliable choice with a wider range of supported models. The idea is identical: compare hypothetical soldiers with different levels of `TSIG` who serve in companies with different levels of `GTSIG`.
+That version plots predicted hostility across task significance at three levels of company task significance, which many people find easier to read.
 :::
 
-A positive interaction here would mean that the negative relationship between personal task significance and hostility is weaker in companies where everyone finds their work meaningful. Always check the plot against the coefficient. Two nearly parallel lines and two crossing lines are different findings even when both interactions are significant.
-
-## Organizing the results
+## Using `modelsummary` and `broom.mixed` to organize your results
 
 ```{r}
-models <- list(
-  "Random intercept" = model.1,
-  "Centered"         = model.4,
-  "Interaction"      = model.5
-)
+#| message: false
 
-modelsummary(
-  models,
-  stars = c("*" = .05, "**" = .01, "***" = .001),
-  gof_map = c("nobs", "aic", "bic"),
-  title = "Random slope and cross-level interaction models predicting hostility"
-)
+library(modelsummary)
+library(broom.mixed)
+
+models <- list(model.4, model.5)
+
+modelsummary(models, output = "markdown")
 ```
 
-`modelsummary()` will also write directly to a file you can open in Word, which is worth knowing when you are assembling a manuscript:
+## HTML version that you can open in Word
 
 ```{r}
 #| eval: false
 
-modelsummary(models, output = "msum.docx", title = "MLM Estimates")
+modelsummary(models, output = 'msum.html', title = 'MLM Estimates')
 ```
 
 ## A note on your content review
 
-The Module 5 content review uses the Best in Class data rather than these Army data. The steps are identical: fit a random intercept model, add a random slope, evaluate it with `ranova()`, then test a cross-level interaction. Chapter 6 works directly with the Best in Class dataset, so you will see that structure applied there before you need it.
+The Module 5 content review uses the Best in Class data rather than these Army data. The steps are identical: fit a random intercept model, add a random slope, evaluate it with `rand()`, then test a cross-level interaction. What changes is the substance of the question, not the code.

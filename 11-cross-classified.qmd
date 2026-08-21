@@ -1,159 +1,295 @@
-# Cross-Classified Models
+# Cross-Classified Linear Mixed Models
 
 **Data for this chapter:** `scotland.dta`
 
-::: {.callout-note}
-## Data file needed
-Copy `scotland.dta` into this project folder before rendering.
-:::
+This week, we will be using George Leckie's (2009) `scotland` dataset, which includes 2,310 students, nested within 17 schools and separately nested within 500+ neighborhoods.
 
-Everything so far has assumed a strict hierarchy: each student belongs to one classroom, each classroom to one school, cleanly nested like boxes inside boxes. Real social structures often refuse to cooperate. This chapter handles the case where a person belongs to two grouping structures at once, and neither one sits inside the other.
+Everything so far has assumed a strict hierarchy: each student belongs to one classroom, each classroom to one school, cleanly nested like boxes inside boxes. Real social structures often refuse to cooperate. Students from one neighborhood attend different schools, and each school draws from many neighborhoods. Schools and neighborhoods are *crossed*, not nested.
 
-The data, from Leckie (2013), cover more than 2,000 Scottish primary school students who are nested within 17 schools and also within more than 500 neighborhoods. Students from a single neighborhood attend different schools, and each school draws from many neighborhoods. Schools and neighborhoods are *crossed*, not nested.
+## Load in our MVP packages
 
 ```{r}
 #| label: setup
 #| message: false
 
-library(tidyverse)
-library(haven)
+suppressPackageStartupMessages(library(tidyverse))
 library(lme4)
-library(lmerTest)
-library(performance)
-library(modelsummary)
+library(Hmisc)
+```
+
+## Part 1: loading in the data, and then recoding variables
+
+### Load in the data
+
+```{r}
+scotland <- haven::read_dta("scotland.dta")
+
+glimpse(scotland)
+```
+
+### The `describe` function from `Hmisc` is a great codebook
+
+```{r}
+describe(scotland)
+```
+
+## Part one: data exploration and coding/labelling
+
+### Start with variable labelling using the `label` function
+
+```{r}
+label(scotland$neighid)="Neighborhood ID"
+label(scotland$schid)="School ID"
+label(scotland$attain)="Student Measure of Educational Attainment"
+label(scotland$p7vrq)="Primary 7 Verbal Reasoning Quotient"
+label(scotland$p7read)="Primary 7 Reading Test Scores"
+label(scotland$dadocc)="School Mean of Dad's Occupation Score on Hope-Goldthorpe Scale"
+label(scotland$dadunemp)="Dad Currently Unemployed"
+label(scotland$daded)="Dad School After Age 15"
+label(scotland$momed)="Mom School After Age 15"
+label(scotland$male)="Male"
+label(scotland$deprive)="Neighborhood Deprivation Score (Poverty, Health, and Housing)"
+```
+
+Labelling every variable at the start is a small investment that pays off repeatedly. Six months from now, `p7vrq` will mean nothing to you, and the label will.
+
+Note one label in particular: `dadocc` is described as a *school mean*, not an individual measure. That makes it a level-2 variable, and it explains why it enters the models later as a school-level predictor. Reading labels carefully is how you avoid modeling a group characteristic as though it were an individual one.
+
+```{r}
+scot.clean <- scotland %>%
+  mutate(.,
+         dadunemp.fac = as_factor(dadunemp),
+         daded.fac = as_factor(daded),
+         momed.fac = as_factor(momed),
+         male.fac = as_factor(male))
+
+levels(scot.clean$dadunemp.fac) = c("No","Yes")
+levels(scot.clean$daded.fac) = c("No","Yes")
+levels(scot.clean$momed.fac) = c("No","Yes")
+levels(scot.clean$male.fac) = c("No","Yes")
+
+glimpse(scot.clean)
+```
+
+Two steps again: `as_factor()` converts to a factor, then assigning to `levels()` renames the categories. The names are applied in the order R already has the levels, so this assumes 0 comes first. Worth verifying with `table()` on any variable where you are unsure, since reversed labels would silently flip the sign of every associated coefficient.
+
+```{r}
+describe(scot.clean)
+```
+
+### Explore our outcome, `attain`
+
+```{r}
+#| label: fig-attain
+#| fig-cap: "Distribution of educational attainment scores."
+
+ggplot(data = scot.clean, mapping = aes(x = attain)) +
+  geom_histogram(bins = 20) +
+  labs(title = "Distribution of Educational Attainment Scores",
+       x = "Standardized Educational Attainment Score") +
+  theme_minimal()
+```
+
+### Explore a few other predictors
+
+```{r}
+#| label: fig-dadocc
+#| fig-cap: "Distribution of school-mean father's occupation scores."
+
+ggplot(data = scot.clean, mapping = aes(x = dadocc)) +
+  geom_histogram(bins = 30) +
+  labs(title = "Distribution of (School Mean) of Dad's Occupation Scores",
+       x = "Standardized Educational Attainment Score") +
+  theme_minimal()
 ```
 
 ```{r}
-scot <- read_dta("scotland.dta")
+#| label: fig-deprive
+#| fig-cap: "Distribution of neighborhood deprivation scores."
 
-glimpse(scot)
+ggplot(data = scot.clean, mapping = aes(x = deprive)) +
+  geom_histogram(bins = 50) +
+  labs(title = "Distribution of Neighborhood Context Scores",
+       x = "Standardized Neighborhood Deprivation Score") +
+  theme_minimal()
 ```
 
-## Confirming the structure
+Because `dadocc` is a school mean, its histogram has one value repeated for every student in a school. With 17 schools, that means the distribution really contains 17 distinct points, however many bars appear. `deprive` behaves similarly at the neighborhood level, though with 500-plus neighborhoods it looks much more continuous.
 
-Before choosing a model, verify the structure is actually crossed. If neighborhoods were nested within schools, each neighborhood would send students to exactly one school.
+## Part two: modeling
+
+### First, run two separate models with school and neighborhood as the L2 clusters
 
 ```{r}
-scot |>
-  group_by(neighid) |>
-  summarize(n_schools = n_distinct(schid)) |>
-  count(n_schools, name = "n_neighborhoods")
+model.null.school <- lmer(attain ~ (1|schid), REML = FALSE, data = scot.clean)
+
+summary(model.null.school)
 ```
 
-If many neighborhoods appear with more than one school, the structure is crossed and a nested model would be wrong.
-
-## Separate null models
-
-Start by fitting each grouping structure on its own.
+### Calculate school ICC
 
 ```{r}
-m_school <- lmer(p7read ~ 1 + (1 | schid), data = scot, REML = FALSE)
-m_neigh  <- lmer(p7read ~ 1 + (1 | neighid), data = scot, REML = FALSE)
-
-summary(m_school)
-summary(m_neigh)
+icc.school <- 0.08874/(0.08874 + 0.93441)
+icc.school
 ```
-
-## The combined cross-classified model
-
-The syntax is unremarkable, which is part of the point. Two crossed factors are simply two separate random intercept terms.
 
 ```{r}
-m_cross <- lmer(p7read ~ 1 + (1 | schid) + (1 | neighid), data = scot, REML = FALSE)
+model.null.neigh <- lmer(attain ~ (1|neighid), REML = FALSE, data = scot.clean)
 
-summary(m_cross)
+summary(model.null.neigh)
 ```
+
+### Calculate neighborhood ICC
+
+```{r}
+icc.neigh <- 0.2015/(0.2015 + 0.8044)
+icc.neigh
+```
+
+Fitting each grouping structure alone first is worth doing, because the comparison with the combined model below is where the main lesson of this chapter lives.
+
+### Now, a null additive cross-classified model
+
+```{r}
+model.null.crossed <- lmer(attain ~ (1|schid) + (1|neighid), REML = FALSE, data = scot.clean)
+
+summary(model.null.crossed)
+```
+
+The syntax is unremarkable, which is part of the point. Two crossed factors are simply two separate random intercept terms joined with `+`.
 
 ::: {.callout-warning}
 ## Do not use the nesting shorthand here
-Writing `(1 | schid/neighid)` would tell R that neighborhoods are nested within schools, creating a separate random effect for every school-neighborhood combination. That is a different model and, for these data, the wrong one. Crossed factors get separate terms joined with `+`.
+Writing `(1|schid/neighid)` would tell R that neighborhoods are nested within schools, creating a separate random effect for every school-neighborhood combination. That is a different model and, for these data, the wrong one.
+
+The diagnostic question is simple: does every neighborhood send its students to exactly one school? Here the answer is no, which is what makes the structure crossed.
 :::
 
-```{r}
-vc <- as.data.frame(VarCorr(m_cross))
-vc
-
-tau_school <- vc$vcov[vc$grp == "schid"]
-tau_neigh  <- vc$vcov[vc$grp == "neighid"]
-sigma2     <- vc$vcov[vc$grp == "Residual"]
-
-total <- tau_school + tau_neigh + sigma2
-
-round(c(
-  school       = tau_school / total,
-  neighborhood = tau_neigh / total,
-  student      = sigma2 / total
-), 3)
-```
-
-## Why the variances shift
-
-Compare the school variance in `m_school` to the school variance in `m_cross`, and do the same for neighborhoods. Both typically shrink when the two factors are modeled together.
-
-The reason is that a single-factor model has nowhere to put the other source of variation. When you fit schools alone, any neighborhood differences get absorbed into the school variance, because students in the same school tend to come from overlapping neighborhoods. The school-only model attributes to schools some variation that actually belongs to where children live. Fitting both simultaneously lets each factor account for its own share.
-
-This has a direct bearing on school accountability research. A model that ignores neighborhoods will systematically overstate how much schools matter.
-
-## Adding predictors at each level
+### Calculate neighborhood ICC in crossed model
 
 ```{r}
-m1 <- lmer(p7read ~ momed + daded + (1 | schid) + (1 | neighid),
-           data = scot, REML = FALSE)
+icc.neigh.crossed <- 0.14122/(0.14122 + 0.07545 + 0.79902)
+icc.neigh.crossed
+```
 
-m2 <- lmer(p7read ~ momed + daded + dadocc + (1 | schid) + (1 | neighid),
-           data = scot, REML = FALSE)
+### Calculate school ICC in crossed model
 
-m3 <- lmer(p7read ~ momed + daded + dadocc + deprive + (1 | schid) + (1 | neighid),
-           data = scot, REML = FALSE)
+```{r}
+icc.school.crossed <- 0.07545/(0.14122 + 0.07545 + 0.79902)
+icc.school.crossed
+```
 
-summary(m3)
+Compare these two numbers with the separate-model ICCs above. Both shrink when the two factors are modeled together, and the reason is the central insight of cross-classified modeling.
+
+A single-factor model has nowhere to put the other source of variation. Fit schools alone, and neighborhood differences get absorbed into the school variance, because students in the same school tend to come from overlapping neighborhoods. The school-only model therefore attributes to schools some variation that actually belongs to where children live. Fitting both at once lets each factor account for its own share.
+
+This has direct consequences for school accountability research. A model that ignores neighborhoods will systematically overstate how much schools matter.
+
+Note also the denominator: all three variance components, since the total variance is now split three ways.
+
+### Add an L1 predictor, male
+
+```{r}
+model.1 <- lmer(attain ~ male.fac + (1|schid) + (1|neighid), REML = FALSE, data = scot.clean)
+
+summary(model.1)
+```
+
+### L1 plus school-level predictor only (`dadocc`)
+
+```{r}
+model.2 <- lmer(attain ~ male.fac + dadocc + (1|schid) + (1|neighid), REML = FALSE, data = scot.clean)
+
+summary(model.2)
+```
+
+Watch the *school* variance here rather than the neighborhood variance. A school-level predictor should explain between-school differences, so that is where the movement belongs.
+
+### L1 plus neighborhood-level predictors only (`deprive`)
+
+```{r}
+model.3 <- lmer(attain ~ male.fac + deprive + (1|schid) + (1|neighid), REML = FALSE, data = scot.clean)
+
+summary(model.3)
+```
+
+And now the mirror image: a neighborhood-level predictor should move the neighborhood variance. Fitting these two separately makes it easy to see which component each predictor is accounting for.
+
+On the deprivation coefficient, a word of caution that applies well beyond these data. Families are not randomly assigned to neighborhoods, and families in more deprived areas differ from others in many ways, some measured here and most not. The coefficient describes an association. It does not establish that moving a child to a less deprived neighborhood would raise their attainment.
+
+### L1 plus both school and neighborhood predictors
+
+```{r}
+model.4 <- lmer(attain ~ male.fac + deprive + dadocc + (1|schid) + (1|neighid), REML = FALSE, data = scot.clean)
+
+summary(model.4)
+```
+
+### Test random effects for `male.fac` at neighborhood level and at school level
+
+```{r}
+model.5 <- lmer(attain ~ male.fac + deprive + dadocc + (male.fac|schid) + (male.fac|neighid), REML = FALSE, data = scot.clean)
+
+summary(model.5)
 ```
 
 ```{r}
-AIC(m_cross, m1, m2, m3)
-BIC(m_cross, m1, m2, m3)
+lmerTest::rand(model.5)
 ```
 
-On the neighborhood deprivation coefficient, a word of caution that applies well beyond these data. Families are not randomly assigned to neighborhoods. Families who end up in more deprived areas differ from those who do not in many ways, some measured here and most not. The coefficient describes an association between neighborhood deprivation and reading achievement. It does not establish that moving a child to a less deprived neighborhood would raise their score.
+This asks whether the gender gap in attainment differs across schools, across neighborhoods, or both. `rand()` tests each random term separately, so the two can come out differently.
 
-## An interaction between parental education levels
+Expect trouble here, and read it as information. Estimating a slope variance across 17 schools is asking a great deal of very little data, so a singular fit or a boundary estimate would not be surprising. The neighborhood version rests on far more units and is on firmer ground.
+
+### Finally, test a model with school-neighborhood interaction
 
 ```{r}
-m_int <- lmer(p7read ~ momed * daded + dadocc + deprive +
-                (1 | schid) + (1 | neighid),
-              data = scot, REML = FALSE)
+model.6 <- lmer(attain ~ male.fac + deprive + dadocc + deprive:dadocc + (1|schid) + (1|neighid), REML = FALSE, data = scot.clean)
 
-summary(m_int)
+summary(model.6)
 ```
 
-State the question before reading the coefficient. This interaction asks whether the association between mother's education and child reading achievement depends on father's education. A negative interaction would suggest the two are partly substitutable, with one highly educated parent doing much of the work and the second adding less than the main effects alone would predict. A positive interaction would suggest they compound.
+This interaction is unusual and worth stating carefully. It crosses a *neighborhood*-level variable with a *school*-level variable, asking whether the effect of neighborhood deprivation depends on the socioeconomic composition of the school a child attends. Does attending a more advantaged school buffer the association between a deprived neighborhood and attainment? That is a genuinely interesting policy question, and it is only askable in a cross-classified framework.
+
+### Use `interplot` to visualize the interaction between `deprive` and `dadocc`
+
+```{r}
+#| label: fig-interplot
+#| fig-cap: "The estimated effect of neighborhood deprivation across levels of school-mean father's occupation."
+
+interplot::interplot(model.6, var1 = "deprive", var2 = "dadocc")
+```
+
+Read the axes carefully. The vertical axis is the *coefficient* on `deprive`, not a predicted attainment score, and the horizontal axis moves across values of `dadocc`. So the line shows how the deprivation effect changes depending on school composition. A downward-sloping line would mean deprivation matters less in more advantaged schools, which is the buffering hypothesis.
+
+::: {.callout-note}
+## If `interplot` will not install
+The package has seen little maintenance recently. `ggeffects` gives a comparable picture from predicted values:
+
+```r
+library(ggeffects)
+plot(ggpredict(model.6, terms = c("deprive", "dadocc")))
+```
+:::
+
+## Comparing the models
+
+```{r}
+#| message: false
+
+library(modelsummary)
+library(broom.mixed)
+
+models <- list(model.null.neigh, model.null.school, model.null.crossed, model.1, model.2, model.3, model.4, model.5, model.6)
+
+modelsummary(models, output = "markdown")
+```
 
 ## A caution about 17 schools
 
-```{r}
-scot |>
-  summarize(
-    n_schools = n_distinct(schid),
-    n_neighborhoods = n_distinct(neighid),
-    n_students = n()
-  )
-```
-
-With only 17 schools, the school-level variance is estimated from very little information. Variance components need a reasonable number of higher-level units to be estimated precisely, and common rules of thumb suggest wanting at least 30 to 50. The neighborhood variance, resting on 500-plus units, is on much firmer ground.
+With only 17 schools, the school-level variance is estimated from very little information. Variance components need a reasonable number of higher-level units to be estimated precisely, and common rules of thumb want at least 30 to 50. The neighborhood variance, resting on 500-plus units, is on much firmer ground.
 
 This asymmetry should shape how you write up the results. Report both variances, but attach appropriate uncertainty to claims about schools. A school-level variance that appears smaller than the neighborhood variance may reflect a genuine difference, or it may reflect that 17 units cannot pin down a variance with much precision.
-
-## Reporting
-
-```{r}
-modelsummary(
-  list("School only" = m_school, "Neighborhood only" = m_neigh,
-       "Cross-classified" = m_cross, "Full model" = m3),
-  stars = c("*" = .05, "**" = .01, "***" = .001),
-  gof_map = c("nobs", "aic", "bic"),
-  title = "Cross-classified models of Scottish primary reading attainment"
-)
-```
 
 ## Recognizing this structure elsewhere
 

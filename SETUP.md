@@ -24,15 +24,13 @@ Chapters 3 and 4 will render as-is, since `hsbmerged.csv` and `lq2002.csv` are a
 
 Copy these into the project folder, alongside the `.qmd` files:
 
-- `descriptive_gss.dta` (chapter 1)
-- `food.csv` (chapter 2)
-- `expanded_strs_no_miss` (chapters 5, 6)
-- `projectSTAR.dta` (chapters 7, 10)
-- `STAR_long.dta` and `STAR_wide.dta` (chapter 8)
-- `school_belonging.csv` (chapter 9)
-- `scotland.dta` (chapter 11)
+- `egmerged.dta` (chapters 8a and 8b)
+- `nsch_2018_topical.dta` (chapter 9)
+- `productivity.dta` (chapter 10)
 
-These are the same files students use for the corresponding content reviews, so they should already be assembled for Canvas.
+The others are already in place: `descriptive_gss.dta`, `food.csv`, `hsbmerged.csv`, `lq2002.csv`, `expanded_strs_no_miss.csv`, `projectSTAR.dta`, and `scotland.dta`.
+
+Every dataset is the one used in the corresponding demonstration handout, so they should already exist alongside the videos.
 
 If you would rather publish the first four chapters now and add the rest later, open each unfinished chapter and add this to the top of the file, just below the title:
 

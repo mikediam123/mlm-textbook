@@ -193,7 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-random-slopes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope and Coefficient Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -221,14 +221,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08-growth-curves.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Longitudinal and Growth Curve Models</span></span></a>
+  <a href="./08a-growth-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08b-growth-advanced.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-binary-outcomes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Generalized Multilevel Models for Binary Outcomes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -245,13 +251,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Assessing Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-cross-classified.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Cross-Classified Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -270,15 +276,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#building-a-scale-score-and-checking-reliability" id="toc-building-a-scale-score-and-checking-reliability" class="nav-link active" data-scroll-target="#building-a-scale-score-and-checking-reliability"><span class="header-section-number">4.1</span> Building a scale score and checking reliability</a></li>
-  <li><a href="#looking-at-the-key-variables" id="toc-looking-at-the-key-variables" class="nav-link" data-scroll-target="#looking-at-the-key-variables"><span class="header-section-number">4.2</span> Looking at the key variables</a></li>
-  <li><a href="#step-one-the-null-model" id="toc-step-one-the-null-model" class="nav-link" data-scroll-target="#step-one-the-null-model"><span class="header-section-number">4.3</span> Step one: the null model</a></li>
-  <li><a href="#step-two-adding-a-level-one-predictor" id="toc-step-two-adding-a-level-one-predictor" class="nav-link" data-scroll-target="#step-two-adding-a-level-one-predictor"><span class="header-section-number">4.4</span> Step two: adding a level-one predictor</a></li>
-  <li><a href="#step-three-a-second-level-one-predictor" id="toc-step-three-a-second-level-one-predictor" class="nav-link" data-scroll-target="#step-three-a-second-level-one-predictor"><span class="header-section-number">4.5</span> Step three: a second level-one predictor</a></li>
-  <li><a href="#step-four-testing-an-interaction" id="toc-step-four-testing-an-interaction" class="nav-link" data-scroll-target="#step-four-testing-an-interaction"><span class="header-section-number">4.6</span> Step four: testing an interaction</a></li>
-  <li><a href="#step-five-adding-level-two-predictors" id="toc-step-five-adding-level-two-predictors" class="nav-link" data-scroll-target="#step-five-adding-level-two-predictors"><span class="header-section-number">4.7</span> Step five: adding level-two predictors</a></li>
-  <li><a href="#presenting-the-results" id="toc-presenting-the-results" class="nav-link" data-scroll-target="#presenting-the-results"><span class="header-section-number">4.8</span> Presenting the results</a></li>
-  <li><a href="#what-to-take-from-this-chapter" id="toc-what-to-take-from-this-chapter" class="nav-link" data-scroll-target="#what-to-take-from-this-chapter"><span class="header-section-number">4.9</span> What to take from this chapter</a></li>
+<li><a href="#load-some-packages-to-help-with-the-analysis-and-data-management" id="toc-load-some-packages-to-help-with-the-analysis-and-data-management" class="nav-link active" data-scroll-target="#load-some-packages-to-help-with-the-analysis-and-data-management"><span class="header-section-number">4.1</span> Load some packages to help with the analysis and data management</a></li>
+  <li><a href="#load-and-explore-the-data" id="toc-load-and-explore-the-data" class="nav-link" data-scroll-target="#load-and-explore-the-data"><span class="header-section-number">4.2</span> Load and explore the data</a></li>
+  <li><a href="#calculating-scale-scores-and-cronbachs-alpha" id="toc-calculating-scale-scores-and-cronbachs-alpha" class="nav-link" data-scroll-target="#calculating-scale-scores-and-cronbachs-alpha"><span class="header-section-number">4.3</span> Calculating scale scores and Cronbach’s alpha</a></li>
+  <li><a href="#scale-reliability-estimates-for-likert-type-scales" id="toc-scale-reliability-estimates-for-likert-type-scales" class="nav-link" data-scroll-target="#scale-reliability-estimates-for-likert-type-scales"><span class="header-section-number">4.4</span> Scale reliability estimates for Likert-type scales</a></li>
+  <li><a href="#save-scored-scales-as-new-variables" id="toc-save-scored-scales-as-new-variables" class="nav-link" data-scroll-target="#save-scored-scales-as-new-variables"><span class="header-section-number">4.5</span> Save scored scales as new variables</a></li>
+  <li><a href="#attach-the-new-variable-to-the-old-dataset" id="toc-attach-the-new-variable-to-the-old-dataset" class="nav-link" data-scroll-target="#attach-the-new-variable-to-the-old-dataset"><span class="header-section-number">4.6</span> Attach the new variable to the old dataset</a></li>
+  <li><a href="#visualizing-the-key-variables" id="toc-visualizing-the-key-variables" class="nav-link" data-scroll-target="#visualizing-the-key-variables"><span class="header-section-number">4.7</span> Visualizing the key variables</a></li>
+  <li>
+<a href="#running-the-multilevel-models" id="toc-running-the-multilevel-models" class="nav-link" data-scroll-target="#running-the-multilevel-models"><span class="header-section-number">4.8</span> Running the multilevel models</a>
+  <ul class="collapse">
+<li><a href="#step-one-the-null-model" id="toc-step-one-the-null-model" class="nav-link" data-scroll-target="#step-one-the-null-model"><span class="header-section-number">4.8.1</span> Step one: the null model</a></li>
+  <li><a href="#step-two-adding-a-level-one-predictor-tsig" id="toc-step-two-adding-a-level-one-predictor-tsig" class="nav-link" data-scroll-target="#step-two-adding-a-level-one-predictor-tsig"><span class="header-section-number">4.8.2</span> Step two: adding a level-one predictor, <code>TSIG</code></a></li>
+  <li><a href="#step-three-adding-an-additional-level-one-predictor-lead" id="toc-step-three-adding-an-additional-level-one-predictor-lead" class="nav-link" data-scroll-target="#step-three-adding-an-additional-level-one-predictor-lead"><span class="header-section-number">4.8.3</span> Step three: adding an additional level-one predictor, <code>LEAD</code></a></li>
+  <li><a href="#step-four-testing-the-interaction-of-lead-and-tsig" id="toc-step-four-testing-the-interaction-of-lead-and-tsig" class="nav-link" data-scroll-target="#step-four-testing-the-interaction-of-lead-and-tsig"><span class="header-section-number">4.8.4</span> Step four: testing the interaction of <code>LEAD</code> and <code>TSIG</code></a></li>
+  <li><a href="#step-five-adding-a-level-two-predictor-gtsig" id="toc-step-five-adding-a-level-two-predictor-gtsig" class="nav-link" data-scroll-target="#step-five-adding-a-level-two-predictor-gtsig"><span class="header-section-number">4.8.5</span> Step five: adding a level-two predictor, <code>GTSIG</code></a></li>
+  <li><a href="#step-six-adding-a-second-level-two-predictor-glead" id="toc-step-six-adding-a-second-level-two-predictor-glead" class="nav-link" data-scroll-target="#step-six-adding-a-second-level-two-predictor-glead"><span class="header-section-number">4.8.6</span> Step six: adding a second level-two predictor, <code>GLEAD</code></a></li>
+  </ul>
+</li>
+  <li><a href="#should-we-include-that-interaction-comparing-model.2-with-model.3" id="toc-should-we-include-that-interaction-comparing-model.2-with-model.3" class="nav-link" data-scroll-target="#should-we-include-that-interaction-comparing-model.2-with-model.3"><span class="header-section-number">4.9</span> Should we include that interaction? Comparing <code>model.2</code> with <code>model.3</code></a></li>
+  <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">4.10</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
+  <li><a href="#html-version-that-you-can-open-in-word" id="toc-html-version-that-you-can-open-in-word" class="nav-link" data-scroll-target="#html-version-that-you-can-open-in-word"><span class="header-section-number">4.11</span> HTML version that you can open in Word</a></li>
+  <li><a href="#what-to-take-from-this-chapter" id="toc-what-to-take-from-this-chapter" class="nav-link" data-scroll-target="#what-to-take-from-this-chapter"><span class="header-section-number">4.12</span> What to take from this chapter</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOURUSERNAME/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -299,29 +318,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 </header><p><strong>Data for this chapter:</strong> <code>lq2002.csv</code></p>
-<p>This chapter uses data from Gavin and Hofmann (2002), a study of organizational climate and attitudes published in <em>Leadership Quarterly</em>. Here we have 2,042 U.S. Army soldiers nested within companies. The structure is the same as students within schools, which is a useful reminder that multilevel modeling is not about education specifically. Anywhere individuals are grouped, these methods apply. This is the same dataset Garson uses in Chapter 6.</p>
+<p>This week, we are going to use data from Gavin and Hofmann (2002), a study on organizational climate and attitudes published in <em>Leadership Quarterly</em>. Here, we have individual soldiers nested within companies. This is the same dataset that Garson uses in Chapter 6, so you can recreate his analysis.</p>
+<p>The structure is the same as students within schools, which is a useful reminder that multilevel modeling is not about education specifically. Anywhere individuals are grouped, these methods apply.</p>
+<section id="load-some-packages-to-help-with-the-analysis-and-data-management" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="load-some-packages-to-help-with-the-analysis-and-data-management">
+<span class="header-section-number">4.1</span> Load some packages to help with the analysis and data management</h2>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'lme4' was built under R version 4.5.2</code></pre>
 </div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/runehaubo/lmerTestR">lmerTest</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'lmerTest' was built under R version 4.5.2</code></pre>
-</div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/">performance</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'performance' was built under R version 4.5.2</code></pre>
-</div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'modelsummary' was built under R version 4.5.2</code></pre>
-</div>
-</div>
+</section><section id="load-and-explore-the-data" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="load-and-explore-the-data">
+<span class="header-section-number">4.2</span> Load and explore the data</h2>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lq2002</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"lq2002.csv"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lq2002</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"lq2002.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">lq2002</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -357,82 +366,89 @@ $ GTSIG    &lt;dbl&gt; 3.541667, 3.541667, 3.541667, 3.541667, 3.541667, 3.54166
 $ GHOSTILE &lt;dbl&gt; 1.0416667, 1.0416667, 1.0416667, 1.0416667, 1.0416667, 1.0416…</code></pre>
 </div>
 </div>
+<p>Remember our old friend <code>describe</code> from the <code>psych</code> package a few weeks ago? This is a great way to get a detailed summary of all the variables in a dataset.</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="va">lq2002</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="va">lq2002</span>,</span>
+<span>                fast <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         vars    n    mean     sd  median trimmed    mad  min     max   range
-ROWID       1 2042 1021.50 589.62 1021.50 1021.50 756.87 1.00 2042.00 2041.00
-COMPID      2 2042   28.73  14.15   29.00   28.85  17.79 2.00   58.00   56.00
-SUB         3 2042 1021.50 589.62 1021.50 1021.50 756.87 1.00 2042.00 2041.00
-LEAD01      4 2042    3.08   1.12    3.00    3.13   1.48 1.00    5.00    4.00
-LEAD02      5 2042    3.35   1.10    4.00    3.40   1.48 1.00    5.00    4.00
-LEAD03      6 2042    2.59   1.19    3.00    2.56   1.48 1.00    5.00    4.00
-LEAD04      7 2042    2.77   1.31    3.00    2.73   1.48 1.00    5.00    4.00
-LEAD05      8 2042    2.90   1.11    3.00    2.93   1.48 1.00    5.00    4.00
-LEAD06      9 2042    3.41   1.03    4.00    3.48   1.48 1.00    5.00    4.00
-LEAD07     10 2042    2.86   1.19    3.00    2.87   1.48 1.00    5.00    4.00
-LEAD08     11 2042    3.35   1.08    4.00    3.43   1.48 1.00    5.00    4.00
-LEAD09     12 2042    2.67   1.20    3.00    2.65   1.48 1.00    5.00    4.00
-LEAD10     13 2042    3.14   1.16    3.00    3.21   1.48 1.00    5.00    4.00
-LEAD11     14 2042    2.88   1.17    3.00    2.91   1.48 1.00    5.00    4.00
-TSIG01     15 2042    2.81   1.26    3.00    2.79   1.48 1.00    5.00    4.00
-TSIG02     16 2042    3.28   1.16    3.50    3.35   0.74 1.00    5.00    4.00
-TSIG03     17 2042    3.31   1.13    4.00    3.39   1.48 1.00    5.00    4.00
-HOSTIL01   18 2042    1.49   1.39    1.00    1.36   1.48 0.00    4.00    4.00
-HOSTIL02   19 2042    0.62   1.10    0.00    0.36   0.00 0.00    4.00    4.00
-HOSTIL03   20 2042    1.09   1.43    0.00    0.86   0.00 0.00    4.00    4.00
-HOSTIL04   21 2042    0.92   1.37    0.00    0.65   0.00 0.00    4.00    4.00
-HOSTIL05   22 2042    0.61   1.04    0.00    0.37   0.00 0.00    4.00    4.00
-LEAD       23 2042    3.00   0.82    3.00    3.02   0.81 1.00    5.00    4.00
-TSIG       24 2042    3.13   1.02    3.33    3.18   0.99 1.00    5.00    4.00
-HOSTILE    25 2042    0.95   1.04    0.60    0.77   0.89 0.00    4.00    4.00
-GLEAD      26 2042    3.00   0.27    2.98    2.99   0.28 2.38    3.74    1.36
-GTSIG      27 2042    3.13   0.32    3.12    3.13   0.40 2.54    3.78    1.24
-GHOSTILE   28 2042    0.95   0.28    0.91    0.94   0.33 0.22    1.52    1.31
-          skew kurtosis    se
-ROWID     0.00    -1.20 13.05
-COMPID    0.00    -0.84  0.31
-SUB       0.00    -1.20 13.05
-LEAD01   -0.27    -0.76  0.02
-LEAD02   -0.51    -0.56  0.02
-LEAD03    0.13    -1.04  0.03
-LEAD04   -0.01    -1.28  0.03
-LEAD05   -0.23    -0.64  0.02
-LEAD06   -0.62     0.11  0.02
-LEAD07   -0.17    -0.98  0.03
-LEAD08   -0.71    -0.17  0.02
-LEAD09    0.02    -1.08  0.03
-LEAD10   -0.52    -0.72  0.03
-LEAD11   -0.17    -0.98  0.03
-TSIG01   -0.07    -1.18  0.03
-TSIG02   -0.52    -0.54  0.03
-TSIG03   -0.57    -0.40  0.03
-HOSTIL01  0.53    -1.00  0.03
-HOSTIL02  1.84     2.43  0.02
-HOSTIL03  1.01    -0.46  0.03
-HOSTIL04  1.27     0.16  0.03
-HOSTIL05  1.81     2.52  0.02
-LEAD     -0.21    -0.32  0.02
-TSIG     -0.38    -0.47  0.02
-HOSTILE   1.20     0.55  0.02
-GLEAD     0.36     0.34  0.01
-GTSIG     0.16    -1.05  0.01
-GHOSTILE  0.15    -0.71  0.01</code></pre>
+<pre><code>         vars    n    mean     sd  median  min     max   range  skew kurtosis
+ROWID       1 2042 1021.50 589.62 1021.50 1.00 2042.00 2041.00  0.00    -1.20
+COMPID      2 2042   28.73  14.15   29.00 2.00   58.00   56.00  0.00    -0.84
+SUB         3 2042 1021.50 589.62 1021.50 1.00 2042.00 2041.00  0.00    -1.20
+LEAD01      4 2042    3.08   1.12    3.00 1.00    5.00    4.00 -0.27    -0.76
+LEAD02      5 2042    3.35   1.10    4.00 1.00    5.00    4.00 -0.51    -0.56
+LEAD03      6 2042    2.59   1.19    3.00 1.00    5.00    4.00  0.13    -1.04
+LEAD04      7 2042    2.77   1.31    3.00 1.00    5.00    4.00 -0.01    -1.28
+LEAD05      8 2042    2.90   1.11    3.00 1.00    5.00    4.00 -0.23    -0.64
+LEAD06      9 2042    3.41   1.03    4.00 1.00    5.00    4.00 -0.62     0.11
+LEAD07     10 2042    2.86   1.19    3.00 1.00    5.00    4.00 -0.17    -0.98
+LEAD08     11 2042    3.35   1.08    4.00 1.00    5.00    4.00 -0.71    -0.17
+LEAD09     12 2042    2.67   1.20    3.00 1.00    5.00    4.00  0.02    -1.08
+LEAD10     13 2042    3.14   1.16    3.00 1.00    5.00    4.00 -0.52    -0.72
+LEAD11     14 2042    2.88   1.17    3.00 1.00    5.00    4.00 -0.17    -0.98
+TSIG01     15 2042    2.81   1.26    3.00 1.00    5.00    4.00 -0.07    -1.18
+TSIG02     16 2042    3.28   1.16    3.50 1.00    5.00    4.00 -0.52    -0.54
+TSIG03     17 2042    3.31   1.13    4.00 1.00    5.00    4.00 -0.57    -0.40
+HOSTIL01   18 2042    1.49   1.39    1.00 0.00    4.00    4.00  0.53    -1.00
+HOSTIL02   19 2042    0.62   1.10    0.00 0.00    4.00    4.00  1.84     2.43
+HOSTIL03   20 2042    1.09   1.43    0.00 0.00    4.00    4.00  1.01    -0.46
+HOSTIL04   21 2042    0.92   1.37    0.00 0.00    4.00    4.00  1.27     0.16
+HOSTIL05   22 2042    0.61   1.04    0.00 0.00    4.00    4.00  1.81     2.52
+LEAD       23 2042    3.00   0.82    3.00 1.00    5.00    4.00 -0.21    -0.32
+TSIG       24 2042    3.13   1.02    3.33 1.00    5.00    4.00 -0.38    -0.47
+HOSTILE    25 2042    0.95   1.04    0.60 0.00    4.00    4.00  1.20     0.55
+GLEAD      26 2042    3.00   0.27    2.98 2.38    3.74    1.36  0.36     0.34
+GTSIG      27 2042    3.13   0.32    3.12 2.54    3.78    1.24  0.16    -1.05
+GHOSTILE   28 2042    0.95   0.28    0.91 0.22    1.52    1.31  0.15    -0.71
+            se
+ROWID    13.05
+COMPID    0.31
+SUB      13.05
+LEAD01    0.02
+LEAD02    0.02
+LEAD03    0.03
+LEAD04    0.03
+LEAD05    0.02
+LEAD06    0.02
+LEAD07    0.03
+LEAD08    0.02
+LEAD09    0.03
+LEAD10    0.03
+LEAD11    0.03
+TSIG01    0.03
+TSIG02    0.03
+TSIG03    0.03
+HOSTIL01  0.03
+HOSTIL02  0.02
+HOSTIL03  0.03
+HOSTIL04  0.03
+HOSTIL05  0.02
+LEAD      0.02
+TSIG      0.02
+HOSTILE   0.02
+GLEAD     0.01
+GTSIG     0.01
+GHOSTILE  0.01</code></pre>
 </div>
 </div>
-<p>The variables we care about are <code>HOSTILE</code> (a scale score for hostility, our outcome), <code>TSIG</code> (task significance), <code>LEAD</code> (leadership climate), and <code>COMPID</code> (company, our clustering variable). The variables beginning with <code>G</code> are group-level aggregates, which will matter later in this chapter.</p>
-<section id="building-a-scale-score-and-checking-reliability" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="building-a-scale-score-and-checking-reliability">
-<span class="header-section-number">4.1</span> Building a scale score and checking reliability</h2>
-<p>Before modeling, a short detour that is worth its own section. The <code>HOSTILE</code> variable is a scale score built from five individual items. It is good practice to verify that a scale you have been handed actually hangs together, and Cronbach’s alpha is the standard first check.</p>
+<p>Writing <code><a href="https://rdrr.io/pkg/psych/man/describe.html">psych::describe()</a></code> rather than just <code><a href="https://rdrr.io/pkg/psych/man/describe.html">describe()</a></code> is a small habit worth adopting. Several packages define a function by that name, and the <code>package::function()</code> form says exactly which one you mean. If you have <code>Hmisc</code> loaded, as we did last week, the unqualified version may not be the one you expect.</p>
+<p>The variables we care about are <code>HOSTILE</code> (a hostility scale score, our outcome), <code>TSIG</code> (task significance), <code>LEAD</code> (leadership climate), and <code>COMPID</code> (company, our clustering variable). The variables beginning with <code>G</code> are group-level aggregates, which matter later in this chapter.</p>
+</section><section id="calculating-scale-scores-and-cronbachs-alpha" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="calculating-scale-scores-and-cronbachs-alpha">
+<span class="header-section-number">4.3</span> Calculating scale scores and Cronbach’s alpha</h2>
+<p>This week, we are going to get a crash course in how to calculate reliability using Cronbach’s alpha. The <code>alpha</code> function in the <code>psych</code> package is a quick and easy way to calculate alpha:</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hostile_items</span> <span class="op">&lt;-</span> <span class="va">lq2002</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">HOSTIL01</span>, <span class="va">HOSTIL02</span>, <span class="va">HOSTIL03</span>, <span class="va">HOSTIL04</span>, <span class="va">HOSTIL05</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">hostile_items</span> <span class="op">&lt;-</span> <span class="va">lq2002</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">HOSTIL01</span>,</span>
+<span>         <span class="va">HOSTIL02</span>,</span>
+<span>         <span class="va">HOSTIL03</span>,</span>
+<span>         <span class="va">HOSTIL04</span>,</span>
+<span>         <span class="va">HOSTIL05</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/alpha.html">alpha</a></span><span class="op">(</span><span class="va">hostile_items</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/alpha.html">alpha</a></span><span class="op">(</span><span class="va">hostile_items</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Reliability analysis   
-Call: psych::alpha(x = hostile_items)
+Call: alpha(x = hostile_items)
 
   raw_alpha std.alpha G6(smc) average_r S/N    ase mean sd median_r
       0.87      0.88    0.87      0.59 7.1 0.0044 0.95  1     0.56
@@ -467,57 +483,181 @@ HOSTIL04 0.60 0.15 0.08 0.07 0.10    0
 HOSTIL05 0.66 0.18 0.08 0.04 0.03    0</code></pre>
 </div>
 </div>
-<p>Alpha is reported in the <code>raw_alpha</code> column of the output. Conventional cutoffs put acceptable reliability somewhere above .70, though the right threshold depends on what the scale is for. Pay attention to the item-level output as well. If dropping one item would raise alpha substantially, that item may not belong.</p>
-<p>You can also build the scale score yourself rather than trusting one you were given:</p>
+<p>Alpha appears in the <code>raw_alpha</code> column. Conventional cutoffs put acceptable reliability somewhere above .70, though the right threshold depends on what the scale is for and what decisions rest on it.</p>
+<p>The item-level output below the summary is worth reading too. The <code>r.drop</code> column shows how each item correlates with the total of the <em>other</em> items, and the “Reliability if an item is dropped” table shows what alpha would be without each one. If dropping a single item would raise alpha substantially, that item may be measuring something different from the rest.</p>
+<p>Now, we can create a new variable, <code>hostile</code>, that is constructed by taking the mean of our 5 <code>hostile</code> items.</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">keys</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>hostile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HOSTIL01"</span>, <span class="st">"HOSTIL02"</span>, <span class="st">"HOSTIL03"</span>, <span class="st">"HOSTIL04"</span>, <span class="st">"HOSTIL05"</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my.keys.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>hostile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"HOSTIL01"</span>,<span class="st">"HOSTIL02"</span>,<span class="st">"HOSTIL03"</span>, <span class="st">"HOSTIL04"</span>,<span class="st">"HOSTIL05"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">scored</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/score.items.html">scoreItems</a></span><span class="op">(</span><span class="va">keys</span>, <span class="va">lq2002</span>, impute <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">lq2002</span> <span class="op">&lt;-</span> <span class="va">lq2002</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>hostile_mine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">scored</span><span class="op">$</span><span class="va">scores</span><span class="op">[</span>, <span class="st">"hostile"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Does our version match the one in the file?</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">lq2002</span><span class="op">$</span><span class="va">HOSTILE</span>, <span class="va">lq2002</span><span class="op">$</span><span class="va">hostile_mine</span>, use <span class="op">=</span> <span class="st">"complete.obs"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">my.scales</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/score.items.html">scoreItems</a></span><span class="op">(</span><span class="va">my.keys.list</span>, <span class="va">lq2002</span>, impute <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>impute = "none"</code> means a respondent missing any item gets a missing scale score rather than having the gap filled in. That is the conservative choice and the right default when you are learning; imputation is a decision that deserves its own justification.</p>
+</section><section id="scale-reliability-estimates-for-likert-type-scales" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="scale-reliability-estimates-for-likert-type-scales">
+<span class="header-section-number">4.4</span> Scale reliability estimates for Likert-type scales</h2>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">my.scales</span>, short <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1</code></pre>
+<pre><code>Call: scoreItems(keys = my.keys.list, items = lq2002, impute = "none")
+
+(Standardized) Alpha:
+      hostile
+alpha    0.87
+
+Standard errors of unstandardized Alpha:
+      hostile
+ASE     0.011
+
+Standardized Alpha of observed scales:
+     hostile
+[1,]    0.87
+
+Average item correlation:
+          hostile
+average.r    0.58
+
+Median item correlation:
+hostile 
+   0.56 
+
+ Guttman 6* reliability: 
+         hostile
+Lambda.6    0.87
+
+Signal/Noise based upon av.r : 
+             hostile
+Signal/Noise     6.9
+
+Scale intercorrelations corrected for attenuation 
+ raw correlations below the diagonal, alpha on the diagonal 
+ corrected correlations above the diagonal:
+
+Note that these are the correlations of the complete scales based on the correlation matrix,
+ not the observed scales based on the raw items.
+        hostile
+hostile    0.87
+
+ Average adjusted correlations within and between scales (MIMS)
+[1] 0.58
+
+ Average adjusted item x scale correlations within and between scales (MIMT)
+[1] 0.82
+
+Item by scale correlations:
+ corrected for item overlap and scale reliability
+         hostile
+HOSTIL01    0.70
+HOSTIL02    0.73
+HOSTIL03    0.81
+HOSTIL04    0.84
+HOSTIL05    0.74
+
+Non missing response frequency for each item
+            0    1    2    3    4 miss
+HOSTIL01 0.32 0.25 0.17 0.13 0.13    0
+HOSTIL02 0.67 0.17 0.07 0.04 0.05    0
+HOSTIL03 0.53 0.17 0.09 0.08 0.12    0
+HOSTIL04 0.60 0.15 0.08 0.07 0.10    0
+HOSTIL05 0.66 0.18 0.08 0.04 0.03    0</code></pre>
 </div>
 </div>
-<p>A correlation of essentially 1.0 confirms the existing variable was constructed the way we think it was.</p>
-</section><section id="looking-at-the-key-variables" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="looking-at-the-key-variables">
-<span class="header-section-number">4.2</span> Looking at the key variables</h2>
+</section><section id="save-scored-scales-as-new-variables" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="save-scored-scales-as-new-variables">
+<span class="header-section-number">4.5</span> Save scored scales as new variables</h2>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lq2002</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">HOSTILE</span>, <span class="va">TSIG</span>, <span class="va">LEAD</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"variable"</span>, values_to <span class="op">=</span> <span class="st">"score"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">25</span>, fill <span class="op">=</span> <span class="st">"#1a7a6e"</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">variable</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Distributions of Hostility, Task Significance, and Leadership Climate"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"N = 2,042 U.S. Army active duty soldiers. Data from Gavin and Hofmann (2002)."</span>,</span>
-<span>    x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Count"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my.scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">my.scales</span><span class="op">$</span><span class="va">scores</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="attach-the-new-variable-to-the-old-dataset" class="level2" data-number="4.6"><h2 data-number="4.6" class="anchored" data-anchor-id="attach-the-new-variable-to-the-old-dataset">
+<span class="header-section-number">4.6</span> Attach the new variable to the old dataset</h2>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lq2002.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html">bind_cols</a></span><span class="op">(</span><span class="va">lq2002</span>, <span class="va">my.scores</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">lq2002.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 2,042
+Columns: 29
+$ ROWID    &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18…
+$ COMPID   &lt;dbl&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2…
+$ SUB      &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18…
+$ LEAD01   &lt;dbl&gt; 2, 4, 4, 1, 1, 2, 3, 3, 3, 4, 2, 2, 4, 4, 1, 2, 4, 4, 4, 4, 4…
+$ LEAD02   &lt;dbl&gt; 2, 4, 4, 1, 1, 3, 2, 3, 4, 3, 4, 3, 4, 4, 1, 1, 5, 4, 5, 4, 2…
+$ LEAD03   &lt;dbl&gt; 2, 2, 2, 1, 1, 2, 2, 2, 3, 3, 1, 1, 4, 4, 1, 2, 3, 4, 1, 4, 2…
+$ LEAD04   &lt;dbl&gt; 3, 4, 4, 1, 1, 4, 1, 4, 2, 4, 3, 1, 4, 4, 1, 4, 5, 4, 1, 5, 1…
+$ LEAD05   &lt;dbl&gt; 2, 4, 2, 1, 3, 2, 2, 2, 3, 3, 1, 2, 4, 4, 1, 3, 3, 4, 1, 2, 2…
+$ LEAD06   &lt;dbl&gt; 2, 4, 4, 1, 2, 4, 2, 2, 3, 4, 3, 4, 4, 4, 1, 3, 5, 4, 4, 2, 2…
+$ LEAD07   &lt;dbl&gt; 5, 4, 4, 4, 1, 3, 2, 2, 3, 3, 3, 1, 4, 3, 1, 5, 3, 4, 1, 3, 2…
+$ LEAD08   &lt;dbl&gt; 5, 4, 4, 2, 1, 4, 2, 4, 1, 4, 4, 3, 4, 4, 1, 2, 5, 4, 1, 3, 2…
+$ LEAD09   &lt;dbl&gt; 5, 4, 4, 3, 1, 2, 3, 2, 3, 3, 2, 2, 4, 4, 1, 4, 1, 4, 1, 4, 2…
+$ LEAD10   &lt;dbl&gt; 5, 4, 4, 3, 1, 4, 4, 2, 2, 4, 3, 2, 4, 4, 1, 2, 5, 4, 4, 4, 1…
+$ LEAD11   &lt;dbl&gt; 4, 3, 2, 2, 1, 3, 2, 4, 3, 3, 2, 1, 4, 4, 1, 2, 4, 4, 1, 4, 2…
+$ TSIG01   &lt;dbl&gt; 1, 3, 5, 1, 4, 4, 2, 2, 4, 4, 3, 3, 4, 4, 1, 1, 4, 4, 1, 5, 1…
+$ TSIG02   &lt;dbl&gt; 5, 4, 5, 3, 4, 4, 4, 2, 3, 4, 4, 3, 4, 4, 1, 5, 4, 4, 5, 5, 4…
+$ TSIG03   &lt;dbl&gt; 5, 3, 5, 2, 4, 4, 4, 4, 4, 4, 3, 3, 4, 4, 1, 4, 5, 4, 5, 5, 4…
+$ HOSTIL01 &lt;dbl&gt; 0, 3, 1, 2, 2, 0, 2, 0, 0, 1, 1, 2, 0, 0, 4, 3, 1, 0, 4, 3, 4…
+$ HOSTIL02 &lt;dbl&gt; 0, 2, 0, 1, 0, 0, 0, 0, 4, 0, 0, 2, 0, 0, 4, 0, 0, 0, 0, 1, 4…
+$ HOSTIL03 &lt;dbl&gt; 0, 0, 0, 3, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 2, 2…
+$ HOSTIL04 &lt;dbl&gt; 0, 0, 0, 3, 0, 0, 1, 0, 4, 0, 0, 1, 0, 0, 4, 0, 0, 0, 4, 3, 2…
+$ HOSTIL05 &lt;dbl&gt; 0, 1, 1, 0, 0, 0, 0, 0, 4, 0, 0, 2, 0, 0, 2, 0, 0, 0, 4, 2, 3…
+$ LEAD     &lt;dbl&gt; 3.363636, 3.727273, 3.454545, 1.818182, 1.272727, 3.000000, 2…
+$ TSIG     &lt;dbl&gt; 3.666667, 3.333333, 5.000000, 2.000000, 4.000000, 4.000000, 3…
+$ HOSTILE  &lt;dbl&gt; 0.0, 1.2, 0.4, 1.8, 0.4, 0.0, 0.8, 0.0, 3.2, 0.2, 0.2, 1.4, 0…
+$ GLEAD    &lt;dbl&gt; 2.882576, 2.882576, 2.882576, 2.882576, 2.882576, 2.882576, 2…
+$ GTSIG    &lt;dbl&gt; 3.541667, 3.541667, 3.541667, 3.541667, 3.541667, 3.541667, 3…
+$ GHOSTILE &lt;dbl&gt; 1.0416667, 1.0416667, 1.0416667, 1.0416667, 1.0416667, 1.0416…
+$ hostile  &lt;dbl&gt; 0.0, 1.2, 0.4, 1.8, 0.4, 0.0, 0.8, 0.0, 3.2, 0.2, 0.2, 1.4, 0…</code></pre>
+</div>
+</div>
+<p><code><a href="https://dplyr.tidyverse.org/reference/bind_cols.html">bind_cols()</a></code> glues the new column onto the original data by position, so it assumes the rows are in the same order and that nothing was dropped along the way. That holds here because <code><a href="https://rdrr.io/pkg/psych/man/score.items.html">scoreItems()</a></code> returned one score per original row. It is worth being aware of, since a join by ID is safer whenever rows might have been reordered or filtered.</p>
+</section><section id="visualizing-the-key-variables" class="level2" data-number="4.7"><h2 data-number="4.7" class="anchored" data-anchor-id="visualizing-the-key-variables">
+<span class="header-section-number">4.7</span> Visualizing the key variables</h2>
+<p>Let’s take a look at some of the key variables for our analysis. We have three variables, all of which are scale scores constructed just like the example above.</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">lq2002</span><span class="op">$</span><span class="va">HOSTILE</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Distribution of Hostility Scores"</span>,</span>
+<span>     sub <span class="op">=</span> <span class="st">"N = 2,042 U.S. Army active duty soliders. Data from Gavin and Hofmann (2002)."</span>,</span>
+<span>     xlab <span class="op">=</span> <span class="st">"Scaled Hostility Score"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-three-vars" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="04-random-intercept_files/figure-html/fig-three-vars-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;4.1: Distributions of the three scale scores used in this chapter.</figcaption></figure>
+<div id="fig-hostile" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="04-random-intercept_files/figure-html/fig-hostile-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4.1: Distribution of hostility scores.</figcaption></figure>
 </div>
 </div>
 </div>
-</section><section id="step-one-the-null-model" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="step-one-the-null-model">
-<span class="header-section-number">4.3</span> Step one: the null model</h2>
-<p>As always, we start by asking whether there is any company-level clustering to model.</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_null</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">COMPID</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">lq2002</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">lq2002</span><span class="op">$</span><span class="va">TSIG</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Distribution of Task Significance Scores"</span>,</span>
+<span>     sub <span class="op">=</span> <span class="st">"N = 2,042 U.S. Army active duty soliders. Data from Gavin and Hofmann (2002)."</span>,</span>
+<span>     xlab <span class="op">=</span> <span class="st">"Scaled Task Significance Score"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-tsig" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="04-random-intercept_files/figure-html/fig-tsig-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4.2: Distribution of task significance scores.</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">lq2002</span><span class="op">$</span><span class="va">LEAD</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"Distribution of Leadership Climate Scores"</span>,</span>
+<span>     sub <span class="op">=</span> <span class="st">"N = 2,042 U.S. Army active duty soliders. Data from Gavin and Hofmann (2002)."</span>,</span>
+<span>     xlab <span class="op">=</span> <span class="st">"Scaled Leadership Climate Score"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-lead" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="04-random-intercept_files/figure-html/fig-lead-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4.3: Distribution of leadership climate scores.</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Notice the shape of the hostility distribution in particular. It piles up near the low end, which is what you would expect for a measure where most people report very little of the thing. That floor will matter when we interpret coefficients later, because there is limited room to move downward.</p>
+</section><section id="running-the-multilevel-models" class="level2" data-number="4.8"><h2 data-number="4.8" class="anchored" data-anchor-id="running-the-multilevel-models">
+<span class="header-section-number">4.8</span> Running the multilevel models</h2>
+<section id="step-one-the-null-model" class="level3" data-number="4.8.1"><h3 data-number="4.8.1" class="anchored" data-anchor-id="step-one-the-null-model">
+<span class="header-section-number">4.8.1</span> Step one: the null model</h3>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.1</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_null</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.0</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
-  method [lmerModLmerTest]
-Formula: HOSTILE ~ 1 + (1 | COMPID)
-   Data: lq2002
+<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
+Formula: HOSTILE ~ (1 | COMPID)
+   Data: lq2002.1
 
       AIC       BIC    logLik -2*log(L)  df.resid 
    5888.9    5905.8   -2941.5    5882.9      2039 
@@ -533,21 +673,27 @@ Random effects:
 Number of obs: 2042, groups:  COMPID, 49
 
 Fixed effects:
-            Estimate Std. Error       df t value Pr(&gt;|t|)    
-(Intercept)  0.90632    0.04308 47.30598   21.04   &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+            Estimate Std. Error t value
+(Intercept)  0.90632    0.04308   21.04</code></pre>
 </div>
 </div>
+<p>The <code>(1|COMPID)</code> term is what makes this multilevel. Everything else follows from it.</p>
+<section id="post-estimation-task-calculate-icc" class="level4" data-number="4.8.1.1"><h4 data-number="4.8.1.1" class="anchored" data-anchor-id="post-estimation-task-calculate-icc">
+<span class="header-section-number">4.8.1.1</span> Post-estimation task: calculate ICC</h4>
+<p>Here’s a quick and easy way to get our friend the ICC!</p>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/performance/reference/icc.html">icc</a></span><span class="op">(</span><span class="va">model_null</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">null.ICC</span> <span class="op">&lt;-</span> <span class="fl">0.05765</span><span class="op">/</span><span class="op">(</span><span class="fl">0.05765</span> <span class="op">+</span> <span class="fl">1.01668</span><span class="op">)</span></span>
+<span><span class="va">null.ICC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># Intraclass Correlation Coefficient
-
-    Adjusted ICC: 0.054
-  Unadjusted ICC: 0.054</code></pre>
+<pre><code>[1] 0.05366135</code></pre>
 </div>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova</a></span><span class="op">(</span><span class="va">model_null</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note how much smaller this is than the ICC we found for schools and math achievement in the last chapter. That is substantively interesting rather than a problem. Soldiers’ hostility is mostly an individual matter, with companies accounting for a modest share of the variation.</p>
+<p>A small ICC does not mean you should abandon multilevel modeling. It still corrects the standard errors, and it still lets you ask questions about company-level predictors, which is exactly where this chapter is heading.</p>
+</section><section id="using-lmertest-to-evaluate-random-effects" class="level4" data-number="4.8.1.2"><h4 data-number="4.8.1.2" class="anchored" data-anchor-id="using-lmertest-to-evaluate-random-effects">
+<span class="header-section-number">4.8.1.2</span> Using <code>lmerTest</code> to evaluate random effects</h4>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">lmerTest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">rand</a></span><span class="op">(</span><span class="va">model.0</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ANOVA-like table for random-effects: Single term deletions
 
@@ -560,18 +706,30 @@ HOSTILE ~ 1 + (1 | COMPID)
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>Note that the ICC here is considerably smaller than the one we found for schools and math achievement. That is substantively interesting rather than a problem. Soldiers’ hostility is mostly an individual matter, with companies accounting for a modest share of the variation. A small ICC does not mean you should abandon multilevel modeling, particularly when you have company-level predictors you want to test.</p>
-</section><section id="step-two-adding-a-level-one-predictor" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="step-two-adding-a-level-one-predictor">
-<span class="header-section-number">4.4</span> Step two: adding a level-one predictor</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>rand()</code> and <code>ranova()</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">lmerTest::rand()</a></code> has been renamed <code>ranova()</code> in current versions of the package. The old name still works, and it is what the demonstration video shows, so it is kept here. If you see <code>ranova()</code> in newer documentation, it is the same function.</p>
+</div>
+</div>
+</section></section><section id="step-two-adding-a-level-one-predictor-tsig" class="level3" data-number="4.8.2"><h3 data-number="4.8.2" class="anchored" data-anchor-id="step-two-adding-a-level-one-predictor-tsig">
+<span class="header-section-number">4.8.2</span> Step two: adding a level-one predictor, <code>TSIG</code>
+</h3>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">COMPID</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">lq2002</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.1</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
-  method [lmerModLmerTest]
+<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
 Formula: HOSTILE ~ TSIG + (1 | COMPID)
-   Data: lq2002
+   Data: lq2002.1
 
       AIC       BIC    logLik -2*log(L)  df.resid 
    5668.4    5690.9   -2830.2    5660.4      2038 
@@ -587,29 +745,27 @@ Random effects:
 Number of obs: 2042, groups:  COMPID, 49
 
 Fixed effects:
-              Estimate Std. Error         df t value Pr(&gt;|t|)    
-(Intercept)    1.96574    0.07574  566.72651   25.95   &lt;2e-16 ***
-TSIG          -0.33180    0.02145 1995.20590  -15.47   &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+            Estimate Std. Error t value
+(Intercept)  1.96574    0.07574   25.95
+TSIG        -0.33180    0.02145  -15.47
 
 Correlation of Fixed Effects:
      (Intr)
 TSIG -0.894</code></pre>
 </div>
 </div>
-<p>The coefficient for <code>TSIG</code> describes how hostility differs between two soldiers who differ by one unit in task significance. Because <code>TSIG</code> varies both within and between companies, this estimate blends those two comparisons. We will separate them shortly.</p>
-</section><section id="step-three-a-second-level-one-predictor" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="step-three-a-second-level-one-predictor">
-<span class="header-section-number">4.5</span> Step three: a second level-one predictor</h2>
+<p>The coefficient for <code>TSIG</code> describes how hostility differs between two soldiers who differ by one unit in task significance. Because <code>TSIG</code> varies both within companies and between them, this single estimate blends two different comparisons. We separate them in step five.</p>
+</section><section id="step-three-adding-an-additional-level-one-predictor-lead" class="level3" data-number="4.8.3"><h3 data-number="4.8.3" class="anchored" data-anchor-id="step-three-adding-an-additional-level-one-predictor-lead">
+<span class="header-section-number">4.8.3</span> Step three: adding an additional level-one predictor, <code>LEAD</code>
+</h3>
 <div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">COMPID</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">lq2002</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.1</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
-  method [lmerModLmerTest]
+<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
 Formula: HOSTILE ~ TSIG + LEAD + (1 | COMPID)
-   Data: lq2002
+   Data: lq2002.1
 
       AIC       BIC    logLik -2*log(L)  df.resid 
    5540.7    5568.9   -2765.4    5530.7      2037 
@@ -625,12 +781,10 @@ Random effects:
 Number of obs: 2042, groups:  COMPID, 49
 
 Fixed effects:
-              Estimate Std. Error         df t value Pr(&gt;|t|)    
-(Intercept)    2.56714    0.08847  923.85117  29.017  &lt; 2e-16 ***
-TSIG          -0.18610    0.02434 1948.98020  -7.646 3.24e-14 ***
-LEAD          -0.35010    0.03021 1930.37022 -11.588  &lt; 2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+            Estimate Std. Error t value
+(Intercept)  2.56714    0.08847  29.017
+TSIG        -0.18610    0.02434  -7.646
+LEAD        -0.35010    0.03021 -11.588
 
 Correlation of Fixed Effects:
      (Intr) TSIG  
@@ -638,18 +792,18 @@ TSIG -0.328
 LEAD -0.577 -0.523</code></pre>
 </div>
 </div>
-</section><section id="step-four-testing-an-interaction" class="level2" data-number="4.6"><h2 data-number="4.6" class="anchored" data-anchor-id="step-four-testing-an-interaction">
-<span class="header-section-number">4.6</span> Step four: testing an interaction</h2>
-<p>Does the relationship between task significance and hostility depend on leadership climate? An interaction between two level-one predictors asks exactly that.</p>
+<p>Watch what happens to the <code>TSIG</code> coefficient when <code>LEAD</code> enters. Soldiers who find their work meaningful also tend to report better leadership climate, so some of what model 1 attributed to task significance was partly leadership.</p>
+</section><section id="step-four-testing-the-interaction-of-lead-and-tsig" class="level3" data-number="4.8.4"><h3 data-number="4.8.4" class="anchored" data-anchor-id="step-four-testing-the-interaction-of-lead-and-tsig">
+<span class="header-section-number">4.8.4</span> Step four: testing the interaction of <code>LEAD</code> and <code>TSIG</code>
+</h3>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">*</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">COMPID</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">lq2002</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">TSIG</span><span class="op">:</span><span class="va">LEAD</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.1</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
-  method [lmerModLmerTest]
-Formula: HOSTILE ~ TSIG * LEAD + (1 | COMPID)
-   Data: lq2002
+<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
+Formula: HOSTILE ~ TSIG + LEAD + TSIG:LEAD + (1 | COMPID)
+   Data: lq2002.1
 
       AIC       BIC    logLik -2*log(L)  df.resid 
    5539.6    5573.3   -2763.8    5527.6      2036 
@@ -665,13 +819,11 @@ Random effects:
 Number of obs: 2042, groups:  COMPID, 49
 
 Fixed effects:
-              Estimate Std. Error         df t value Pr(&gt;|t|)    
-(Intercept)    2.89374    0.20342 2001.95172  14.225  &lt; 2e-16 ***
-TSIG          -0.29435    0.06543 2040.19886  -4.499 7.23e-06 ***
-LEAD          -0.47236    0.07498 2039.10534  -6.300 3.63e-10 ***
-TSIG:LEAD      0.03858    0.02166 2029.77741   1.781    0.075 .  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+            Estimate Std. Error t value
+(Intercept)  2.89374    0.20342  14.225
+TSIG        -0.29435    0.06543  -4.499
+LEAD        -0.47236    0.07498  -6.300
+TSIG:LEAD    0.03858    0.02166   1.781
 
 Correlation of Fixed Effects:
           (Intr) TSIG   LEAD  
@@ -680,48 +832,19 @@ LEAD      -0.925  0.771
 TSIG:LEAD  0.901 -0.928 -0.915</code></pre>
 </div>
 </div>
-<p>Interactions are much easier to understand as pictures than as coefficients:</p>
+<p>The <code>:</code> operator specifies an interaction. Writing <code>TSIG + LEAD + TSIG:LEAD</code> includes both main effects plus their interaction. The shorthand <code>TSIG*LEAD</code> does the same thing, and the longer form makes the structure visible, which is why it is worth writing out while you are learning.</p>
+<p>An interaction here asks whether the relationship between task significance and hostility depends on leadership climate. Both predictors are at level 1, so this is a <em>within-level</em> interaction. In the next chapter we look at cross-level interactions, where a level-2 variable moderates a level-1 slope.</p>
+</section><section id="step-five-adding-a-level-two-predictor-gtsig" class="level3" data-number="4.8.5"><h3 data-number="4.8.5" class="anchored" data-anchor-id="step-five-adding-a-level-two-predictor-gtsig">
+<span class="header-section-number">4.8.5</span> Step five: adding a level-two predictor, <code>GTSIG</code>
+</h3>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://strengejacke.github.io/ggeffects/">ggeffects</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'ggeffects' was built under R version 4.5.2</code></pre>
-</div>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://strengejacke.github.io/ggeffects/reference/ggpredict.html">ggpredict</a></span><span class="op">(</span><span class="va">model_3</span>, terms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TSIG"</span>, <span class="st">"LEAD"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-interaction" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="04-random-intercept_files/figure-html/fig-interaction-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;4.2: Predicted hostility across levels of task significance, at low, average, and high leadership climate.</figcaption></figure>
-</div>
-</div>
-</div>
-<p>Whether the interaction earns its place in the model is a separate question from whether it is significant. We can test it directly:</p>
-<div class="cell">
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model_2</span>, <span class="va">model_3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Data: lq2002
-Models:
-model_2: HOSTILE ~ TSIG + LEAD + (1 | COMPID)
-model_3: HOSTILE ~ TSIG * LEAD + (1 | COMPID)
-        npar    AIC    BIC  logLik -2*log(L)  Chisq Df Pr(&gt;Chisq)  
-model_2    5 5540.7 5568.9 -2765.4    5530.7                       
-model_3    6 5539.6 5573.3 -2763.8    5527.6 3.1706  1    0.07498 .
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
-</div>
-</section><section id="step-five-adding-level-two-predictors" class="level2" data-number="4.7"><h2 data-number="4.7" class="anchored" data-anchor-id="step-five-adding-level-two-predictors">
-<span class="header-section-number">4.7</span> Step five: adding level-two predictors</h2>
-<p><code>GTSIG</code> and <code>GLEAD</code> are company averages. Adding them alongside the individual-level versions is not redundancy, even though it looks like it at first glance. These two coefficients answer different questions.</p>
-<p>The individual-level coefficient asks: within a given company, do soldiers who report higher task significance report less hostility? The group-level coefficient asks: do companies with higher average task significance have lower hostility overall? A soldier can be high on task significance in a company where everyone is low, or low in a company where everyone is high. Those are different situations, and they can have different consequences.</p>
-<div class="cell">
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">GTSIG</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">COMPID</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">lq2002</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">GTSIG</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.1</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
-  method [lmerModLmerTest]
+<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
 Formula: HOSTILE ~ TSIG + LEAD + GTSIG + (1 | COMPID)
-   Data: lq2002
+   Data: lq2002.1
 
       AIC       BIC    logLik -2*log(L)  df.resid 
    5533.7    5567.4   -2760.8    5521.7      2036 
@@ -737,13 +860,11 @@ Random effects:
 Number of obs: 2042, groups:  COMPID, 49
 
 Fixed effects:
-              Estimate Std. Error         df t value Pr(&gt;|t|)    
-(Intercept)    3.40718    0.25785   42.52614  13.214  &lt; 2e-16 ***
-TSIG          -0.17234    0.02479 2041.22422  -6.953 4.79e-12 ***
-LEAD          -0.35177    0.02996 1824.44441 -11.741  &lt; 2e-16 ***
-GTSIG         -0.27729    0.08258   46.65424  -3.358  0.00157 ** 
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+            Estimate Std. Error t value
+(Intercept)  3.40718    0.25785  13.214
+TSIG        -0.17234    0.02479  -6.953
+LEAD        -0.35177    0.02996 -11.741
+GTSIG       -0.27729    0.08258  -3.358
 
 Correlation of Fixed Effects:
       (Intr) TSIG   LEAD  
@@ -752,15 +873,19 @@ LEAD  -0.205 -0.511
 GTSIG -0.942 -0.227  0.010</code></pre>
 </div>
 </div>
+<p><code>GTSIG</code> is the company average of task significance. Having both <code>TSIG</code> and <code>GTSIG</code> in the model is not redundancy, even though it looks that way at first. The two coefficients answer different questions.</p>
+<p>The individual-level coefficient asks: within a given company, do soldiers who report higher task significance report less hostility? The group-level coefficient asks: do companies where task significance is high on average have lower hostility overall? A soldier can be high on task significance in a company where everyone is low, or low in a company where everyone is high. Those are genuinely different situations and can have different consequences.</p>
+</section><section id="step-six-adding-a-second-level-two-predictor-glead" class="level3" data-number="4.8.6"><h3 data-number="4.8.6" class="anchored" data-anchor-id="step-six-adding-a-second-level-two-predictor-glead">
+<span class="header-section-number">4.8.6</span> Step six: adding a second level-two predictor, <code>GLEAD</code>
+</h3>
 <div class="cell">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">GTSIG</span> <span class="op">+</span> <span class="va">GLEAD</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">COMPID</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">lq2002</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">GTSIG</span> <span class="op">+</span> <span class="va">GLEAD</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.1</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
-  method [lmerModLmerTest]
+<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
 Formula: HOSTILE ~ TSIG + LEAD + GTSIG + GLEAD + (1 | COMPID)
-   Data: lq2002
+   Data: lq2002.1
 
       AIC       BIC    logLik -2*log(L)  df.resid 
    5535.2    5574.6   -2760.6    5521.2      2035 
@@ -776,14 +901,12 @@ Random effects:
 Number of obs: 2042, groups:  COMPID, 49
 
 Fixed effects:
-              Estimate Std. Error         df t value Pr(&gt;|t|)    
-(Intercept)    3.52131    0.31006   46.68490  11.357 4.95e-15 ***
-TSIG          -0.17486    0.02508 1998.05166  -6.971 4.27e-12 ***
-LEAD          -0.34583    0.03132 1998.05165 -11.042  &lt; 2e-16 ***
-GTSIG         -0.24989    0.09273   49.35128  -2.695   0.0096 ** 
-GLEAD         -0.06981    0.10715   74.02590  -0.651   0.5168    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+            Estimate Std. Error t value
+(Intercept)  3.52131    0.31006  11.357
+TSIG        -0.17486    0.02508  -6.971
+LEAD        -0.34583    0.03132 -11.042
+GTSIG       -0.24989    0.09273  -2.695
+GLEAD       -0.06981    0.10715  -0.651
 
 Correlation of Fixed Effects:
       (Intr) TSIG   LEAD   GTSIG 
@@ -793,86 +916,93 @@ GTSIG -0.437 -0.271  0.143
 GLEAD -0.559  0.154 -0.292 -0.460</code></pre>
 </div>
 </div>
-<p>Watch what happens to the company-level variance as you move from the null model through model 5. Adding level-two predictors should reduce it, because those predictors are explaining some of the between-company differences that the null model could only describe.</p>
-</section><section id="presenting-the-results" class="level2" data-number="4.8"><h2 data-number="4.8" class="anchored" data-anchor-id="presenting-the-results">
-<span class="header-section-number">4.8</span> Presenting the results</h2>
-<p>Reporting six models one <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> at a time is unreadable. A single comparison table is how this belongs in a paper. Older versions of these course materials used <code>stargazer</code> for this. That package is no longer maintained and breaks with recent versions of R, so we use <code>modelsummary</code> instead.</p>
+<p>Track the company-level variance as you move from the null model through model 5. It should shrink as level-2 predictors enter, because those predictors are explaining between-company differences the null model could only describe. That shrinkage is the clearest signal that a level-2 predictor is doing real work.</p>
+</section></section><section id="should-we-include-that-interaction-comparing-model.2-with-model.3" class="level2" data-number="4.9"><h2 data-number="4.9" class="anchored" data-anchor-id="should-we-include-that-interaction-comparing-model.2-with-model.3">
+<span class="header-section-number">4.9</span> Should we include that interaction? Comparing <code>model.2</code> with <code>model.3</code>
+</h2>
 <div class="cell">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>    <span class="st">"Null"</span>    <span class="op">=</span> <span class="va">model_null</span>,</span>
-<span>    <span class="st">"M1"</span>      <span class="op">=</span> <span class="va">model_1</span>,</span>
-<span>    <span class="st">"M2"</span>      <span class="op">=</span> <span class="va">model_2</span>,</span>
-<span>    <span class="st">"M3: Int"</span> <span class="op">=</span> <span class="va">model_3</span>,</span>
-<span>    <span class="st">"M4"</span>      <span class="op">=</span> <span class="va">model_4</span>,</span>
-<span>    <span class="st">"M5"</span>      <span class="op">=</span> <span class="va">model_5</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  stars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"*"</span> <span class="op">=</span> <span class="fl">.05</span>, <span class="st">"**"</span> <span class="op">=</span> <span class="fl">.01</span>, <span class="st">"***"</span> <span class="op">=</span> <span class="fl">.001</span><span class="op">)</span>,</span>
-<span>  gof_map <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"nobs"</span>, <span class="st">"aic"</span>, <span class="st">"bic"</span><span class="op">)</span>,</span>
-<span>  title <span class="op">=</span> <span class="st">"Multilevel models predicting hostility among U.S. Army soldiers"</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model.2</span>, <span class="va">model.3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Data: lq2002.1
+Models:
+model.2: HOSTILE ~ TSIG + LEAD + (1 | COMPID)
+model.3: HOSTILE ~ TSIG + LEAD + TSIG:LEAD + (1 | COMPID)
+        npar    AIC    BIC  logLik -2*log(L)  Chisq Df Pr(&gt;Chisq)  
+model.2    5 5540.7 5568.9 -2765.4    5530.7                       
+model.3    6 5539.6 5573.3 -2763.8    5527.6 3.1706  1    0.07498 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p><code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> on two <code>lmer</code> objects performs a likelihood ratio test. It is valid here because both models were fit with <code>REML = FALSE</code>, that is, with maximum likelihood. Comparing REML-fitted models that differ in their fixed effects is not valid, which is one reason we use ML throughout this book.</p>
+</section><section id="using-modelsummary-and-broom.mixed-to-organize-your-results" class="level2" data-number="4.10"><h2 data-number="4.10" class="anchored" data-anchor-id="using-modelsummary-and-broom.mixed-to-organize-your-results">
+<span class="header-section-number">4.10</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</h2>
+<div class="cell">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bbolker/broom.mixed">broom.mixed</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">model.0</span>, <span class="va">model.1</span>, <span class="va">model.2</span>, <span class="va">model.3</span>, <span class="va">model.4</span>, <span class="va">model.5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<!-- preamble start -->
 
     <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
       // Create table-specific functions using external factory
-      const tableFns_55w3jljr0vyunx9k6lk7 = TinyTable.createTableFunctions("tinytable_55w3jljr0vyunx9k6lk7");
+      const tableFns_uwix02gs472s2bgk84v3 = TinyTable.createTableFunctions("tinytable_uwix02gs472s2bgk84v3");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '17', j: 2 }, { i: '17', j: 3 }, { i: '17', j: 4 }, { i: '17', j: 5 }, { i: '17', j: 6 }, { i: '17', j: 7 } ], css_id: 'tinytable_css_6xt4kfxit6zo4zg1ssit',}, 
-          { positions: [ { i: '14', j: 2 }, { i: '14', j: 3 }, { i: '14', j: 4 }, { i: '14', j: 5 }, { i: '14', j: 6 }, { i: '14', j: 7 } ], css_id: 'tinytable_css_gvd4w0jvkjwuxiezgpnj',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '13', j: 4 }, { i: '15', j: 4 }, { i: '16', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 }, { i: '13', j: 5 }, { i: '15', j: 5 }, { i: '16', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '12', j: 6 }, { i: '13', j: 6 }, { i: '15', j: 6 }, { i: '16', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 }, { i: '12', j: 7 }, { i: '13', j: 7 }, { i: '15', j: 7 }, { i: '16', j: 7 } ], css_id: 'tinytable_css_ueda7qr2nz5d8t1kiivr',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 } ], css_id: 'tinytable_css_04wf87m7ffxvayopcsac',}, 
-          { positions: [ { i: '17', j: 1 } ], css_id: 'tinytable_css_0dkhz6d7hvksjf79eolk',}, 
-          { positions: [ { i: '14', j: 1 } ], css_id: 'tinytable_css_dsviq9mio4dzffh9rjl3',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 } ], css_id: 'tinytable_css_4lr1dq891dw9ivc8nwik',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_oh2pecs35nra9oeyzsai',}, 
+          { positions: [ { i: '21', j: 2 }, { i: '21', j: 3 }, { i: '21', j: 4 }, { i: '21', j: 5 }, { i: '21', j: 6 }, { i: '21', j: 7 } ], css_id: 'tinytable_css_ejsf98njg4b0h27z5jb7',}, 
+          { positions: [ { i: '14', j: 2 }, { i: '14', j: 3 }, { i: '14', j: 4 }, { i: '14', j: 5 }, { i: '14', j: 6 }, { i: '14', j: 7 } ], css_id: 'tinytable_css_wab3m7ip8gd625cqh3y2',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 }, { i: '20', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '13', j: 4 }, { i: '15', j: 4 }, { i: '16', j: 4 }, { i: '17', j: 4 }, { i: '18', j: 4 }, { i: '19', j: 4 }, { i: '20', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 }, { i: '13', j: 5 }, { i: '15', j: 5 }, { i: '16', j: 5 }, { i: '17', j: 5 }, { i: '18', j: 5 }, { i: '19', j: 5 }, { i: '20', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '12', j: 6 }, { i: '13', j: 6 }, { i: '15', j: 6 }, { i: '16', j: 6 }, { i: '17', j: 6 }, { i: '18', j: 6 }, { i: '19', j: 6 }, { i: '20', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 }, { i: '12', j: 7 }, { i: '13', j: 7 }, { i: '15', j: 7 }, { i: '16', j: 7 }, { i: '17', j: 7 }, { i: '18', j: 7 }, { i: '19', j: 7 }, { i: '20', j: 7 } ], css_id: 'tinytable_css_2kdawzkt29avcf1eew8r',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 } ], css_id: 'tinytable_css_scd5h9ks6erwj38d737v',}, 
+          { positions: [ { i: '21', j: 1 } ], css_id: 'tinytable_css_menme5xcv625ekz2k9oo',}, 
+          { positions: [ { i: '14', j: 1 } ], css_id: 'tinytable_css_bjx2bfnpkxvn9nig0q5n',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 } ], css_id: 'tinytable_css_26nwk1jddcketg8q3qfy',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_653z1f2ve5dxwvxatvj8',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_55w3jljr0vyunx9k6lk7.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_uwix02gs472s2bgk84v3.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
 <style>
     /* tinytable css entries after */
-    #tinytable_55w3jljr0vyunx9k6lk7 td.tinytable_css_6xt4kfxit6zo4zg1ssit, #tinytable_55w3jljr0vyunx9k6lk7 th.tinytable_css_6xt4kfxit6zo4zg1ssit {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_55w3jljr0vyunx9k6lk7 td.tinytable_css_gvd4w0jvkjwuxiezgpnj, #tinytable_55w3jljr0vyunx9k6lk7 th.tinytable_css_gvd4w0jvkjwuxiezgpnj {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_55w3jljr0vyunx9k6lk7 td.tinytable_css_ueda7qr2nz5d8t1kiivr, #tinytable_55w3jljr0vyunx9k6lk7 th.tinytable_css_ueda7qr2nz5d8t1kiivr { text-align: center }
-    #tinytable_55w3jljr0vyunx9k6lk7 td.tinytable_css_04wf87m7ffxvayopcsac, #tinytable_55w3jljr0vyunx9k6lk7 th.tinytable_css_04wf87m7ffxvayopcsac {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_55w3jljr0vyunx9k6lk7 td.tinytable_css_0dkhz6d7hvksjf79eolk, #tinytable_55w3jljr0vyunx9k6lk7 th.tinytable_css_0dkhz6d7hvksjf79eolk {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_55w3jljr0vyunx9k6lk7 td.tinytable_css_dsviq9mio4dzffh9rjl3, #tinytable_55w3jljr0vyunx9k6lk7 th.tinytable_css_dsviq9mio4dzffh9rjl3 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_55w3jljr0vyunx9k6lk7 td.tinytable_css_4lr1dq891dw9ivc8nwik, #tinytable_55w3jljr0vyunx9k6lk7 th.tinytable_css_4lr1dq891dw9ivc8nwik { text-align: left }
-    #tinytable_55w3jljr0vyunx9k6lk7 td.tinytable_css_oh2pecs35nra9oeyzsai, #tinytable_55w3jljr0vyunx9k6lk7 th.tinytable_css_oh2pecs35nra9oeyzsai {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_uwix02gs472s2bgk84v3 td.tinytable_css_ejsf98njg4b0h27z5jb7, #tinytable_uwix02gs472s2bgk84v3 th.tinytable_css_ejsf98njg4b0h27z5jb7 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_uwix02gs472s2bgk84v3 td.tinytable_css_wab3m7ip8gd625cqh3y2, #tinytable_uwix02gs472s2bgk84v3 th.tinytable_css_wab3m7ip8gd625cqh3y2 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_uwix02gs472s2bgk84v3 td.tinytable_css_2kdawzkt29avcf1eew8r, #tinytable_uwix02gs472s2bgk84v3 th.tinytable_css_2kdawzkt29avcf1eew8r { text-align: center }
+    #tinytable_uwix02gs472s2bgk84v3 td.tinytable_css_scd5h9ks6erwj38d737v, #tinytable_uwix02gs472s2bgk84v3 th.tinytable_css_scd5h9ks6erwj38d737v {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_uwix02gs472s2bgk84v3 td.tinytable_css_menme5xcv625ekz2k9oo, #tinytable_uwix02gs472s2bgk84v3 th.tinytable_css_menme5xcv625ekz2k9oo {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_uwix02gs472s2bgk84v3 td.tinytable_css_bjx2bfnpkxvn9nig0q5n, #tinytable_uwix02gs472s2bgk84v3 th.tinytable_css_bjx2bfnpkxvn9nig0q5n {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_uwix02gs472s2bgk84v3 td.tinytable_css_26nwk1jddcketg8q3qfy, #tinytable_uwix02gs472s2bgk84v3 th.tinytable_css_26nwk1jddcketg8q3qfy { text-align: left }
+    #tinytable_uwix02gs472s2bgk84v3 td.tinytable_css_653z1f2ve5dxwvxatvj8, #tinytable_uwix02gs472s2bgk84v3 th.tinytable_css_653z1f2ve5dxwvxatvj8 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
 <div class="container">
-      <table class="tinytable" id="tinytable_55w3jljr0vyunx9k6lk7" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-<caption>Multilevel models predicting hostility among U.S. Army soldiers</caption>
-        <thead><tr>
+      <table class="tinytable" id="tinytable_uwix02gs472s2bgk84v3" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead><tr>
 <th scope="col" data-row="0" data-col="1"> </th>
-                <th scope="col" data-row="0" data-col="2">Null</th>
-                <th scope="col" data-row="0" data-col="3">M1</th>
-                <th scope="col" data-row="0" data-col="4">M2</th>
-                <th scope="col" data-row="0" data-col="5">M3: Int</th>
-                <th scope="col" data-row="0" data-col="6">M4</th>
-                <th scope="col" data-row="0" data-col="7">M5</th>
+                <th scope="col" data-row="0" data-col="2">(1)</th>
+                <th scope="col" data-row="0" data-col="3">(2)</th>
+                <th scope="col" data-row="0" data-col="4">(3)</th>
+                <th scope="col" data-row="0" data-col="5">(4)</th>
+                <th scope="col" data-row="0" data-col="6">(5)</th>
+                <th scope="col" data-row="0" data-col="7">(6)</th>
               </tr></thead>
-<tfoot><tr><td colspan="7">* p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
 <tbody>
 <tr>
 <td data-row="1" data-col="1">(Intercept)</td>
-                  <td data-row="1" data-col="2">0.906***</td>
-                  <td data-row="1" data-col="3">1.966***</td>
-                  <td data-row="1" data-col="4">2.567***</td>
-                  <td data-row="1" data-col="5">2.894***</td>
-                  <td data-row="1" data-col="6">3.407***</td>
-                  <td data-row="1" data-col="7">3.521***</td>
+                  <td data-row="1" data-col="2">0.906</td>
+                  <td data-row="1" data-col="3">1.966</td>
+                  <td data-row="1" data-col="4">2.567</td>
+                  <td data-row="1" data-col="5">2.894</td>
+                  <td data-row="1" data-col="6">3.407</td>
+                  <td data-row="1" data-col="7">3.521</td>
                 </tr>
 <tr>
 <td data-row="2" data-col="1"></td>
@@ -886,11 +1016,11 @@ GLEAD -0.559  0.154 -0.292 -0.460</code></pre>
 <tr>
 <td data-row="3" data-col="1">TSIG</td>
                   <td data-row="3" data-col="2"></td>
-                  <td data-row="3" data-col="3">-0.332***</td>
-                  <td data-row="3" data-col="4">-0.186***</td>
-                  <td data-row="3" data-col="5">-0.294***</td>
-                  <td data-row="3" data-col="6">-0.172***</td>
-                  <td data-row="3" data-col="7">-0.175***</td>
+                  <td data-row="3" data-col="3">-0.332</td>
+                  <td data-row="3" data-col="4">-0.186</td>
+                  <td data-row="3" data-col="5">-0.294</td>
+                  <td data-row="3" data-col="6">-0.172</td>
+                  <td data-row="3" data-col="7">-0.175</td>
                 </tr>
 <tr>
 <td data-row="4" data-col="1"></td>
@@ -905,10 +1035,10 @@ GLEAD -0.559  0.154 -0.292 -0.460</code></pre>
 <td data-row="5" data-col="1">LEAD</td>
                   <td data-row="5" data-col="2"></td>
                   <td data-row="5" data-col="3"></td>
-                  <td data-row="5" data-col="4">-0.350***</td>
-                  <td data-row="5" data-col="5">-0.472***</td>
-                  <td data-row="5" data-col="6">-0.352***</td>
-                  <td data-row="5" data-col="7">-0.346***</td>
+                  <td data-row="5" data-col="4">-0.350</td>
+                  <td data-row="5" data-col="5">-0.472</td>
+                  <td data-row="5" data-col="6">-0.352</td>
+                  <td data-row="5" data-col="7">-0.346</td>
                 </tr>
 <tr>
 <td data-row="6" data-col="1"></td>
@@ -943,8 +1073,8 @@ GLEAD -0.559  0.154 -0.292 -0.460</code></pre>
                   <td data-row="9" data-col="3"></td>
                   <td data-row="9" data-col="4"></td>
                   <td data-row="9" data-col="5"></td>
-                  <td data-row="9" data-col="6">-0.277***</td>
-                  <td data-row="9" data-col="7">-0.250**</td>
+                  <td data-row="9" data-col="6">-0.277</td>
+                  <td data-row="9" data-col="7">-0.250</td>
                 </tr>
 <tr>
 <td data-row="10" data-col="1"></td>
@@ -1001,22 +1131,58 @@ GLEAD -0.559  0.154 -0.292 -0.460</code></pre>
                   <td data-row="15" data-col="7">2042</td>
                 </tr>
 <tr>
-<td data-row="16" data-col="1">AIC</td>
-                  <td data-row="16" data-col="2">5893.4</td>
-                  <td data-row="16" data-col="3">5679.2</td>
-                  <td data-row="16" data-col="4">5557.0</td>
-                  <td data-row="16" data-col="5">5561.6</td>
-                  <td data-row="16" data-col="6">5553.4</td>
-                  <td data-row="16" data-col="7">5557.6</td>
+<td data-row="16" data-col="1">R2 Marg.</td>
+                  <td data-row="16" data-col="2">0.000</td>
+                  <td data-row="16" data-col="3">0.108</td>
+                  <td data-row="16" data-col="4">0.165</td>
+                  <td data-row="16" data-col="5">0.167</td>
+                  <td data-row="16" data-col="6">0.180</td>
+                  <td data-row="16" data-col="7">0.181</td>
                 </tr>
 <tr>
-<td data-row="17" data-col="1">BIC</td>
-                  <td data-row="17" data-col="2">5910.3</td>
-                  <td data-row="17" data-col="3">5701.6</td>
-                  <td data-row="17" data-col="4">5585.1</td>
-                  <td data-row="17" data-col="5">5595.3</td>
-                  <td data-row="17" data-col="6">5587.1</td>
-                  <td data-row="17" data-col="7">5596.9</td>
+<td data-row="17" data-col="1">R2 Cond.</td>
+                  <td data-row="17" data-col="2">0.054</td>
+                  <td data-row="17" data-col="3">0.134</td>
+                  <td data-row="17" data-col="4">0.184</td>
+                  <td data-row="17" data-col="5">0.185</td>
+                  <td data-row="17" data-col="6">0.190</td>
+                  <td data-row="17" data-col="7">0.190</td>
+                </tr>
+<tr>
+<td data-row="18" data-col="1">AIC</td>
+                  <td data-row="18" data-col="2">5893.4</td>
+                  <td data-row="18" data-col="3">5679.2</td>
+                  <td data-row="18" data-col="4">5557.0</td>
+                  <td data-row="18" data-col="5">5561.6</td>
+                  <td data-row="18" data-col="6">5553.4</td>
+                  <td data-row="18" data-col="7">5557.6</td>
+                </tr>
+<tr>
+<td data-row="19" data-col="1">BIC</td>
+                  <td data-row="19" data-col="2">5910.3</td>
+                  <td data-row="19" data-col="3">5701.6</td>
+                  <td data-row="19" data-col="4">5585.1</td>
+                  <td data-row="19" data-col="5">5595.3</td>
+                  <td data-row="19" data-col="6">5587.1</td>
+                  <td data-row="19" data-col="7">5596.9</td>
+                </tr>
+<tr>
+<td data-row="20" data-col="1">ICC</td>
+                  <td data-row="20" data-col="2">0.1</td>
+                  <td data-row="20" data-col="3">0.0</td>
+                  <td data-row="20" data-col="4">0.0</td>
+                  <td data-row="20" data-col="5">0.0</td>
+                  <td data-row="20" data-col="6">0.0</td>
+                  <td data-row="20" data-col="7">0.0</td>
+                </tr>
+<tr>
+<td data-row="21" data-col="1">RMSE</td>
+                  <td data-row="21" data-col="2">1.00</td>
+                  <td data-row="21" data-col="3">0.95</td>
+                  <td data-row="21" data-col="4">0.93</td>
+                  <td data-row="21" data-col="5">0.92</td>
+                  <td data-row="21" data-col="6">0.93</td>
+                  <td data-row="21" data-col="7">0.93</td>
                 </tr>
 </tbody>
 </table>
@@ -1024,17 +1190,18 @@ GLEAD -0.559  0.154 -0.292 -0.460</code></pre>
 <!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
-<p><code><a href="https://modelsummary.com/man/modelsummary.html">modelsummary()</a></code> will also write this table straight to a Word or LaTeX file, which is worth knowing when you are assembling a manuscript:</p>
+<p>Reporting six models one <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> at a time is unreadable. A single comparison table is how this belongs in a paper, and reading across the columns is how you see what each addition changed.</p>
+<p><code>broom.mixed</code> is what makes this work. <code>modelsummary</code> knows how to format tables, but it relies on <code>broom.mixed</code> to translate <code>lmer</code> objects into tidy data frames first. Load it even though you never call it directly.</p>
+</section><section id="html-version-that-you-can-open-in-word" class="level2" data-number="4.11"><h2 data-number="4.11" class="anchored" data-anchor-id="html-version-that-you-can-open-in-word">
+<span class="header-section-number">4.11</span> HTML version that you can open in Word</h2>
 <div class="cell">
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"Null"</span> <span class="op">=</span> <span class="va">model_null</span>, <span class="st">"M5"</span> <span class="op">=</span> <span class="va">model_5</span><span class="op">)</span>,</span>
-<span>  output <span class="op">=</span> <span class="st">"hostility_models.docx"</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>, output <span class="op">=</span> <span class="st">'msum.html'</span>, title <span class="op">=</span> <span class="st">'MLM Estimates'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="what-to-take-from-this-chapter" class="level2" data-number="4.9"><h2 data-number="4.9" class="anchored" data-anchor-id="what-to-take-from-this-chapter">
-<span class="header-section-number">4.9</span> What to take from this chapter</h2>
-<p>Three ideas are worth carrying forward. Level-one and level-two versions of the same construct answer different questions and belong in the model together. Variance components tell a story as you build models, and watching them shrink is how you know where your predictors are doing work. And an interaction is much easier to defend when you can show someone the plot.</p>
-<p>In the next chapter we relax an assumption we have been making all along, that the relationship between a predictor and the outcome is identical in every group.</p>
+<p>This writes the table to a file in your working directory. Word opens HTML tables directly, so you can generate this, open it in Word, and paste it into a manuscript. <code>modelsummary</code> will also write <code>.docx</code> directly if you prefer: change the extension to <code>msum.docx</code>.</p>
+</section><section id="what-to-take-from-this-chapter" class="level2" data-number="4.12"><h2 data-number="4.12" class="anchored" data-anchor-id="what-to-take-from-this-chapter">
+<span class="header-section-number">4.12</span> What to take from this chapter</h2>
+<p>Three ideas carry forward. Level-1 and level-2 versions of the same construct answer different questions and belong in the model together. Variance components tell a story as you build up models, and watching them shrink shows where your predictors are doing work. And a series of models belongs in one table, not six.</p>
+<p>The next chapter relaxes an assumption we have been making all along: that the relationship between a predictor and the outcome is the same in every company.</p>
 
 
 <!-- -->
@@ -1329,210 +1496,267 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./05-random-slopes.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope and Coefficient Models</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb41" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conditional Random Intercept Models</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>**Data for this chapter:** <span class="in">`lq2002.csv`</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>This chapter uses data from Gavin and Hofmann (2002), a study of organizational climate and attitudes published in *Leadership Quarterly*. Here we have 2,042 U.S. Army soldiers nested within companies. The structure is the same as students within schools, which is a useful reminder that multilevel modeling is not about education specifically. Anywhere individuals are grouped, these methods apply. This is the same dataset Garson uses in Chapter 6.</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
-<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
-<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
-<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a>lq2002 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"lq2002.csv"</span>)</span>
-<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(lq2002)</span>
-<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(lq2002)</span>
-<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a>The variables we care about are <span class="in">`HOSTILE`</span> (a scale score for hostility, our outcome), <span class="in">`TSIG`</span> (task significance), <span class="in">`LEAD`</span> (leadership climate), and <span class="in">`COMPID`</span> (company, our clustering variable). The variables beginning with <span class="in">`G`</span> are group-level aggregates, which will matter later in this chapter.</span>
-<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a><span class="fu">## Building a scale score and checking reliability</span></span>
-<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a>Before modeling, a short detour that is worth its own section. The <span class="in">`HOSTILE`</span> variable is a scale score built from five individual items. It is good practice to verify that a scale you have been handed actually hangs together, and Cronbach's alpha is the standard first check.</span>
-<span id="cb41-42"><a href="#cb41-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-45"><a href="#cb41-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-46"><a href="#cb41-46" aria-hidden="true" tabindex="-1"></a>hostile_items <span class="ot">&lt;-</span> lq2002 <span class="sc">|&gt;</span></span>
-<span id="cb41-47"><a href="#cb41-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(HOSTIL01, HOSTIL02, HOSTIL03, HOSTIL04, HOSTIL05)</span>
-<span id="cb41-48"><a href="#cb41-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-49"><a href="#cb41-49" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">alpha</span>(hostile_items)</span>
-<span id="cb41-50"><a href="#cb41-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-51"><a href="#cb41-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-52"><a href="#cb41-52" aria-hidden="true" tabindex="-1"></a>Alpha is reported in the <span class="in">`raw_alpha`</span> column of the output. Conventional cutoffs put acceptable reliability somewhere above .70, though the right threshold depends on what the scale is for. Pay attention to the item-level output as well. If dropping one item would raise alpha substantially, that item may not belong.</span>
-<span id="cb41-53"><a href="#cb41-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-54"><a href="#cb41-54" aria-hidden="true" tabindex="-1"></a>You can also build the scale score yourself rather than trusting one you were given:</span>
-<span id="cb41-55"><a href="#cb41-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-58"><a href="#cb41-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-59"><a href="#cb41-59" aria-hidden="true" tabindex="-1"></a>keys <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">hostile =</span> <span class="fu">c</span>(<span class="st">"HOSTIL01"</span>, <span class="st">"HOSTIL02"</span>, <span class="st">"HOSTIL03"</span>, <span class="st">"HOSTIL04"</span>, <span class="st">"HOSTIL05"</span>))</span>
-<span id="cb41-60"><a href="#cb41-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-61"><a href="#cb41-61" aria-hidden="true" tabindex="-1"></a>scored <span class="ot">&lt;-</span> psych<span class="sc">::</span><span class="fu">scoreItems</span>(keys, lq2002, <span class="at">impute =</span> <span class="st">"none"</span>)</span>
-<span id="cb41-62"><a href="#cb41-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-63"><a href="#cb41-63" aria-hidden="true" tabindex="-1"></a>lq2002 <span class="ot">&lt;-</span> lq2002 <span class="sc">|&gt;</span></span>
-<span id="cb41-64"><a href="#cb41-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hostile_mine =</span> <span class="fu">as.numeric</span>(scored<span class="sc">$</span>scores[, <span class="st">"hostile"</span>]))</span>
-<span id="cb41-65"><a href="#cb41-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-66"><a href="#cb41-66" aria-hidden="true" tabindex="-1"></a><span class="co"># Does our version match the one in the file?</span></span>
-<span id="cb41-67"><a href="#cb41-67" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(lq2002<span class="sc">$</span>HOSTILE, lq2002<span class="sc">$</span>hostile_mine, <span class="at">use =</span> <span class="st">"complete.obs"</span>)</span>
-<span id="cb41-68"><a href="#cb41-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-69"><a href="#cb41-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-70"><a href="#cb41-70" aria-hidden="true" tabindex="-1"></a>A correlation of essentially 1.0 confirms the existing variable was constructed the way we think it was.</span>
-<span id="cb41-71"><a href="#cb41-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-72"><a href="#cb41-72" aria-hidden="true" tabindex="-1"></a><span class="fu">## Looking at the key variables</span></span>
-<span id="cb41-73"><a href="#cb41-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-76"><a href="#cb41-76" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-77"><a href="#cb41-77" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-three-vars</span></span>
-<span id="cb41-78"><a href="#cb41-78" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distributions of the three scale scores used in this chapter."</span></span>
-<span id="cb41-79"><a href="#cb41-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-80"><a href="#cb41-80" aria-hidden="true" tabindex="-1"></a>lq2002 <span class="sc">|&gt;</span></span>
-<span id="cb41-81"><a href="#cb41-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(HOSTILE, TSIG, LEAD) <span class="sc">|&gt;</span></span>
-<span id="cb41-82"><a href="#cb41-82" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"variable"</span>, <span class="at">values_to =</span> <span class="st">"score"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb41-83"><a href="#cb41-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> score)) <span class="sc">+</span></span>
-<span id="cb41-84"><a href="#cb41-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>, <span class="at">fill =</span> <span class="st">"#1a7a6e"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb41-85"><a href="#cb41-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
-<span id="cb41-86"><a href="#cb41-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb41-87"><a href="#cb41-87" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distributions of Hostility, Task Significance, and Leadership Climate"</span>,</span>
-<span id="cb41-88"><a href="#cb41-88" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"N = 2,042 U.S. Army active duty soldiers. Data from Gavin and Hofmann (2002)."</span>,</span>
-<span id="cb41-89"><a href="#cb41-89" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Count"</span></span>
-<span id="cb41-90"><a href="#cb41-90" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb41-91"><a href="#cb41-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb41-92"><a href="#cb41-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-93"><a href="#cb41-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-94"><a href="#cb41-94" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step one: the null model</span></span>
-<span id="cb41-95"><a href="#cb41-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-96"><a href="#cb41-96" aria-hidden="true" tabindex="-1"></a>As always, we start by asking whether there is any company-level clustering to model.</span>
-<span id="cb41-97"><a href="#cb41-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-100"><a href="#cb41-100" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-101"><a href="#cb41-101" aria-hidden="true" tabindex="-1"></a>model_null <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> COMPID), <span class="at">data =</span> lq2002, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb41-102"><a href="#cb41-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-103"><a href="#cb41-103" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_null)</span>
-<span id="cb41-104"><a href="#cb41-104" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-105"><a href="#cb41-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-108"><a href="#cb41-108" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-109"><a href="#cb41-109" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(model_null)</span>
-<span id="cb41-110"><a href="#cb41-110" aria-hidden="true" tabindex="-1"></a><span class="fu">ranova</span>(model_null)</span>
-<span id="cb41-111"><a href="#cb41-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-112"><a href="#cb41-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-113"><a href="#cb41-113" aria-hidden="true" tabindex="-1"></a>Note that the ICC here is considerably smaller than the one we found for schools and math achievement. That is substantively interesting rather than a problem. Soldiers' hostility is mostly an individual matter, with companies accounting for a modest share of the variation. A small ICC does not mean you should abandon multilevel modeling, particularly when you have company-level predictors you want to test.</span>
-<span id="cb41-114"><a href="#cb41-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-115"><a href="#cb41-115" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step two: adding a level-one predictor</span></span>
-<span id="cb41-116"><a href="#cb41-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-119"><a href="#cb41-119" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-120"><a href="#cb41-120" aria-hidden="true" tabindex="-1"></a>model_1 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> TSIG <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> COMPID), <span class="at">data =</span> lq2002, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb41-121"><a href="#cb41-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-122"><a href="#cb41-122" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_1)</span>
-<span id="cb41-123"><a href="#cb41-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-124"><a href="#cb41-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-125"><a href="#cb41-125" aria-hidden="true" tabindex="-1"></a>The coefficient for <span class="in">`TSIG`</span> describes how hostility differs between two soldiers who differ by one unit in task significance. Because <span class="in">`TSIG`</span> varies both within and between companies, this estimate blends those two comparisons. We will separate them shortly.</span>
-<span id="cb41-126"><a href="#cb41-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-127"><a href="#cb41-127" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step three: a second level-one predictor</span></span>
-<span id="cb41-128"><a href="#cb41-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-131"><a href="#cb41-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-132"><a href="#cb41-132" aria-hidden="true" tabindex="-1"></a>model_2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> TSIG <span class="sc">+</span> LEAD <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> COMPID), <span class="at">data =</span> lq2002, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb41-133"><a href="#cb41-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-134"><a href="#cb41-134" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_2)</span>
-<span id="cb41-135"><a href="#cb41-135" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-136"><a href="#cb41-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-137"><a href="#cb41-137" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step four: testing an interaction</span></span>
-<span id="cb41-138"><a href="#cb41-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-139"><a href="#cb41-139" aria-hidden="true" tabindex="-1"></a>Does the relationship between task significance and hostility depend on leadership climate? An interaction between two level-one predictors asks exactly that.</span>
-<span id="cb41-140"><a href="#cb41-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-143"><a href="#cb41-143" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-144"><a href="#cb41-144" aria-hidden="true" tabindex="-1"></a>model_3 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> TSIG <span class="sc">*</span> LEAD <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> COMPID), <span class="at">data =</span> lq2002, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb41-145"><a href="#cb41-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-146"><a href="#cb41-146" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_3)</span>
-<span id="cb41-147"><a href="#cb41-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-148"><a href="#cb41-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-149"><a href="#cb41-149" aria-hidden="true" tabindex="-1"></a>Interactions are much easier to understand as pictures than as coefficients:</span>
-<span id="cb41-150"><a href="#cb41-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-153"><a href="#cb41-153" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-154"><a href="#cb41-154" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-interaction</span></span>
-<span id="cb41-155"><a href="#cb41-155" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Predicted hostility across levels of task significance, at low, average, and high leadership climate."</span></span>
-<span id="cb41-156"><a href="#cb41-156" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb41-157"><a href="#cb41-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-158"><a href="#cb41-158" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggeffects)</span>
-<span id="cb41-159"><a href="#cb41-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-160"><a href="#cb41-160" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ggpredict</span>(model_3, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"TSIG"</span>, <span class="st">"LEAD"</span>)))</span>
-<span id="cb41-161"><a href="#cb41-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-162"><a href="#cb41-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-163"><a href="#cb41-163" aria-hidden="true" tabindex="-1"></a>Whether the interaction earns its place in the model is a separate question from whether it is significant. We can test it directly:</span>
-<span id="cb41-164"><a href="#cb41-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-167"><a href="#cb41-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-168"><a href="#cb41-168" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_2, model_3)</span>
-<span id="cb41-169"><a href="#cb41-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-170"><a href="#cb41-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-171"><a href="#cb41-171" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step five: adding level-two predictors</span></span>
-<span id="cb41-172"><a href="#cb41-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-173"><a href="#cb41-173" aria-hidden="true" tabindex="-1"></a><span class="in">`GTSIG`</span> and <span class="in">`GLEAD`</span> are company averages. Adding them alongside the individual-level versions is not redundancy, even though it looks like it at first glance. These two coefficients answer different questions.</span>
-<span id="cb41-174"><a href="#cb41-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-175"><a href="#cb41-175" aria-hidden="true" tabindex="-1"></a>The individual-level coefficient asks: within a given company, do soldiers who report higher task significance report less hostility? The group-level coefficient asks: do companies with higher average task significance have lower hostility overall? A soldier can be high on task significance in a company where everyone is low, or low in a company where everyone is high. Those are different situations, and they can have different consequences.</span>
-<span id="cb41-176"><a href="#cb41-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-179"><a href="#cb41-179" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-180"><a href="#cb41-180" aria-hidden="true" tabindex="-1"></a>model_4 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> TSIG <span class="sc">+</span> LEAD <span class="sc">+</span> GTSIG <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> COMPID), <span class="at">data =</span> lq2002, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb41-181"><a href="#cb41-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-182"><a href="#cb41-182" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_4)</span>
-<span id="cb41-183"><a href="#cb41-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-184"><a href="#cb41-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-187"><a href="#cb41-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-188"><a href="#cb41-188" aria-hidden="true" tabindex="-1"></a>model_5 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> TSIG <span class="sc">+</span> LEAD <span class="sc">+</span> GTSIG <span class="sc">+</span> GLEAD <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> COMPID), <span class="at">data =</span> lq2002, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb41-189"><a href="#cb41-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-190"><a href="#cb41-190" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_5)</span>
-<span id="cb41-191"><a href="#cb41-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-192"><a href="#cb41-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-193"><a href="#cb41-193" aria-hidden="true" tabindex="-1"></a>Watch what happens to the company-level variance as you move from the null model through model 5. Adding level-two predictors should reduce it, because those predictors are explaining some of the between-company differences that the null model could only describe.</span>
-<span id="cb41-194"><a href="#cb41-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-195"><a href="#cb41-195" aria-hidden="true" tabindex="-1"></a><span class="fu">## Presenting the results</span></span>
-<span id="cb41-196"><a href="#cb41-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-197"><a href="#cb41-197" aria-hidden="true" tabindex="-1"></a>Reporting six models one <span class="in">`summary()`</span> at a time is unreadable. A single comparison table is how this belongs in a paper. Older versions of these course materials used <span class="in">`stargazer`</span> for this. That package is no longer maintained and breaks with recent versions of R, so we use <span class="in">`modelsummary`</span> instead.</span>
-<span id="cb41-198"><a href="#cb41-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-201"><a href="#cb41-201" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-202"><a href="#cb41-202" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(</span>
-<span id="cb41-203"><a href="#cb41-203" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
-<span id="cb41-204"><a href="#cb41-204" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Null"</span>    <span class="ot">=</span> model_null,</span>
-<span id="cb41-205"><a href="#cb41-205" aria-hidden="true" tabindex="-1"></a>    <span class="st">"M1"</span>      <span class="ot">=</span> model_1,</span>
-<span id="cb41-206"><a href="#cb41-206" aria-hidden="true" tabindex="-1"></a>    <span class="st">"M2"</span>      <span class="ot">=</span> model_2,</span>
-<span id="cb41-207"><a href="#cb41-207" aria-hidden="true" tabindex="-1"></a>    <span class="st">"M3: Int"</span> <span class="ot">=</span> model_3,</span>
-<span id="cb41-208"><a href="#cb41-208" aria-hidden="true" tabindex="-1"></a>    <span class="st">"M4"</span>      <span class="ot">=</span> model_4,</span>
-<span id="cb41-209"><a href="#cb41-209" aria-hidden="true" tabindex="-1"></a>    <span class="st">"M5"</span>      <span class="ot">=</span> model_5</span>
-<span id="cb41-210"><a href="#cb41-210" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb41-211"><a href="#cb41-211" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"*"</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">"**"</span> <span class="ot">=</span> .<span class="dv">01</span>, <span class="st">"***"</span> <span class="ot">=</span> .<span class="dv">001</span>),</span>
-<span id="cb41-212"><a href="#cb41-212" aria-hidden="true" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">"nobs"</span>, <span class="st">"aic"</span>, <span class="st">"bic"</span>),</span>
-<span id="cb41-213"><a href="#cb41-213" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Multilevel models predicting hostility among U.S. Army soldiers"</span></span>
-<span id="cb41-214"><a href="#cb41-214" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb41-215"><a href="#cb41-215" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-216"><a href="#cb41-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-217"><a href="#cb41-217" aria-hidden="true" tabindex="-1"></a><span class="in">`modelsummary()`</span> will also write this table straight to a Word or LaTeX file, which is worth knowing when you are assembling a manuscript:</span>
-<span id="cb41-218"><a href="#cb41-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-221"><a href="#cb41-221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb41-222"><a href="#cb41-222" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb41-223"><a href="#cb41-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-224"><a href="#cb41-224" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(</span>
-<span id="cb41-225"><a href="#cb41-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">"Null"</span> <span class="ot">=</span> model_null, <span class="st">"M5"</span> <span class="ot">=</span> model_5),</span>
-<span id="cb41-226"><a href="#cb41-226" aria-hidden="true" tabindex="-1"></a>  <span class="at">output =</span> <span class="st">"hostility_models.docx"</span></span>
-<span id="cb41-227"><a href="#cb41-227" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb41-228"><a href="#cb41-228" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb41-229"><a href="#cb41-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-230"><a href="#cb41-230" aria-hidden="true" tabindex="-1"></a><span class="fu">## What to take from this chapter</span></span>
-<span id="cb41-231"><a href="#cb41-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-232"><a href="#cb41-232" aria-hidden="true" tabindex="-1"></a>Three ideas are worth carrying forward. Level-one and level-two versions of the same construct answer different questions and belong in the model together. Variance components tell a story as you build models, and watching them shrink is how you know where your predictors are doing work. And an interaction is much easier to defend when you can show someone the plot.</span>
-<span id="cb41-233"><a href="#cb41-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-234"><a href="#cb41-234" aria-hidden="true" tabindex="-1"></a>In the next chapter we relax an assumption we have been making all along, that the relationship between a predictor and the outcome is identical in every group.</span>
+<div class="sourceCode" id="cb37" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conditional Random Intercept Models</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>**Data for this chapter:** <span class="in">`lq2002.csv`</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>This week, we are going to use data from Gavin and Hofmann (2002), a study on organizational climate and attitudes published in *Leadership Quarterly*. Here, we have individual soldiers nested within companies. This is the same dataset that Garson uses in Chapter 6, so you can recreate his analysis.</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>The structure is the same as students within schools, which is a useful reminder that multilevel modeling is not about education specifically. Anywhere individuals are grouped, these methods apply.</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load some packages to help with the analysis and data management</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load and explore the data</span></span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a>lq2002 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"lq2002.csv"</span>)</span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(lq2002)</span>
+<span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-34"><a href="#cb37-34" aria-hidden="true" tabindex="-1"></a>Remember our old friend <span class="in">`describe`</span> from the <span class="in">`psych`</span> package a few weeks ago? This is a great way to get a detailed summary of all the variables in a dataset.</span>
+<span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-38"><a href="#cb37-38" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-39"><a href="#cb37-39" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(lq2002,</span>
+<span id="cb37-40"><a href="#cb37-40" aria-hidden="true" tabindex="-1"></a>                <span class="at">fast =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-41"><a href="#cb37-41" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-42"><a href="#cb37-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-43"><a href="#cb37-43" aria-hidden="true" tabindex="-1"></a>Writing <span class="in">`psych::describe()`</span> rather than just <span class="in">`describe()`</span> is a small habit worth adopting. Several packages define a function by that name, and the <span class="in">`package::function()`</span> form says exactly which one you mean. If you have <span class="in">`Hmisc`</span> loaded, as we did last week, the unqualified version may not be the one you expect.</span>
+<span id="cb37-44"><a href="#cb37-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-45"><a href="#cb37-45" aria-hidden="true" tabindex="-1"></a>The variables we care about are <span class="in">`HOSTILE`</span> (a hostility scale score, our outcome), <span class="in">`TSIG`</span> (task significance), <span class="in">`LEAD`</span> (leadership climate), and <span class="in">`COMPID`</span> (company, our clustering variable). The variables beginning with <span class="in">`G`</span> are group-level aggregates, which matter later in this chapter.</span>
+<span id="cb37-46"><a href="#cb37-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-47"><a href="#cb37-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Calculating scale scores and Cronbach's alpha</span></span>
+<span id="cb37-48"><a href="#cb37-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-49"><a href="#cb37-49" aria-hidden="true" tabindex="-1"></a>This week, we are going to get a crash course in how to calculate reliability using Cronbach's alpha. The <span class="in">`alpha`</span> function in the <span class="in">`psych`</span> package is a quick and easy way to calculate alpha:</span>
+<span id="cb37-50"><a href="#cb37-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-53"><a href="#cb37-53" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-54"><a href="#cb37-54" aria-hidden="true" tabindex="-1"></a>hostile_items <span class="ot">&lt;-</span> lq2002 <span class="sc">%&gt;%</span></span>
+<span id="cb37-55"><a href="#cb37-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(., HOSTIL01,</span>
+<span id="cb37-56"><a href="#cb37-56" aria-hidden="true" tabindex="-1"></a>         HOSTIL02,</span>
+<span id="cb37-57"><a href="#cb37-57" aria-hidden="true" tabindex="-1"></a>         HOSTIL03,</span>
+<span id="cb37-58"><a href="#cb37-58" aria-hidden="true" tabindex="-1"></a>         HOSTIL04,</span>
+<span id="cb37-59"><a href="#cb37-59" aria-hidden="true" tabindex="-1"></a>         HOSTIL05)</span>
+<span id="cb37-60"><a href="#cb37-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-61"><a href="#cb37-61" aria-hidden="true" tabindex="-1"></a><span class="fu">alpha</span>(hostile_items)</span>
+<span id="cb37-62"><a href="#cb37-62" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-63"><a href="#cb37-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-64"><a href="#cb37-64" aria-hidden="true" tabindex="-1"></a>Alpha appears in the <span class="in">`raw_alpha`</span> column. Conventional cutoffs put acceptable reliability somewhere above .70, though the right threshold depends on what the scale is for and what decisions rest on it.</span>
+<span id="cb37-65"><a href="#cb37-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-66"><a href="#cb37-66" aria-hidden="true" tabindex="-1"></a>The item-level output below the summary is worth reading too. The <span class="in">`r.drop`</span> column shows how each item correlates with the total of the *other* items, and the "Reliability if an item is dropped" table shows what alpha would be without each one. If dropping a single item would raise alpha substantially, that item may be measuring something different from the rest.</span>
+<span id="cb37-67"><a href="#cb37-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-68"><a href="#cb37-68" aria-hidden="true" tabindex="-1"></a>Now, we can create a new variable, <span class="in">`hostile`</span>, that is constructed by taking the mean of our 5 <span class="in">`hostile`</span> items.</span>
+<span id="cb37-69"><a href="#cb37-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-72"><a href="#cb37-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-73"><a href="#cb37-73" aria-hidden="true" tabindex="-1"></a>my.keys.list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">hostile =</span> <span class="fu">c</span>(<span class="st">"HOSTIL01"</span>,<span class="st">"HOSTIL02"</span>,<span class="st">"HOSTIL03"</span>, <span class="st">"HOSTIL04"</span>,<span class="st">"HOSTIL05"</span>))</span>
+<span id="cb37-74"><a href="#cb37-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-75"><a href="#cb37-75" aria-hidden="true" tabindex="-1"></a>my.scales <span class="ot">&lt;-</span> <span class="fu">scoreItems</span>(my.keys.list, lq2002, <span class="at">impute =</span> <span class="st">"none"</span>)</span>
+<span id="cb37-76"><a href="#cb37-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-77"><a href="#cb37-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-78"><a href="#cb37-78" aria-hidden="true" tabindex="-1"></a><span class="in">`impute = "none"`</span> means a respondent missing any item gets a missing scale score rather than having the gap filled in. That is the conservative choice and the right default when you are learning; imputation is a decision that deserves its own justification.</span>
+<span id="cb37-79"><a href="#cb37-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-80"><a href="#cb37-80" aria-hidden="true" tabindex="-1"></a><span class="fu">## Scale reliability estimates for Likert-type scales</span></span>
+<span id="cb37-81"><a href="#cb37-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-84"><a href="#cb37-84" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-85"><a href="#cb37-85" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(my.scales, <span class="at">short =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb37-86"><a href="#cb37-86" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-87"><a href="#cb37-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-88"><a href="#cb37-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## Save scored scales as new variables</span></span>
+<span id="cb37-89"><a href="#cb37-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-92"><a href="#cb37-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-93"><a href="#cb37-93" aria-hidden="true" tabindex="-1"></a>my.scores <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(my.scales<span class="sc">$</span>scores)</span>
+<span id="cb37-94"><a href="#cb37-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-95"><a href="#cb37-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-96"><a href="#cb37-96" aria-hidden="true" tabindex="-1"></a><span class="fu">## Attach the new variable to the old dataset</span></span>
+<span id="cb37-97"><a href="#cb37-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-100"><a href="#cb37-100" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-101"><a href="#cb37-101" aria-hidden="true" tabindex="-1"></a>lq2002<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(lq2002, my.scores)</span>
+<span id="cb37-102"><a href="#cb37-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-103"><a href="#cb37-103" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(lq2002<span class="fl">.1</span>)</span>
+<span id="cb37-104"><a href="#cb37-104" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-105"><a href="#cb37-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-106"><a href="#cb37-106" aria-hidden="true" tabindex="-1"></a><span class="in">`bind_cols()`</span> glues the new column onto the original data by position, so it assumes the rows are in the same order and that nothing was dropped along the way. That holds here because <span class="in">`scoreItems()`</span> returned one score per original row. It is worth being aware of, since a join by ID is safer whenever rows might have been reordered or filtered.</span>
+<span id="cb37-107"><a href="#cb37-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-108"><a href="#cb37-108" aria-hidden="true" tabindex="-1"></a><span class="fu">## Visualizing the key variables</span></span>
+<span id="cb37-109"><a href="#cb37-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-110"><a href="#cb37-110" aria-hidden="true" tabindex="-1"></a>Let's take a look at some of the key variables for our analysis. We have three variables, all of which are scale scores constructed just like the example above.</span>
+<span id="cb37-111"><a href="#cb37-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-114"><a href="#cb37-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-115"><a href="#cb37-115" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-hostile</span></span>
+<span id="cb37-116"><a href="#cb37-116" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribution of hostility scores."</span></span>
+<span id="cb37-117"><a href="#cb37-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-118"><a href="#cb37-118" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(lq2002<span class="sc">$</span>HOSTILE,</span>
+<span id="cb37-119"><a href="#cb37-119" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Distribution of Hostility Scores"</span>,</span>
+<span id="cb37-120"><a href="#cb37-120" aria-hidden="true" tabindex="-1"></a>     <span class="at">sub =</span> <span class="st">"N = 2,042 U.S. Army active duty soliders. Data from Gavin and Hofmann (2002)."</span>,</span>
+<span id="cb37-121"><a href="#cb37-121" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Scaled Hostility Score"</span>)</span>
+<span id="cb37-122"><a href="#cb37-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-123"><a href="#cb37-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-126"><a href="#cb37-126" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-127"><a href="#cb37-127" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-tsig</span></span>
+<span id="cb37-128"><a href="#cb37-128" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribution of task significance scores."</span></span>
+<span id="cb37-129"><a href="#cb37-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-130"><a href="#cb37-130" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(lq2002<span class="sc">$</span>TSIG,</span>
+<span id="cb37-131"><a href="#cb37-131" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Distribution of Task Significance Scores"</span>,</span>
+<span id="cb37-132"><a href="#cb37-132" aria-hidden="true" tabindex="-1"></a>     <span class="at">sub =</span> <span class="st">"N = 2,042 U.S. Army active duty soliders. Data from Gavin and Hofmann (2002)."</span>,</span>
+<span id="cb37-133"><a href="#cb37-133" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Scaled Task Significance Score"</span>)</span>
+<span id="cb37-134"><a href="#cb37-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-135"><a href="#cb37-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-138"><a href="#cb37-138" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-139"><a href="#cb37-139" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-lead</span></span>
+<span id="cb37-140"><a href="#cb37-140" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribution of leadership climate scores."</span></span>
+<span id="cb37-141"><a href="#cb37-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-142"><a href="#cb37-142" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(lq2002<span class="sc">$</span>LEAD,</span>
+<span id="cb37-143"><a href="#cb37-143" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Distribution of Leadership Climate Scores"</span>,</span>
+<span id="cb37-144"><a href="#cb37-144" aria-hidden="true" tabindex="-1"></a>     <span class="at">sub =</span> <span class="st">"N = 2,042 U.S. Army active duty soliders. Data from Gavin and Hofmann (2002)."</span>,</span>
+<span id="cb37-145"><a href="#cb37-145" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Scaled Leadership Climate Score"</span>)</span>
+<span id="cb37-146"><a href="#cb37-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-147"><a href="#cb37-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-148"><a href="#cb37-148" aria-hidden="true" tabindex="-1"></a>Notice the shape of the hostility distribution in particular. It piles up near the low end, which is what you would expect for a measure where most people report very little of the thing. That floor will matter when we interpret coefficients later, because there is limited room to move downward.</span>
+<span id="cb37-149"><a href="#cb37-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-150"><a href="#cb37-150" aria-hidden="true" tabindex="-1"></a><span class="fu">## Running the multilevel models</span></span>
+<span id="cb37-151"><a href="#cb37-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-152"><a href="#cb37-152" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step one: the null model</span></span>
+<span id="cb37-153"><a href="#cb37-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-156"><a href="#cb37-156" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-157"><a href="#cb37-157" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.0</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> (<span class="dv">1</span><span class="sc">|</span>COMPID), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002<span class="fl">.1</span>)</span>
+<span id="cb37-158"><a href="#cb37-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-159"><a href="#cb37-159" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.0</span>)</span>
+<span id="cb37-160"><a href="#cb37-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-161"><a href="#cb37-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-162"><a href="#cb37-162" aria-hidden="true" tabindex="-1"></a>The <span class="in">`(1|COMPID)`</span> term is what makes this multilevel. Everything else follows from it.</span>
+<span id="cb37-163"><a href="#cb37-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-164"><a href="#cb37-164" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Post-estimation task: calculate ICC</span></span>
+<span id="cb37-165"><a href="#cb37-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-166"><a href="#cb37-166" aria-hidden="true" tabindex="-1"></a>Here's a quick and easy way to get our friend the ICC!</span>
+<span id="cb37-167"><a href="#cb37-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-170"><a href="#cb37-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-171"><a href="#cb37-171" aria-hidden="true" tabindex="-1"></a>null.ICC <span class="ot">&lt;-</span> <span class="fl">0.05765</span><span class="sc">/</span>(<span class="fl">0.05765</span> <span class="sc">+</span> <span class="fl">1.01668</span>)</span>
+<span id="cb37-172"><a href="#cb37-172" aria-hidden="true" tabindex="-1"></a>null.ICC</span>
+<span id="cb37-173"><a href="#cb37-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-174"><a href="#cb37-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-175"><a href="#cb37-175" aria-hidden="true" tabindex="-1"></a>Note how much smaller this is than the ICC we found for schools and math achievement in the last chapter. That is substantively interesting rather than a problem. Soldiers' hostility is mostly an individual matter, with companies accounting for a modest share of the variation.</span>
+<span id="cb37-176"><a href="#cb37-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-177"><a href="#cb37-177" aria-hidden="true" tabindex="-1"></a>A small ICC does not mean you should abandon multilevel modeling. It still corrects the standard errors, and it still lets you ask questions about company-level predictors, which is exactly where this chapter is heading.</span>
+<span id="cb37-178"><a href="#cb37-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-179"><a href="#cb37-179" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using `lmerTest` to evaluate random effects</span></span>
+<span id="cb37-180"><a href="#cb37-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-183"><a href="#cb37-183" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-184"><a href="#cb37-184" aria-hidden="true" tabindex="-1"></a>lmerTest<span class="sc">::</span><span class="fu">rand</span>(model<span class="fl">.0</span>)</span>
+<span id="cb37-185"><a href="#cb37-185" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-186"><a href="#cb37-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-187"><a href="#cb37-187" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb37-188"><a href="#cb37-188" aria-hidden="true" tabindex="-1"></a><span class="fu">## `rand()` and `ranova()`</span></span>
+<span id="cb37-189"><a href="#cb37-189" aria-hidden="true" tabindex="-1"></a><span class="in">`lmerTest::rand()`</span> has been renamed <span class="in">`ranova()`</span> in current versions of the package. The old name still works, and it is what the demonstration video shows, so it is kept here. If you see <span class="in">`ranova()`</span> in newer documentation, it is the same function.</span>
+<span id="cb37-190"><a href="#cb37-190" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb37-191"><a href="#cb37-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-192"><a href="#cb37-192" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step two: adding a level-one predictor, `TSIG`</span></span>
+<span id="cb37-193"><a href="#cb37-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-196"><a href="#cb37-196" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-197"><a href="#cb37-197" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> TSIG <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>COMPID), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002<span class="fl">.1</span>)</span>
+<span id="cb37-198"><a href="#cb37-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-199"><a href="#cb37-199" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.1</span>)</span>
+<span id="cb37-200"><a href="#cb37-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-201"><a href="#cb37-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-202"><a href="#cb37-202" aria-hidden="true" tabindex="-1"></a>The coefficient for <span class="in">`TSIG`</span> describes how hostility differs between two soldiers who differ by one unit in task significance. Because <span class="in">`TSIG`</span> varies both within companies and between them, this single estimate blends two different comparisons. We separate them in step five.</span>
+<span id="cb37-203"><a href="#cb37-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-204"><a href="#cb37-204" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step three: adding an additional level-one predictor, `LEAD`</span></span>
+<span id="cb37-205"><a href="#cb37-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-208"><a href="#cb37-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-209"><a href="#cb37-209" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> TSIG <span class="sc">+</span> LEAD <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>COMPID), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002<span class="fl">.1</span>)</span>
+<span id="cb37-210"><a href="#cb37-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-211"><a href="#cb37-211" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.2</span>)</span>
+<span id="cb37-212"><a href="#cb37-212" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-213"><a href="#cb37-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-214"><a href="#cb37-214" aria-hidden="true" tabindex="-1"></a>Watch what happens to the <span class="in">`TSIG`</span> coefficient when <span class="in">`LEAD`</span> enters. Soldiers who find their work meaningful also tend to report better leadership climate, so some of what model 1 attributed to task significance was partly leadership.</span>
+<span id="cb37-215"><a href="#cb37-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-216"><a href="#cb37-216" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step four: testing the interaction of `LEAD` and `TSIG`</span></span>
+<span id="cb37-217"><a href="#cb37-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-220"><a href="#cb37-220" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-221"><a href="#cb37-221" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> TSIG <span class="sc">+</span> LEAD <span class="sc">+</span> TSIG<span class="sc">:</span>LEAD <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>COMPID), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002<span class="fl">.1</span>)</span>
+<span id="cb37-222"><a href="#cb37-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-223"><a href="#cb37-223" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.3</span>)</span>
+<span id="cb37-224"><a href="#cb37-224" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-225"><a href="#cb37-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-226"><a href="#cb37-226" aria-hidden="true" tabindex="-1"></a>The <span class="in">`:`</span> operator specifies an interaction. Writing <span class="in">`TSIG + LEAD + TSIG:LEAD`</span> includes both main effects plus their interaction. The shorthand <span class="in">`TSIG*LEAD`</span> does the same thing, and the longer form makes the structure visible, which is why it is worth writing out while you are learning.</span>
+<span id="cb37-227"><a href="#cb37-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-228"><a href="#cb37-228" aria-hidden="true" tabindex="-1"></a>An interaction here asks whether the relationship between task significance and hostility depends on leadership climate. Both predictors are at level 1, so this is a *within-level* interaction. In the next chapter we look at cross-level interactions, where a level-2 variable moderates a level-1 slope.</span>
+<span id="cb37-229"><a href="#cb37-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-230"><a href="#cb37-230" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step five: adding a level-two predictor, `GTSIG`</span></span>
+<span id="cb37-231"><a href="#cb37-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-234"><a href="#cb37-234" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-235"><a href="#cb37-235" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> TSIG <span class="sc">+</span> LEAD <span class="sc">+</span> GTSIG <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>COMPID), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002<span class="fl">.1</span>)</span>
+<span id="cb37-236"><a href="#cb37-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-237"><a href="#cb37-237" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.4</span>)</span>
+<span id="cb37-238"><a href="#cb37-238" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-239"><a href="#cb37-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-240"><a href="#cb37-240" aria-hidden="true" tabindex="-1"></a><span class="in">`GTSIG`</span> is the company average of task significance. Having both <span class="in">`TSIG`</span> and <span class="in">`GTSIG`</span> in the model is not redundancy, even though it looks that way at first. The two coefficients answer different questions.</span>
+<span id="cb37-241"><a href="#cb37-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-242"><a href="#cb37-242" aria-hidden="true" tabindex="-1"></a>The individual-level coefficient asks: within a given company, do soldiers who report higher task significance report less hostility? The group-level coefficient asks: do companies where task significance is high on average have lower hostility overall? A soldier can be high on task significance in a company where everyone is low, or low in a company where everyone is high. Those are genuinely different situations and can have different consequences.</span>
+<span id="cb37-243"><a href="#cb37-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-244"><a href="#cb37-244" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step six: adding a second level-two predictor, `GLEAD`</span></span>
+<span id="cb37-245"><a href="#cb37-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-248"><a href="#cb37-248" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-249"><a href="#cb37-249" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> TSIG <span class="sc">+</span> LEAD <span class="sc">+</span> GTSIG <span class="sc">+</span> GLEAD <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>COMPID), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002<span class="fl">.1</span>)</span>
+<span id="cb37-250"><a href="#cb37-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-251"><a href="#cb37-251" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.5</span>)</span>
+<span id="cb37-252"><a href="#cb37-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-253"><a href="#cb37-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-254"><a href="#cb37-254" aria-hidden="true" tabindex="-1"></a>Track the company-level variance as you move from the null model through model 5. It should shrink as level-2 predictors enter, because those predictors are explaining between-company differences the null model could only describe. That shrinkage is the clearest signal that a level-2 predictor is doing real work.</span>
+<span id="cb37-255"><a href="#cb37-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-256"><a href="#cb37-256" aria-hidden="true" tabindex="-1"></a><span class="fu">## Should we include that interaction? Comparing `model.2` with `model.3`</span></span>
+<span id="cb37-257"><a href="#cb37-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-260"><a href="#cb37-260" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-261"><a href="#cb37-261" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model<span class="fl">.2</span>, model<span class="fl">.3</span>)</span>
+<span id="cb37-262"><a href="#cb37-262" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-263"><a href="#cb37-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-264"><a href="#cb37-264" aria-hidden="true" tabindex="-1"></a><span class="in">`anova()`</span> on two <span class="in">`lmer`</span> objects performs a likelihood ratio test. It is valid here because both models were fit with <span class="in">`REML = FALSE`</span>, that is, with maximum likelihood. Comparing REML-fitted models that differ in their fixed effects is not valid, which is one reason we use ML throughout this book.</span>
+<span id="cb37-265"><a href="#cb37-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-266"><a href="#cb37-266" aria-hidden="true" tabindex="-1"></a><span class="fu">## Using `modelsummary` and `broom.mixed` to organize your results</span></span>
+<span id="cb37-267"><a href="#cb37-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-270"><a href="#cb37-270" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-271"><a href="#cb37-271" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb37-272"><a href="#cb37-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-273"><a href="#cb37-273" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb37-274"><a href="#cb37-274" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.mixed)</span>
+<span id="cb37-275"><a href="#cb37-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-276"><a href="#cb37-276" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(model<span class="fl">.0</span>, model<span class="fl">.1</span>, model<span class="fl">.2</span>, model<span class="fl">.3</span>, model<span class="fl">.4</span>, model<span class="fl">.5</span>)</span>
+<span id="cb37-277"><a href="#cb37-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-278"><a href="#cb37-278" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models)</span>
+<span id="cb37-279"><a href="#cb37-279" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-280"><a href="#cb37-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-281"><a href="#cb37-281" aria-hidden="true" tabindex="-1"></a>Reporting six models one <span class="in">`summary()`</span> at a time is unreadable. A single comparison table is how this belongs in a paper, and reading across the columns is how you see what each addition changed.</span>
+<span id="cb37-282"><a href="#cb37-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-283"><a href="#cb37-283" aria-hidden="true" tabindex="-1"></a><span class="in">`broom.mixed`</span> is what makes this work. <span class="in">`modelsummary`</span> knows how to format tables, but it relies on <span class="in">`broom.mixed`</span> to translate <span class="in">`lmer`</span> objects into tidy data frames first. Load it even though you never call it directly.</span>
+<span id="cb37-284"><a href="#cb37-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-285"><a href="#cb37-285" aria-hidden="true" tabindex="-1"></a><span class="fu">## HTML version that you can open in Word</span></span>
+<span id="cb37-286"><a href="#cb37-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-289"><a href="#cb37-289" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-290"><a href="#cb37-290" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb37-291"><a href="#cb37-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-292"><a href="#cb37-292" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models, <span class="at">output =</span> <span class="st">'msum.html'</span>, <span class="at">title =</span> <span class="st">'MLM Estimates'</span>)</span>
+<span id="cb37-293"><a href="#cb37-293" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-294"><a href="#cb37-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-295"><a href="#cb37-295" aria-hidden="true" tabindex="-1"></a>This writes the table to a file in your working directory. Word opens HTML tables directly, so you can generate this, open it in Word, and paste it into a manuscript. <span class="in">`modelsummary`</span> will also write <span class="in">`.docx`</span> directly if you prefer: change the extension to <span class="in">`msum.docx`</span>.</span>
+<span id="cb37-296"><a href="#cb37-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-297"><a href="#cb37-297" aria-hidden="true" tabindex="-1"></a><span class="fu">## What to take from this chapter</span></span>
+<span id="cb37-298"><a href="#cb37-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-299"><a href="#cb37-299" aria-hidden="true" tabindex="-1"></a>Three ideas carry forward. Level-1 and level-2 versions of the same construct answer different questions and belong in the model together. Variance components tell a story as you build up models, and watching them shrink shows where your predictors are doing work. And a series of models belongs in one table, not six.</span>
+<span id="cb37-300"><a href="#cb37-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-301"><a href="#cb37-301" aria-hidden="true" tabindex="-1"></a>The next chapter relaxes an assumption we have been making all along: that the relationship between a predictor and the outcome is the same in every company.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

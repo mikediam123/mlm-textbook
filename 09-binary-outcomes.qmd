@@ -1,175 +1,299 @@
-# Generalized Multilevel Models for Binary Outcomes
+# Binary and Generalized Linear Mixed Models
 
-**Data for this chapter:** `school_belonging.csv`
+**Data for this chapter:** `nsch_2018_topical.dta`
 
 ::: {.callout-note}
 ## Data file needed
-Copy `school_belonging.csv` into this project folder before rendering.
+Copy `nsch_2018_topical.dta` into this project folder before rendering.
 :::
 
-Not every outcome is continuous. When the thing you are predicting is yes or no, present or absent, the linear model is the wrong tool, and we move to generalized linear mixed models. These data cover 6,528 middle school students in 122 schools, with a binary indicator of whether each student reports a strong sense of belonging at school.
+This week, we will look at the 2018 National Survey of Children's Health, available at <https://www.census.gov/data/datasets/2018/demo/nsch/nsch2018.html>.
+
+Not every outcome is continuous. When the thing you are predicting is yes or no, the linear model is the wrong tool, and we move to generalized linear mixed models. Here the outcome is whether a child has asthma, and children are nested within states.
+
+## Load in our MVP packages
 
 ```{r}
 #| label: setup
 #| message: false
 
-library(tidyverse)
+suppressPackageStartupMessages(library(tidyverse))
 library(lme4)
-library(performance)
-library(modelsummary)
-library(ggeffects)
+library(Hmisc)
 ```
+
+## Part 1: loading in the data, and then recoding variables
+
+### Load in the data
 
 ```{r}
-#| message: false
+nsch <- haven::read_dta("nsch_2018_topical.dta")
 
-belong <- read_csv("school_belonging.csv")
-
-glimpse(belong)
+glimpse(nsch)
 ```
+
+This is a large file with a great many variables, which is typical of national survey data. You will almost never use more than a handful, which is what the next step is for.
+
+### The `select` function is really useful, especially with really big datasets
+
+First, we narrow down the data by selecting only the variables we need. Then, we use the `as_factor` function to convert all variables to factors ahead of time.
 
 ```{r}
-belong |>
-  count(school_belonging) |>
-  mutate(proportion = n / sum(n))
+nsch.2 <- nsch %>%
+  select(.,
+         fipsst,
+         hhid,
+         k2q40a,
+         k9q41,
+         mold,
+         physactiv) %>%
+  as_factor()
+
+glimpse(nsch.2)
 ```
 
-## The null model
+Two things worth noting. Survey variables often carry uninformative names like `k2q40a`, which is why the codebook is essential and why we rename them shortly. And applying `as_factor()` to the whole data frame at once converts every labelled variable using the labels that came with the file, which saves doing it one at a time.
 
-The function changes from `lmer()` to `glmer()`, and we specify a family and link.
+`fipsst` is the state FIPS code, and it is our clustering variable. `hhid` identifies households.
+
+### The `table` function is a great way to figure out how variables are labelled
 
 ```{r}
-m_null <- glmer(school_belonging ~ 1 + (1 | school_id),
-                family = binomial(link = "logit"),
-                data = belong)
-
-summary(m_null)
+table(nsch.2$k2q40a)
+table(nsch.2$k9q41)
+table(nsch.2$physactiv)
+table(nsch.2$mold)
 ```
 
-## The ICC, with a wrinkle
+Do this before anything else. Large surveys encode several kinds of non-response as ordinary categories, and if you skip this step those categories quietly become levels in your model.
 
-In a linear model we computed the ICC from two estimated variances. In a logistic model there is no estimated level-one variance, because for a binary outcome the residual variance is determined by the mean. The standard solution fixes it at $\pi^2/3 \approx 3.29$, the variance of the standard logistic distribution:
-
-$$\text{ICC} = \frac{\tau_{00}}{\tau_{00} + \pi^2/3}$$
+### Now, we can use `filter` to only keep observations that have valid categories
 
 ```{r}
-vc <- as.data.frame(VarCorr(m_null))
-tau00 <- vc$vcov[vc$grp == "school_id"]
+nsch.2.clean <- nsch.2 %>%
+  filter(!(k2q40a %in%
+                  c("No valid response", "Suppressed for confidentiality", "Not in universe", "Logical skip"))) %>%
+  filter(!(k9q41 %in%
+                  c("No valid response", "Suppressed for confidentiality", "Not in universe", "Logical skip"))) %>%
+filter(!(physactiv %in%
+                  c("No valid response", "Suppressed for confidentiality", "Not in universe", "Logical skip"))) %>%
+filter(!(mold %in%
+                  c("No valid response", "Suppressed for confidentiality", "Not in universe", "Logical skip"))) %>%
+  rename(.,
+        asthma = k2q40a,
+        smoke_house = k9q41) %>%
+  mutate(.,
+         asthma.num = as.numeric(asthma),
+         asthma.recode = case_when(
+           asthma.num == 2 ~ 0,
+           asthma.num == 1 ~ 1
+         ))
 
-icc_logistic <- tau00 / (tau00 + (pi^2 / 3))
-icc_logistic
+glimpse(nsch.2.clean)
 ```
+
+Three operations chained together. The `filter()` calls drop rows where any of our four variables carries a non-response code. The `rename()` gives the two cryptic variables readable names. The `mutate()` builds the outcome.
+
+That last step deserves unpacking, because it is doing something specific. `glmer()` needs a 0/1 numeric outcome, but our factor has levels in the order "Yes", "No", which `as.numeric()` turns into 1 and 2. So `case_when()` maps 1 to 1 and 2 to 0, giving us the 0/1 coding the model requires with 1 meaning the child has asthma.
+
+Always verify a recode rather than assuming it:
 
 ```{r}
-performance::icc(m_null)
+table(nsch.2.clean$asthma, nsch.2.clean$asthma.recode)
 ```
 
-Because that level-one variance is assumed rather than estimated, the logistic ICC is on a latent scale and is not directly comparable to an ICC from a linear model. Treat it as a rough indication of clustering, not as a precise proportion of variance in the observed outcome.
+A cross-tabulation of the original against the recoded version is the fastest way to confirm the mapping went the direction you intended. Reversed coding here would flip the sign of every coefficient in the chapter.
 
-## Student-level predictors
+Note also how many rows the filtering removed. Listwise dropping across four variables adds up, and the analysis sample is what your results describe.
+
+### The `describe` function from `Hmisc` is a nice codebook
 
 ```{r}
-m_l1 <- glmer(school_belonging ~ peer_inclusivity + teacher_support +
-                community_activities + (1 | school_id),
-              family = binomial(link = "logit"),
-              data = belong)
-
-summary(m_l1)
+Hmisc::describe(nsch.2.clean)
 ```
 
-Coefficients from `glmer()` are on the log-odds scale, which almost nobody reads intuitively. Exponentiate to get odds ratios:
+## Part 2: multilevel logistic regression models
+
+### We use `glmer` instead of `lmer` now that we have a binary outcome
 
 ```{r}
-exp(fixef(m_l1))
+model.null <- glmer(asthma.recode ~ (1|fipsst), family = binomial, data = nsch.2.clean)
+
+summary(model.null)
 ```
+
+Two changes from everything so far: the function is `glmer()` rather than `lmer()`, and we specify `family = binomial`, which tells R the outcome is 0/1 and to use a logit link. Everything else about the syntax is the same.
+
+#### Calculate ICC for logistic regression (L1 random variance is fixed)
 
 ```{r}
-#| message: false
-#| warning: false
-
-exp(confint(m_l1, method = "Wald"))
+null.icc <- 0.01808/(0.01808 + (pi^2/3))
+null.icc
 ```
 
-### Saying it correctly
+The parenthetical in that heading is the important part. In a linear model we compute the ICC from two *estimated* variances. In a logistic model there is no estimated level-1 variance, because for a binary outcome the variance is determined by the mean. The standard solution fixes it at $\pi^2/3$, roughly 3.29, which is the variance of the standard logistic distribution.
 
-An odds ratio of 2.4 for peer inclusivity means the *odds* of reporting strong belonging are 2.4 times higher for students who perceive their peers as inclusive, holding the other predictors constant and comparing students within the same school.
+Because that denominator term is assumed rather than estimated, the logistic ICC lives on a latent scale and is not directly comparable to an ICC from a linear model. Treat it as a rough indication of clustering rather than a precise proportion of variance in the observed outcome.
 
-It does not mean those students are 2.4 times more *likely* to feel belonging. Odds and probability are different quantities, and they diverge sharply when outcomes are common. If the baseline probability is 50 percent, an odds ratio of 2.4 corresponds to about 71 percent, not 120 percent, which would be impossible. The looser phrasing is only approximately right when the outcome is rare, and it is worth avoiding entirely.
-
-## A school-level predictor
+### Let's add a L1 predictor, whether anyone smokes in the house
 
 ```{r}
-m_l2 <- glmer(school_belonging ~ peer_inclusivity + teacher_support +
-                community_activities + small_school + (1 | school_id),
-              family = binomial(link = "logit"),
-              data = belong)
+model.2 <- glmer(asthma.recode ~ smoke_house + (1|fipsst), family = binomial, data = nsch.2.clean)
 
-summary(m_l2)
-exp(fixef(m_l2))
+summary(model.2)
 ```
 
-Before interpreting the school-size coefficient causally, consider what else varies with school size. Small schools differ from large ones in funding, urbanicity, student composition, and staffing. Any of those could produce an association between size and belonging without size itself doing the work.
+These estimates are logit coefficients. Long story short, negative numbers suggest lower odds relative to the reference group, and positive numbers suggest higher odds. So here, we would say that children in houses without a smoker have lower odds of having asthma. But that's about all we can say without some more math.
 
-## Predicted probabilities
-
-This is the step that makes generalized models communicable. Rather than asking your reader to think in odds ratios, compute the predicted probability for specific student profiles.
+We can exponentiate this coefficient to get an odds ratio, which makes things a little easier to interpret.
 
 ```{r}
-ggpredict(m_l2, terms = c("peer_inclusivity", "teacher_support"))
+smoke.odds.ratio <- exp(-0.3877)
+smoke.odds.ratio
 ```
+
+When the OR is less than one (.68 in this case), we subtract 1 − OR which equals .32. This means that for children in houses without a smoker, the odds of having asthma are 32% lower than for children who live in houses with a smoker.
+
+::: {.callout-warning}
+## Odds are not probabilities
+"32% lower odds" is not the same as "32% less likely," and the two diverge sharply when an outcome is common. Odds are p/(1−p); probability is p. An odds ratio of 0.68 corresponds to different probability differences depending on where you start.
+
+The looser phrasing is only approximately right when the outcome is rare, and it is worth avoiding entirely. This is why the predicted probabilities below matter so much for communicating results.
+:::
+
+We can also get predicted probabilities associated with each estimate. To do this, we need to add up the logits and plug them into the formula below:
 
 ```{r}
-#| label: fig-probs
-#| fig-cap: "Predicted probability of strong school belonging by peer inclusivity and teacher support."
+# Predicted probability for child in house with smoker (logit = -1.2380)
 
-plot(ggpredict(m_l2, terms = c("peer_inclusivity", "teacher_support")))
+exp(-1.2380)/(1+exp(-1.2380))
 ```
 
-You can also compute specific contrasts by hand. The inverse logit function, `plogis()`, converts log-odds back to probabilities:
+So, for a child in a house with a smoker, the predicted probability of having asthma is 22%.
+
+What about for a child in a house that doesn't have a smoker?
 
 ```{r}
-# A student with all supports, in a small school
-profile_high <- data.frame(
-  peer_inclusivity = 1, teacher_support = 1,
-  community_activities = 1, small_school = 1, school_id = NA
-)
+# Predicted probability for child in house without smoker (logit = -1.2380 + -0.3877 = -1.6257)
 
-# A student with none, in a large school
-profile_low <- data.frame(
-  peer_inclusivity = 0, teacher_support = 0,
-  community_activities = 0, small_school = 0, school_id = NA
-)
-
-predict(m_l2, newdata = profile_high, type = "response", re.form = NA)
-predict(m_l2, newdata = profile_low,  type = "response", re.form = NA)
+exp(-1.6257)/(1+exp(-1.6257))
 ```
 
-Setting `re.form = NA` asks for the prediction for a typical school rather than for any particular one. That is usually what you want when describing a general pattern.
+For a child in a house without a smoker, the predicted probability of having asthma is 16%.
 
-The difference between those two probabilities is the number to lead with when talking to a principal. It says what fraction of students in each situation we expect to feel they belong, in units anyone can act on.
+That formula, $e^x/(1+e^x)$, is the inverse logit. It converts a log-odds back into a probability. R has it built in as `plogis()`, so `plogis(-1.6257)` gives the same answer, but writing it out once makes clear what is happening.
 
-## Reporting
+Notice the arithmetic in the comment: you build the logit for a profile by *adding up* the relevant coefficients, starting from the intercept. The intercept alone describes a child in the reference category on every predictor.
+
+### Now add another L1 predictor, `mold`
 
 ```{r}
-modelsummary(
-  list("Null" = m_null, "Student level" = m_l1, "+ School size" = m_l2),
-  exponentiate = TRUE,
-  stars = c("*" = .05, "**" = .01, "***" = .001),
-  gof_map = c("nobs", "aic", "bic"),
-  title = "Multilevel logistic models predicting strong school belonging (odds ratios)"
-)
+model.3 <- glmer(asthma.recode ~ smoke_house + mold + (1|fipsst), family = binomial, data = nsch.2.clean)
+
+summary(model.3)
 ```
 
-Setting `exponentiate = TRUE` puts the table on the odds ratio scale. Label the column clearly, because a reader who assumes log-odds will misread every number in it.
+The estimate for `smoke_house` looks very similar (−.35). So the calculations we ran for the first model (ORs, predicted probabilities) would still hold. But we can do the same thing for the `mold` variable.
+
+First, we can exponentiate the coefficient to get an odds ratio:
+
+```{r}
+mold.odds.ratio <- exp(-0.4672)
+mold.odds.ratio
+```
+
+Pretty similar to smoke! So the odds of having asthma for a child in a house without mold (`mold` = No) are about 37 percent lower than the odds for a child in a house with mold.
+
+We can also get predicted probabilities associated with each estimate:
+
+```{r}
+# Predicted probability for child in house with mold AND smoker (this is the intercept) (logit = -0.8724)
+
+exp(-0.8724)/(1+exp(-0.8724))
+```
+
+So, for a child in a house with a smoker AND mold, the predicted probability of having asthma is 29%.
+
+What about for a child in a house that doesn't have a smoker OR mold?
+
+```{r}
+# Predicted probability for child in house without smoker (logit = -0.8724 + -0.3590 + -0.4603 = -1.6917)
+
+exp(-1.6917)/(1+exp(-1.6917))
+```
+
+For a child in a house without a smoker OR mold, the predicted probability of having asthma is 15%. Other combinations can be found by adding or removing the logits for each coefficient.
+
+That contrast, 29% against 15%, is the number to lead with when talking to a non-technical audience. It says what fraction of children in each situation we expect to have asthma, in units anyone can act on. No audience outside a statistics seminar will do anything useful with an odds ratio.
+
+### Now add a third L1 predictor, `physactiv`
+
+```{r}
+model.4 <- glmer(asthma.recode ~ smoke_house + mold + physactiv + (1|fipsst), family = binomial, data = nsch.2.clean)
+
+summary(model.4)
+```
+
+### How about a `mold` by `smoke_house` interaction?
+
+```{r}
+model.5 <- glmer(asthma.recode ~ smoke_house + mold + smoke_house:mold + (1|fipsst), family = binomial, data = nsch.2.clean)
+
+summary(model.5)
+```
+
+Interactions in logistic models carry an extra wrinkle worth knowing about. Because the logit scale is nonlinear, two predictors can interact on the probability scale even when the interaction coefficient is zero, and vice versa. If the substantive question is about probabilities, check predicted probabilities for each combination rather than relying on the coefficient alone.
+
+### Same thing, PLUS adding a random slope for `mold`
+
+```{r}
+model.6 <- glmer(asthma.recode ~ smoke_house + mold + (mold|fipsst), family = binomial, data = nsch.2.clean)
+
+summary(model.6)
+```
+
+This asks whether the association between household mold and asthma differs from state to state, which is plausible: climate, housing stock, and building codes all vary.
+
+### Should we keep that random slope? `rand` won't work with GLMMs, but we can compare AIC and BIC
+
+Here, we see that both AIC and BIC went up, which is not a good sign. We probably don't need the random slopes.
+
+```{r}
+model.6.aic <- 3045.1
+model.6.bic <- 3081.8
+
+model.5.aic <- 3042.7
+model.5.bic <- 3073.2
+
+model.6.aic - model.5.aic
+
+model.6.bic - model.5.bic
+```
+
+Both differences are positive, meaning the simpler model fits better once complexity is penalized. When AIC and BIC agree, as they do here, the decision is easy. Chapter 6 covers what to do when they disagree.
 
 ::: {.callout-tip}
-## If the model runs slowly or will not converge
-`glmer()` uses numerical approximation and is considerably more temperamental than `lmer()`. A different optimizer often fixes convergence warnings:
+## If `glmer` is slow or will not converge
+`glmer()` uses numerical approximation and is considerably more temperamental than `lmer()`. Convergence warnings are common, especially with random slopes. A different optimizer often resolves them:
 
 ```r
-m <- glmer(y ~ x + (1 | group), family = binomial, data = d,
-           control = glmerControl(optimizer = "bobyqa",
-                                  optCtrl = list(maxfun = 100000)))
+glmer(y ~ x + (1 | group), family = binomial, data = d,
+      control = glmerControl(optimizer = "bobyqa",
+                             optCtrl = list(maxfun = 100000)))
 ```
-Increasing `nAGQ` improves accuracy at the cost of speed, but is only available for models with a single random effect.
 :::
+
+## Using `modelsummary` and `broom.mixed` to organize your results
+
+```{r}
+#| message: false
+
+library(modelsummary)
+library(broom.mixed)
+
+models1 <- list(model.null, model.2, model.3, model.4, model.5, model.6)
+
+modelsummary(models1, output = "markdown")
+```
+
+By default this table reports log-odds, the raw coefficients. If you want odds ratios instead, add `exponentiate = TRUE`, and label the column clearly so a reader does not assume log-odds.

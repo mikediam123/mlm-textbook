@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.361">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
-<title>Applied Multilevel Modeling in R - 5&nbsp; Random Slope and Coefficient Models</title>
+<title>Applied Multilevel Modeling in R - 5&nbsp; Random Slope Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -99,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-null-model.html">Two-Level Models</a></li><li class="breadcrumb-item"><a href="./05-random-slopes.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope and Coefficient Models</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-null-model.html">Two-Level Models</a></li><li class="breadcrumb-item"><a href="./05-random-slopes.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -193,7 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-random-slopes.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope and Coefficient Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -221,14 +221,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08-growth-curves.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Longitudinal and Growth Curve Models</span></span></a>
+  <a href="./08a-growth-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08b-growth-advanced.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-binary-outcomes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Generalized Multilevel Models for Binary Outcomes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -245,13 +251,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Assessing Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-cross-classified.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Cross-Classified Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -270,33 +276,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#data-management-calculating-cluster-means" id="toc-data-management-calculating-cluster-means" class="nav-link active" data-scroll-target="#data-management-calculating-cluster-means"><span class="header-section-number">5.1</span> Data management: calculating cluster means</a></li>
-  <li><a href="#step-one-the-preferred-model-without-random-slopes" id="toc-step-one-the-preferred-model-without-random-slopes" class="nav-link" data-scroll-target="#step-one-the-preferred-model-without-random-slopes"><span class="header-section-number">5.2</span> Step one: the preferred model without random slopes</a></li>
+<li><a href="#load-some-packages-to-help-with-the-analysis-and-data-management" id="toc-load-some-packages-to-help-with-the-analysis-and-data-management" class="nav-link active" data-scroll-target="#load-some-packages-to-help-with-the-analysis-and-data-management"><span class="header-section-number">5.1</span> Load some packages to help with the analysis and data management</a></li>
+  <li><a href="#load-and-explore-the-data" id="toc-load-and-explore-the-data" class="nav-link" data-scroll-target="#load-and-explore-the-data"><span class="header-section-number">5.2</span> Load and explore the data</a></li>
+  <li><a href="#data-management-tip-of-the-week-calculating-group-cluster-means" id="toc-data-management-tip-of-the-week-calculating-group-cluster-means" class="nav-link" data-scroll-target="#data-management-tip-of-the-week-calculating-group-cluster-means"><span class="header-section-number">5.3</span> Data management tip of the week: calculating group (cluster) means</a></li>
   <li>
-<a href="#step-two-add-a-random-slope-for-tsig" id="toc-step-two-add-a-random-slope-for-tsig" class="nav-link" data-scroll-target="#step-two-add-a-random-slope-for-tsig"><span class="header-section-number">5.3</span> Step two: add a random slope for TSIG</a>
+<a href="#running-random-slopes-models" id="toc-running-random-slopes-models" class="nav-link" data-scroll-target="#running-random-slopes-models"><span class="header-section-number">5.4</span> Running random slopes models</a>
   <ul class="collapse">
-<li><a href="#reading-the-singular-fit" id="toc-reading-the-singular-fit" class="nav-link" data-scroll-target="#reading-the-singular-fit"><span class="header-section-number">5.3.1</span> Reading the singular fit</a></li>
+<li><a href="#step-one-run-your-preferred-model-without-random-slopes" id="toc-step-one-run-your-preferred-model-without-random-slopes" class="nav-link" data-scroll-target="#step-one-run-your-preferred-model-without-random-slopes"><span class="header-section-number">5.4.1</span> Step one: run your preferred model <em>without</em> random slopes</a></li>
+  <li><a href="#step-two-add-a-random-slope-for-tsig" id="toc-step-two-add-a-random-slope-for-tsig" class="nav-link" data-scroll-target="#step-two-add-a-random-slope-for-tsig"><span class="header-section-number">5.4.2</span> Step two: add a random slope for TSIG</a></li>
+  <li><a href="#using-lmertest-to-evaluate-random-slope" id="toc-using-lmertest-to-evaluate-random-slope" class="nav-link" data-scroll-target="#using-lmertest-to-evaluate-random-slope"><span class="header-section-number">5.4.3</span> Using <code>lmerTest</code> to evaluate random slope</a></li>
+  <li><a href="#step-three-add-a-random-slope-for-lead" id="toc-step-three-add-a-random-slope-for-lead" class="nav-link" data-scroll-target="#step-three-add-a-random-slope-for-lead"><span class="header-section-number">5.4.4</span> Step three: add a random slope for LEAD</a></li>
+  <li><a href="#using-lmertest-to-evaluate-random-slope-1" id="toc-using-lmertest-to-evaluate-random-slope-1" class="nav-link" data-scroll-target="#using-lmertest-to-evaluate-random-slope-1"><span class="header-section-number">5.4.5</span> Using <code>lmerTest</code> to evaluate random slope</a></li>
   </ul>
 </li>
-  <li><a href="#evaluating-the-random-slope" id="toc-evaluating-the-random-slope" class="nav-link" data-scroll-target="#evaluating-the-random-slope"><span class="header-section-number">5.4</span> Evaluating the random slope</a></li>
-  <li><a href="#step-three-add-a-random-slope-for-lead" id="toc-step-three-add-a-random-slope-for-lead" class="nav-link" data-scroll-target="#step-three-add-a-random-slope-for-lead"><span class="header-section-number">5.5</span> Step three: add a random slope for LEAD</a></li>
   <li>
-<a href="#a-cross-level-interaction" id="toc-a-cross-level-interaction" class="nav-link" data-scroll-target="#a-cross-level-interaction"><span class="header-section-number">5.6</span> A cross-level interaction</a>
+<a href="#getting-fancy-modeling-a-cross-level-interaction" id="toc-getting-fancy-modeling-a-cross-level-interaction" class="nav-link" data-scroll-target="#getting-fancy-modeling-a-cross-level-interaction"><span class="header-section-number">5.5</span> Getting fancy: modeling a cross-level interaction</a>
   <ul class="collapse">
-<li><a href="#center-the-predictors-first" id="toc-center-the-predictors-first" class="nav-link" data-scroll-target="#center-the-predictors-first"><span class="header-section-number">5.6.1</span> Center the predictors first</a></li>
-  <li><a href="#fit-and-interpret" id="toc-fit-and-interpret" class="nav-link" data-scroll-target="#fit-and-interpret"><span class="header-section-number">5.6.2</span> Fit and interpret</a></li>
-  <li><a href="#should-we-keep-the-interaction" id="toc-should-we-keep-the-interaction" class="nav-link" data-scroll-target="#should-we-keep-the-interaction"><span class="header-section-number">5.6.3</span> Should we keep the interaction?</a></li>
-  <li><a href="#visualizing-it" id="toc-visualizing-it" class="nav-link" data-scroll-target="#visualizing-it"><span class="header-section-number">5.6.4</span> Visualizing it</a></li>
+<li><a href="#step-one-create-centered-versions-of-your-two-predictors" id="toc-step-one-create-centered-versions-of-your-two-predictors" class="nav-link" data-scroll-target="#step-one-create-centered-versions-of-your-two-predictors"><span class="header-section-number">5.5.1</span> Step one: create centered versions of your two predictors</a></li>
+  <li><a href="#step-two-run-the-mlm-and-interpret-the-results" id="toc-step-two-run-the-mlm-and-interpret-the-results" class="nav-link" data-scroll-target="#step-two-run-the-mlm-and-interpret-the-results"><span class="header-section-number">5.5.2</span> Step two: run the MLM and interpret the results</a></li>
   </ul>
 </li>
-  <li><a href="#organizing-the-results" id="toc-organizing-the-results" class="nav-link" data-scroll-target="#organizing-the-results"><span class="header-section-number">5.7</span> Organizing the results</a></li>
-  <li><a href="#a-note-on-your-content-review" id="toc-a-note-on-your-content-review" class="nav-link" data-scroll-target="#a-note-on-your-content-review"><span class="header-section-number">5.8</span> A note on your content review</a></li>
+  <li><a href="#interaction-effects-model" id="toc-interaction-effects-model" class="nav-link" data-scroll-target="#interaction-effects-model"><span class="header-section-number">5.6</span> Interaction effects model</a></li>
+  <li><a href="#should-we-include-that-interaction-comparing-model.4-with-model.5" id="toc-should-we-include-that-interaction-comparing-model.4-with-model.5" class="nav-link" data-scroll-target="#should-we-include-that-interaction-comparing-model.4-with-model.5"><span class="header-section-number">5.7</span> Should we include that interaction? Comparing <code>model.4</code> with <code>model.5</code></a></li>
+  <li><a href="#step-three-use-interplot-to-obtain-more-easily-interpretable-results" id="toc-step-three-use-interplot-to-obtain-more-easily-interpretable-results" class="nav-link" data-scroll-target="#step-three-use-interplot-to-obtain-more-easily-interpretable-results"><span class="header-section-number">5.8</span> Step three: use <code>interplot</code> to obtain more easily interpretable results</a></li>
+  <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">5.9</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
+  <li><a href="#html-version-that-you-can-open-in-word" id="toc-html-version-that-you-can-open-in-word" class="nav-link" data-scroll-target="#html-version-that-you-can-open-in-word"><span class="header-section-number">5.10</span> HTML version that you can open in Word</a></li>
+  <li><a href="#a-note-on-your-content-review" id="toc-a-note-on-your-content-review" class="nav-link" data-scroll-target="#a-note-on-your-content-review"><span class="header-section-number">5.11</span> A note on your content review</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOURUSERNAME/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
-<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope and Coefficient Models</span>
+<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
@@ -311,34 +322,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 </header><p><strong>Data for this chapter:</strong> <code>lq2002.csv</code></p>
-<p>Every model so far has assumed that a predictor relates to the outcome in the same way in every group. The slope was fixed; only the intercept was allowed to vary. This chapter relaxes that assumption.</p>
-<p>We continue with the Gavin and Hofmann (2002) data from the previous chapter: 2,042 U.S. Army soldiers nested within 49 companies. Staying with a dataset you already know means the new idea arrives on its own, without a new codebook attached to it. This is the same data Garson uses in Chapter 7.</p>
+<p>This week, we are going to continue using data from Gavin and Hofmann (2002), a study on organizational climate and attitudes published in <em>Leadership Quarterly</em>. Here, we have individual soldiers nested within companies. This is the same dataset that Garson uses in Chapter 7, so you can recreate his analysis.</p>
+<p>Every model so far has assumed that a predictor relates to the outcome the same way in every company. The slope was fixed; only the intercept was allowed to vary. This chapter relaxes that assumption.</p>
+<section id="load-some-packages-to-help-with-the-analysis-and-data-management" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="load-some-packages-to-help-with-the-analysis-and-data-management">
+<span class="header-section-number">5.1</span> Load some packages to help with the analysis and data management</h2>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'lme4' was built under R version 4.5.2</code></pre>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/runehaubo/lmerTestR">lmerTest</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'lmerTest' was built under R version 4.5.2</code></pre>
-</div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/">performance</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'performance' was built under R version 4.5.2</code></pre>
-</div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'modelsummary' was built under R version 4.5.2</code></pre>
-</div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://strengejacke.github.io/ggeffects/">ggeffects</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'ggeffects' was built under R version 4.5.2</code></pre>
-</div>
-</div>
+<p><code><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages()</a></code> hides the loading banners these packages print. Those messages are informative the first few times, particularly the tidyverse conflict list, and clutter after that.</p>
+</section><section id="load-and-explore-the-data" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="load-and-explore-the-data">
+<span class="header-section-number">5.2</span> Load and explore the data</h2>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lq2002</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"lq2002.csv"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lq2002</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"lq2002.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">lq2002</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -374,28 +370,76 @@ $ GTSIG    &lt;dbl&gt; 3.541667, 3.541667, 3.541667, 3.541667, 3.541667, 3.54166
 $ GHOSTILE &lt;dbl&gt; 1.0416667, 1.0416667, 1.0416667, 1.0416667, 1.0416667, 1.0416…</code></pre>
 </div>
 </div>
-<section id="data-management-calculating-cluster-means" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="data-management-calculating-cluster-means">
-<span class="header-section-number">5.1</span> Data management: calculating cluster means</h2>
-<p>Here is something that comes up constantly in multilevel work. Often you want to take an individual-level measure and calculate the cluster, or group, mean. This is “aggregating up” an individual measure to see whether it also matters as a predictor at level 2. My own sense of task significance is important, but how my colleagues feel about their work probably matters too.</p>
+</section><section id="data-management-tip-of-the-week-calculating-group-cluster-means" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="data-management-tip-of-the-week-calculating-group-cluster-means">
+<span class="header-section-number">5.3</span> Data management tip of the week: calculating group (cluster) means</h2>
+<p>Here is something that comes up a lot in MLM. Often, you want to take an individual-level measure and calculate the cluster, or group, mean. This is “aggregating up” an individual measure to see if it is a significant predictor at level 2. We did this last week with the task significance measure (<code>TSIG</code>). My own sense of task significance is important, but it is probably also important to consider how my colleagues feel about their work as well.</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lq2002</span> <span class="op">&lt;-</span> <span class="va">lq2002</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">COMPID</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
-<span>    glead    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">LEAD</span><span class="op">)</span>,</span>
-<span>    gtsig    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">TSIG</span><span class="op">)</span>,</span>
-<span>    ghostile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">HOSTILE</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lq2002.1</span> <span class="op">&lt;-</span> <span class="va">lq2002</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">COMPID</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
+<span>            glead <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">LEAD</span><span class="op">)</span>,</span>
+<span>            gtsig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">TSIG</span><span class="op">)</span>,</span>
+<span>            ghostile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">GHOSTILE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">lq2002.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 2,042
+Columns: 31
+$ ROWID    &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18…
+$ COMPID   &lt;dbl&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2…
+$ SUB      &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18…
+$ LEAD01   &lt;dbl&gt; 2, 4, 4, 1, 1, 2, 3, 3, 3, 4, 2, 2, 4, 4, 1, 2, 4, 4, 4, 4, 4…
+$ LEAD02   &lt;dbl&gt; 2, 4, 4, 1, 1, 3, 2, 3, 4, 3, 4, 3, 4, 4, 1, 1, 5, 4, 5, 4, 2…
+$ LEAD03   &lt;dbl&gt; 2, 2, 2, 1, 1, 2, 2, 2, 3, 3, 1, 1, 4, 4, 1, 2, 3, 4, 1, 4, 2…
+$ LEAD04   &lt;dbl&gt; 3, 4, 4, 1, 1, 4, 1, 4, 2, 4, 3, 1, 4, 4, 1, 4, 5, 4, 1, 5, 1…
+$ LEAD05   &lt;dbl&gt; 2, 4, 2, 1, 3, 2, 2, 2, 3, 3, 1, 2, 4, 4, 1, 3, 3, 4, 1, 2, 2…
+$ LEAD06   &lt;dbl&gt; 2, 4, 4, 1, 2, 4, 2, 2, 3, 4, 3, 4, 4, 4, 1, 3, 5, 4, 4, 2, 2…
+$ LEAD07   &lt;dbl&gt; 5, 4, 4, 4, 1, 3, 2, 2, 3, 3, 3, 1, 4, 3, 1, 5, 3, 4, 1, 3, 2…
+$ LEAD08   &lt;dbl&gt; 5, 4, 4, 2, 1, 4, 2, 4, 1, 4, 4, 3, 4, 4, 1, 2, 5, 4, 1, 3, 2…
+$ LEAD09   &lt;dbl&gt; 5, 4, 4, 3, 1, 2, 3, 2, 3, 3, 2, 2, 4, 4, 1, 4, 1, 4, 1, 4, 2…
+$ LEAD10   &lt;dbl&gt; 5, 4, 4, 3, 1, 4, 4, 2, 2, 4, 3, 2, 4, 4, 1, 2, 5, 4, 4, 4, 1…
+$ LEAD11   &lt;dbl&gt; 4, 3, 2, 2, 1, 3, 2, 4, 3, 3, 2, 1, 4, 4, 1, 2, 4, 4, 1, 4, 2…
+$ TSIG01   &lt;dbl&gt; 1, 3, 5, 1, 4, 4, 2, 2, 4, 4, 3, 3, 4, 4, 1, 1, 4, 4, 1, 5, 1…
+$ TSIG02   &lt;dbl&gt; 5, 4, 5, 3, 4, 4, 4, 2, 3, 4, 4, 3, 4, 4, 1, 5, 4, 4, 5, 5, 4…
+$ TSIG03   &lt;dbl&gt; 5, 3, 5, 2, 4, 4, 4, 4, 4, 4, 3, 3, 4, 4, 1, 4, 5, 4, 5, 5, 4…
+$ HOSTIL01 &lt;dbl&gt; 0, 3, 1, 2, 2, 0, 2, 0, 0, 1, 1, 2, 0, 0, 4, 3, 1, 0, 4, 3, 4…
+$ HOSTIL02 &lt;dbl&gt; 0, 2, 0, 1, 0, 0, 0, 0, 4, 0, 0, 2, 0, 0, 4, 0, 0, 0, 0, 1, 4…
+$ HOSTIL03 &lt;dbl&gt; 0, 0, 0, 3, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 2, 2…
+$ HOSTIL04 &lt;dbl&gt; 0, 0, 0, 3, 0, 0, 1, 0, 4, 0, 0, 1, 0, 0, 4, 0, 0, 0, 4, 3, 2…
+$ HOSTIL05 &lt;dbl&gt; 0, 1, 1, 0, 0, 0, 0, 0, 4, 0, 0, 2, 0, 0, 2, 0, 0, 0, 4, 2, 3…
+$ LEAD     &lt;dbl&gt; 3.363636, 3.727273, 3.454545, 1.818182, 1.272727, 3.000000, 2…
+$ TSIG     &lt;dbl&gt; 3.666667, 3.333333, 5.000000, 2.000000, 4.000000, 4.000000, 3…
+$ HOSTILE  &lt;dbl&gt; 0.0, 1.2, 0.4, 1.8, 0.4, 0.0, 0.8, 0.0, 3.2, 0.2, 0.2, 1.4, 0…
+$ GLEAD    &lt;dbl&gt; 2.882576, 2.882576, 2.882576, 2.882576, 2.882576, 2.882576, 2…
+$ GTSIG    &lt;dbl&gt; 3.541667, 3.541667, 3.541667, 3.541667, 3.541667, 3.541667, 3…
+$ GHOSTILE &lt;dbl&gt; 1.0416667, 1.0416667, 1.0416667, 1.0416667, 1.0416667, 1.0416…
+$ glead    &lt;dbl&gt; 2.882576, 2.882576, 2.882576, 2.882576, 2.882576, 2.882576, 2…
+$ gtsig    &lt;dbl&gt; 3.541667, 3.541667, 3.541667, 3.541667, 3.541667, 3.541667, 3…
+$ ghostile &lt;dbl&gt; 1.0416667, 1.0416667, 1.0416667, 1.0416667, 1.0416667, 1.0416…</code></pre>
 </div>
-<p>That command has two parts. First, <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> groups all responses into their respective companies as determined by <code>COMPID</code>. This declares that the operations that follow are to be performed within each cluster. Second, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> creates new variables equal to the mean of the original variables. Because we grouped by <code>COMPID</code> first, we get the mean by company rather than the overall mean.</p>
-<p>Do not forget <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> at the end. A grouped data frame stays grouped, and every later operation will silently run within company until you undo it. This is one of the most common sources of confusing results in tidyverse code.</p>
-<p>These new variables should be identical to <code>GLEAD</code>, <code>GTSIG</code>, and <code>GHOSTILE</code>, which already exist in the file. Checking that they match is a cheap way to confirm you did it right:</p>
+</div>
+<p>The above command has two parts. First, we use the <code>group_by</code> command from our friend, the <code>dplyr</code> package, to group all responses in their respective clusters/companies determined by <code>COMPID</code>. This is a first step to declare that all the operations that follow are to be performed at the cluster (company) level. Second, we use the <code>mutate</code> command, which we have used before, to create new variables that are equal to the mean of the original variables. Since we just grouped by <code>COMPID</code>, this means we get the mean of the variables by company.</p>
+<p>So, we calculate new variables called <code>glead</code>, <code>gtsig</code>, and <code>ghostile</code> that are equal to the mean of <code>LEAD</code>, <code>TSIG</code>, and <code>HOSTILE</code> by company. This is actually identical to what is already calculated for us in the dataset, the variables <code>GLEAD</code>, <code>GTSIG</code>, and <code>GHOSTILE</code>. I just wanted to show you how to do it so you can try it on your own!</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Do not forget <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A grouped data frame stays grouped. Every operation after <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> silently runs within company until you undo it, which produces results that look plausible and are wrong. <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> at the end of the chain is cheap insurance.</p>
+<p>You can check whether a data frame is still grouped with <code>groups(lq2002.1)</code>, which should return an empty list here.</p>
+</div>
+</div>
+<p>Since we have computed variables that should already exist in the file, we can verify our work:</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lq2002</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span></span>
-<span>    lead_check <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">glead</span> <span class="op">-</span> <span class="va">GLEAD</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    tsig_check <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">gtsig</span> <span class="op">-</span> <span class="va">GTSIG</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lq2002.1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>lead_check <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">glead</span> <span class="op">-</span> <span class="va">GLEAD</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>            tsig_check <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">gtsig</span> <span class="op">-</span> <span class="va">GTSIG</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   lead_check tsig_check
@@ -403,20 +447,20 @@ $ GHOSTILE &lt;dbl&gt; 1.0416667, 1.0416667, 1.0416667, 1.0416667, 1.0416667, 1.
 1   6.11e-10   5.71e-10</code></pre>
 </div>
 </div>
-<p>Differences on the order of 1e-15 are floating point noise, not disagreement.</p>
-</section><section id="step-one-the-preferred-model-without-random-slopes" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="step-one-the-preferred-model-without-random-slopes">
-<span class="header-section-number">5.2</span> Step one: the preferred model without random slopes</h2>
-<p>Assume we ran a series of models with these data, as we did in the previous chapter, and arrived at one that best represents the data and matches our research questions. That model has a random intercept, two level-1 predictors (<code>TSIG</code> and <code>LEAD</code>), and one level-2 predictor (<code>GTSIG</code>). Let us refit it to remind ourselves and to get fit statistics we can use as we go.</p>
+<p>Differences on the order of 1e-15 are floating point noise, not disagreement. Anything larger would mean the aggregation did not do what we thought.</p>
+</section><section id="running-random-slopes-models" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="running-random-slopes-models">
+<span class="header-section-number">5.4</span> Running random slopes models</h2>
+<section id="step-one-run-your-preferred-model-without-random-slopes" class="level3" data-number="5.4.1"><h3 data-number="5.4.1" class="anchored" data-anchor-id="step-one-run-your-preferred-model-without-random-slopes">
+<span class="header-section-number">5.4.1</span> Step one: run your preferred model <em>without</em> random slopes</h3>
+<p>Let’s assume that we ran a bunch of models with this army data (which we did, last week!), and arrived at a model that we thought best represented our data and matched our research questions. That is the model below, with a random intercept, two level-1 predictors (<code>LEAD</code> and <code>TSIG</code>), and one level-2 predictor (<code>GTSIG</code>). Let’s rerun that model to remind ourselves and also get measures of model fit (<code>AIC</code> and <code>BIC</code>) that we can use as we go along.</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">GTSIG</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">COMPID</span><span class="op">)</span>,</span>
-<span>                REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">GTSIG</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
-  method [lmerModLmerTest]
+<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
 Formula: HOSTILE ~ TSIG + LEAD + GTSIG + (1 | COMPID)
-   Data: lq2002
+   Data: lq2002.1
 
       AIC       BIC    logLik -2*log(L)  df.resid 
    5533.7    5567.4   -2760.8    5521.7      2036 
@@ -432,13 +476,11 @@ Random effects:
 Number of obs: 2042, groups:  COMPID, 49
 
 Fixed effects:
-              Estimate Std. Error         df t value Pr(&gt;|t|)    
-(Intercept)    3.40718    0.25785   42.52614  13.214  &lt; 2e-16 ***
-TSIG          -0.17234    0.02479 2041.22422  -6.953 4.79e-12 ***
-LEAD          -0.35177    0.02996 1824.44441 -11.741  &lt; 2e-16 ***
-GTSIG         -0.27729    0.08258   46.65424  -3.358  0.00157 ** 
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+            Estimate Std. Error t value
+(Intercept)  3.40718    0.25785  13.214
+TSIG        -0.17234    0.02479  -6.953
+LEAD        -0.35177    0.02996 -11.741
+GTSIG       -0.27729    0.08258  -3.358
 
 Correlation of Fixed Effects:
       (Intr) TSIG   LEAD  
@@ -447,31 +489,20 @@ LEAD  -0.205 -0.511
 GTSIG -0.942 -0.227  0.010</code></pre>
 </div>
 </div>
+</section><section id="step-two-add-a-random-slope-for-tsig" class="level3" data-number="5.4.2"><h3 data-number="5.4.2" class="anchored" data-anchor-id="step-two-add-a-random-slope-for-tsig">
+<span class="header-section-number">5.4.2</span> Step two: add a random slope for TSIG</h3>
+<p>Now, the next logical step after testing predictors is to see whether or not any predictors should be treated as random at level-2. Here, we are going to test a random slope for <code>TSIG</code>. This is effectively allowing the slope of <code>TSIG</code> (which was overall negative) to vary according to which company a soldier is in. In some companies, that slope could now be higher, in some companies, it could be lower.</p>
+<p>In terms of coding, to add a random slope, you just list the predictor name again after the colon. Notice now that <code>TSIG</code> appears twice in the code: once to the left of the <code>~</code>, and once on the right side of the pipe operator (<code>|</code>).</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/performance/reference/icc.html">icc</a></span><span class="op">(</span><span class="va">model.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># Intraclass Correlation Coefficient
-
-    Adjusted ICC: 0.011
-  Unadjusted ICC: 0.009</code></pre>
-</div>
-</div>
-</section><section id="step-two-add-a-random-slope-for-tsig" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="step-two-add-a-random-slope-for-tsig">
-<span class="header-section-number">5.3</span> Step two: add a random slope for TSIG</h2>
-<p>The next logical step after testing predictors is to ask whether any of them should be treated as random at level 2. Here we test a random slope for <code>TSIG</code>. This allows the slope of <code>TSIG</code>, which was negative overall, to vary by company. In some companies that slope could be steeper, in others flatter.</p>
-<p>In terms of code, to add a random slope you list the predictor again inside the parentheses, on the left of the vertical bar. Notice that <code>TSIG</code> now appears twice: once among the fixed effects, and once in the random effects term.</p>
-<div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">GTSIG</span> <span class="op">+</span> <span class="op">(</span><span class="va">TSIG</span> <span class="op">|</span> <span class="va">COMPID</span><span class="op">)</span>,</span>
-<span>                REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">GTSIG</span> <span class="op">+</span> <span class="op">(</span><span class="va">TSIG</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>boundary (singular) fit: see help('isSingular')</code></pre>
 </div>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
-  method [lmerModLmerTest]
+<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
 Formula: HOSTILE ~ TSIG + LEAD + GTSIG + (TSIG | COMPID)
-   Data: lq2002
+   Data: lq2002.1
 
       AIC       BIC    logLik -2*log(L)  df.resid 
    5517.3    5562.3   -2750.6    5501.3      2034 
@@ -481,20 +512,18 @@ Scaled residuals:
 -2.6985 -0.6803 -0.2299  0.4954  3.4722 
 
 Random effects:
- Groups   Name        Variance Std.Dev. Corr 
- COMPID   (Intercept) 0.21072  0.4590        
-          TSIG        0.01234  0.1111   -1.00
- Residual             0.85150  0.9228        
+ Groups   Name        Variance Std.Dev. Corr  
+ COMPID   (Intercept) 0.21072  0.4590         
+          TSIG        0.01234  0.1111   -1.00 
+ Residual             0.85150  0.9228         
 Number of obs: 2042, groups:  COMPID, 49
 
 Fixed effects:
-              Estimate Std. Error         df t value Pr(&gt;|t|)    
-(Intercept)    3.16962    0.25633   98.38298  12.365  &lt; 2e-16 ***
-TSIG          -0.15484    0.03037   79.40441  -5.099 2.27e-06 ***
-LEAD          -0.34450    0.02964 1937.08177 -11.624  &lt; 2e-16 ***
-GTSIG         -0.23218    0.07685  115.61697  -3.021   0.0031 ** 
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+            Estimate Std. Error t value
+(Intercept)  3.16962    0.25633  12.365
+TSIG        -0.15484    0.03037  -5.099
+LEAD        -0.34450    0.02964 -11.624
+GTSIG       -0.23218    0.07685  -3.021
 
 Correlation of Fixed Effects:
       (Intr) TSIG   LEAD  
@@ -505,63 +534,27 @@ optimizer (nloptwrap) convergence code: 0 (OK)
 boundary (singular) fit: see help('isSingular')</code></pre>
 </div>
 </div>
-<p><code>(TSIG | COMPID)</code> is shorthand. It estimates a random intercept and a random slope for <code>TSIG</code>, plus the correlation between them. Writing <code>(1 + TSIG | COMPID)</code> means exactly the same thing and is more explicit about the intercept.</p>
-<section id="reading-the-singular-fit" class="level3" data-number="5.3.1"><h3 data-number="5.3.1" class="anchored" data-anchor-id="reading-the-singular-fit">
-<span class="header-section-number">5.3.1</span> Reading the singular fit</h3>
-<p>You will likely see <code>boundary (singular) fit: see ?isSingular</code>, and the random effects table will show an intercept-slope correlation at or very near -1.00.</p>
-<p>This is worth stopping on rather than stepping past. A correlation of exactly -1 is not a finding about the Army. It is the model telling you it has run out of information. The estimation has pushed a parameter to the edge of the space it is allowed to occupy, which is what happens when 49 companies cannot support an intercept variance, a slope variance, and a correlation among them all at once.</p>
-<p>The practical question is what to do about it. A singular fit does not invalidate the fixed effects, which are usually what you are reporting. It does mean the random effects structure should be treated with suspicion, and it is a reason to consider dropping the correlation:</p>
+<p>The Random effects table now has three quantities rather than one: an intercept variance, a slope variance, and the correlation between them. The slope variance is the new one, and it answers a question the previous model could not ask.</p>
+<p>Think about what teacher-to-teacher, or here company-to-company, slope variation would mean on the ground. In one company, soldiers who find their work meaningful report much less hostility than those who do not. In another, that gap is small. The average relationship might be identical in both, but the experience of being in those two companies is different.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reading a singular fit
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You may see <code>boundary (singular) fit: see ?isSingular</code>, with the intercept-slope correlation at or near -1.00.</p>
+<p>This is worth stopping on rather than stepping past. A correlation of exactly -1 is not a finding about the Army. It is the model reporting that it has run out of information. Estimation has pushed a parameter to the edge of the space it is allowed to occupy, which happens when 49 companies cannot support an intercept variance, a slope variance, and a correlation between them all at once.</p>
+<p>A singular fit does not invalidate the fixed effects, which are usually what you report. It does mean the random effects structure should be treated with suspicion. One standard response is to drop the correlation, fitting <code>(1|COMPID) + (0 + TSIG|COMPID)</code>, which asks for a slope that varies by company but is uncorrelated with the intercept.</p>
+</div>
+</div>
+</section><section id="using-lmertest-to-evaluate-random-slope" class="level3" data-number="5.4.3"><h3 data-number="5.4.3" class="anchored" data-anchor-id="using-lmertest-to-evaluate-random-slope">
+<span class="header-section-number">5.4.3</span> Using <code>lmerTest</code> to evaluate random slope</h3>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.2b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">GTSIG</span> <span class="op">+</span></span>
-<span>                   <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">COMPID</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">0</span> <span class="op">+</span> <span class="va">TSIG</span> <span class="op">|</span> <span class="va">COMPID</span><span class="op">)</span>,</span>
-<span>                 REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>boundary (singular) fit: see help('isSingular')</code></pre>
-</div>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.2b</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
-  method [lmerModLmerTest]
-Formula: HOSTILE ~ TSIG + LEAD + GTSIG + (1 | COMPID) + (0 + TSIG | COMPID)
-   Data: lq2002
-
-      AIC       BIC    logLik -2*log(L)  df.resid 
-   5535.7    5575.0   -2760.8    5521.7      2035 
-
-Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--2.3166 -0.6960 -0.2211  0.5171  3.4998 
-
-Random effects:
- Groups   Name        Variance Std.Dev.
- COMPID   (Intercept) 0.009902 0.09951 
- COMPID.1 TSIG        0.000000 0.00000 
- Residual             0.867052 0.93116 
-Number of obs: 2042, groups:  COMPID, 49
-
-Fixed effects:
-              Estimate Std. Error         df t value Pr(&gt;|t|)    
-(Intercept)    3.40721    0.25783   42.52974  13.215  &lt; 2e-16 ***
-TSIG          -0.17234    0.02479 2041.22394  -6.953 4.79e-12 ***
-LEAD          -0.35177    0.02996 1824.43714 -11.741  &lt; 2e-16 ***
-GTSIG         -0.27730    0.08258   46.65843  -3.358  0.00157 ** 
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Correlation of Fixed Effects:
-      (Intr) TSIG   LEAD  
-TSIG   0.105              
-LEAD  -0.205 -0.511       
-GTSIG -0.942 -0.227  0.010
-optimizer (nloptwrap) convergence code: 0 (OK)
-boundary (singular) fit: see help('isSingular')</code></pre>
-</div>
-</div>
-<p>The <code>(0 + TSIG | COMPID)</code> term asks for a slope that varies by company but is uncorrelated with the intercept. That is one fewer parameter, and it often resolves the singularity.</p>
-</section></section><section id="evaluating-the-random-slope" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="evaluating-the-random-slope">
-<span class="header-section-number">5.4</span> Evaluating the random slope</h2>
-<div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova</a></span><span class="op">(</span><span class="va">model.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">lmerTest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">rand</a></span><span class="op">(</span><span class="va">model.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ANOVA-like table for random-effects: Single term deletions
 
@@ -574,36 +567,21 @@ TSIG in (TSIG | COMPID)    6 -2760.8 5533.7 20.388  2   3.74e-05 ***
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<code><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">rand()</a></code> became <code><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova()</a></code>
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Older course materials call <code><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">lmerTest::rand()</a></code>. The function was renamed to <code><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova()</a></code> several versions ago. <code><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">rand()</a></code> may still work but is no longer the documented name.</p>
-</div>
-</div>
 <p>The likelihood ratio test gives you statistical evidence. It should not be the only thing you consult. A random slope that improves fit but has no substantive rationale is worth questioning, and a slope with a strong theoretical rationale that narrowly misses significance may still deserve to stay, particularly with a modest number of level-2 units.</p>
-<p>Note also what a significant result here means. Testing whether a variance equals zero puts the null hypothesis on the boundary of the parameter space, which makes the usual chi-square reference distribution conservative. A significant result is therefore trustworthy; a marginal one deserves more caution than the p-value suggests.</p>
-</section><section id="step-three-add-a-random-slope-for-lead" class="level2" data-number="5.5"><h2 data-number="5.5" class="anchored" data-anchor-id="step-three-add-a-random-slope-for-lead">
-<span class="header-section-number">5.5</span> Step three: add a random slope for LEAD</h2>
-<p>Same idea, now testing whether the leadership climate slope also varies by company.</p>
+<p>One technical note on reading this p-value. Testing whether a variance equals zero puts the null hypothesis on the boundary of the parameter space, which makes the usual chi-square reference distribution conservative. A significant result is therefore trustworthy. A marginal one deserves more caution than the number suggests.</p>
+</section><section id="step-three-add-a-random-slope-for-lead" class="level3" data-number="5.4.4"><h3 data-number="5.4.4" class="anchored" data-anchor-id="step-three-add-a-random-slope-for-lead">
+<span class="header-section-number">5.4.4</span> Step three: add a random slope for LEAD</h3>
+<p>Same thing here, except now we are testing a random slope for <code>LEAD</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">GTSIG</span> <span class="op">+</span> <span class="op">(</span><span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">|</span> <span class="va">COMPID</span><span class="op">)</span>,</span>
-<span>                REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">GTSIG</span> <span class="op">+</span> <span class="op">(</span><span class="va">TSIG</span> <span class="op">+</span> <span class="va">LEAD</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>boundary (singular) fit: see help('isSingular')</code></pre>
 </div>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
-  method [lmerModLmerTest]
+<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
 Formula: HOSTILE ~ TSIG + LEAD + GTSIG + (TSIG + LEAD | COMPID)
-   Data: lq2002
+   Data: lq2002.1
 
       AIC       BIC    logLik -2*log(L)  df.resid 
    5521.0    5582.9   -2749.5    5499.0      2031 
@@ -613,21 +591,19 @@ Scaled residuals:
 -2.5989 -0.6758 -0.2228  0.4958  3.5053 
 
 Random effects:
- Groups   Name        Variance Std.Dev. Corr       
- COMPID   (Intercept) 0.24374  0.4937              
-          TSIG        0.01638  0.1280   -0.71      
-          LEAD        0.01172  0.1083   -0.31 -0.45
- Residual             0.84531  0.9194              
+ Groups   Name        Variance Std.Dev. Corr        
+ COMPID   (Intercept) 0.24374  0.4937               
+          TSIG        0.01638  0.1280   -0.71       
+          LEAD        0.01172  0.1083   -0.31 -0.45 
+ Residual             0.84531  0.9194               
 Number of obs: 2042, groups:  COMPID, 49
 
 Fixed effects:
-             Estimate Std. Error        df t value Pr(&gt;|t|)    
-(Intercept)   3.19306    0.26108  91.05360  12.230  &lt; 2e-16 ***
-TSIG         -0.15414    0.03208  49.81240  -4.805 1.46e-05 ***
-LEAD         -0.34395    0.03469  40.00220  -9.916 2.46e-12 ***
-GTSIG        -0.24041    0.07789 112.38400  -3.087  0.00255 ** 
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+            Estimate Std. Error t value
+(Intercept)  3.19306    0.26108  12.230
+TSIG        -0.15414    0.03208  -4.805
+LEAD        -0.34395    0.03469  -9.916
+GTSIG       -0.24041    0.07789  -3.087
 
 Correlation of Fixed Effects:
       (Intr) TSIG   LEAD  
@@ -638,8 +614,10 @@ optimizer (nloptwrap) convergence code: 0 (OK)
 boundary (singular) fit: see help('isSingular')</code></pre>
 </div>
 </div>
+</section><section id="using-lmertest-to-evaluate-random-slope-1" class="level3" data-number="5.4.5"><h3 data-number="5.4.5" class="anchored" data-anchor-id="using-lmertest-to-evaluate-random-slope-1">
+<span class="header-section-number">5.4.5</span> Using <code>lmerTest</code> to evaluate random slope</h3>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova</a></span><span class="op">(</span><span class="va">model.3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">lmerTest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">rand</a></span><span class="op">(</span><span class="va">model.3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>boundary (singular) fit: see help('isSingular')
 boundary (singular) fit: see help('isSingular')</code></pre>
@@ -657,41 +635,104 @@ LEAD in (TSIG + LEAD | COMPID)    8 -2750.6 5517.3  2.2442  3   0.523288
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>Read the <code><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova()</a></code> output carefully here. It tests each random term separately, and the two can come out differently: one slope may earn its place while the other does not. That is a more useful result than a single verdict on the whole random structure.</p>
-</section><section id="a-cross-level-interaction" class="level2" data-number="5.6"><h2 data-number="5.6" class="anchored" data-anchor-id="a-cross-level-interaction">
-<span class="header-section-number">5.6</span> A cross-level interaction</h2>
-<p>This is more advanced, but worth showing. In the previous chapter we looked at an interaction between <code>LEAD</code> and <code>TSIG</code>, both level-1 soldier covariates. Multilevel models also let us test <em>cross-level</em> interactions, between a level-1 and a level-2 predictor.</p>
-<p>Suppose we want to test an interaction between <code>TSIG</code> (level 1) and <code>GTSIG</code> (level 2). Put another way: is there an interaction between how I feel about the importance of my job, and how my peers feel about the importance of theirs? That seems worth testing.</p>
-<section id="center-the-predictors-first" class="level3" data-number="5.6.1"><h3 data-number="5.6.1" class="anchored" data-anchor-id="center-the-predictors-first">
-<span class="header-section-number">5.6.1</span> Center the predictors first</h3>
-<p>Centering means subtracting the mean from every observation, so that zero now means average. When examining interactions it is usually a good idea to center continuous predictors first. This makes the results easier to interpret, and it ensures the interaction is evaluated near the sample mean rather than at a value that may not exist in the data.</p>
+<p>Read this output carefully. <code>rand()</code> tests each random term separately, so the two slopes can come out differently: one may earn its place while the other does not. That is a more useful result than a single verdict on the whole random structure.</p>
+<p>Notice also how quickly the number of parameters grows. Two random slopes plus an intercept means three variances and three correlations, all estimated from 49 companies. This is the most common reason MLM models fail to converge, and it is worth doing the arithmetic before fitting rather than after.</p>
+</section></section><section id="getting-fancy-modeling-a-cross-level-interaction" class="level2" data-number="5.5"><h2 data-number="5.5" class="anchored" data-anchor-id="getting-fancy-modeling-a-cross-level-interaction">
+<span class="header-section-number">5.5</span> Getting fancy: modeling a cross-level interaction</h2>
+<p>This is more advanced stuff, but I want to show you how you might model a cross-level interaction. Last week, we looked at the interaction between <code>LEAD</code> and <code>TSIG</code>, which is an interaction between two level-1 (soldier) covariates. In MLM, it is really easy to look at cross-level interactions, as well. So, let’s say we want to test whether there is an interaction between <code>TSIG</code> (level-1) and <code>GTSIG</code> (level-2). Put another way, is there an interaction between how I feel about the importance of my job, and how my peers feel about the importance of their job? Probably, and it is worth testing.</p>
+<p>Note the difference from a random slope. A random slope says slopes vary across companies but does not say why. A cross-level interaction tries to <em>explain</em> that variation using a level-2 variable.</p>
+<section id="step-one-create-centered-versions-of-your-two-predictors" class="level3" data-number="5.5.1"><h3 data-number="5.5.1" class="anchored" data-anchor-id="step-one-create-centered-versions-of-your-two-predictors">
+<span class="header-section-number">5.5.1</span> Step one: create centered versions of your two predictors</h3>
+<p>Centering a variable means to subtract the mean from every observation. So now that variable has a mean of 0 (0 now means average). When we look at interaction effects, it is usually a good idea to center any continuous predictors before analyzing. This facilitates easier interpretation of the results, and it ensures that the interaction is being evaluated near the sample mean.</p>
+<p>Centering works like this: you use the <code>mutate</code> function from <code>dplyr</code> to create a new variable that is equal to the original variable minus the mean (which we get using the <code>mean</code> function). Just to check our work, we can call the <code>describe</code> function from <code>psych</code> and make sure that the means of those new variables are 0.</p>
 <div class="cell">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lq2002</span> <span class="op">&lt;-</span> <span class="va">lq2002</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
-<span>    tsig_cent  <span class="op">=</span> <span class="va">TSIG</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">TSIG</span><span class="op">)</span>,</span>
-<span>    gtsig_cent <span class="op">=</span> <span class="va">GTSIG</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">GTSIG</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lq2002.2</span> <span class="op">&lt;-</span> <span class="va">lq2002.1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
+<span>         tsig_cent <span class="op">=</span> <span class="va">TSIG</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">TSIG</span><span class="op">)</span>,</span>
+<span>         gtsig_cent <span class="op">=</span> <span class="va">GTSIG</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">GTSIG</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Check the work: both means should be 0</span></span>
-<span><span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="va">lq2002</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tsig_cent"</span>, <span class="st">"gtsig_cent"</span><span class="op">)</span><span class="op">]</span>, fast <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="va">lq2002.2</span>, fast <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           vars    n mean   sd median   min  max range  skew kurtosis   se
-tsig_cent     1 2042    0 1.02   0.20 -2.13 1.87  4.00 -0.38    -0.47 0.02
-gtsig_cent    2 2042    0 0.32  -0.01 -0.59 0.64  1.24  0.16    -1.05 0.01</code></pre>
+<pre><code>           vars    n    mean     sd  median   min     max   range  skew
+ROWID         1 2042 1021.50 589.62 1021.50  1.00 2042.00 2041.00  0.00
+COMPID        2 2042   28.73  14.15   29.00  2.00   58.00   56.00  0.00
+SUB           3 2042 1021.50 589.62 1021.50  1.00 2042.00 2041.00  0.00
+LEAD01        4 2042    3.08   1.12    3.00  1.00    5.00    4.00 -0.27
+LEAD02        5 2042    3.35   1.10    4.00  1.00    5.00    4.00 -0.51
+LEAD03        6 2042    2.59   1.19    3.00  1.00    5.00    4.00  0.13
+LEAD04        7 2042    2.77   1.31    3.00  1.00    5.00    4.00 -0.01
+LEAD05        8 2042    2.90   1.11    3.00  1.00    5.00    4.00 -0.23
+LEAD06        9 2042    3.41   1.03    4.00  1.00    5.00    4.00 -0.62
+LEAD07       10 2042    2.86   1.19    3.00  1.00    5.00    4.00 -0.17
+LEAD08       11 2042    3.35   1.08    4.00  1.00    5.00    4.00 -0.71
+LEAD09       12 2042    2.67   1.20    3.00  1.00    5.00    4.00  0.02
+LEAD10       13 2042    3.14   1.16    3.00  1.00    5.00    4.00 -0.52
+LEAD11       14 2042    2.88   1.17    3.00  1.00    5.00    4.00 -0.17
+TSIG01       15 2042    2.81   1.26    3.00  1.00    5.00    4.00 -0.07
+TSIG02       16 2042    3.28   1.16    3.50  1.00    5.00    4.00 -0.52
+TSIG03       17 2042    3.31   1.13    4.00  1.00    5.00    4.00 -0.57
+HOSTIL01     18 2042    1.49   1.39    1.00  0.00    4.00    4.00  0.53
+HOSTIL02     19 2042    0.62   1.10    0.00  0.00    4.00    4.00  1.84
+HOSTIL03     20 2042    1.09   1.43    0.00  0.00    4.00    4.00  1.01
+HOSTIL04     21 2042    0.92   1.37    0.00  0.00    4.00    4.00  1.27
+HOSTIL05     22 2042    0.61   1.04    0.00  0.00    4.00    4.00  1.81
+LEAD         23 2042    3.00   0.82    3.00  1.00    5.00    4.00 -0.21
+TSIG         24 2042    3.13   1.02    3.33  1.00    5.00    4.00 -0.38
+HOSTILE      25 2042    0.95   1.04    0.60  0.00    4.00    4.00  1.20
+GLEAD        26 2042    3.00   0.27    2.98  2.38    3.74    1.36  0.36
+GTSIG        27 2042    3.13   0.32    3.12  2.54    3.78    1.24  0.16
+GHOSTILE     28 2042    0.95   0.28    0.91  0.22    1.52    1.31  0.15
+glead        29 2042    3.00   0.27    2.98  2.38    3.74    1.36  0.36
+gtsig        30 2042    3.13   0.32    3.12  2.54    3.78    1.24  0.16
+ghostile     31 2042    0.95   0.28    0.91  0.22    1.52    1.31  0.15
+tsig_cent    32 2042    0.00   1.02    0.20 -2.13    1.87    4.00 -0.38
+gtsig_cent   33 2042    0.00   0.32   -0.01 -0.59    0.64    1.24  0.16
+           kurtosis    se
+ROWID         -1.20 13.05
+COMPID        -0.84  0.31
+SUB           -1.20 13.05
+LEAD01        -0.76  0.02
+LEAD02        -0.56  0.02
+LEAD03        -1.04  0.03
+LEAD04        -1.28  0.03
+LEAD05        -0.64  0.02
+LEAD06         0.11  0.02
+LEAD07        -0.98  0.03
+LEAD08        -0.17  0.02
+LEAD09        -1.08  0.03
+LEAD10        -0.72  0.03
+LEAD11        -0.98  0.03
+TSIG01        -1.18  0.03
+TSIG02        -0.54  0.03
+TSIG03        -0.40  0.03
+HOSTIL01      -1.00  0.03
+HOSTIL02       2.43  0.02
+HOSTIL03      -0.46  0.03
+HOSTIL04       0.16  0.03
+HOSTIL05       2.52  0.02
+LEAD          -0.32  0.02
+TSIG          -0.47  0.02
+HOSTILE        0.55  0.02
+GLEAD          0.34  0.01
+GTSIG         -1.05  0.01
+GHOSTILE      -0.71  0.01
+glead          0.34  0.01
+gtsig         -1.05  0.01
+ghostile      -0.71  0.01
+tsig_cent     -0.47  0.02
+gtsig_cent    -1.05  0.01</code></pre>
 </div>
 </div>
-</section><section id="fit-and-interpret" class="level3" data-number="5.6.2"><h3 data-number="5.6.2" class="anchored" data-anchor-id="fit-and-interpret">
-<span class="header-section-number">5.6.2</span> Fit and interpret</h3>
+</section><section id="step-two-run-the-mlm-and-interpret-the-results" class="level3" data-number="5.5.2"><h3 data-number="5.5.2" class="anchored" data-anchor-id="step-two-run-the-mlm-and-interpret-the-results">
+<span class="header-section-number">5.5.2</span> Step two: run the MLM and interpret the results</h3>
 <div class="cell">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">tsig_cent</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">gtsig_cent</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">COMPID</span><span class="op">)</span>,</span>
-<span>                REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">tsig_cent</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">gtsig_cent</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
-  method [lmerModLmerTest]
+<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
 Formula: HOSTILE ~ tsig_cent + LEAD + gtsig_cent + (1 | COMPID)
-   Data: lq2002
+   Data: lq2002.2
 
       AIC       BIC    logLik -2*log(L)  df.resid 
    5533.7    5567.4   -2760.8    5521.7      2036 
@@ -707,13 +748,11 @@ Random effects:
 Number of obs: 2042, groups:  COMPID, 49
 
 Fixed effects:
-              Estimate Std. Error         df t value Pr(&gt;|t|)    
-(Intercept)    1.99845    0.09384 1048.28028  21.296  &lt; 2e-16 ***
-tsig_cent     -0.17234    0.02479 2041.22422  -6.953 4.79e-12 ***
-LEAD          -0.35177    0.02996 1824.44440 -11.741  &lt; 2e-16 ***
-gtsig_cent    -0.27729    0.08258   46.65424  -3.358  0.00157 ** 
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+            Estimate Std. Error t value
+(Intercept)  1.99845    0.09384  21.296
+tsig_cent   -0.17234    0.02479  -6.953
+LEAD        -0.35177    0.02996 -11.741
+gtsig_cent  -0.27729    0.08258  -3.358
 
 Correlation of Fixed Effects:
            (Intr) tsg_cn LEAD  
@@ -722,18 +761,18 @@ LEAD       -0.960 -0.511
 gtsig_cent -0.020 -0.227  0.010</code></pre>
 </div>
 </div>
+<p>Compare this to <code>model.1</code>. The coefficients on the predictors are identical, and only the intercept changed. That is centering working exactly as advertised: it relocates the origin without altering any relationship. What it buys you is an interpretable intercept, now the predicted hostility for a soldier of average task significance in a company of average task significance, which is a sentence you can put in a paper.</p>
+</section></section><section id="interaction-effects-model" class="level2" data-number="5.6"><h2 data-number="5.6" class="anchored" data-anchor-id="interaction-effects-model">
+<span class="header-section-number">5.6</span> Interaction effects model</h2>
 <div class="cell">
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">tsig_cent</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">gtsig_cent</span> <span class="op">+</span></span>
-<span>                  <span class="va">tsig_cent</span><span class="op">:</span><span class="va">gtsig_cent</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">COMPID</span><span class="op">)</span>,</span>
-<span>                REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">HOSTILE</span> <span class="op">~</span> <span class="va">tsig_cent</span> <span class="op">+</span> <span class="va">LEAD</span> <span class="op">+</span> <span class="va">gtsig_cent</span> <span class="op">+</span> <span class="va">tsig_cent</span><span class="op">:</span><span class="va">gtsig_cent</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">COMPID</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">lq2002.2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
-  method [lmerModLmerTest]
+<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
 Formula: HOSTILE ~ tsig_cent + LEAD + gtsig_cent + tsig_cent:gtsig_cent +  
     (1 | COMPID)
-   Data: lq2002
+   Data: lq2002.2
 
       AIC       BIC    logLik -2*log(L)  df.resid 
    5530.2    5569.6   -2758.1    5516.2      2035 
@@ -749,14 +788,12 @@ Random effects:
 Number of obs: 2042, groups:  COMPID, 49
 
 Fixed effects:
-                       Estimate Std. Error         df t value Pr(&gt;|t|)    
-(Intercept)             1.97511    0.09418 1080.30416  20.971  &lt; 2e-16 ***
-tsig_cent              -0.16826    0.02481 2041.74697  -6.781 1.56e-11 ***
-LEAD                   -0.34961    0.02993 1829.96220 -11.682  &lt; 2e-16 ***
-gtsig_cent             -0.29177    0.08223   48.16072  -3.548 0.000876 ***
-tsig_cent:gtsig_cent    0.15799    0.06757 1824.87112   2.338 0.019491 *  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+                     Estimate Std. Error t value
+(Intercept)           1.97511    0.09418  20.971
+tsig_cent            -0.16826    0.02481  -6.781
+LEAD                 -0.34961    0.02993 -11.682
+gtsig_cent           -0.29177    0.08223  -3.548
+tsig_cent:gtsig_cent  0.15799    0.06757   2.338
 
 Correlation of Fixed Effects:
             (Intr) tsg_cn LEAD   gtsg_c
@@ -766,13 +803,13 @@ gtsig_cent  -0.012 -0.232  0.008
 tsg_cnt:gt_ -0.107  0.070  0.032 -0.071</code></pre>
 </div>
 </div>
-<p>Compare model.4 to model.1. The coefficients on the predictors are identical, and only the intercept changed. That is centering working exactly as advertised: it relocates the origin without altering the relationships. The intercept in model.4 is now the predicted hostility for a soldier of average task significance in a company of average task significance, which is a sentence you can actually write in a paper.</p>
-</section><section id="should-we-keep-the-interaction" class="level3" data-number="5.6.3"><h3 data-number="5.6.3" class="anchored" data-anchor-id="should-we-keep-the-interaction">
-<span class="header-section-number">5.6.3</span> Should we keep the interaction?</h3>
+</section><section id="should-we-include-that-interaction-comparing-model.4-with-model.5" class="level2" data-number="5.7"><h2 data-number="5.7" class="anchored" data-anchor-id="should-we-include-that-interaction-comparing-model.4-with-model.5">
+<span class="header-section-number">5.7</span> Should we include that interaction? Comparing <code>model.4</code> with <code>model.5</code>
+</h2>
 <div class="cell">
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model.4</span>, <span class="va">model.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model.5</span>, <span class="va">model.4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Data: lq2002
+<pre><code>Data: lq2002.2
 Models:
 model.4: HOSTILE ~ tsig_cent + LEAD + gtsig_cent + (1 | COMPID)
 model.5: HOSTILE ~ tsig_cent + LEAD + gtsig_cent + tsig_cent:gtsig_cent + (1 | COMPID)
@@ -783,225 +820,168 @@ model.5    7 5530.2 5569.6 -2758.1    5516.2 5.4564  1     0.0195 *
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-</section><section id="visualizing-it" class="level3" data-number="5.6.4"><h3 data-number="5.6.4" class="anchored" data-anchor-id="visualizing-it">
-<span class="header-section-number">5.6.4</span> Visualizing it</h3>
-<p>Interpreting a significant interaction from coefficients alone is hard, and there is no way around that. Plotting predicted values is what makes it legible.</p>
+</section><section id="step-three-use-interplot-to-obtain-more-easily-interpretable-results" class="level2" data-number="5.8"><h2 data-number="5.8" class="anchored" data-anchor-id="step-three-use-interplot-to-obtain-more-easily-interpretable-results">
+<span class="header-section-number">5.8</span> Step three: use <code>interplot</code> to obtain more easily interpretable results</h2>
+<p>Interpreting significant interactions is hard, there’s no way around it. But the <code>margins</code> command can be super useful for this. We will use margins to compare hypothetical soldiers with different levels of <code>TSIG</code> who are in companies that have different levels of <code>GTSIG</code>. And then we will plot the results to create a nice visual.</p>
 <div class="cell">
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://strengejacke.github.io/ggeffects/reference/ggpredict.html">ggpredict</a></span><span class="op">(</span><span class="va">model.5</span>, terms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tsig_cent"</span>, <span class="st">"gtsig_cent [-0.5, 0, 0.5]"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">interplot</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/interplot/man/interplot.html">interplot</a></span><span class="op">(</span><span class="va">model.5</span>, var1 <span class="op">=</span> <span class="st">"gtsig_cent"</span>, var2 <span class="op">=</span> <span class="st">"tsig_cent"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-crosslevel" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="05-random-slopes_files/figure-html/fig-crosslevel-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.1: Predicted hostility across individual task significance, at low, average, and high company task significance.</figcaption></figure>
+<div id="fig-interplot" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="05-random-slopes_files/figure-html/fig-interplot-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.1: The estimated effect of company task significance across levels of individual task significance.</figcaption></figure>
 </div>
 </div>
 </div>
+<p>Read this plot carefully, because it is not the same as the trajectory plots we make elsewhere. The vertical axis is the <em>coefficient</em> on <code>gtsig_cent</code>, not a predicted hostility score, and the horizontal axis moves across values of <code>tsig_cent</code>. So the line shows how the company-level effect changes depending on the individual-level value. If the line is flat, there is no interaction. If the confidence band excludes zero over part of the range, the moderation is meaningful there.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-A package change since 2020
+If <code>interplot</code> will not install
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Earlier versions of this demonstration used <code>interplot::interplot()</code> for this plot. That package has seen little maintenance, and <code>ggeffects</code> is now the more reliable choice with a wider range of supported models. The idea is identical: compare hypothetical soldiers with different levels of <code>TSIG</code> who serve in companies with different levels of <code>GTSIG</code>.</p>
+<p>The <code>interplot</code> package has seen little maintenance recently. If it is unavailable, <code>ggeffects</code> produces a comparable picture from predicted values rather than coefficients:</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://strengejacke.github.io/ggeffects/">ggeffects</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://strengejacke.github.io/ggeffects/reference/ggpredict.html">ggpredict</a></span><span class="op">(</span><span class="va">model.5</span>, terms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tsig_cent"</span>, <span class="st">"gtsig_cent [-0.5, 0, 0.5]"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>That version plots predicted hostility across task significance at three levels of company task significance, which many people find easier to read.</p>
 </div>
 </div>
-<p>A positive interaction here would mean that the negative relationship between personal task significance and hostility is weaker in companies where everyone finds their work meaningful. Always check the plot against the coefficient. Two nearly parallel lines and two crossing lines are different findings even when both interactions are significant.</p>
-</section></section><section id="organizing-the-results" class="level2" data-number="5.7"><h2 data-number="5.7" class="anchored" data-anchor-id="organizing-the-results">
-<span class="header-section-number">5.7</span> Organizing the results</h2>
+</section><section id="using-modelsummary-and-broom.mixed-to-organize-your-results" class="level2" data-number="5.9"><h2 data-number="5.9" class="anchored" data-anchor-id="using-modelsummary-and-broom.mixed-to-organize-your-results">
+<span class="header-section-number">5.9</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</h2>
 <div class="cell">
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>  <span class="st">"Random intercept"</span> <span class="op">=</span> <span class="va">model.1</span>,</span>
-<span>  <span class="st">"Centered"</span>         <span class="op">=</span> <span class="va">model.4</span>,</span>
-<span>  <span class="st">"Interaction"</span>      <span class="op">=</span> <span class="va">model.5</span></span>
-<span><span class="op">)</span></span>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bbolker/broom.mixed">broom.mixed</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span></span>
-<span>  <span class="va">models</span>,</span>
-<span>  stars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"*"</span> <span class="op">=</span> <span class="fl">.05</span>, <span class="st">"**"</span> <span class="op">=</span> <span class="fl">.01</span>, <span class="st">"***"</span> <span class="op">=</span> <span class="fl">.001</span><span class="op">)</span>,</span>
-<span>  gof_map <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"nobs"</span>, <span class="st">"aic"</span>, <span class="st">"bic"</span><span class="op">)</span>,</span>
-<span>  title <span class="op">=</span> <span class="st">"Random slope and cross-level interaction models predicting hostility"</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">model.4</span>, <span class="va">model.5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>, output <span class="op">=</span> <span class="st">"markdown"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<!-- preamble start -->
-
-    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
-      // Create table-specific functions using external factory
-      const tableFns_nvf4t04tadjclk8t4in9 = TinyTable.createTableFunctions("tinytable_nvf4t04tadjclk8t4in9");
-      // tinytable span after
-      window.addEventListener('load', function () {
-          var cellsToStyle = [
-            // tinytable style arrays after
-          { positions: [ { i: '19', j: 2 }, { i: '19', j: 3 }, { i: '19', j: 4 } ], css_id: 'tinytable_css_gw0a0meqnb9bnrluxwrc',}, 
-          { positions: [ { i: '16', j: 2 }, { i: '16', j: 3 }, { i: '16', j: 4 } ], css_id: 'tinytable_css_ryzpjx161eg77w1agsle',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '13', j: 4 }, { i: '14', j: 4 }, { i: '15', j: 4 }, { i: '17', j: 4 }, { i: '18', j: 4 } ], css_id: 'tinytable_css_eb8y9wn0qd3jiplshvaw',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 } ], css_id: 'tinytable_css_jcxmzp7e8rxoxxltcbtm',}, 
-          { positions: [ { i: '19', j: 1 } ], css_id: 'tinytable_css_bn85vkisyuolcb9wiipr',}, 
-          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_73prey3qqmvyrcgukojn',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 } ], css_id: 'tinytable_css_otg50n6bydeypyffv0nh',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_pkok4fhuzkjs9zenabud',}, 
-          ];
-
-          // Loop over the arrays to style the cells
-          cellsToStyle.forEach(function (group) {
-              group.positions.forEach(function (cell) {
-                  tableFns_nvf4t04tadjclk8t4in9.styleCell(cell.i, cell.j, group.css_id);
-              });
-          });
-      });
-    </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
-<style>
-    /* tinytable css entries after */
-    #tinytable_nvf4t04tadjclk8t4in9 td.tinytable_css_gw0a0meqnb9bnrluxwrc, #tinytable_nvf4t04tadjclk8t4in9 th.tinytable_css_gw0a0meqnb9bnrluxwrc {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_nvf4t04tadjclk8t4in9 td.tinytable_css_ryzpjx161eg77w1agsle, #tinytable_nvf4t04tadjclk8t4in9 th.tinytable_css_ryzpjx161eg77w1agsle {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_nvf4t04tadjclk8t4in9 td.tinytable_css_eb8y9wn0qd3jiplshvaw, #tinytable_nvf4t04tadjclk8t4in9 th.tinytable_css_eb8y9wn0qd3jiplshvaw { text-align: center }
-    #tinytable_nvf4t04tadjclk8t4in9 td.tinytable_css_jcxmzp7e8rxoxxltcbtm, #tinytable_nvf4t04tadjclk8t4in9 th.tinytable_css_jcxmzp7e8rxoxxltcbtm {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_nvf4t04tadjclk8t4in9 td.tinytable_css_bn85vkisyuolcb9wiipr, #tinytable_nvf4t04tadjclk8t4in9 th.tinytable_css_bn85vkisyuolcb9wiipr {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_nvf4t04tadjclk8t4in9 td.tinytable_css_73prey3qqmvyrcgukojn, #tinytable_nvf4t04tadjclk8t4in9 th.tinytable_css_73prey3qqmvyrcgukojn {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_nvf4t04tadjclk8t4in9 td.tinytable_css_otg50n6bydeypyffv0nh, #tinytable_nvf4t04tadjclk8t4in9 th.tinytable_css_otg50n6bydeypyffv0nh { text-align: left }
-    #tinytable_nvf4t04tadjclk8t4in9 td.tinytable_css_pkok4fhuzkjs9zenabud, #tinytable_nvf4t04tadjclk8t4in9 th.tinytable_css_pkok4fhuzkjs9zenabud {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    </style>
-<div class="container">
-      <table class="tinytable" id="tinytable_nvf4t04tadjclk8t4in9" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-<caption>Random slope and cross-level interaction models predicting hostility</caption>
-        <thead><tr>
-<th scope="col" data-row="0" data-col="1"> </th>
-                <th scope="col" data-row="0" data-col="2">Random intercept</th>
-                <th scope="col" data-row="0" data-col="3">Centered</th>
-                <th scope="col" data-row="0" data-col="4">Interaction</th>
-              </tr></thead>
-<tfoot><tr><td colspan="4">* p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 13%">
+<col style="width: 13%">
+</colgroup>
+<thead><tr class="header">
+<th></th>
+<th><ol type="1">
+<li>
+</li></ol></th>
+<th><ol start="2" type="1">
+<li>
+</li></ol></th>
+</tr></thead>
 <tbody>
-<tr>
-<td data-row="1" data-col="1">(Intercept)</td>
-                  <td data-row="1" data-col="2">3.407***</td>
-                  <td data-row="1" data-col="3">1.998***</td>
-                  <td data-row="1" data-col="4">1.975***</td>
-                </tr>
-<tr>
-<td data-row="2" data-col="1"></td>
-                  <td data-row="2" data-col="2">(0.258)</td>
-                  <td data-row="2" data-col="3">(0.094)</td>
-                  <td data-row="2" data-col="4">(0.094)</td>
-                </tr>
-<tr>
-<td data-row="3" data-col="1">TSIG</td>
-                  <td data-row="3" data-col="2">-0.172***</td>
-                  <td data-row="3" data-col="3"></td>
-                  <td data-row="3" data-col="4"></td>
-                </tr>
-<tr>
-<td data-row="4" data-col="1"></td>
-                  <td data-row="4" data-col="2">(0.025)</td>
-                  <td data-row="4" data-col="3"></td>
-                  <td data-row="4" data-col="4"></td>
-                </tr>
-<tr>
-<td data-row="5" data-col="1">LEAD</td>
-                  <td data-row="5" data-col="2">-0.352***</td>
-                  <td data-row="5" data-col="3">-0.352***</td>
-                  <td data-row="5" data-col="4">-0.350***</td>
-                </tr>
-<tr>
-<td data-row="6" data-col="1"></td>
-                  <td data-row="6" data-col="2">(0.030)</td>
-                  <td data-row="6" data-col="3">(0.030)</td>
-                  <td data-row="6" data-col="4">(0.030)</td>
-                </tr>
-<tr>
-<td data-row="7" data-col="1">GTSIG</td>
-                  <td data-row="7" data-col="2">-0.277***</td>
-                  <td data-row="7" data-col="3"></td>
-                  <td data-row="7" data-col="4"></td>
-                </tr>
-<tr>
-<td data-row="8" data-col="1"></td>
-                  <td data-row="8" data-col="2">(0.083)</td>
-                  <td data-row="8" data-col="3"></td>
-                  <td data-row="8" data-col="4"></td>
-                </tr>
-<tr>
-<td data-row="9" data-col="1">tsig_cent</td>
-                  <td data-row="9" data-col="2"></td>
-                  <td data-row="9" data-col="3">-0.172***</td>
-                  <td data-row="9" data-col="4">-0.168***</td>
-                </tr>
-<tr>
-<td data-row="10" data-col="1"></td>
-                  <td data-row="10" data-col="2"></td>
-                  <td data-row="10" data-col="3">(0.025)</td>
-                  <td data-row="10" data-col="4">(0.025)</td>
-                </tr>
-<tr>
-<td data-row="11" data-col="1">gtsig_cent</td>
-                  <td data-row="11" data-col="2"></td>
-                  <td data-row="11" data-col="3">-0.277***</td>
-                  <td data-row="11" data-col="4">-0.292***</td>
-                </tr>
-<tr>
-<td data-row="12" data-col="1"></td>
-                  <td data-row="12" data-col="2"></td>
-                  <td data-row="12" data-col="3">(0.083)</td>
-                  <td data-row="12" data-col="4">(0.082)</td>
-                </tr>
-<tr>
-<td data-row="13" data-col="1">tsig_cent × gtsig_cent</td>
-                  <td data-row="13" data-col="2"></td>
-                  <td data-row="13" data-col="3"></td>
-                  <td data-row="13" data-col="4">0.158*</td>
-                </tr>
-<tr>
-<td data-row="14" data-col="1"></td>
-                  <td data-row="14" data-col="2"></td>
-                  <td data-row="14" data-col="3"></td>
-                  <td data-row="14" data-col="4">(0.068)</td>
-                </tr>
-<tr>
-<td data-row="15" data-col="1">SD (Intercept COMPID)</td>
-                  <td data-row="15" data-col="2">0.100</td>
-                  <td data-row="15" data-col="3">0.100</td>
-                  <td data-row="15" data-col="4">0.098</td>
-                </tr>
-<tr>
-<td data-row="16" data-col="1">SD (Observations)</td>
-                  <td data-row="16" data-col="2">0.931</td>
-                  <td data-row="16" data-col="3">0.931</td>
-                  <td data-row="16" data-col="4">0.930</td>
-                </tr>
-<tr>
-<td data-row="17" data-col="1">Num.Obs.</td>
-                  <td data-row="17" data-col="2">2042</td>
-                  <td data-row="17" data-col="3">2042</td>
-                  <td data-row="17" data-col="4">2042</td>
-                </tr>
-<tr>
-<td data-row="18" data-col="1">AIC</td>
-                  <td data-row="18" data-col="2">5553.4</td>
-                  <td data-row="18" data-col="3">5553.4</td>
-                  <td data-row="18" data-col="4">5553.5</td>
-                </tr>
-<tr>
-<td data-row="19" data-col="1">BIC</td>
-                  <td data-row="19" data-col="2">5587.1</td>
-                  <td data-row="19" data-col="3">5587.1</td>
-                  <td data-row="19" data-col="4">5592.8</td>
-                </tr>
+<tr class="odd">
+<td>(Intercept)</td>
+<td>1.998</td>
+<td>1.975</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>(0.094)</td>
+<td>(0.094)</td>
+</tr>
+<tr class="odd">
+<td>tsig_cent</td>
+<td>-0.172</td>
+<td>-0.168</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>(0.025)</td>
+<td>(0.025)</td>
+</tr>
+<tr class="odd">
+<td>LEAD</td>
+<td>-0.352</td>
+<td>-0.350</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>(0.030)</td>
+<td>(0.030)</td>
+</tr>
+<tr class="odd">
+<td>gtsig_cent</td>
+<td>-0.277</td>
+<td>-0.292</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>(0.083)</td>
+<td>(0.082)</td>
+</tr>
+<tr class="odd">
+<td>tsig_cent × gtsig_cent</td>
+<td></td>
+<td>0.158</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>(0.068)</td>
+</tr>
+<tr class="odd">
+<td>SD (Intercept COMPID)</td>
+<td>0.100</td>
+<td>0.098</td>
+</tr>
+<tr class="even">
+<td>SD (Observations)</td>
+<td>0.931</td>
+<td>0.930</td>
+</tr>
+<tr class="odd">
+<td>Num.Obs.</td>
+<td>2042</td>
+<td>2042</td>
+</tr>
+<tr class="even">
+<td>R2 Marg.</td>
+<td>0.180</td>
+<td>0.183</td>
+</tr>
+<tr class="odd">
+<td>R2 Cond.</td>
+<td>0.190</td>
+<td>0.192</td>
+</tr>
+<tr class="even">
+<td>AIC</td>
+<td>5553.4</td>
+<td>5553.5</td>
+</tr>
+<tr class="odd">
+<td>BIC</td>
+<td>5587.1</td>
+<td>5592.8</td>
+</tr>
+<tr class="even">
+<td>ICC</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td>RMSE</td>
+<td>0.93</td>
+<td>0.93</td>
+</tr>
 </tbody>
 </table>
 </div>
-<!-- hack to avoid NA insertion in last line -->
 </div>
-</div>
-<p><code><a href="https://modelsummary.com/man/modelsummary.html">modelsummary()</a></code> will also write directly to a file you can open in Word, which is worth knowing when you are assembling a manuscript:</p>
+</section><section id="html-version-that-you-can-open-in-word" class="level2" data-number="5.10"><h2 data-number="5.10" class="anchored" data-anchor-id="html-version-that-you-can-open-in-word">
+<span class="header-section-number">5.10</span> HTML version that you can open in Word</h2>
 <div class="cell">
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>, output <span class="op">=</span> <span class="st">"msum.docx"</span>, title <span class="op">=</span> <span class="st">"MLM Estimates"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>, output <span class="op">=</span> <span class="st">'msum.html'</span>, title <span class="op">=</span> <span class="st">'MLM Estimates'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="a-note-on-your-content-review" class="level2" data-number="5.8"><h2 data-number="5.8" class="anchored" data-anchor-id="a-note-on-your-content-review">
-<span class="header-section-number">5.8</span> A note on your content review</h2>
-<p>The Module 5 content review uses the Best in Class data rather than these Army data. The steps are identical: fit a random intercept model, add a random slope, evaluate it with <code><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova()</a></code>, then test a cross-level interaction. Chapter 6 works directly with the Best in Class dataset, so you will see that structure applied there before you need it.</p>
+</section><section id="a-note-on-your-content-review" class="level2" data-number="5.11"><h2 data-number="5.11" class="anchored" data-anchor-id="a-note-on-your-content-review">
+<span class="header-section-number">5.11</span> A note on your content review</h2>
+<p>The Module 5 content review uses the Best in Class data rather than these Army data. The steps are identical: fit a random intercept model, add a random slope, evaluate it with <code>rand()</code>, then test a cross-level interaction. What changes is the substance of the question, not the code.</p>
 
 
 <!-- -->
@@ -1300,238 +1280,235 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb48" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Random Slope and Coefficient Models</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>**Data for this chapter:** <span class="in">`lq2002.csv`</span></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>Every model so far has assumed that a predictor relates to the outcome in the same way in every group. The slope was fixed; only the intercept was allowed to vary. This chapter relaxes that assumption.</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>We continue with the Gavin and Hofmann (2002) data from the previous chapter: 2,042 U.S. Army soldiers nested within 49 companies. Staying with a dataset you already know means the new idea arrives on its own, without a new codebook attached to it. This is the same data Garson uses in Chapter 7.</span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
-<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
-<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
-<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggeffects)</span>
-<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-29"><a href="#cb48-29" aria-hidden="true" tabindex="-1"></a>lq2002 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"lq2002.csv"</span>)</span>
-<span id="cb48-30"><a href="#cb48-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-31"><a href="#cb48-31" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(lq2002)</span>
-<span id="cb48-32"><a href="#cb48-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-33"><a href="#cb48-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-34"><a href="#cb48-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data management: calculating cluster means</span></span>
-<span id="cb48-35"><a href="#cb48-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-36"><a href="#cb48-36" aria-hidden="true" tabindex="-1"></a>Here is something that comes up constantly in multilevel work. Often you want to take an individual-level measure and calculate the cluster, or group, mean. This is "aggregating up" an individual measure to see whether it also matters as a predictor at level 2. My own sense of task significance is important, but how my colleagues feel about their work probably matters too.</span>
-<span id="cb48-37"><a href="#cb48-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-40"><a href="#cb48-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-41"><a href="#cb48-41" aria-hidden="true" tabindex="-1"></a>lq2002 <span class="ot">&lt;-</span> lq2002 <span class="sc">|&gt;</span></span>
-<span id="cb48-42"><a href="#cb48-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(COMPID) <span class="sc">|&gt;</span></span>
-<span id="cb48-43"><a href="#cb48-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb48-44"><a href="#cb48-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">glead    =</span> <span class="fu">mean</span>(LEAD),</span>
-<span id="cb48-45"><a href="#cb48-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">gtsig    =</span> <span class="fu">mean</span>(TSIG),</span>
-<span id="cb48-46"><a href="#cb48-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">ghostile =</span> <span class="fu">mean</span>(HOSTILE)</span>
-<span id="cb48-47"><a href="#cb48-47" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb48-48"><a href="#cb48-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb48-49"><a href="#cb48-49" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-50"><a href="#cb48-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-51"><a href="#cb48-51" aria-hidden="true" tabindex="-1"></a>That command has two parts. First, <span class="in">`group_by()`</span> groups all responses into their respective companies as determined by <span class="in">`COMPID`</span>. This declares that the operations that follow are to be performed within each cluster. Second, <span class="in">`mutate()`</span> creates new variables equal to the mean of the original variables. Because we grouped by <span class="in">`COMPID`</span> first, we get the mean by company rather than the overall mean.</span>
-<span id="cb48-52"><a href="#cb48-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-53"><a href="#cb48-53" aria-hidden="true" tabindex="-1"></a>Do not forget <span class="in">`ungroup()`</span> at the end. A grouped data frame stays grouped, and every later operation will silently run within company until you undo it. This is one of the most common sources of confusing results in tidyverse code.</span>
-<span id="cb48-54"><a href="#cb48-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-55"><a href="#cb48-55" aria-hidden="true" tabindex="-1"></a>These new variables should be identical to <span class="in">`GLEAD`</span>, <span class="in">`GTSIG`</span>, and <span class="in">`GHOSTILE`</span>, which already exist in the file. Checking that they match is a cheap way to confirm you did it right:</span>
-<span id="cb48-56"><a href="#cb48-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-59"><a href="#cb48-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-60"><a href="#cb48-60" aria-hidden="true" tabindex="-1"></a>lq2002 <span class="sc">|&gt;</span></span>
-<span id="cb48-61"><a href="#cb48-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb48-62"><a href="#cb48-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">lead_check =</span> <span class="fu">max</span>(<span class="fu">abs</span>(glead <span class="sc">-</span> GLEAD)),</span>
-<span id="cb48-63"><a href="#cb48-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">tsig_check =</span> <span class="fu">max</span>(<span class="fu">abs</span>(gtsig <span class="sc">-</span> GTSIG))</span>
-<span id="cb48-64"><a href="#cb48-64" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb48-65"><a href="#cb48-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-66"><a href="#cb48-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-67"><a href="#cb48-67" aria-hidden="true" tabindex="-1"></a>Differences on the order of 1e-15 are floating point noise, not disagreement.</span>
-<span id="cb48-68"><a href="#cb48-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-69"><a href="#cb48-69" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step one: the preferred model without random slopes</span></span>
-<span id="cb48-70"><a href="#cb48-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-71"><a href="#cb48-71" aria-hidden="true" tabindex="-1"></a>Assume we ran a series of models with these data, as we did in the previous chapter, and arrived at one that best represents the data and matches our research questions. That model has a random intercept, two level-1 predictors (<span class="in">`TSIG`</span> and <span class="in">`LEAD`</span>), and one level-2 predictor (<span class="in">`GTSIG`</span>). Let us refit it to remind ourselves and to get fit statistics we can use as we go.</span>
-<span id="cb48-72"><a href="#cb48-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-75"><a href="#cb48-75" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-76"><a href="#cb48-76" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> TSIG <span class="sc">+</span> LEAD <span class="sc">+</span> GTSIG <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> COMPID),</span>
-<span id="cb48-77"><a href="#cb48-77" aria-hidden="true" tabindex="-1"></a>                <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002)</span>
-<span id="cb48-78"><a href="#cb48-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-79"><a href="#cb48-79" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.1</span>)</span>
-<span id="cb48-80"><a href="#cb48-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-81"><a href="#cb48-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-84"><a href="#cb48-84" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-85"><a href="#cb48-85" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(model<span class="fl">.1</span>)</span>
-<span id="cb48-86"><a href="#cb48-86" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-87"><a href="#cb48-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-88"><a href="#cb48-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step two: add a random slope for TSIG</span></span>
-<span id="cb48-89"><a href="#cb48-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-90"><a href="#cb48-90" aria-hidden="true" tabindex="-1"></a>The next logical step after testing predictors is to ask whether any of them should be treated as random at level 2. Here we test a random slope for <span class="in">`TSIG`</span>. This allows the slope of <span class="in">`TSIG`</span>, which was negative overall, to vary by company. In some companies that slope could be steeper, in others flatter.</span>
-<span id="cb48-91"><a href="#cb48-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-92"><a href="#cb48-92" aria-hidden="true" tabindex="-1"></a>In terms of code, to add a random slope you list the predictor again inside the parentheses, on the left of the vertical bar. Notice that <span class="in">`TSIG`</span> now appears twice: once among the fixed effects, and once in the random effects term.</span>
-<span id="cb48-93"><a href="#cb48-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-96"><a href="#cb48-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-97"><a href="#cb48-97" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> TSIG <span class="sc">+</span> LEAD <span class="sc">+</span> GTSIG <span class="sc">+</span> (TSIG <span class="sc">|</span> COMPID),</span>
-<span id="cb48-98"><a href="#cb48-98" aria-hidden="true" tabindex="-1"></a>                <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002)</span>
-<span id="cb48-99"><a href="#cb48-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-100"><a href="#cb48-100" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.2</span>)</span>
-<span id="cb48-101"><a href="#cb48-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-102"><a href="#cb48-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-103"><a href="#cb48-103" aria-hidden="true" tabindex="-1"></a><span class="in">`(TSIG | COMPID)`</span> is shorthand. It estimates a random intercept and a random slope for <span class="in">`TSIG`</span>, plus the correlation between them. Writing <span class="in">`(1 + TSIG | COMPID)`</span> means exactly the same thing and is more explicit about the intercept.</span>
-<span id="cb48-104"><a href="#cb48-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-105"><a href="#cb48-105" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reading the singular fit</span></span>
-<span id="cb48-106"><a href="#cb48-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-107"><a href="#cb48-107" aria-hidden="true" tabindex="-1"></a>You will likely see <span class="in">`boundary (singular) fit: see ?isSingular`</span>, and the random effects table will show an intercept-slope correlation at or very near -1.00.</span>
-<span id="cb48-108"><a href="#cb48-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-109"><a href="#cb48-109" aria-hidden="true" tabindex="-1"></a>This is worth stopping on rather than stepping past. A correlation of exactly -1 is not a finding about the Army. It is the model telling you it has run out of information. The estimation has pushed a parameter to the edge of the space it is allowed to occupy, which is what happens when 49 companies cannot support an intercept variance, a slope variance, and a correlation among them all at once.</span>
-<span id="cb48-110"><a href="#cb48-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-111"><a href="#cb48-111" aria-hidden="true" tabindex="-1"></a>The practical question is what to do about it. A singular fit does not invalidate the fixed effects, which are usually what you are reporting. It does mean the random effects structure should be treated with suspicion, and it is a reason to consider dropping the correlation:</span>
-<span id="cb48-112"><a href="#cb48-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-115"><a href="#cb48-115" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-116"><a href="#cb48-116" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.2</span>b <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> TSIG <span class="sc">+</span> LEAD <span class="sc">+</span> GTSIG <span class="sc">+</span></span>
-<span id="cb48-117"><a href="#cb48-117" aria-hidden="true" tabindex="-1"></a>                   (<span class="dv">1</span> <span class="sc">|</span> COMPID) <span class="sc">+</span> (<span class="dv">0</span> <span class="sc">+</span> TSIG <span class="sc">|</span> COMPID),</span>
-<span id="cb48-118"><a href="#cb48-118" aria-hidden="true" tabindex="-1"></a>                 <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002)</span>
-<span id="cb48-119"><a href="#cb48-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-120"><a href="#cb48-120" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.2</span>b)</span>
-<span id="cb48-121"><a href="#cb48-121" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-122"><a href="#cb48-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-123"><a href="#cb48-123" aria-hidden="true" tabindex="-1"></a>The <span class="in">`(0 + TSIG | COMPID)`</span> term asks for a slope that varies by company but is uncorrelated with the intercept. That is one fewer parameter, and it often resolves the singularity.</span>
-<span id="cb48-124"><a href="#cb48-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-125"><a href="#cb48-125" aria-hidden="true" tabindex="-1"></a><span class="fu">## Evaluating the random slope</span></span>
-<span id="cb48-126"><a href="#cb48-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-129"><a href="#cb48-129" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-130"><a href="#cb48-130" aria-hidden="true" tabindex="-1"></a><span class="fu">ranova</span>(model<span class="fl">.2</span>)</span>
-<span id="cb48-131"><a href="#cb48-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-132"><a href="#cb48-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-133"><a href="#cb48-133" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb48-134"><a href="#cb48-134" aria-hidden="true" tabindex="-1"></a><span class="fu">## `rand()` became `ranova()`</span></span>
-<span id="cb48-135"><a href="#cb48-135" aria-hidden="true" tabindex="-1"></a>Older course materials call <span class="in">`lmerTest::rand()`</span>. The function was renamed to <span class="in">`ranova()`</span> several versions ago. <span class="in">`rand()`</span> may still work but is no longer the documented name.</span>
-<span id="cb48-136"><a href="#cb48-136" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb48-137"><a href="#cb48-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-138"><a href="#cb48-138" aria-hidden="true" tabindex="-1"></a>The likelihood ratio test gives you statistical evidence. It should not be the only thing you consult. A random slope that improves fit but has no substantive rationale is worth questioning, and a slope with a strong theoretical rationale that narrowly misses significance may still deserve to stay, particularly with a modest number of level-2 units.</span>
-<span id="cb48-139"><a href="#cb48-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-140"><a href="#cb48-140" aria-hidden="true" tabindex="-1"></a>Note also what a significant result here means. Testing whether a variance equals zero puts the null hypothesis on the boundary of the parameter space, which makes the usual chi-square reference distribution conservative. A significant result is therefore trustworthy; a marginal one deserves more caution than the p-value suggests.</span>
-<span id="cb48-141"><a href="#cb48-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-142"><a href="#cb48-142" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step three: add a random slope for LEAD</span></span>
-<span id="cb48-143"><a href="#cb48-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-144"><a href="#cb48-144" aria-hidden="true" tabindex="-1"></a>Same idea, now testing whether the leadership climate slope also varies by company.</span>
-<span id="cb48-145"><a href="#cb48-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-148"><a href="#cb48-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-149"><a href="#cb48-149" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> TSIG <span class="sc">+</span> LEAD <span class="sc">+</span> GTSIG <span class="sc">+</span> (TSIG <span class="sc">+</span> LEAD <span class="sc">|</span> COMPID),</span>
-<span id="cb48-150"><a href="#cb48-150" aria-hidden="true" tabindex="-1"></a>                <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002)</span>
-<span id="cb48-151"><a href="#cb48-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-152"><a href="#cb48-152" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.3</span>)</span>
-<span id="cb48-153"><a href="#cb48-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-154"><a href="#cb48-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-157"><a href="#cb48-157" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-158"><a href="#cb48-158" aria-hidden="true" tabindex="-1"></a><span class="fu">ranova</span>(model<span class="fl">.3</span>)</span>
-<span id="cb48-159"><a href="#cb48-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-160"><a href="#cb48-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-161"><a href="#cb48-161" aria-hidden="true" tabindex="-1"></a>Read the <span class="in">`ranova()`</span> output carefully here. It tests each random term separately, and the two can come out differently: one slope may earn its place while the other does not. That is a more useful result than a single verdict on the whole random structure.</span>
-<span id="cb48-162"><a href="#cb48-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-163"><a href="#cb48-163" aria-hidden="true" tabindex="-1"></a><span class="fu">## A cross-level interaction</span></span>
-<span id="cb48-164"><a href="#cb48-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-165"><a href="#cb48-165" aria-hidden="true" tabindex="-1"></a>This is more advanced, but worth showing. In the previous chapter we looked at an interaction between <span class="in">`LEAD`</span> and <span class="in">`TSIG`</span>, both level-1 soldier covariates. Multilevel models also let us test *cross-level* interactions, between a level-1 and a level-2 predictor.</span>
-<span id="cb48-166"><a href="#cb48-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-167"><a href="#cb48-167" aria-hidden="true" tabindex="-1"></a>Suppose we want to test an interaction between <span class="in">`TSIG`</span> (level 1) and <span class="in">`GTSIG`</span> (level 2). Put another way: is there an interaction between how I feel about the importance of my job, and how my peers feel about the importance of theirs? That seems worth testing.</span>
-<span id="cb48-168"><a href="#cb48-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-169"><a href="#cb48-169" aria-hidden="true" tabindex="-1"></a><span class="fu">### Center the predictors first</span></span>
-<span id="cb48-170"><a href="#cb48-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-171"><a href="#cb48-171" aria-hidden="true" tabindex="-1"></a>Centering means subtracting the mean from every observation, so that zero now means average. When examining interactions it is usually a good idea to center continuous predictors first. This makes the results easier to interpret, and it ensures the interaction is evaluated near the sample mean rather than at a value that may not exist in the data.</span>
-<span id="cb48-172"><a href="#cb48-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-175"><a href="#cb48-175" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-176"><a href="#cb48-176" aria-hidden="true" tabindex="-1"></a>lq2002 <span class="ot">&lt;-</span> lq2002 <span class="sc">|&gt;</span></span>
-<span id="cb48-177"><a href="#cb48-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb48-178"><a href="#cb48-178" aria-hidden="true" tabindex="-1"></a>    <span class="at">tsig_cent  =</span> TSIG <span class="sc">-</span> <span class="fu">mean</span>(TSIG),</span>
-<span id="cb48-179"><a href="#cb48-179" aria-hidden="true" tabindex="-1"></a>    <span class="at">gtsig_cent =</span> GTSIG <span class="sc">-</span> <span class="fu">mean</span>(GTSIG)</span>
-<span id="cb48-180"><a href="#cb48-180" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb48-181"><a href="#cb48-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-182"><a href="#cb48-182" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the work: both means should be 0</span></span>
-<span id="cb48-183"><a href="#cb48-183" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(lq2002[, <span class="fu">c</span>(<span class="st">"tsig_cent"</span>, <span class="st">"gtsig_cent"</span>)], <span class="at">fast =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb48-184"><a href="#cb48-184" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-185"><a href="#cb48-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-186"><a href="#cb48-186" aria-hidden="true" tabindex="-1"></a><span class="fu">### Fit and interpret</span></span>
-<span id="cb48-187"><a href="#cb48-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-190"><a href="#cb48-190" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-191"><a href="#cb48-191" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> tsig_cent <span class="sc">+</span> LEAD <span class="sc">+</span> gtsig_cent <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> COMPID),</span>
-<span id="cb48-192"><a href="#cb48-192" aria-hidden="true" tabindex="-1"></a>                <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002)</span>
-<span id="cb48-193"><a href="#cb48-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-194"><a href="#cb48-194" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.4</span>)</span>
-<span id="cb48-195"><a href="#cb48-195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-196"><a href="#cb48-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-199"><a href="#cb48-199" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-200"><a href="#cb48-200" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> tsig_cent <span class="sc">+</span> LEAD <span class="sc">+</span> gtsig_cent <span class="sc">+</span></span>
-<span id="cb48-201"><a href="#cb48-201" aria-hidden="true" tabindex="-1"></a>                  tsig_cent<span class="sc">:</span>gtsig_cent <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> COMPID),</span>
-<span id="cb48-202"><a href="#cb48-202" aria-hidden="true" tabindex="-1"></a>                <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002)</span>
-<span id="cb48-203"><a href="#cb48-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-204"><a href="#cb48-204" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.5</span>)</span>
-<span id="cb48-205"><a href="#cb48-205" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-206"><a href="#cb48-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-207"><a href="#cb48-207" aria-hidden="true" tabindex="-1"></a>Compare model.4 to model.1. The coefficients on the predictors are identical, and only the intercept changed. That is centering working exactly as advertised: it relocates the origin without altering the relationships. The intercept in model.4 is now the predicted hostility for a soldier of average task significance in a company of average task significance, which is a sentence you can actually write in a paper.</span>
-<span id="cb48-208"><a href="#cb48-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-209"><a href="#cb48-209" aria-hidden="true" tabindex="-1"></a><span class="fu">### Should we keep the interaction?</span></span>
-<span id="cb48-210"><a href="#cb48-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-213"><a href="#cb48-213" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-214"><a href="#cb48-214" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model<span class="fl">.4</span>, model<span class="fl">.5</span>)</span>
-<span id="cb48-215"><a href="#cb48-215" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-216"><a href="#cb48-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-217"><a href="#cb48-217" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualizing it</span></span>
-<span id="cb48-218"><a href="#cb48-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-219"><a href="#cb48-219" aria-hidden="true" tabindex="-1"></a>Interpreting a significant interaction from coefficients alone is hard, and there is no way around that. Plotting predicted values is what makes it legible.</span>
-<span id="cb48-220"><a href="#cb48-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-223"><a href="#cb48-223" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-224"><a href="#cb48-224" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-crosslevel</span></span>
-<span id="cb48-225"><a href="#cb48-225" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Predicted hostility across individual task significance, at low, average, and high company task significance."</span></span>
-<span id="cb48-226"><a href="#cb48-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-227"><a href="#cb48-227" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ggpredict</span>(model<span class="fl">.5</span>, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"tsig_cent"</span>, <span class="st">"gtsig_cent [-0.5, 0, 0.5]"</span>)))</span>
-<span id="cb48-228"><a href="#cb48-228" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-229"><a href="#cb48-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-230"><a href="#cb48-230" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb48-231"><a href="#cb48-231" aria-hidden="true" tabindex="-1"></a><span class="fu">## A package change since 2020</span></span>
-<span id="cb48-232"><a href="#cb48-232" aria-hidden="true" tabindex="-1"></a>Earlier versions of this demonstration used <span class="in">`interplot::interplot()`</span> for this plot. That package has seen little maintenance, and <span class="in">`ggeffects`</span> is now the more reliable choice with a wider range of supported models. The idea is identical: compare hypothetical soldiers with different levels of <span class="in">`TSIG`</span> who serve in companies with different levels of <span class="in">`GTSIG`</span>.</span>
-<span id="cb48-233"><a href="#cb48-233" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb48-234"><a href="#cb48-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-235"><a href="#cb48-235" aria-hidden="true" tabindex="-1"></a>A positive interaction here would mean that the negative relationship between personal task significance and hostility is weaker in companies where everyone finds their work meaningful. Always check the plot against the coefficient. Two nearly parallel lines and two crossing lines are different findings even when both interactions are significant.</span>
-<span id="cb48-236"><a href="#cb48-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-237"><a href="#cb48-237" aria-hidden="true" tabindex="-1"></a><span class="fu">## Organizing the results</span></span>
-<span id="cb48-238"><a href="#cb48-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-241"><a href="#cb48-241" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-242"><a href="#cb48-242" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb48-243"><a href="#cb48-243" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Random intercept"</span> <span class="ot">=</span> model<span class="fl">.1</span>,</span>
-<span id="cb48-244"><a href="#cb48-244" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Centered"</span>         <span class="ot">=</span> model<span class="fl">.4</span>,</span>
-<span id="cb48-245"><a href="#cb48-245" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Interaction"</span>      <span class="ot">=</span> model<span class="fl">.5</span></span>
-<span id="cb48-246"><a href="#cb48-246" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb48-247"><a href="#cb48-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-248"><a href="#cb48-248" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(</span>
-<span id="cb48-249"><a href="#cb48-249" aria-hidden="true" tabindex="-1"></a>  models,</span>
-<span id="cb48-250"><a href="#cb48-250" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"*"</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">"**"</span> <span class="ot">=</span> .<span class="dv">01</span>, <span class="st">"***"</span> <span class="ot">=</span> .<span class="dv">001</span>),</span>
-<span id="cb48-251"><a href="#cb48-251" aria-hidden="true" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">"nobs"</span>, <span class="st">"aic"</span>, <span class="st">"bic"</span>),</span>
-<span id="cb48-252"><a href="#cb48-252" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Random slope and cross-level interaction models predicting hostility"</span></span>
-<span id="cb48-253"><a href="#cb48-253" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb48-254"><a href="#cb48-254" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-255"><a href="#cb48-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-256"><a href="#cb48-256" aria-hidden="true" tabindex="-1"></a><span class="in">`modelsummary()`</span> will also write directly to a file you can open in Word, which is worth knowing when you are assembling a manuscript:</span>
-<span id="cb48-257"><a href="#cb48-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-260"><a href="#cb48-260" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb48-261"><a href="#cb48-261" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb48-262"><a href="#cb48-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-263"><a href="#cb48-263" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models, <span class="at">output =</span> <span class="st">"msum.docx"</span>, <span class="at">title =</span> <span class="st">"MLM Estimates"</span>)</span>
-<span id="cb48-264"><a href="#cb48-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb48-265"><a href="#cb48-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-266"><a href="#cb48-266" aria-hidden="true" tabindex="-1"></a><span class="fu">## A note on your content review</span></span>
-<span id="cb48-267"><a href="#cb48-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-268"><a href="#cb48-268" aria-hidden="true" tabindex="-1"></a>The Module 5 content review uses the Best in Class data rather than these Army data. The steps are identical: fit a random intercept model, add a random slope, evaluate it with <span class="in">`ranova()`</span>, then test a cross-level interaction. Chapter 6 works directly with the Best in Class dataset, so you will see that structure applied there before you need it.</span>
+<div class="sourceCode" id="cb35" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Random Slope Models</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>**Data for this chapter:** <span class="in">`lq2002.csv`</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>This week, we are going to continue using data from Gavin and Hofmann (2002), a study on organizational climate and attitudes published in *Leadership Quarterly*. Here, we have individual soldiers nested within companies. This is the same dataset that Garson uses in Chapter 7, so you can recreate his analysis.</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>Every model so far has assumed that a predictor relates to the outcome the same way in every company. The slope was fixed; only the intercept was allowed to vary. This chapter relaxes that assumption.</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load some packages to help with the analysis and data management</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(tidyverse))</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(lme4))</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a><span class="in">`suppressPackageStartupMessages()`</span> hides the loading banners these packages print. Those messages are informative the first few times, particularly the tidyverse conflict list, and clutter after that.</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load and explore the data</span></span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a>lq2002 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"lq2002.csv"</span>)</span>
+<span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(lq2002)</span>
+<span id="cb35-32"><a href="#cb35-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb35-33"><a href="#cb35-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-34"><a href="#cb35-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data management tip of the week: calculating group (cluster) means</span></span>
+<span id="cb35-35"><a href="#cb35-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-36"><a href="#cb35-36" aria-hidden="true" tabindex="-1"></a>Here is something that comes up a lot in MLM. Often, you want to take an individual-level measure and calculate the cluster, or group, mean. This is "aggregating up" an individual measure to see if it is a significant predictor at level 2. We did this last week with the task significance measure (<span class="in">`TSIG`</span>). My own sense of task significance is important, but it is probably also important to consider how my colleagues feel about their work as well.</span>
+<span id="cb35-37"><a href="#cb35-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-40"><a href="#cb35-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-41"><a href="#cb35-41" aria-hidden="true" tabindex="-1"></a>lq2002<span class="fl">.1</span> <span class="ot">&lt;-</span> lq2002 <span class="sc">%&gt;%</span></span>
+<span id="cb35-42"><a href="#cb35-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(COMPID) <span class="sc">%&gt;%</span></span>
+<span id="cb35-43"><a href="#cb35-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(.,</span>
+<span id="cb35-44"><a href="#cb35-44" aria-hidden="true" tabindex="-1"></a>            <span class="at">glead =</span> <span class="fu">mean</span>(LEAD),</span>
+<span id="cb35-45"><a href="#cb35-45" aria-hidden="true" tabindex="-1"></a>            <span class="at">gtsig =</span> <span class="fu">mean</span>(TSIG),</span>
+<span id="cb35-46"><a href="#cb35-46" aria-hidden="true" tabindex="-1"></a>            <span class="at">ghostile =</span> <span class="fu">mean</span>(GHOSTILE)) <span class="sc">%&gt;%</span></span>
+<span id="cb35-47"><a href="#cb35-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb35-48"><a href="#cb35-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-49"><a href="#cb35-49" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(lq2002<span class="fl">.1</span>)</span>
+<span id="cb35-50"><a href="#cb35-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb35-51"><a href="#cb35-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-52"><a href="#cb35-52" aria-hidden="true" tabindex="-1"></a>The above command has two parts. First, we use the <span class="in">`group_by`</span> command from our friend, the <span class="in">`dplyr`</span> package, to group all responses in their respective clusters/companies determined by <span class="in">`COMPID`</span>. This is a first step to declare that all the operations that follow are to be performed at the cluster (company) level. Second, we use the <span class="in">`mutate`</span> command, which we have used before, to create new variables that are equal to the mean of the original variables. Since we just grouped by <span class="in">`COMPID`</span>, this means we get the mean of the variables by company.</span>
+<span id="cb35-53"><a href="#cb35-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-54"><a href="#cb35-54" aria-hidden="true" tabindex="-1"></a>So, we calculate new variables called <span class="in">`glead`</span>, <span class="in">`gtsig`</span>, and <span class="in">`ghostile`</span> that are equal to the mean of <span class="in">`LEAD`</span>, <span class="in">`TSIG`</span>, and <span class="in">`HOSTILE`</span> by company. This is actually identical to what is already calculated for us in the dataset, the variables <span class="in">`GLEAD`</span>, <span class="in">`GTSIG`</span>, and <span class="in">`GHOSTILE`</span>. I just wanted to show you how to do it so you can try it on your own!</span>
+<span id="cb35-55"><a href="#cb35-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-56"><a href="#cb35-56" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb35-57"><a href="#cb35-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## Do not forget `ungroup()`</span></span>
+<span id="cb35-58"><a href="#cb35-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-59"><a href="#cb35-59" aria-hidden="true" tabindex="-1"></a>A grouped data frame stays grouped. Every operation after <span class="in">`group_by()`</span> silently runs within company until you undo it, which produces results that look plausible and are wrong. <span class="in">`ungroup()`</span> at the end of the chain is cheap insurance.</span>
+<span id="cb35-60"><a href="#cb35-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-61"><a href="#cb35-61" aria-hidden="true" tabindex="-1"></a>You can check whether a data frame is still grouped with <span class="in">`groups(lq2002.1)`</span>, which should return an empty list here.</span>
+<span id="cb35-62"><a href="#cb35-62" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb35-63"><a href="#cb35-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-64"><a href="#cb35-64" aria-hidden="true" tabindex="-1"></a>Since we have computed variables that should already exist in the file, we can verify our work:</span>
+<span id="cb35-65"><a href="#cb35-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-68"><a href="#cb35-68" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-69"><a href="#cb35-69" aria-hidden="true" tabindex="-1"></a>lq2002<span class="fl">.1</span> <span class="sc">%&gt;%</span></span>
+<span id="cb35-70"><a href="#cb35-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">lead_check =</span> <span class="fu">max</span>(<span class="fu">abs</span>(glead <span class="sc">-</span> GLEAD)),</span>
+<span id="cb35-71"><a href="#cb35-71" aria-hidden="true" tabindex="-1"></a>            <span class="at">tsig_check =</span> <span class="fu">max</span>(<span class="fu">abs</span>(gtsig <span class="sc">-</span> GTSIG)))</span>
+<span id="cb35-72"><a href="#cb35-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb35-73"><a href="#cb35-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-74"><a href="#cb35-74" aria-hidden="true" tabindex="-1"></a>Differences on the order of 1e-15 are floating point noise, not disagreement. Anything larger would mean the aggregation did not do what we thought.</span>
+<span id="cb35-75"><a href="#cb35-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-76"><a href="#cb35-76" aria-hidden="true" tabindex="-1"></a><span class="fu">## Running random slopes models</span></span>
+<span id="cb35-77"><a href="#cb35-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-78"><a href="#cb35-78" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step one: run your preferred model *without* random slopes</span></span>
+<span id="cb35-79"><a href="#cb35-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-80"><a href="#cb35-80" aria-hidden="true" tabindex="-1"></a>Let's assume that we ran a bunch of models with this army data (which we did, last week!), and arrived at a model that we thought best represented our data and matched our research questions. That is the model below, with a random intercept, two level-1 predictors (<span class="in">`LEAD`</span> and <span class="in">`TSIG`</span>), and one level-2 predictor (<span class="in">`GTSIG`</span>). Let's rerun that model to remind ourselves and also get measures of model fit (<span class="in">`AIC`</span> and <span class="in">`BIC`</span>) that we can use as we go along.</span>
+<span id="cb35-81"><a href="#cb35-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-84"><a href="#cb35-84" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-85"><a href="#cb35-85" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> TSIG <span class="sc">+</span> LEAD <span class="sc">+</span> GTSIG <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>COMPID), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002<span class="fl">.1</span>)</span>
+<span id="cb35-86"><a href="#cb35-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-87"><a href="#cb35-87" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.1</span>)</span>
+<span id="cb35-88"><a href="#cb35-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb35-89"><a href="#cb35-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-90"><a href="#cb35-90" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step two: add a random slope for TSIG</span></span>
+<span id="cb35-91"><a href="#cb35-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-92"><a href="#cb35-92" aria-hidden="true" tabindex="-1"></a>Now, the next logical step after testing predictors is to see whether or not any predictors should be treated as random at level-2. Here, we are going to test a random slope for <span class="in">`TSIG`</span>. This is effectively allowing the slope of <span class="in">`TSIG`</span> (which was overall negative) to vary according to which company a soldier is in. In some companies, that slope could now be higher, in some companies, it could be lower.</span>
+<span id="cb35-93"><a href="#cb35-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-94"><a href="#cb35-94" aria-hidden="true" tabindex="-1"></a>In terms of coding, to add a random slope, you just list the predictor name again after the colon. Notice now that <span class="in">`TSIG`</span> appears twice in the code: once to the left of the <span class="in">`~`</span>, and once on the right side of the pipe operator (<span class="in">`|`</span>).</span>
+<span id="cb35-95"><a href="#cb35-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-98"><a href="#cb35-98" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-99"><a href="#cb35-99" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> TSIG <span class="sc">+</span> LEAD <span class="sc">+</span> GTSIG <span class="sc">+</span> (TSIG<span class="sc">|</span>COMPID), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002<span class="fl">.1</span>)</span>
+<span id="cb35-100"><a href="#cb35-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-101"><a href="#cb35-101" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.2</span>)</span>
+<span id="cb35-102"><a href="#cb35-102" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb35-103"><a href="#cb35-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-104"><a href="#cb35-104" aria-hidden="true" tabindex="-1"></a>The Random effects table now has three quantities rather than one: an intercept variance, a slope variance, and the correlation between them. The slope variance is the new one, and it answers a question the previous model could not ask.</span>
+<span id="cb35-105"><a href="#cb35-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-106"><a href="#cb35-106" aria-hidden="true" tabindex="-1"></a>Think about what teacher-to-teacher, or here company-to-company, slope variation would mean on the ground. In one company, soldiers who find their work meaningful report much less hostility than those who do not. In another, that gap is small. The average relationship might be identical in both, but the experience of being in those two companies is different.</span>
+<span id="cb35-107"><a href="#cb35-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-108"><a href="#cb35-108" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb35-109"><a href="#cb35-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reading a singular fit</span></span>
+<span id="cb35-110"><a href="#cb35-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-111"><a href="#cb35-111" aria-hidden="true" tabindex="-1"></a>You may see <span class="in">`boundary (singular) fit: see ?isSingular`</span>, with the intercept-slope correlation at or near -1.00.</span>
+<span id="cb35-112"><a href="#cb35-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-113"><a href="#cb35-113" aria-hidden="true" tabindex="-1"></a>This is worth stopping on rather than stepping past. A correlation of exactly -1 is not a finding about the Army. It is the model reporting that it has run out of information. Estimation has pushed a parameter to the edge of the space it is allowed to occupy, which happens when 49 companies cannot support an intercept variance, a slope variance, and a correlation between them all at once.</span>
+<span id="cb35-114"><a href="#cb35-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-115"><a href="#cb35-115" aria-hidden="true" tabindex="-1"></a>A singular fit does not invalidate the fixed effects, which are usually what you report. It does mean the random effects structure should be treated with suspicion. One standard response is to drop the correlation, fitting <span class="in">`(1|COMPID) + (0 + TSIG|COMPID)`</span>, which asks for a slope that varies by company but is uncorrelated with the intercept.</span>
+<span id="cb35-116"><a href="#cb35-116" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb35-117"><a href="#cb35-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-118"><a href="#cb35-118" aria-hidden="true" tabindex="-1"></a><span class="fu">### Using `lmerTest` to evaluate random slope</span></span>
+<span id="cb35-119"><a href="#cb35-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-122"><a href="#cb35-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-123"><a href="#cb35-123" aria-hidden="true" tabindex="-1"></a>lmerTest<span class="sc">::</span><span class="fu">rand</span>(model<span class="fl">.2</span>)</span>
+<span id="cb35-124"><a href="#cb35-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb35-125"><a href="#cb35-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-126"><a href="#cb35-126" aria-hidden="true" tabindex="-1"></a>The likelihood ratio test gives you statistical evidence. It should not be the only thing you consult. A random slope that improves fit but has no substantive rationale is worth questioning, and a slope with a strong theoretical rationale that narrowly misses significance may still deserve to stay, particularly with a modest number of level-2 units.</span>
+<span id="cb35-127"><a href="#cb35-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-128"><a href="#cb35-128" aria-hidden="true" tabindex="-1"></a>One technical note on reading this p-value. Testing whether a variance equals zero puts the null hypothesis on the boundary of the parameter space, which makes the usual chi-square reference distribution conservative. A significant result is therefore trustworthy. A marginal one deserves more caution than the number suggests.</span>
+<span id="cb35-129"><a href="#cb35-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-130"><a href="#cb35-130" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step three: add a random slope for LEAD</span></span>
+<span id="cb35-131"><a href="#cb35-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-132"><a href="#cb35-132" aria-hidden="true" tabindex="-1"></a>Same thing here, except now we are testing a random slope for <span class="in">`LEAD`</span>:</span>
+<span id="cb35-133"><a href="#cb35-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-136"><a href="#cb35-136" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-137"><a href="#cb35-137" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> TSIG <span class="sc">+</span> LEAD <span class="sc">+</span> GTSIG <span class="sc">+</span> (TSIG <span class="sc">+</span> LEAD<span class="sc">|</span>COMPID), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002<span class="fl">.1</span>)</span>
+<span id="cb35-138"><a href="#cb35-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-139"><a href="#cb35-139" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.3</span>)</span>
+<span id="cb35-140"><a href="#cb35-140" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb35-141"><a href="#cb35-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-142"><a href="#cb35-142" aria-hidden="true" tabindex="-1"></a><span class="fu">### Using `lmerTest` to evaluate random slope</span></span>
+<span id="cb35-143"><a href="#cb35-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-146"><a href="#cb35-146" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-147"><a href="#cb35-147" aria-hidden="true" tabindex="-1"></a>lmerTest<span class="sc">::</span><span class="fu">rand</span>(model<span class="fl">.3</span>)</span>
+<span id="cb35-148"><a href="#cb35-148" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb35-149"><a href="#cb35-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-150"><a href="#cb35-150" aria-hidden="true" tabindex="-1"></a>Read this output carefully. <span class="in">`rand()`</span> tests each random term separately, so the two slopes can come out differently: one may earn its place while the other does not. That is a more useful result than a single verdict on the whole random structure.</span>
+<span id="cb35-151"><a href="#cb35-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-152"><a href="#cb35-152" aria-hidden="true" tabindex="-1"></a>Notice also how quickly the number of parameters grows. Two random slopes plus an intercept means three variances and three correlations, all estimated from 49 companies. This is the most common reason MLM models fail to converge, and it is worth doing the arithmetic before fitting rather than after.</span>
+<span id="cb35-153"><a href="#cb35-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-154"><a href="#cb35-154" aria-hidden="true" tabindex="-1"></a><span class="fu">## Getting fancy: modeling a cross-level interaction</span></span>
+<span id="cb35-155"><a href="#cb35-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-156"><a href="#cb35-156" aria-hidden="true" tabindex="-1"></a>This is more advanced stuff, but I want to show you how you might model a cross-level interaction. Last week, we looked at the interaction between <span class="in">`LEAD`</span> and <span class="in">`TSIG`</span>, which is an interaction between two level-1 (soldier) covariates. In MLM, it is really easy to look at cross-level interactions, as well. So, let's say we want to test whether there is an interaction between <span class="in">`TSIG`</span> (level-1) and <span class="in">`GTSIG`</span> (level-2). Put another way, is there an interaction between how I feel about the importance of my job, and how my peers feel about the importance of their job? Probably, and it is worth testing.</span>
+<span id="cb35-157"><a href="#cb35-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-158"><a href="#cb35-158" aria-hidden="true" tabindex="-1"></a>Note the difference from a random slope. A random slope says slopes vary across companies but does not say why. A cross-level interaction tries to *explain* that variation using a level-2 variable.</span>
+<span id="cb35-159"><a href="#cb35-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-160"><a href="#cb35-160" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step one: create centered versions of your two predictors</span></span>
+<span id="cb35-161"><a href="#cb35-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-162"><a href="#cb35-162" aria-hidden="true" tabindex="-1"></a>Centering a variable means to subtract the mean from every observation. So now that variable has a mean of 0 (0 now means average). When we look at interaction effects, it is usually a good idea to center any continuous predictors before analyzing. This facilitates easier interpretation of the results, and it ensures that the interaction is being evaluated near the sample mean.</span>
+<span id="cb35-163"><a href="#cb35-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-164"><a href="#cb35-164" aria-hidden="true" tabindex="-1"></a>Centering works like this: you use the <span class="in">`mutate`</span> function from <span class="in">`dplyr`</span> to create a new variable that is equal to the original variable minus the mean (which we get using the <span class="in">`mean`</span> function). Just to check our work, we can call the <span class="in">`describe`</span> function from <span class="in">`psych`</span> and make sure that the means of those new variables are 0.</span>
+<span id="cb35-165"><a href="#cb35-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-168"><a href="#cb35-168" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-169"><a href="#cb35-169" aria-hidden="true" tabindex="-1"></a>lq2002<span class="fl">.2</span> <span class="ot">&lt;-</span> lq2002<span class="fl">.1</span> <span class="sc">%&gt;%</span></span>
+<span id="cb35-170"><a href="#cb35-170" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(.,</span>
+<span id="cb35-171"><a href="#cb35-171" aria-hidden="true" tabindex="-1"></a>         <span class="at">tsig_cent =</span> TSIG <span class="sc">-</span> <span class="fu">mean</span>(TSIG),</span>
+<span id="cb35-172"><a href="#cb35-172" aria-hidden="true" tabindex="-1"></a>         <span class="at">gtsig_cent =</span> GTSIG <span class="sc">-</span> <span class="fu">mean</span>(GTSIG))</span>
+<span id="cb35-173"><a href="#cb35-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-174"><a href="#cb35-174" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(lq2002<span class="fl">.2</span>, <span class="at">fast =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb35-175"><a href="#cb35-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb35-176"><a href="#cb35-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-177"><a href="#cb35-177" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step two: run the MLM and interpret the results</span></span>
+<span id="cb35-178"><a href="#cb35-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-181"><a href="#cb35-181" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-182"><a href="#cb35-182" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> tsig_cent <span class="sc">+</span> LEAD <span class="sc">+</span> gtsig_cent <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>COMPID), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002<span class="fl">.2</span>)</span>
+<span id="cb35-183"><a href="#cb35-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-184"><a href="#cb35-184" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.4</span>)</span>
+<span id="cb35-185"><a href="#cb35-185" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb35-186"><a href="#cb35-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-187"><a href="#cb35-187" aria-hidden="true" tabindex="-1"></a>Compare this to <span class="in">`model.1`</span>. The coefficients on the predictors are identical, and only the intercept changed. That is centering working exactly as advertised: it relocates the origin without altering any relationship. What it buys you is an interpretable intercept, now the predicted hostility for a soldier of average task significance in a company of average task significance, which is a sentence you can put in a paper.</span>
+<span id="cb35-188"><a href="#cb35-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-189"><a href="#cb35-189" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaction effects model</span></span>
+<span id="cb35-190"><a href="#cb35-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-193"><a href="#cb35-193" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-194"><a href="#cb35-194" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> tsig_cent <span class="sc">+</span> LEAD <span class="sc">+</span> gtsig_cent <span class="sc">+</span> tsig_cent<span class="sc">:</span>gtsig_cent <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>COMPID), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002<span class="fl">.2</span>)</span>
+<span id="cb35-195"><a href="#cb35-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-196"><a href="#cb35-196" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.5</span>)</span>
+<span id="cb35-197"><a href="#cb35-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb35-198"><a href="#cb35-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-199"><a href="#cb35-199" aria-hidden="true" tabindex="-1"></a><span class="fu">## Should we include that interaction? Comparing `model.4` with `model.5`</span></span>
+<span id="cb35-200"><a href="#cb35-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-203"><a href="#cb35-203" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-204"><a href="#cb35-204" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model<span class="fl">.5</span>, model<span class="fl">.4</span>)</span>
+<span id="cb35-205"><a href="#cb35-205" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb35-206"><a href="#cb35-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-207"><a href="#cb35-207" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step three: use `interplot` to obtain more easily interpretable results</span></span>
+<span id="cb35-208"><a href="#cb35-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-209"><a href="#cb35-209" aria-hidden="true" tabindex="-1"></a>Interpreting significant interactions is hard, there's no way around it. But the <span class="in">`margins`</span> command can be super useful for this. We will use margins to compare hypothetical soldiers with different levels of <span class="in">`TSIG`</span> who are in companies that have different levels of <span class="in">`GTSIG`</span>. And then we will plot the results to create a nice visual.</span>
+<span id="cb35-210"><a href="#cb35-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-213"><a href="#cb35-213" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-214"><a href="#cb35-214" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-interplot</span></span>
+<span id="cb35-215"><a href="#cb35-215" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "The estimated effect of company task significance across levels of individual task significance."</span></span>
+<span id="cb35-216"><a href="#cb35-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-217"><a href="#cb35-217" aria-hidden="true" tabindex="-1"></a>interplot<span class="sc">::</span><span class="fu">interplot</span>(model<span class="fl">.5</span>, <span class="at">var1 =</span> <span class="st">"gtsig_cent"</span>, <span class="at">var2 =</span> <span class="st">"tsig_cent"</span>)</span>
+<span id="cb35-218"><a href="#cb35-218" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb35-219"><a href="#cb35-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-220"><a href="#cb35-220" aria-hidden="true" tabindex="-1"></a>Read this plot carefully, because it is not the same as the trajectory plots we make elsewhere. The vertical axis is the *coefficient* on <span class="in">`gtsig_cent`</span>, not a predicted hostility score, and the horizontal axis moves across values of <span class="in">`tsig_cent`</span>. So the line shows how the company-level effect changes depending on the individual-level value. If the line is flat, there is no interaction. If the confidence band excludes zero over part of the range, the moderation is meaningful there.</span>
+<span id="cb35-221"><a href="#cb35-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-222"><a href="#cb35-222" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb35-223"><a href="#cb35-223" aria-hidden="true" tabindex="-1"></a><span class="fu">## If `interplot` will not install</span></span>
+<span id="cb35-224"><a href="#cb35-224" aria-hidden="true" tabindex="-1"></a>The <span class="in">`interplot`</span> package has seen little maintenance recently. If it is unavailable, <span class="in">`ggeffects`</span> produces a comparable picture from predicted values rather than coefficients:</span>
+<span id="cb35-225"><a href="#cb35-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-226"><a href="#cb35-226" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb35-227"><a href="#cb35-227" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggeffects)</span>
+<span id="cb35-228"><a href="#cb35-228" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ggpredict</span>(model<span class="fl">.5</span>, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"tsig_cent"</span>, <span class="st">"gtsig_cent [-0.5, 0, 0.5]"</span>)))</span>
+<span id="cb35-229"><a href="#cb35-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb35-230"><a href="#cb35-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-231"><a href="#cb35-231" aria-hidden="true" tabindex="-1"></a>That version plots predicted hostility across task significance at three levels of company task significance, which many people find easier to read.</span>
+<span id="cb35-232"><a href="#cb35-232" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb35-233"><a href="#cb35-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-234"><a href="#cb35-234" aria-hidden="true" tabindex="-1"></a><span class="fu">## Using `modelsummary` and `broom.mixed` to organize your results</span></span>
+<span id="cb35-235"><a href="#cb35-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-238"><a href="#cb35-238" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-239"><a href="#cb35-239" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb35-240"><a href="#cb35-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-241"><a href="#cb35-241" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb35-242"><a href="#cb35-242" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.mixed)</span>
+<span id="cb35-243"><a href="#cb35-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-244"><a href="#cb35-244" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(model<span class="fl">.4</span>, model<span class="fl">.5</span>)</span>
+<span id="cb35-245"><a href="#cb35-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-246"><a href="#cb35-246" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models, <span class="at">output =</span> <span class="st">"markdown"</span>)</span>
+<span id="cb35-247"><a href="#cb35-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb35-248"><a href="#cb35-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-249"><a href="#cb35-249" aria-hidden="true" tabindex="-1"></a><span class="fu">## HTML version that you can open in Word</span></span>
+<span id="cb35-250"><a href="#cb35-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-253"><a href="#cb35-253" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb35-254"><a href="#cb35-254" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb35-255"><a href="#cb35-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-256"><a href="#cb35-256" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models, <span class="at">output =</span> <span class="st">'msum.html'</span>, <span class="at">title =</span> <span class="st">'MLM Estimates'</span>)</span>
+<span id="cb35-257"><a href="#cb35-257" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb35-258"><a href="#cb35-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-259"><a href="#cb35-259" aria-hidden="true" tabindex="-1"></a><span class="fu">## A note on your content review</span></span>
+<span id="cb35-260"><a href="#cb35-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-261"><a href="#cb35-261" aria-hidden="true" tabindex="-1"></a>The Module 5 content review uses the Best in Class data rather than these Army data. The steps are identical: fit a random intercept model, add a random slope, evaluate it with <span class="in">`rand()`</span>, then test a cross-level interaction. What changes is the substance of the question, not the code.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

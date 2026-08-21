@@ -2,174 +2,226 @@
 
 **Data for this chapter:** `projectSTAR.dta`
 
-::: {.callout-note}
-## Data file needed
-Copy `projectSTAR.dta` into this project folder before rendering.
-:::
+This week, we are going to use the Kindergarten data from Project STAR, the Tennessee Class Size Experiment conducted from 1985 to 1990.
 
-Real data often nest more than two levels deep. Students sit in classrooms, classrooms sit in schools, and each layer can contribute its own variation. This chapter uses the Tennessee Class Size Experiment, with more than 6,000 kindergarten students nested in classrooms nested in over 200 schools.
+Real data often nest more than two levels deep. Students sit in classrooms, classrooms sit in schools, and each layer can contribute its own variation.
+
+## Load some packages to help with the analysis and data management
 
 ```{r}
 #| label: setup
+
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(lme4))
+```
+
+## Load and explore the data
+
+```{r}
+projectSTAR <- haven::read_dta("projectSTAR.dta")
+
+glimpse(projectSTAR)
+```
+
+Note the `haven::` prefix. We never load `haven` with `library()` here, so calling the function with its package name attached is what makes it available. This works for any installed package and is handy when you need one function and do not want the whole namespace.
+
+## Part one: data exploration and management
+
+### Use `str` to figure out the 2/1 coding scheme and variable labels
+
+The `str` function (short for structure) will show us any variable labels or values that have been attached to a variable. You can use this to find out how variables have been coded.
+
+```{r}
+str(projectSTAR)
+```
+
+This output is long, and it is worth scrolling. Project STAR variables carry Stata labels, and the coding is not always what you would guess. Several variables here use 1/2 coding rather than the 0/1 that regression conventions assume, which is exactly the sort of thing that produces a coefficient with a baffling sign if you do not check first.
+
+### Create a clean dataset ready for modeling
+
+```{r}
+star.clean <- projectSTAR %>%
+  mutate(.,
+         schoolid = gkschid,
+         classid = gktchid,
+         read = gktreadss,
+         classtype = as_factor(gkclasstype),
+         years_exp = gktyears,
+         urbanicity = as_factor(gksurban),
+         stu_frl = as_factor(gkfreelunch)
+         ) %>%
+  group_by(classid) %>% # Create a new variable, which is the average FRL by classroom:
+  mutate(.,
+            class_frl = mean(gkfreelunch, na.rm = TRUE) - 1
+         ) %>%
+  ungroup() %>%
+  group_by(schoolid) %>% # Create a new variable, which is the average FRL by school:
+  mutate(.,
+            school_frl = mean(gkfreelunch, na.rm = TRUE) - 1
+         ) %>%
+  ungroup() %>%
+  select(.,
+         schoolid,
+         classid,
+         read,
+         classtype,
+         years_exp,
+         urbanicity,
+         stu_frl,
+         class_frl,
+         school_frl)
+
+glimpse(star.clean)
+```
+
+This is a great example of when you might "aggregate up" an individual measure to see if it is a significant predictor at level 2 or level 3. We did this in the past with the task significance measure (`TSIG`) and the `lq2002` dataset.
+
+The above command has two parts. First, we use the `group_by` command from our friend, the `dplyr` package, to group all responses in their groups determined by `classid`. This is a first step to declare that all the operations that follow are to be performed at the cluster (classroom) level. Second, we use the `mutate` command, which we have used before, to create new variables that are equal to the mean of the original variables. Since we just grouped by `classid`, this means we get the mean of the variables by classroom.
+
+We have to get just a little fancier. Since the values of `gkfreelunch` are 1 for free lunch and 2 for non-free lunch, first we take the mean of that variable. Then, we subtract 1 from that value to give us the proportion of students who are non-free lunch. This gives us the new variable `class_frl`.
+
+Finally, we do the same thing at the school level, grouping by `schoolid`, and then performing the same operation on `gkfreelunch` to give us `school_frl`, which is the proportion of students at each school who are non-free lunch.
+
+Other than that, we are just tidying and renaming first, and then at the bottom selecting only the variables we need for the models we will run.
+
+::: {.callout-tip}
+## Why the `- 1` trick works, and when it does not
+
+The subtraction is doing something slightly clever. With a variable coded 1/2, the mean sits somewhere between 1 and 2, and subtracting 1 shifts it to sit between 0 and 1, which is a proportion. It works precisely because the coding is 1/2 with no other values.
+
+If a variable were coded 1/2/3, or had a missing-data code like 9 mixed in, the same arithmetic would produce something meaningless that still looks like a proportion. This is why the `str()` step above is not optional: the recode is only correct if you have confirmed the coding first.
+
+Notice also the two `ungroup()` calls. Each aggregation grouped the data, and each has to be undone before the next one groups it differently.
+:::
+
+Worth pausing on one more thing: `read` here is `gktreadss`, the kindergarten reading scale score. This is our outcome for the whole chapter.
+
+## Part two: the null 3-level model
+
+### Run a null 3-level model for reading scores
+
+```{r}
+model.0 <- lmer(read ~ (1|schoolid) + (1|classid), data = star.clean)
+
+summary(model.0)
+```
+
+Two random intercept terms, joined by `+`, give us three levels: students within classrooms within schools.
+
+::: {.callout-note}
+## Why this syntax works here
+
+You may also see the nesting shorthand `(1|schoolid/classid)`, which does the same thing when classroom IDs repeat across schools, for instance if every school numbers its classrooms 1, 2, 3.
+
+Here that is unnecessary because `gktchid` is a unique teacher identifier across the whole dataset, so R can already tell classrooms apart without knowing which school they belong to. The `+` form is correct and simpler.
+
+If you are ever unsure, check with `n_distinct(star.clean$classid)` and compare it to what you would expect. If two schools genuinely shared a classroom ID, the counts would be too low.
+:::
+
+### Calculate L2 ICC (classroom)
+
+```{r}
+ICC.class <- 114.9/(728.2 + 169.8 + 114.9)
+ICC.class
+```
+
+### Calculate L3 ICC (school)
+
+```{r}
+ICC.school <- 169.8/(728.2 + 169.8 + 114.9)
+ICC.school
+```
+
+These two proportions, plus the student-level share, sum to one and describe where the variation in kindergarten reading achievement lives. Read the comparison between them rather than the absolute numbers: it speaks to whether the classroom a child lands in matters more than the school they attend, which is one of the more consequential questions in education research.
+
+The denominator is the same in both calculations, and it is the total variance across all three levels. Getting that denominator right is where students most often slip.
+
+## Part three: add predictors at each level
+
+### Add a student-level predictor, FRL
+
+```{r}
+model.1 <- lmer(read ~ stu_frl + (1|schoolid) + (1|classid), data = star.clean)
+
+summary(model.1)
+```
+
+### Add teacher-level predictors: years of experience and class type
+
+```{r}
+model.2 <- lmer(read ~ stu_frl + years_exp + classtype + (1|schoolid) + (1|classid), data = star.clean)
+
+summary(model.2)
+```
+
+Both of these are properties of the classroom, not the student, so they are level-2 predictors. They can shift a whole classroom up or down relative to others.
+
+### Add a school-level predictor, urbanicity of school
+
+```{r}
+model.3 <- lmer(read ~ stu_frl + years_exp + classtype + urbanicity + (1|schoolid) + (1|classid), data = star.clean)
+
+summary(model.3)
+```
+
+Now watch the *school*-level variance rather than the classroom-level variance. A level-3 predictor explains between-school differences, so that is where you should expect movement. A level-2 predictor should move the classroom variance. Matching each predictor to the variance component it ought to affect is a good habit and a good diagnostic: if adding a school-level variable moves nothing at the school level, that is informative.
+
+### Add in FRL at all three levels (student, teacher, school)
+
+```{r}
+model.4 <- lmer(read ~ stu_frl +  class_frl + school_frl +  years_exp + classtype + urbanicity + (1|schoolid) + (1|classid), data = star.clean)
+
+summary(model.4)
+```
+
+This is the same construct entered three times, at three levels, and the three coefficients answer three different questions. Does a child receiving free lunch score differently from a classmate who does not? Do classrooms with more low-income students score differently overall? Do schools serving more low-income students differ again?
+
+These can point in different directions, and often do. That is not a contradiction; it is the whole reason for separating them.
+
+## Part four: try adding a random slope
+
+### Add a random slope for years of experience at level 3 (school)
+
+```{r}
+model.5 <- lmer(read ~ stu_frl + years_exp + classtype + urbanicity + (1|classid) + (years_exp|schoolid), data = star.clean)
+
+summary(model.5)
+```
+
+Say what this means before reading the output. A random slope for teacher experience at the school level says the payoff to having an experienced teacher is not the same in every school. In some schools an experienced teacher makes a large difference; in others, less. That points at something structural, perhaps how schools assign teachers to classes, or how much support new teachers receive.
+
+## Should we include that random slope? Comparing `model.4` with `model.5`
+
+```{r}
+anova(model.4, model.5)
+```
+
+::: {.callout-warning}
+## These two models differ in more than the random slope
+`model.4` includes the FRL aggregates and `model.5` does not, so this comparison changes the fixed effects and the random effects at the same time. A significant result therefore cannot be attributed to the random slope alone.
+
+To isolate the slope, compare `model.3` and `model.5`, which have identical fixed effects, or use `lmerTest::rand(model.5)`, which tests each random term against the same model without it.
+:::
+
+## Using `modelsummary` and `broom.mixed` to organize your results
+
+```{r}
 #| message: false
 
-library(tidyverse)
-library(haven)
-library(lme4)
-library(lmerTest)
-library(performance)
 library(modelsummary)
+library(broom.mixed)
+
+models <- list(model.0, model.1, model.2, model.3, model.4, model.5)
+
+modelsummary(models, output = "default")
 ```
 
-```{r}
-star <- read_dta("projectSTAR.dta")
-
-glimpse(star)
-```
-
-```{r}
-#| label: fig-math
-#| fig-cap: "Distribution of kindergarten math scores."
-
-ggplot(star, aes(x = gktmathss)) +
-  geom_histogram(bins = 40, fill = "#1a7a6e", color = "white") +
-  labs(title = "Kindergarten Math Scores",
-       x = "Scale score", y = "Number of students") +
-  theme_minimal()
-```
-
-## Specifying three levels
-
-Two syntaxes produce the same model. The nesting shorthand is compact:
-
-```{r}
-m_null3 <- lmer(gktmathss ~ 1 + (1 | gkschid/gktchid), data = star, REML = FALSE)
-
-summary(m_null3)
-```
-
-The explicit form makes what is happening more visible, and is safer when classroom IDs are not unique across schools:
+## HTML version that you can open in Word
 
 ```{r}
 #| eval: false
 
-m_null3_alt <- lmer(gktmathss ~ 1 + (1 | gkschid) + (1 | gktchid:gkschid),
-                    data = star, REML = FALSE)
-```
-
-If your classroom identifier repeats across schools, for instance if every school numbers its classrooms starting at 1, the explicit syntax is required. Otherwise R will treat classroom 1 in School A and classroom 1 in School B as the same classroom.
-
-## Partitioning variance across three levels
-
-```{r}
-vc <- as.data.frame(VarCorr(m_null3))
-vc
-```
-
-```{r}
-tau_class  <- vc$vcov[grepl("gktchid", vc$grp)]
-tau_school <- vc$vcov[vc$grp == "gkschid"]
-sigma2     <- vc$vcov[vc$grp == "Residual"]
-
-total <- tau_class + tau_school + sigma2
-
-round(c(
-  student   = sigma2 / total,
-  classroom = tau_class / total,
-  school    = tau_school / total
-), 3)
-```
-
-These three proportions sum to one and describe where the variation in kindergarten math achievement lives. In most educational data the student level dominates, which is worth remembering when you read claims about school effects. The interesting comparison is usually between the classroom and school shares, because it speaks to whether the teacher a child draws matters more than the school they attend.
-
-```{r}
-performance::icc(m_null3, by_group = TRUE)
-```
-
-## What ignoring a level costs you
-
-Suppose we had modeled only students within schools, ignoring classrooms entirely.
-
-```{r}
-m_null2 <- lmer(gktmathss ~ 1 + (1 | gkschid), data = star, REML = FALSE)
-
-vc2 <- as.data.frame(VarCorr(m_null2))
-vc2
-```
-
-Compare the school-level variance in this model to the one in the three-level model. Dropping the classroom level does not make classroom variation disappear. It redistributes it, and much of it lands at whichever level remains. A researcher looking only at the two-level model would conclude that schools matter more than they do, when part of what they are seeing is teachers.
-
-## Adding predictors at each level
-
-A three-level model can take predictors at any level. Here we use student self-concept, two classroom-level variables, and a school-level aggregate we compute ourselves.
-
-```{r}
-star <- star |>
-  group_by(gkschid) |>
-  mutate(sch_mean_math = mean(gktmathss, na.rm = TRUE)) |>
-  ungroup() |>
-  mutate(
-    classtype_f = as_factor(gkclasstype),
-    highdeg_f   = as_factor(gkthighdegree)
-  )
-
-m_cond3 <- lmer(
-  gktmathss ~ gkselfconcraw + classtype_f + highdeg_f + sch_mean_math +
-    (1 | gkschid/gktchid),
-  data = star, REML = FALSE
-)
-
-summary(m_cond3)
-```
-
-```{r}
-performance::r2(m_cond3)
-AIC(m_null3, m_cond3)
-BIC(m_null3, m_cond3)
-```
-
-A note on the school mean. Computing a group average from the same outcome you are predicting and then using it as a predictor is common practice, but it deserves care. The school mean is partly composed of the very students whose scores you are modeling, which builds in a mechanical relationship. With large schools the contribution of any one student is small and the practice is generally accepted. With small clusters it can be seriously misleading.
-
-::: {.callout-warning}
-## About convergence warnings
-Models this complex frequently produce singularity or convergence warnings. For these data the model still converges and returns usable estimates and standard errors. Do not ignore such warnings by reflex, but do read them as diagnostic information rather than as a verdict. A singular fit usually means one variance component is being estimated at or near zero.
-:::
-
-## Random slopes at two levels
-
-A slope can vary across classrooms, across schools, or both. Fit them separately first, because asking for everything at once is the fastest route to a model that will not converge.
-
-```{r}
-m_slope_class <- lmer(
-  gktmathss ~ gkselfconcraw + classtype_f + highdeg_f + sch_mean_math +
-    (1 | gkschid) + (1 + gkselfconcraw | gktchid:gkschid),
-  data = star, REML = FALSE
-)
-
-ranova(m_slope_class)
-```
-
-```{r}
-m_slope_school <- lmer(
-  gktmathss ~ gkselfconcraw + classtype_f + highdeg_f + sch_mean_math +
-    (1 + gkselfconcraw | gkschid) + (1 | gktchid:gkschid),
-  data = star, REML = FALSE
-)
-
-ranova(m_slope_school)
-```
-
-State what each would mean before you look at the test. A random slope at the classroom level says the relationship between self-concept and math achievement differs from teacher to teacher, perhaps because some teachers are better at reaching students who doubt themselves. At the school level it says that relationship differs across schools, which points at something more structural: tracking policies, counseling resources, school climate.
-
-## Reporting
-
-```{r}
-modelsummary(
-  list("Null (3-level)" = m_null3, "Conditional" = m_cond3),
-  stars = c("*" = .05, "**" = .01, "***" = .001),
-  gof_map = c("nobs", "aic", "bic"),
-  title = "Three-level models of kindergarten math achievement"
-)
+modelsummary(models, output = 'msum.html', title = 'MLM Estimates')
 ```
 
 When you write up a three-level model, report the variance partition from the null model, not just the fixed effects from the final one. Readers need to know how much room there was to explain at each level before they can judge what your predictors accomplished.

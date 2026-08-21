@@ -117,6 +117,41 @@ Logged as chapters are executed for the first time. Each entry is a place where 
 
 **Also added:** A callout on the general hazard. `tibble()` accepting a `NULL` column silently means a variable can go missing far from where the error appears. The habit worth teaching is to look upstream at where the object was created, and to run `str()` on unfamiliar objects before building data frames from them.
 
+### All remaining chapters aligned to the demonstration handouts
+
+The remaining eight handouts were supplied. Every chapter except 6 now follows its handout's code, with explanation added around it. Verified programmatically: datasets, model object names, and outcome variables all match.
+
+**Corrections to datasets I had guessed wrong.** Four chapters were built on entirely the wrong data:
+
+| Chapter | Was | Now |
+|---|---|---|
+| 7 | `gktmathss` (math) | `gktreadss` via `read`, with the full `star.clean` recode |
+| 8 | `STAR_long.dta` / `STAR_wide.dta` | `egmerged.dta`, Sustaining Effects Study |
+| 9 | `school_belonging.csv` | `nsch_2018_topical.dta`, NSCH asthma |
+| 10 | `projectSTAR.dta` | `productivity.dta`, state unemployment |
+
+**Chapter 8 split into 8a and 8b**, matching the two handouts and the two content reviews. `08-growth-curves.qmd` removed; `08a-growth-intro.qmd` and `08b-growth-advanced.qmd` added. `_quarto.yml` updated.
+
+**Chapter 4** rebuilt on `MLM_Week_4_Handout.Rmd`: `model.0` through `model.5`, the hardcoded ICC `0.05765/(0.05765 + 1.01668)`, three base R `hist()` calls, explicit `TSIG:LEAD`, and `alpha()`/`scoreItems()` for the scale construction.
+
+**Chapter 5** aligned to `MLM_Module_5_Handout.Rmd`. Notably `ghostile = mean(GHOSTILE)`, which I had written as `mean(HOSTILE)`. Restored `interplot::interplot()` as primary with `ggeffects` offered as a fallback, reversing an earlier substitution now that matching the video takes priority.
+
+**Chapter 7** rebuilt: reading scores, the `star.clean` pipeline with renames and the `mean(gkfreelunch) - 1` proportion trick at classroom and school levels, `(1|schoolid) + (1|classid)` rather than the nesting shorthand, and `(years_exp|schoolid)` for the random slope.
+
+**Chapters 8a and 8b** built on `egmerged.dta`: the `table1` descriptive tables from collapsed student- and school-level frames, `scatter.smooth()`, `broom.mixed::augment()` with `effects = c("ran_pars", "fixed")`, the 50-student subset plots, `pivot_wider` then `pivot_longer`, and the `nlme::lme()` homogeneous and heterogeneous variance pair.
+
+**Chapter 9** rebuilt on NSCH: the `select` → `as_factor` → `table` → `filter` → `rename` → `case_when` cleaning sequence, `glmer(family = binomial)`, the hardcoded logistic ICC with `pi^2/3`, hand-computed odds ratios and predicted probabilities via `exp(x)/(1+exp(x))`, and the hardcoded AIC/BIC comparison.
+
+**Chapter 10** rebuilt on `productivity.dta`: `year0 = year - 1970`, `pub_cap_1000`, polynomial model sequence, `augment()` diagnostics, `shapiro.test()`, RVF plots plain and colored by year, the Cook's distance plot labelled by state with the `4/816` cutoff, `robustlmm::rlmer()`, and the trimmed-model comparison.
+
+**Chapter 11** aligned: outcome changed from `p7read` to `attain`, added the eleven `label()` calls, the `as_factor()` + `levels()` recodes, three ggplot histograms, hardcoded ICCs for all four models, `model.1` through `model.6`, and `interplot` for the `deprive` × `dadocc` interaction.
+
+**One silent fix.** The Module 10 handout has `linetype = "d  otted"` with a stray space in the Cook's distance chunk, which errors. Corrected to `"dotted"`.
+
+**Explanation added throughout**, without changing code: why `psych::describe()` should be namespaced; what `bind_cols()` assumes; why the `- 1` proportion trick depends on 1/2 coding; the difference between a random slope and a cross-level interaction; why the level-1 variance drops when time enters a growth model; that odds ratios are not probabilities; why `augment()` output should be used instead of the source data; and, in Chapter 7, a warning that `anova(model.4, model.5)` compares models differing in both fixed and random effects.
+
+**Superseded:** the earlier note about aligning only chapters 1–3.
+
 ### Chapters 1–3 aligned to the actual demonstration handouts
 
 Dr. Broda supplied the three MLM demonstration handouts (`Video Links and Code Demos/`). All three chapters were rewritten so the book follows the code students see in the videos. Elaboration was added freely; the code spine was not changed.

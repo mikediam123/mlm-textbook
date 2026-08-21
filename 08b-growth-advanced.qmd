@@ -1,0 +1,288 @@
+# Advanced Growth Models
+
+**Data for this chapter:** `egmerged.dta`
+
+::: {.callout-note}
+## Data file needed
+Copy `egmerged.dta` into this project folder before rendering.
+:::
+
+This week, we continue with the data from the US Sustaining Effects Study (Carter 1984), which attempted to assess the sustaining impacts of compensatory schooling for students over time. We will dig into nonlinear growth patterns and heterogeneous variance models, two advanced topics in growth modeling.
+
+## Load in our MVP packages
+
+```{r}
+#| label: setup
+
+suppressPackageStartupMessages(library(tidyverse))
+library(lme4)
+```
+
+## Part 1: loading in the data, reshaping from long to wide, creating new variables
+
+### Load in the data
+
+```{r}
+egmerged <- haven::read_dta("egmerged.dta")
+
+glimpse(egmerged)
+```
+
+### Super handy trick: reshaping data
+
+#### Using `pivot_wider` to reshape from long to wide
+
+```{r}
+egmerged.wide <- egmerged %>%
+  pivot_wider(.,
+              id_cols = c("childid", "schoolid", "female", "black", "hispanic", "size", "lowinc", "mobility"),
+              names_from = year,
+              values_from = math,
+              names_prefix = "math_year",
+              )
+
+glimpse(egmerged.wide)
+```
+
+Reshaping is one of the most useful data management skills you will pick up, and one of the most error-prone, so it is worth understanding each argument.
+
+`id_cols` lists the variables that identify a row in the new wide dataset and stay constant. `names_from` says which variable supplies the new column *names*, here `year`. `values_from` says which variable fills the cells. `names_prefix` puts readable text in front of the new column names, so you get `math_year1` rather than a column called `1`, which R would find awkward.
+
+Note what happens to the row count. The long file has one row per student-year; the wide file has one row per student. That change is the whole point, and checking it is a quick way to confirm the reshape did what you intended.
+
+#### Using `pivot_longer` to reshape from wide to long
+
+```{r}
+egmerged.long <- egmerged.wide %>%
+  pivot_longer(.,
+              cols = starts_with("math"),
+              names_to = "year",
+              values_to = "math",
+              names_prefix = "math_year",
+              )
+
+glimpse(egmerged.long)
+```
+
+And back again. `pivot_longer()` reverses the operation: `cols` selects which columns to stack, `names_to` names the new column holding the old column names, and `values_to` names the column holding the values. Stripping `names_prefix` on the way back recovers the bare year numbers.
+
+Being able to go both directions matters because different tools want different shapes. Growth models need long format. Many descriptive tables and correlation matrices want wide.
+
+### A little more cleanup: change `year` to numeric, drop observations with missing math scores
+
+```{r}
+egmerged.long.clean <- egmerged.long %>%
+  mutate(.,
+         year  = as.numeric(year)) %>%
+  na.omit()
+
+glimpse(egmerged.long.clean)
+```
+
+The `as.numeric()` step is easy to forget and consequential. Column names are text, so after reshaping, `year` arrives as a character variable. Left that way, R would treat it as a categorical variable with six unrelated levels rather than as a quantity you can fit a slope to.
+
+`na.omit()` here removes the empty cells created by the reshape: students who were not measured in every year got `NA` in the wide file, and those became rows with missing math scores when we went back to long. As always, this function deserves care, since it drops any row missing on *any* variable.
+
+### A little housekeeping: creating squared and cubic terms for time
+
+```{r}
+egmerged.clean <- egmerged %>%
+  mutate(.,
+         retained.fac = as_factor(retained),
+         female.fac = as_factor(female),
+         black.fac = as_factor(black),
+         hispanic.fac = as_factor(hispanic),
+         year0 = year - 1,
+         year_sq = year0^2,
+         year_cube = year0^3)
+
+glimpse(egmerged.clean)
+```
+
+Note that this builds from the original `egmerged`, not from the reshaped version. The reshaping above was a demonstration of a technique; the modeling that follows uses the data as they came.
+
+Building the polynomial terms from `year0` rather than `year` matters. Squaring a variable that starts at 0 keeps the terms interpretable and keeps them less correlated with one another than they would otherwise be.
+
+## Part 2: nonlinear growth models
+
+### Now, run a GROWTH null model for math scores (with year included)
+
+```{r}
+model.null.growth <- lmer(math ~ year0 + (1|childid), data = egmerged.clean)
+
+summary(model.null.growth)
+```
+
+#### Calculate GROWTH ICC
+
+```{r}
+null.growth.icc <- 0.8683/(0.8683 + 0.3470)
+null.growth.icc
+```
+
+### Add nonlinear growth terms (square)
+
+```{r}
+model.square <- lmer(math ~ year0 + year_sq + (1|childid), data = egmerged.clean)
+
+summary(model.square)
+```
+
+A quadratic term lets the trajectory bend. A negative coefficient means growth decelerates, with gains getting smaller in later years. A positive one means it accelerates.
+
+Be careful with the language here. Deceleration does *not* mean scores decline. Scores decline only if the curve actually turns over within the range of the data, which is a separate question you answer by looking at the plot. That misreading appears constantly in published work.
+
+### Add nonlinear growth terms (cubic)
+
+```{r}
+model.cube <- lmer(math ~ year0 + year_cube + (1|childid), data = egmerged.clean)
+
+summary(model.cube)
+```
+
+### Add nonlinear growth terms (square AND cubic)
+
+```{r}
+model.both <- lmer(math ~ year0 + year_sq + year_cube + (1|childid), REML = FALSE, data = egmerged.clean)
+
+summary(model.both)
+```
+
+A cubic term allows one more change of direction: growth that decelerates and then picks back up, or the reverse. Each additional polynomial term buys flexibility and costs a degree of freedom, and beyond cubic the terms rarely correspond to anything you can describe substantively.
+
+### Should we keep that cubic term? Use `anova` to test
+
+```{r}
+anova(model.square, model.both)
+```
+
+::: {.callout-warning}
+## Estimator matters for this comparison
+`anova()` on `lmer` objects compares models by likelihood ratio test, and that comparison is only valid when both models were fit with maximum likelihood, since they differ in their fixed effects.
+
+`model.both` was fit with `REML = FALSE`, but `model.square` above was not, so it used the REML default. R handles this by silently refitting both with ML before comparing, and it will usually print a message saying so. The result is correct, but it is better to set `REML = FALSE` on every model you intend to compare so that nothing happens behind your back.
+:::
+
+### Same thing, PLUS adding a random slope for year0
+
+```{r}
+model.both.rand <- lmer(math ~ year0 + year_sq + year_cube + (year0|childid), REML = FALSE, data = egmerged.clean)
+
+summary(model.both.rand)
+```
+
+Note what is random and what is not. The linear component of time varies across children; the quadratic and cubic terms are fixed, so the *shape* of the curve is assumed common while its steepness varies. Letting the higher-order terms vary too is possible but demands far more data.
+
+### Should we keep that random slope for time? Use `rand` to test
+
+```{r}
+lmerTest::rand(model.both.rand)
+```
+
+## Using `modelsummary` and `broom.mixed` to organize your results
+
+```{r}
+#| message: false
+
+library(modelsummary)
+library(broom.mixed)
+
+models1 <- list(model.null.growth, model.square, model.cube, model.both, model.both.rand)
+
+modelsummary(models1, output = "default")
+```
+
+## Visualize our model by predicting scores
+
+```{r}
+predicted.vals <- broom.mixed::augment(model.both.rand, effects = c("ran_pars", "fixed"), conf.int = TRUE)
+
+glimpse(predicted.vals)
+```
+
+## And then plotting them
+
+```{r}
+#| label: fig-nonlinear
+#| fig-cap: "Predicted math scores over time with quadratic and cubic terms."
+
+ggplot(data = predicted.vals, mapping = aes(x = year0, y = .fitted)) +
+  geom_jitter(alpha = .40, color = "seagreen1") +
+  geom_smooth(method = "loess", formula = 'y ~ x', color = "seagreen") +
+  labs(title = "Predicted Change in Math Scores Over Time",
+      subtitle = "With Square and Cubic Effects for Nonlinear Growth",
+      caption = "Notes. N = 1,731 students in the Sustaining Effects Study (Carter, 1984). Year 0 = Kindergarten.") +
+  ylab("Predicted Math Score") +
+  xlab("Year") +
+  theme(legend.position = "none")
+```
+
+This is where you check whether the polynomial terms describe something real. Look at whether the curve bends within the range of the observed years, and in which direction. A curve that only bends beyond your last measurement occasion is extrapolation, not a finding.
+
+## Random slopes for a sample of 50 students
+
+This gives a sense of the variability in slopes.
+
+```{r}
+#| label: fig-fifty
+#| fig-cap: "Individual predicted trajectories for a subset of students."
+
+predicted.vals50 <- predicted.vals %>%
+  arrange(childid, year0) %>%
+  slice(., 1:252)
+
+ggplot(data = predicted.vals50, mapping = aes(x = year0, y = .fitted, color = as_factor(childid))) +
+  geom_point(alpha = .50) +
+  geom_line() +
+  labs(title = "Predicted Change in Math Scores Over Time",
+      subtitle = "With Square and Cubic Effects for Nonlinear Growth",
+      caption = "Notes. Subset of N = 50 students in the Sustaining Effects Study (Carter, 1984). Year 0 = Kindergarten.") +
+  ylab("Predicted Math Score") +
+  xlab("Year") +
+  theme(legend.position = "none")
+```
+
+Here `geom_line()` connects each child's own predicted points rather than fitting a smoother through everything, so you see the actual curves the model assigns to individuals.
+
+## Part 2: heterogeneous variance repeated measures model
+
+```{r}
+#| message: false
+
+library(nlme)
+
+model.null.growth.homog <- lme(math ~ year0,
+                         random = ~ year0|childid,
+                         data = egmerged.clean,
+                         method = "ML")
+
+summary(model.null.growth.homog)
+```
+
+We switch packages here. `nlme` and `lme4` fit overlapping families of models with different syntax, and `nlme` can do something `lme4` cannot: let the level-1 residual variance differ across occasions.
+
+The syntax differs in a few visible ways. Random effects go in a separate `random =` argument rather than inside the formula, and the estimator is named with `method = "ML"` rather than `REML = FALSE`. This first model is the homogeneous-variance version, equivalent to what `lmer()` would give you, fit here as a baseline for comparison.
+
+```{r}
+model.null.growth.het <- lme(math ~ year0,
+                             random =  ~ year0|childid,
+                             data = egmerged.clean,
+                             method = "ML",
+                             weights = varIdent(form = ~ 1 | year0)
+)
+
+summary(model.null.growth.het)
+```
+
+`varIdent(form = ~ 1 | year0)` is the piece that matters. It asks for a separate residual variance at each value of `year0` rather than one shared value.
+
+Here is the assumption being relaxed, in plain terms. The standard model assumes measurements are equally noisy at every occasion: a third grader's score sits as close to their predicted trajectory as a sixth grader's does. That is often false. Scores tend to spread out as children develop, tests differ in difficulty and reliability across grades, and floor or ceiling effects can compress the variance at one end of the range.
+
+The output reports variance function parameters, which are multipliers relative to the first occasion. Values above 1 mean more variability at that year than at baseline; below 1, less. A clear trend upward across years is the signature of a construct that is still developing.
+
+::: {.callout-note}
+## Comparing across packages
+`lme4` and `nlme` compute likelihoods slightly differently, so small numerical differences between an `lmer()` and an `lme()` fit of the same model are expected and do not indicate an error.
+
+Also note that loading `nlme` after `lme4` masks a few function names in both directions. If something misbehaves after this point, restart R and load only what that section needs.
+:::

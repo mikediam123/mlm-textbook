@@ -61,7 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./08-growth-curves.html" rel="next">
+<link href="./08a-growth-intro.html" rel="next">
 <link href="./06-fit-effect-sizes.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -193,7 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-random-slopes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope and Coefficient Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Random Slope Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -221,14 +221,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08-growth-curves.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Longitudinal and Growth Curve Models</span></span></a>
+  <a href="./08a-growth-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08b-growth-advanced.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Growth Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-binary-outcomes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Generalized Multilevel Models for Binary Outcomes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Binary and Generalized Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -245,13 +251,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10-assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Assessing Assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Checking Assumptions for MLMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-cross-classified.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Cross-Classified Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cross-Classified Linear Mixed Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -270,12 +276,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#specifying-three-levels" id="toc-specifying-three-levels" class="nav-link active" data-scroll-target="#specifying-three-levels"><span class="header-section-number">7.1</span> Specifying three levels</a></li>
-  <li><a href="#partitioning-variance-across-three-levels" id="toc-partitioning-variance-across-three-levels" class="nav-link" data-scroll-target="#partitioning-variance-across-three-levels"><span class="header-section-number">7.2</span> Partitioning variance across three levels</a></li>
-  <li><a href="#what-ignoring-a-level-costs-you" id="toc-what-ignoring-a-level-costs-you" class="nav-link" data-scroll-target="#what-ignoring-a-level-costs-you"><span class="header-section-number">7.3</span> What ignoring a level costs you</a></li>
-  <li><a href="#adding-predictors-at-each-level" id="toc-adding-predictors-at-each-level" class="nav-link" data-scroll-target="#adding-predictors-at-each-level"><span class="header-section-number">7.4</span> Adding predictors at each level</a></li>
-  <li><a href="#random-slopes-at-two-levels" id="toc-random-slopes-at-two-levels" class="nav-link" data-scroll-target="#random-slopes-at-two-levels"><span class="header-section-number">7.5</span> Random slopes at two levels</a></li>
-  <li><a href="#reporting" id="toc-reporting" class="nav-link" data-scroll-target="#reporting"><span class="header-section-number">7.6</span> Reporting</a></li>
+<li><a href="#load-some-packages-to-help-with-the-analysis-and-data-management" id="toc-load-some-packages-to-help-with-the-analysis-and-data-management" class="nav-link active" data-scroll-target="#load-some-packages-to-help-with-the-analysis-and-data-management"><span class="header-section-number">7.1</span> Load some packages to help with the analysis and data management</a></li>
+  <li><a href="#load-and-explore-the-data" id="toc-load-and-explore-the-data" class="nav-link" data-scroll-target="#load-and-explore-the-data"><span class="header-section-number">7.2</span> Load and explore the data</a></li>
+  <li>
+<a href="#part-one-data-exploration-and-management" id="toc-part-one-data-exploration-and-management" class="nav-link" data-scroll-target="#part-one-data-exploration-and-management"><span class="header-section-number">7.3</span> Part one: data exploration and management</a>
+  <ul class="collapse">
+<li><a href="#use-str-to-figure-out-the-21-coding-scheme-and-variable-labels" id="toc-use-str-to-figure-out-the-21-coding-scheme-and-variable-labels" class="nav-link" data-scroll-target="#use-str-to-figure-out-the-21-coding-scheme-and-variable-labels"><span class="header-section-number">7.3.1</span> Use <code>str</code> to figure out the 2/1 coding scheme and variable labels</a></li>
+  <li><a href="#create-a-clean-dataset-ready-for-modeling" id="toc-create-a-clean-dataset-ready-for-modeling" class="nav-link" data-scroll-target="#create-a-clean-dataset-ready-for-modeling"><span class="header-section-number">7.3.2</span> Create a clean dataset ready for modeling</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#part-two-the-null-3-level-model" id="toc-part-two-the-null-3-level-model" class="nav-link" data-scroll-target="#part-two-the-null-3-level-model"><span class="header-section-number">7.4</span> Part two: the null 3-level model</a>
+  <ul class="collapse">
+<li><a href="#run-a-null-3-level-model-for-reading-scores" id="toc-run-a-null-3-level-model-for-reading-scores" class="nav-link" data-scroll-target="#run-a-null-3-level-model-for-reading-scores"><span class="header-section-number">7.4.1</span> Run a null 3-level model for reading scores</a></li>
+  <li><a href="#calculate-l2-icc-classroom" id="toc-calculate-l2-icc-classroom" class="nav-link" data-scroll-target="#calculate-l2-icc-classroom"><span class="header-section-number">7.4.2</span> Calculate L2 ICC (classroom)</a></li>
+  <li><a href="#calculate-l3-icc-school" id="toc-calculate-l3-icc-school" class="nav-link" data-scroll-target="#calculate-l3-icc-school"><span class="header-section-number">7.4.3</span> Calculate L3 ICC (school)</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#part-three-add-predictors-at-each-level" id="toc-part-three-add-predictors-at-each-level" class="nav-link" data-scroll-target="#part-three-add-predictors-at-each-level"><span class="header-section-number">7.5</span> Part three: add predictors at each level</a>
+  <ul class="collapse">
+<li><a href="#add-a-student-level-predictor-frl" id="toc-add-a-student-level-predictor-frl" class="nav-link" data-scroll-target="#add-a-student-level-predictor-frl"><span class="header-section-number">7.5.1</span> Add a student-level predictor, FRL</a></li>
+  <li><a href="#add-teacher-level-predictors-years-of-experience-and-class-type" id="toc-add-teacher-level-predictors-years-of-experience-and-class-type" class="nav-link" data-scroll-target="#add-teacher-level-predictors-years-of-experience-and-class-type"><span class="header-section-number">7.5.2</span> Add teacher-level predictors: years of experience and class type</a></li>
+  <li><a href="#add-a-school-level-predictor-urbanicity-of-school" id="toc-add-a-school-level-predictor-urbanicity-of-school" class="nav-link" data-scroll-target="#add-a-school-level-predictor-urbanicity-of-school"><span class="header-section-number">7.5.3</span> Add a school-level predictor, urbanicity of school</a></li>
+  <li><a href="#add-in-frl-at-all-three-levels-student-teacher-school" id="toc-add-in-frl-at-all-three-levels-student-teacher-school" class="nav-link" data-scroll-target="#add-in-frl-at-all-three-levels-student-teacher-school"><span class="header-section-number">7.5.4</span> Add in FRL at all three levels (student, teacher, school)</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#part-four-try-adding-a-random-slope" id="toc-part-four-try-adding-a-random-slope" class="nav-link" data-scroll-target="#part-four-try-adding-a-random-slope"><span class="header-section-number">7.6</span> Part four: try adding a random slope</a>
+  <ul class="collapse">
+<li><a href="#add-a-random-slope-for-years-of-experience-at-level-3-school" id="toc-add-a-random-slope-for-years-of-experience-at-level-3-school" class="nav-link" data-scroll-target="#add-a-random-slope-for-years-of-experience-at-level-3-school"><span class="header-section-number">7.6.1</span> Add a random slope for years of experience at level 3 (school)</a></li>
+  </ul>
+</li>
+  <li><a href="#should-we-include-that-random-slope-comparing-model.4-with-model.5" id="toc-should-we-include-that-random-slope-comparing-model.4-with-model.5" class="nav-link" data-scroll-target="#should-we-include-that-random-slope-comparing-model.4-with-model.5"><span class="header-section-number">7.7</span> Should we include that random slope? Comparing <code>model.4</code> with <code>model.5</code></a></li>
+  <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">7.8</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
+  <li><a href="#html-version-that-you-can-open-in-word" id="toc-html-version-that-you-can-open-in-word" class="nav-link" data-scroll-target="#html-version-that-you-can-open-in-word"><span class="header-section-number">7.9</span> HTML version that you can open in Word</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOURUSERNAME/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -296,44 +331,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 </header><p><strong>Data for this chapter:</strong> <code>projectSTAR.dta</code></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Data file needed
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Copy <code>projectSTAR.dta</code> into this project folder before rendering.</p>
-</div>
-</div>
-<p>Real data often nest more than two levels deep. Students sit in classrooms, classrooms sit in schools, and each layer can contribute its own variation. This chapter uses the Tennessee Class Size Experiment, with more than 6,000 kindergarten students nested in classrooms nested in over 200 schools.</p>
+<p>This week, we are going to use the Kindergarten data from Project STAR, the Tennessee Class Size Experiment conducted from 1985 to 1990.</p>
+<p>Real data often nest more than two levels deep. Students sit in classrooms, classrooms sit in schools, and each layer can contribute its own variation.</p>
+<section id="load-some-packages-to-help-with-the-analysis-and-data-management" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="load-some-packages-to-help-with-the-analysis-and-data-management">
+<span class="header-section-number">7.1</span> Load some packages to help with the analysis and data management</h2>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://haven.tidyverse.org">haven</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'lme4' was built under R version 4.5.2</code></pre>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/runehaubo/lmerTestR">lmerTest</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'lmerTest' was built under R version 4.5.2</code></pre>
-</div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/">performance</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'performance' was built under R version 4.5.2</code></pre>
-</div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'modelsummary' was built under R version 4.5.2</code></pre>
-</div>
-</div>
+</section><section id="load-and-explore-the-data" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="load-and-explore-the-data">
+<span class="header-section-number">7.2</span> Load and explore the data</h2>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">star</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"projectSTAR.dta"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">projectSTAR</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"projectSTAR.dta"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">star</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">projectSTAR</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 6,325
 Columns: 27
@@ -366,498 +377,892 @@ $ gkmotivraw    &lt;dbl&gt; 23, 24, 28, 27, 25, 24, NA, NA, 26, 27, 24, 24, 23, 
 $ gkselfconcraw &lt;dbl&gt; 52, 53, 56, 61, 54, 55, NA, NA, 52, 61, 55, 49, 49, 59, …</code></pre>
 </div>
 </div>
+<p>Note the <code>haven::</code> prefix. We never load <code>haven</code> with <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> here, so calling the function with its package name attached is what makes it available. This works for any installed package and is handy when you need one function and do not want the whole namespace.</p>
+</section><section id="part-one-data-exploration-and-management" class="level2" data-number="7.3"><h2 data-number="7.3" class="anchored" data-anchor-id="part-one-data-exploration-and-management">
+<span class="header-section-number">7.3</span> Part one: data exploration and management</h2>
+<section id="use-str-to-figure-out-the-21-coding-scheme-and-variable-labels" class="level3" data-number="7.3.1"><h3 data-number="7.3.1" class="anchored" data-anchor-id="use-str-to-figure-out-the-21-coding-scheme-and-variable-labels">
+<span class="header-section-number">7.3.1</span> Use <code>str</code> to figure out the 2/1 coding scheme and variable labels</h3>
+<p>The <code>str</code> function (short for structure) will show us any variable labels or values that have been attached to a variable. You can use this to find out how variables have been coded.</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">star</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gktmathss</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">40</span>, fill <span class="op">=</span> <span class="st">"#1a7a6e"</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Kindergarten Math Scores"</span>,</span>
-<span>       x <span class="op">=</span> <span class="st">"Scale score"</span>, y <span class="op">=</span> <span class="st">"Number of students"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 454 rows containing non-finite outside the scale range
-(`stat_bin()`).</code></pre>
-</div>
-<div class="cell-output-display">
-<div id="fig-math" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="07-three-level_files/figure-html/fig-math-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;7.1: Distribution of kindergarten math scores.</figcaption></figure>
-</div>
-</div>
-</div>
-<section id="specifying-three-levels" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="specifying-three-levels">
-<span class="header-section-number">7.1</span> Specifying three levels</h2>
-<p>Two syntaxes produce the same model. The nesting shorthand is compact:</p>
-<div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m_null3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">gktmathss</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">gkschid</span><span class="op">/</span><span class="va">gktchid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m_null3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">projectSTAR</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
-  method [lmerModLmerTest]
-Formula: gktmathss ~ 1 + (1 | gkschid/gktchid)
-   Data: star
+<pre><code>tibble [6,325 × 27] (S3: tbl_df/tbl/data.frame)
+ $ stdntid      : num [1:6325] 10001 10133 10246 10263 10266 ...
+  ..- attr(*, "label")= chr "STUDENT ID"
+  ..- attr(*, "format.stata")= chr "%10.0g"
+ $ race         : dbl+lbl [1:6325] 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1,...
+   ..@ label       : chr "STUDENT RACE/ETHNICITY"
+   ..@ format.stata: chr "%10.0g"
+   ..@ labels      : Named num [1:6] 1 2 3 4 5 6
+   .. ..- attr(*, "names")= chr [1:6] "WHITE" "BLACK" "ASIAN" "HISPANIC" ...
+ $ gender       : dbl+lbl [1:6325] 1, 1, 2, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 2,...
+   ..@ label       : chr "STUDENT GENDER"
+   ..@ format.stata: chr "%10.0g"
+   ..@ labels      : Named num [1:2] 1 2
+   .. ..- attr(*, "names")= chr [1:2] "MALE" "FEMALE"
+ $ FLAGSGK      : dbl+lbl [1:6325] 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,...
+   ..@ label       : chr "IN STAR IN KINDERGARTEN"
+   ..@ format.stata: chr "%10.0g"
+   ..@ labels      : Named num [1:2] 0 1
+   .. ..- attr(*, "names")= chr [1:2] "NO" "YES"
+ $ flaggk       : dbl+lbl [1:6325] 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1,...
+   ..@ label       : chr "ACHIEVEMENT DATA AVAILABLE GRADE K"
+   ..@ format.stata: chr "%10.0g"
+   ..@ labels      : Named num [1:2] 0 1
+   .. ..- attr(*, "names")= chr [1:2] "NO" "YES"
+ $ gkclasstype  : dbl+lbl [1:6325] 3, 3, 3, 1, 2, 3, 1, 3, 1, 2, 3, 3, 2, 3, 3, 3, 1, 2,...
+   ..@ label       : chr "CLASSROOM TYPE KINDERGARTEN"
+   ..@ format.stata: chr "%10.0g"
+   ..@ labels      : Named num [1:3] 1 2 3
+   .. ..- attr(*, "names")= chr [1:3] "SMALL CLASS" "REGULAR CLASS" "REGULAR + AIDE CLASS"
+ $ gkschid      : num [1:6325] 169229 169280 218562 205492 257899 ...
+  ..- attr(*, "label")= chr "KINDERGARTEN SCHOOL ID"
+  ..- attr(*, "format.stata")= chr "%10.0g"
+ $ gksurban     : dbl+lbl [1:6325] 2, 2, 4, 2, 3, 3, 2, 2, 3, 3, 3, 2, 2, 2, 2, 3, 3, 3,...
+   ..@ label       : chr "SCHOOL URBANICITY KINDERGARTEN"
+   ..@ format.stata: chr "%10.0g"
+   ..@ labels      : Named num [1:4] 1 2 3 4
+   .. ..- attr(*, "names")= chr [1:4] "INNER CITY" "SUBURBAN" "RURAL" "URBAN"
+ $ gktchid      : num [1:6325] 16922904 16928003 21856202 20549204 25789904 ...
+  ..- attr(*, "label")= chr "KINDERGARTEN TEACHER ID"
+  ..- attr(*, "format.stata")= chr "%10.0g"
+ $ gktgen       : dbl+lbl [1:6325] 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,...
+   ..@ label       : chr "TEACHER GENDER KINDERGARTEN"
+   ..@ format.stata: chr "%10.0g"
+   ..@ labels      : Named num [1:2] 1 2
+   .. ..- attr(*, "names")= chr [1:2] "MALE" "FEMALE"
+ $ gktrace      : dbl+lbl [1:6325]  2,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  ...
+   ..@ label       : chr "TEACHER RACE/ETHNICITY KINDERGARTEN"
+   ..@ format.stata: chr "%10.0g"
+   ..@ labels      : Named num [1:6] 1 2 3 4 5 6
+   .. ..- attr(*, "names")= chr [1:6] "WHITE" "BLACK" "ASIAN" "HISPANIC" ...
+ $ gkthighdegree: dbl+lbl [1:6325]  2,  2,  3,  2,  3,  2,  3,  3,  3,  3,  2,  2,  3,  ...
+   ..@ label       : chr "TEACHER HIGHEST DEGREE KINDERGARTEN"
+   ..@ format.stata: chr "%10.0g"
+   ..@ labels      : Named num [1:6] 1 2 3 4 5 6
+   .. ..- attr(*, "names")= chr [1:6] "ASSOCIATES" "BACHELORS" "MASTERS" "MASTERS +" ...
+ $ gktcareer    : dbl+lbl [1:6325]  4,  4,  4,  4,  4, NA,  4,  4,  4,  4,  4,  4,  4,  ...
+   ..@ label       : chr "TEACHER CAREER LADDER LEVEL KINDERGARTEN"
+   ..@ format.stata: chr "%10.0g"
+   ..@ labels      : Named num [1:7] 1 2 3 4 5 6 7
+   .. ..- attr(*, "names")= chr [1:7] "CHOSE NO TO BE ON CAREER LADDER" "APPRENTICE" "PROBATION" "LADDER LEVEL 1" ...
+ $ gktyears     : num [1:6325] 5 7 8 3 12 2 7 14 4 6 ...
+  ..- attr(*, "label")= chr "YEARS OF TOTAL TEACHING EXPERIENCE KINDERGARTEN"
+  ..- attr(*, "format.stata")= chr "%10.0g"
+ $ gkclasssize  : num [1:6325] 24 22 17 17 24 24 13 24 14 23 ...
+  ..- attr(*, "label")= chr "CLASS SIZE KINDERGARTEN"
+  ..- attr(*, "format.stata")= chr "%10.0g"
+ $ gkfreelunch  : dbl+lbl [1:6325] 2, 2, 2, 1, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2,...
+   ..@ label       : chr "FREE/REDUCED LUNCH STATUS KINDERGARTEN"
+   ..@ format.stata: chr "%10.0g"
+   ..@ labels      : Named num [1:2] 1 2
+   .. ..- attr(*, "names")= chr [1:2] "FREE LUNCH" "NON-FREE LUNCH"
+ $ gkrepeat     : dbl+lbl [1:6325] 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,...
+   ..@ label       : chr "REPEATING KINDERGARTEN IN 1985-1986 SCHOOL YEAR"
+   ..@ format.stata: chr "%10.0g"
+   ..@ labels      : Named num [1:2] 1 2
+   .. ..- attr(*, "names")= chr [1:2] "YES, PROMOTION RECOMMENDED" "NO, PROMOTION NOT RECOMMENDED"
+ $ gkspeced     : dbl+lbl [1:6325] 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,...
+   ..@ label       : chr "SPECIAL EDUCATION STATUS KINDERGARTEN"
+   ..@ format.stata: chr "%10.0g"
+   ..@ labels      : Named num [1:2] 1 2
+   .. ..- attr(*, "names")= chr [1:2] "YES" "NO"
+ $ gkspecin     : dbl+lbl [1:6325] 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2,...
+   ..@ label       : chr "PULLED OUT FOR SPECIAL INSTRUCTION KINDERGARTEN"
+   ..@ format.stata: chr "%10.0g"
+   ..@ labels      : Named num [1:2] 1 2
+   .. ..- attr(*, "names")= chr [1:2] "YES" "NO"
+ $ gkpresent    : num [1:6325] 161 175 132 178 170 94 160 154 172 95 ...
+  ..- attr(*, "label")= chr "DAYS PRESENT AT SCHOOL KINDERGARTEN"
+  ..- attr(*, "format.stata")= chr "%10.0g"
+ $ gkabsent     : num [1:6325] 19 5 28 2 10 3 2 7 8 2 ...
+  ..- attr(*, "label")= chr "DAYS ABSENT FROM SCHOOL KINDERGARTEN"
+  ..- attr(*, "format.stata")= chr "%10.0g"
+ $ gktreadss    : num [1:6325] NA 427 450 483 456 411 443 448 463 472 ...
+  ..- attr(*, "label")= chr "TOTAL READING SCALE SCORE SAT KINDERGARTEN"
+  ..- attr(*, "format.stata")= chr "%10.0g"
+ $ gktmathss    : num [1:6325] NA 478 494 513 513 468 473 449 520 536 ...
+  ..- attr(*, "label")= chr "TOTAL MATH SCALE SCORE SAT KINDERGARTEN"
+  ..- attr(*, "format.stata")= chr "%10.0g"
+ $ gktlistss    : num [1:6325] NA 509 549 554 520 571 595 540 565 595 ...
+  ..- attr(*, "label")= chr "TOTAL LISTENING SCALE SCORE SAT KINDERGARTEN"
+  ..- attr(*, "format.stata")= chr "%10.0g"
+ $ gkwordskillss: num [1:6325] NA 418 444 431 468 396 444 444 480 486 ...
+  ..- attr(*, "label")= chr "WORD STUDY SKILLS SCALE SCORE SAT KINDERGARTEN"
+  ..- attr(*, "format.stata")= chr "%10.0g"
+ $ gkmotivraw   : num [1:6325] 23 24 28 27 25 24 NA NA 26 27 ...
+  ..- attr(*, "label")= chr "MOTIVATION RAW SCORE SCAMIN KINDERGARTEN"
+  ..- attr(*, "format.stata")= chr "%10.0g"
+ $ gkselfconcraw: num [1:6325] 52 53 56 61 54 55 NA NA 52 61 ...
+  ..- attr(*, "label")= chr "SELF-CONCEPT RAW SCORE SCAMIN KINDERGARTEN"
+  ..- attr(*, "format.stata")= chr "%10.0g"</code></pre>
+</div>
+</div>
+<p>This output is long, and it is worth scrolling. Project STAR variables carry Stata labels, and the coding is not always what you would guess. Several variables here use 1/2 coding rather than the 0/1 that regression conventions assume, which is exactly the sort of thing that produces a coefficient with a baffling sign if you do not check first.</p>
+</section><section id="create-a-clean-dataset-ready-for-modeling" class="level3" data-number="7.3.2"><h3 data-number="7.3.2" class="anchored" data-anchor-id="create-a-clean-dataset-ready-for-modeling">
+<span class="header-section-number">7.3.2</span> Create a clean dataset ready for modeling</h3>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">star.clean</span> <span class="op">&lt;-</span> <span class="va">projectSTAR</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
+<span>         schoolid <span class="op">=</span> <span class="va">gkschid</span>,</span>
+<span>         classid <span class="op">=</span> <span class="va">gktchid</span>,</span>
+<span>         read <span class="op">=</span> <span class="va">gktreadss</span>,</span>
+<span>         classtype <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">gkclasstype</span><span class="op">)</span>,</span>
+<span>         years_exp <span class="op">=</span> <span class="va">gktyears</span>,</span>
+<span>         urbanicity <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">gksurban</span><span class="op">)</span>,</span>
+<span>         stu_frl <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">gkfreelunch</span><span class="op">)</span></span>
+<span>         <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">classid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># Create a new variable, which is the average FRL by classroom:</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
+<span>            class_frl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">gkfreelunch</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span></span>
+<span>         <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">schoolid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># Create a new variable, which is the average FRL by school:</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
+<span>            school_frl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">gkfreelunch</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span></span>
+<span>         <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>,</span>
+<span>         <span class="va">schoolid</span>,</span>
+<span>         <span class="va">classid</span>,</span>
+<span>         <span class="va">read</span>,</span>
+<span>         <span class="va">classtype</span>,</span>
+<span>         <span class="va">years_exp</span>,</span>
+<span>         <span class="va">urbanicity</span>,</span>
+<span>         <span class="va">stu_frl</span>,</span>
+<span>         <span class="va">class_frl</span>,</span>
+<span>         <span class="va">school_frl</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">star.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 6,325
+Columns: 9
+$ schoolid   &lt;dbl&gt; 169229, 169280, 218562, 205492, 257899, 161176, 189382, 189…
+$ classid    &lt;dbl&gt; 16922904, 16928003, 21856202, 20549204, 25789904, 16117602,…
+$ read       &lt;dbl&gt; NA, 427, 450, 483, 456, 411, 443, 448, 463, 472, 428, 545, …
+$ classtype  &lt;fct&gt; REGULAR + AIDE CLASS, REGULAR + AIDE CLASS, REGULAR + AIDE …
+$ years_exp  &lt;dbl&gt; 5, 7, 8, 3, 12, 2, 7, 14, 4, 6, 11, 16, 12, 5, 17, 10, 6, 1…
+$ urbanicity &lt;fct&gt; SUBURBAN, SUBURBAN, URBAN, SUBURBAN, RURAL, RURAL, SUBURBAN…
+$ stu_frl    &lt;fct&gt; NON-FREE LUNCH, NON-FREE LUNCH, NON-FREE LUNCH, FREE LUNCH,…
+$ class_frl  &lt;dbl&gt; 0.8750000, 0.9545455, 0.7647059, 0.2352941, 0.4583333, 0.60…
+$ school_frl &lt;dbl&gt; 0.86206897, 0.86206897, 0.71666667, 0.15189873, 0.62857143,…</code></pre>
+</div>
+</div>
+<p>This is a great example of when you might “aggregate up” an individual measure to see if it is a significant predictor at level 2 or level 3. We did this in the past with the task significance measure (<code>TSIG</code>) and the <code>lq2002</code> dataset.</p>
+<p>The above command has two parts. First, we use the <code>group_by</code> command from our friend, the <code>dplyr</code> package, to group all responses in their groups determined by <code>classid</code>. This is a first step to declare that all the operations that follow are to be performed at the cluster (classroom) level. Second, we use the <code>mutate</code> command, which we have used before, to create new variables that are equal to the mean of the original variables. Since we just grouped by <code>classid</code>, this means we get the mean of the variables by classroom.</p>
+<p>We have to get just a little fancier. Since the values of <code>gkfreelunch</code> are 1 for free lunch and 2 for non-free lunch, first we take the mean of that variable. Then, we subtract 1 from that value to give us the proportion of students who are non-free lunch. This gives us the new variable <code>class_frl</code>.</p>
+<p>Finally, we do the same thing at the school level, grouping by <code>schoolid</code>, and then performing the same operation on <code>gkfreelunch</code> to give us <code>school_frl</code>, which is the proportion of students at each school who are non-free lunch.</p>
+<p>Other than that, we are just tidying and renaming first, and then at the bottom selecting only the variables we need for the models we will run.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Why the <code>- 1</code> trick works, and when it does not
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The subtraction is doing something slightly clever. With a variable coded 1/2, the mean sits somewhere between 1 and 2, and subtracting 1 shifts it to sit between 0 and 1, which is a proportion. It works precisely because the coding is 1/2 with no other values.</p>
+<p>If a variable were coded 1/2/3, or had a missing-data code like 9 mixed in, the same arithmetic would produce something meaningless that still looks like a proportion. This is why the <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> step above is not optional: the recode is only correct if you have confirmed the coding first.</p>
+<p>Notice also the two <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> calls. Each aggregation grouped the data, and each has to be undone before the next one groups it differently.</p>
+</div>
+</div>
+<p>Worth pausing on one more thing: <code>read</code> here is <code>gktreadss</code>, the kindergarten reading scale score. This is our outcome for the whole chapter.</p>
+</section></section><section id="part-two-the-null-3-level-model" class="level2" data-number="7.4"><h2 data-number="7.4" class="anchored" data-anchor-id="part-two-the-null-3-level-model">
+<span class="header-section-number">7.4</span> Part two: the null 3-level model</h2>
+<section id="run-a-null-3-level-model-for-reading-scores" class="level3" data-number="7.4.1"><h3 data-number="7.4.1" class="anchored" data-anchor-id="run-a-null-3-level-model-for-reading-scores">
+<span class="header-section-number">7.4.1</span> Run a null 3-level model for reading scores</h3>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.0</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML ['lmerMod']
+Formula: read ~ (1 | schoolid) + (1 | classid)
+   Data: star.clean
 
-      AIC       BIC    logLik -2*log(L)  df.resid 
-  60618.8   60645.5  -30305.4   60610.8      5867 
+REML criterion at convergence: 55139.6
 
 Scaled residuals: 
     Min      1Q  Median      3Q     Max 
--6.2037 -0.6273 -0.0635  0.5846  3.9171 
+-3.6315 -0.6013 -0.0966  0.4466  7.3775 
 
 Random effects:
- Groups          Name        Variance Std.Dev.
- gktchid:gkschid (Intercept)  287.6   16.96   
- gkschid         (Intercept)  375.8   19.39   
- Residual                    1612.4   40.15   
-Number of obs: 5871, groups:  gktchid:gkschid, 325; gkschid, 79
+ Groups   Name        Variance Std.Dev.
+ classid  (Intercept) 114.9    10.72   
+ schoolid (Intercept) 169.8    13.03   
+ Residual             728.2    26.99   
+Number of obs: 5789, groups:  classid, 325; schoolid, 79
 
 Fixed effects:
-            Estimate Std. Error     df t value Pr(&gt;|t|)    
-(Intercept)   486.00       2.45  78.31   198.4   &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+            Estimate Std. Error t value
+(Intercept)  437.049      1.633   267.6</code></pre>
 </div>
 </div>
-<p>The explicit form makes what is happening more visible, and is safer when classroom IDs are not unique across schools:</p>
+<p>Two random intercept terms, joined by <code>+</code>, give us three levels: students within classrooms within schools.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Why this syntax works here
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You may also see the nesting shorthand <code>(1|schoolid/classid)</code>, which does the same thing when classroom IDs repeat across schools, for instance if every school numbers its classrooms 1, 2, 3.</p>
+<p>Here that is unnecessary because <code>gktchid</code> is a unique teacher identifier across the whole dataset, so R can already tell classrooms apart without knowing which school they belong to. The <code>+</code> form is correct and simpler.</p>
+<p>If you are ever unsure, check with <code>n_distinct(star.clean$classid)</code> and compare it to what you would expect. If two schools genuinely shared a classroom ID, the counts would be too low.</p>
+</div>
+</div>
+</section><section id="calculate-l2-icc-classroom" class="level3" data-number="7.4.2"><h3 data-number="7.4.2" class="anchored" data-anchor-id="calculate-l2-icc-classroom">
+<span class="header-section-number">7.4.2</span> Calculate L2 ICC (classroom)</h3>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m_null3_alt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">gktmathss</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">gkschid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">gktchid</span><span class="op">:</span><span class="va">gkschid</span><span class="op">)</span>,</span>
-<span>                    data <span class="op">=</span> <span class="va">star</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>If your classroom identifier repeats across schools, for instance if every school numbers its classrooms starting at 1, the explicit syntax is required. Otherwise R will treat classroom 1 in School A and classroom 1 in School B as the same classroom.</p>
-</section><section id="partitioning-variance-across-three-levels" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="partitioning-variance-across-three-levels">
-<span class="header-section-number">7.2</span> Partitioning variance across three levels</h2>
-<div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">vc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/nlme/man/VarCorr.html">VarCorr</a></span><span class="op">(</span><span class="va">m_null3</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">vc</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ICC.class</span> <span class="op">&lt;-</span> <span class="fl">114.9</span><span class="op">/</span><span class="op">(</span><span class="fl">728.2</span> <span class="op">+</span> <span class="fl">169.8</span> <span class="op">+</span> <span class="fl">114.9</span><span class="op">)</span></span>
+<span><span class="va">ICC.class</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>              grp        var1 var2      vcov    sdcor
-1 gktchid:gkschid (Intercept) &lt;NA&gt;  287.5884 16.95843
-2         gkschid (Intercept) &lt;NA&gt;  375.8040 19.38566
-3        Residual        &lt;NA&gt; &lt;NA&gt; 1612.3949 40.15464</code></pre>
+<pre><code>[1] 0.1134367</code></pre>
 </div>
 </div>
+</section><section id="calculate-l3-icc-school" class="level3" data-number="7.4.3"><h3 data-number="7.4.3" class="anchored" data-anchor-id="calculate-l3-icc-school">
+<span class="header-section-number">7.4.3</span> Calculate L3 ICC (school)</h3>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tau_class</span>  <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="va">vcov</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"gktchid"</span>, <span class="va">vc</span><span class="op">$</span><span class="va">grp</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">tau_school</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="va">vcov</span><span class="op">[</span><span class="va">vc</span><span class="op">$</span><span class="va">grp</span> <span class="op">==</span> <span class="st">"gkschid"</span><span class="op">]</span></span>
-<span><span class="va">sigma2</span>     <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="va">vcov</span><span class="op">[</span><span class="va">vc</span><span class="op">$</span><span class="va">grp</span> <span class="op">==</span> <span class="st">"Residual"</span><span class="op">]</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ICC.school</span> <span class="op">&lt;-</span> <span class="fl">169.8</span><span class="op">/</span><span class="op">(</span><span class="fl">728.2</span> <span class="op">+</span> <span class="fl">169.8</span> <span class="op">+</span> <span class="fl">114.9</span><span class="op">)</span></span>
+<span><span class="va">ICC.school</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1676375</code></pre>
+</div>
+</div>
+<p>These two proportions, plus the student-level share, sum to one and describe where the variation in kindergarten reading achievement lives. Read the comparison between them rather than the absolute numbers: it speaks to whether the classroom a child lands in matters more than the school they attend, which is one of the more consequential questions in education research.</p>
+<p>The denominator is the same in both calculations, and it is the total variance across all three levels. Getting that denominator right is where students most often slip.</p>
+</section></section><section id="part-three-add-predictors-at-each-level" class="level2" data-number="7.5"><h2 data-number="7.5" class="anchored" data-anchor-id="part-three-add-predictors-at-each-level">
+<span class="header-section-number">7.5</span> Part three: add predictors at each level</h2>
+<section id="add-a-student-level-predictor-frl" class="level3" data-number="7.5.1"><h3 data-number="7.5.1" class="anchored" data-anchor-id="add-a-student-level-predictor-frl">
+<span class="header-section-number">7.5.1</span> Add a student-level predictor, FRL</h3>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">total</span> <span class="op">&lt;-</span> <span class="va">tau_class</span> <span class="op">+</span> <span class="va">tau_school</span> <span class="op">+</span> <span class="va">sigma2</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>  student   <span class="op">=</span> <span class="va">sigma2</span> <span class="op">/</span> <span class="va">total</span>,</span>
-<span>  classroom <span class="op">=</span> <span class="va">tau_class</span> <span class="op">/</span> <span class="va">total</span>,</span>
-<span>  school    <span class="op">=</span> <span class="va">tau_school</span> <span class="op">/</span> <span class="va">total</span></span>
-<span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  student classroom    school 
-    0.708     0.126     0.165 </code></pre>
-</div>
-</div>
-<p>These three proportions sum to one and describe where the variation in kindergarten math achievement lives. In most educational data the student level dominates, which is worth remembering when you read claims about school effects. The interesting comparison is usually between the classroom and school shares, because it speaks to whether the teacher a child draws matters more than the school they attend.</p>
-<div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/performance/reference/icc.html">icc</a></span><span class="op">(</span><span class="va">m_null3</span>, by_group <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># ICC by Group
+<pre><code>Linear mixed model fit by REML ['lmerMod']
+Formula: read ~ stu_frl + (1 | schoolid) + (1 | classid)
+   Data: star.clean
 
-Group           |   ICC
------------------------
-gktchid:gkschid | 0.126
-gkschid         | 0.165</code></pre>
-</div>
-</div>
-</section><section id="what-ignoring-a-level-costs-you" class="level2" data-number="7.3"><h2 data-number="7.3" class="anchored" data-anchor-id="what-ignoring-a-level-costs-you">
-<span class="header-section-number">7.3</span> What ignoring a level costs you</h2>
-<p>Suppose we had modeled only students within schools, ignoring classrooms entirely.</p>
-<div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m_null2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">gktmathss</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">gkschid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">vc2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/nlme/man/VarCorr.html">VarCorr</a></span><span class="op">(</span><span class="va">m_null2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">vc2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       grp        var1 var2      vcov    sdcor
-1  gkschid (Intercept) &lt;NA&gt;  450.7584 21.23107
-2 Residual        &lt;NA&gt; &lt;NA&gt; 1826.3914 42.73630</code></pre>
-</div>
-</div>
-<p>Compare the school-level variance in this model to the one in the three-level model. Dropping the classroom level does not make classroom variation disappear. It redistributes it, and much of it lands at whichever level remains. A researcher looking only at the two-level model would conclude that schools matter more than they do, when part of what they are seeing is teachers.</p>
-</section><section id="adding-predictors-at-each-level" class="level2" data-number="7.4"><h2 data-number="7.4" class="anchored" data-anchor-id="adding-predictors-at-each-level">
-<span class="header-section-number">7.4</span> Adding predictors at each level</h2>
-<p>A three-level model can take predictors at any level. Here we use student self-concept, two classroom-level variables, and a school-level aggregate we compute ourselves.</p>
-<div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">star</span> <span class="op">&lt;-</span> <span class="va">star</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">gkschid</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>sch_mean_math <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">gktmathss</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
-<span>    classtype_f <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">gkclasstype</span><span class="op">)</span>,</span>
-<span>    highdeg_f   <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">gkthighdegree</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span><span class="va">m_cond3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span></span>
-<span>  <span class="va">gktmathss</span> <span class="op">~</span> <span class="va">gkselfconcraw</span> <span class="op">+</span> <span class="va">classtype_f</span> <span class="op">+</span> <span class="va">highdeg_f</span> <span class="op">+</span> <span class="va">sch_mean_math</span> <span class="op">+</span></span>
-<span>    <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">gkschid</span><span class="op">/</span><span class="va">gktchid</span><span class="op">)</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">star</span>, REML <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>boundary (singular) fit: see help('isSingular')</code></pre>
-</div>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m_cond3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
-  method [lmerModLmerTest]
-Formula: gktmathss ~ gkselfconcraw + classtype_f + highdeg_f + sch_mean_math +  
-    (1 | gkschid/gktchid)
-   Data: star
-
-      AIC       BIC    logLik -2*log(L)  df.resid 
-  48768.2   48839.3  -24373.1   48746.2      4745 
+REML criterion at convergence: 54635.9
 
 Scaled residuals: 
     Min      1Q  Median      3Q     Max 
--3.7976 -0.6435 -0.0603  0.5904  4.0060 
+-3.8204 -0.5915 -0.0926  0.4431  7.3227 
 
 Random effects:
- Groups          Name        Variance Std.Dev.
- gktchid:gkschid (Intercept)  174.4   13.21   
- gkschid         (Intercept)    0.0    0.00   
- Residual                    1552.8   39.41   
-Number of obs: 4756, groups:  gktchid:gkschid, 301; gkschid, 73
+ Groups   Name        Variance Std.Dev.
+ classid  (Intercept) 113.4    10.65   
+ schoolid (Intercept) 142.4    11.93   
+ Residual             687.5    26.22   
+Number of obs: 5771, groups:  classid, 325; schoolid, 79
 
 Fixed effects:
-                                  Estimate Std. Error         df t value
-(Intercept)                      -14.15268   22.09078  317.69103  -0.641
-gkselfconcraw                      0.43544    0.11725 4755.84428   3.714
-classtype_fREGULAR CLASS          -8.20633    2.35152  293.16090  -3.490
-classtype_fREGULAR + AIDE CLASS   -8.69961    2.35099  288.49370  -3.700
-highdeg_fMASTERS                  -0.33621    2.10936  280.44980  -0.159
-highdeg_fMASTERS +                -2.37697    5.96377  275.53134  -0.399
-highdeg_fSPECIALIST               19.25123   10.64910  405.76184   1.808
-sch_mean_math                      0.99386    0.04374  275.01868  22.724
-                                Pr(&gt;|t|)    
-(Intercept)                     0.522205    
-gkselfconcraw                   0.000206 ***
-classtype_fREGULAR CLASS        0.000558 ***
-classtype_fREGULAR + AIDE CLASS 0.000258 ***
-highdeg_fMASTERS                0.873477    
-highdeg_fMASTERS +              0.690520    
-highdeg_fSPECIALIST             0.071381 .  
-sch_mean_math                    &lt; 2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+                      Estimate Std. Error t value
+(Intercept)           428.8394     1.5808  271.28
+stu_frlNON-FREE LUNCH  15.6106     0.8338   18.72
 
 Correlation of Fixed Effects:
-            (Intr) gkslfc c_REGC c_R+AC h_MAST h_MAS+ h_SPEC
-gkselfcncrw -0.274                                          
-c_REGULARCL -0.039  0.030                                   
-c_REGULA+AC -0.059  0.027  0.479                            
-hgh_MASTERS  0.019 -0.011 -0.072 -0.064                     
-hg_MASTERS+  0.021 -0.007 -0.021  0.000  0.114              
-h_SPECIALIS  0.003 -0.008  0.101  0.101  0.054  0.021       
-sch_men_mth -0.951 -0.025 -0.019  0.002 -0.043 -0.030 -0.014
-optimizer (nloptwrap) convergence code: 0 (OK)
-boundary (singular) fit: see help('isSingular')</code></pre>
+            (Intr)
+s_NON-FREEL -0.278</code></pre>
 </div>
 </div>
+</section><section id="add-teacher-level-predictors-years-of-experience-and-class-type" class="level3" data-number="7.5.2"><h3 data-number="7.5.2" class="anchored" data-anchor-id="add-teacher-level-predictors-years-of-experience-and-class-type">
+<span class="header-section-number">7.5.2</span> Add teacher-level predictors: years of experience and class type</h3>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/performance/reference/r2.html">r2</a></span><span class="op">(</span><span class="va">m_cond3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Can't compute random effect variances. Some variance components equal
-  zero. Your model may suffer from singularity (see `?lme4::isSingular`
-  and `?performance::check_singularity`).
-  Decrease the `tolerance` level to force the calculation of random effect
-  variances, or impose priors on your random effects parameters (using
-  packages like `brms` or `glmmTMB`).</code></pre>
-</div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span> <span class="va">years_exp</span> <span class="op">+</span> <span class="va">classtype</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Random effect variances not available. Returned R2 does not account for random effects.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># R2 for Mixed Models
+<pre><code>Linear mixed model fit by REML ['lmerMod']
+Formula: read ~ stu_frl + years_exp + classtype + (1 | schoolid) + (1 |  
+    classid)
+   Data: star.clean
 
-  Conditional R2: NA
-     Marginal R2: 0.249</code></pre>
+REML criterion at convergence: 54432.7
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.8496 -0.5895 -0.0972  0.4409  7.2503 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ classid  (Intercept) 102.4    10.12   
+ schoolid (Intercept) 141.0    11.88   
+ Residual             689.1    26.25   
+Number of obs: 5751, groups:  classid, 324; schoolid, 79
+
+Fixed effects:
+                              Estimate Std. Error t value
+(Intercept)                   429.6765     2.1265 202.063
+stu_frlNON-FREE LUNCH          15.5597     0.8362  18.607
+years_exp                       0.3125     0.1262   2.476
+classtypeREGULAR CLASS         -6.2966     1.6306  -3.861
+classtypeREGULAR + AIDE CLASS  -5.3194     1.6309  -3.262
+
+Correlation of Fixed Effects:
+            (Intr) s_NONL yrs_xp cREGUC
+s_NON-FREEL -0.200                     
+years_exp   -0.532 -0.017              
+cREGULARCLA -0.360  0.000  0.003       
+cREGULAR+AC -0.324  0.009 -0.065  0.464</code></pre>
 </div>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span><span class="op">(</span><span class="va">m_null3</span>, <span class="va">m_cond3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Both of these are properties of the classroom, not the student, so they are level-2 predictors. They can shift a whole classroom up or down relative to others.</p>
+</section><section id="add-a-school-level-predictor-urbanicity-of-school" class="level3" data-number="7.5.3"><h3 data-number="7.5.3" class="anchored" data-anchor-id="add-a-school-level-predictor-urbanicity-of-school">
+<span class="header-section-number">7.5.3</span> Add a school-level predictor, urbanicity of school</h3>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span> <span class="va">years_exp</span> <span class="op">+</span> <span class="va">classtype</span> <span class="op">+</span> <span class="va">urbanicity</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML ['lmerMod']
+Formula: 
+read ~ stu_frl + years_exp + classtype + urbanicity + (1 | schoolid) +  
+    (1 | classid)
+   Data: star.clean
+
+REML criterion at convergence: 54417.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.8510 -0.5896 -0.0971  0.4411  7.2542 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ classid  (Intercept) 102.4    10.12   
+ schoolid (Intercept) 146.1    12.09   
+ Residual             689.0    26.25   
+Number of obs: 5751, groups:  classid, 324; schoolid, 79
+
+Fixed effects:
+                              Estimate Std. Error t value
+(Intercept)                   427.2909     3.6298 117.716
+stu_frlNON-FREE LUNCH          15.4736     0.8422  18.374
+years_exp                       0.3052     0.1265   2.412
+classtypeREGULAR CLASS         -6.2813     1.6312  -3.851
+classtypeREGULAR + AIDE CLASS  -5.2977     1.6314  -3.247
+urbanicitySUBURBAN              3.8798     4.6802   0.829
+urbanicityRURAL                 2.5357     4.0529   0.626
+urbanicityURBAN                 4.3470     6.1330   0.709
+
+Correlation of Fixed Effects:
+            (Intr) s_NONL yrs_xp cREGUC cRE+AC uSUBUR uRURAL
+s_NON-FREEL -0.026                                          
+years_exp   -0.266 -0.011                                   
+cREGULARCLA -0.214 -0.001  0.003                            
+cREGULAR+AC -0.203  0.008 -0.066  0.464                     
+urbSUBURBAN -0.657 -0.109 -0.048  0.010  0.013              
+urbnctRURAL -0.758 -0.098 -0.053 -0.003  0.013  0.614       
+urbnctURBAN -0.505 -0.063 -0.030  0.012  0.013  0.405  0.466</code></pre>
+</div>
+</div>
+<p>Now watch the <em>school</em>-level variance rather than the classroom-level variance. A level-3 predictor explains between-school differences, so that is where you should expect movement. A level-2 predictor should move the classroom variance. Matching each predictor to the variance component it ought to affect is a good habit and a good diagnostic: if adding a school-level variable moves nothing at the school level, that is informative.</p>
+</section><section id="add-in-frl-at-all-three-levels-student-teacher-school" class="level3" data-number="7.5.4"><h3 data-number="7.5.4" class="anchored" data-anchor-id="add-in-frl-at-all-three-levels-student-teacher-school">
+<span class="header-section-number">7.5.4</span> Add in FRL at all three levels (student, teacher, school)</h3>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span>  <span class="va">class_frl</span> <span class="op">+</span> <span class="va">school_frl</span> <span class="op">+</span>  <span class="va">years_exp</span> <span class="op">+</span> <span class="va">classtype</span> <span class="op">+</span> <span class="va">urbanicity</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML ['lmerMod']
+Formula: read ~ stu_frl + class_frl + school_frl + years_exp + classtype +  
+    urbanicity + (1 | schoolid) + (1 | classid)
+   Data: star.clean
+
+REML criterion at convergence: 54405.5
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.8519 -0.5895 -0.0974  0.4423  7.2565 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ classid  (Intercept) 103.0    10.15   
+ schoolid (Intercept) 148.5    12.18   
+ Residual             689.0    26.25   
+Number of obs: 5751, groups:  classid, 324; schoolid, 79
+
+Fixed effects:
+                              Estimate Std. Error t value
+(Intercept)                   427.2476     3.8148 111.996
+stu_frlNON-FREE LUNCH          15.4340     0.8516  18.124
+class_frl                       2.5997     7.1910   0.362
+school_frl                     -2.1258    11.5341  -0.184
+years_exp                       0.3018     0.1270   2.376
+classtypeREGULAR CLASS         -6.2803     1.6345  -3.842
+classtypeREGULAR + AIDE CLASS  -5.2600     1.6379  -3.211
+urbanicitySUBURBAN              3.6239     7.2776   0.498
+urbanicityRURAL                 2.3449     5.9095   0.397
+urbanicityURBAN                 4.1521     7.4252   0.559
+
+Correlation of Fixed Effects:
+            (Intr) s_NONL clss_f schl_f yrs_xp cREGUC cRE+AC uSUBUR uRURAL
+s_NON-FREEL  0.001                                                        
+class_frl    0.000 -0.118                                                 
+school_frl  -0.230  0.001 -0.606                                          
+years_exp   -0.252 -0.003 -0.061  0.034                                   
+cREGULARCLA -0.200  0.000  0.005 -0.013  0.003                            
+cREGULAR+AC -0.193  0.000  0.065 -0.038 -0.070  0.464                     
+urbSUBURBAN -0.188 -0.001 -0.006 -0.603 -0.027  0.016  0.007              
+urbnctRURAL -0.293 -0.002 -0.003 -0.574 -0.033  0.007  0.008  0.826       
+urbnctURBAN -0.242 -0.002 -0.005 -0.439 -0.022  0.016  0.010  0.641  0.669</code></pre>
+</div>
+</div>
+<p>This is the same construct entered three times, at three levels, and the three coefficients answer three different questions. Does a child receiving free lunch score differently from a classmate who does not? Do classrooms with more low-income students score differently overall? Do schools serving more low-income students differ again?</p>
+<p>These can point in different directions, and often do. That is not a contradiction; it is the whole reason for separating them.</p>
+</section></section><section id="part-four-try-adding-a-random-slope" class="level2" data-number="7.6"><h2 data-number="7.6" class="anchored" data-anchor-id="part-four-try-adding-a-random-slope">
+<span class="header-section-number">7.6</span> Part four: try adding a random slope</h2>
+<section id="add-a-random-slope-for-years-of-experience-at-level-3-school" class="level3" data-number="7.6.1"><h3 data-number="7.6.1" class="anchored" data-anchor-id="add-a-random-slope-for-years-of-experience-at-level-3-school">
+<span class="header-section-number">7.6.1</span> Add a random slope for years of experience at level 3 (school)</h3>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span> <span class="va">years_exp</span> <span class="op">+</span> <span class="va">classtype</span> <span class="op">+</span> <span class="va">urbanicity</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">years_exp</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in AIC.default(m_null3, m_cond3): models are not all fitted to the same
-number of observations</code></pre>
+<pre><code>Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model failed to converge with max|grad| = 0.0188831 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.</code></pre>
+</div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML ['lmerMod']
+Formula: read ~ stu_frl + years_exp + classtype + urbanicity + (1 | classid) +  
+    (years_exp | schoolid)
+   Data: star.clean
+
+REML criterion at convergence: 54411.3
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.8572 -0.5876 -0.1015  0.4445  7.3113 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr 
+ classid  (Intercept)  95.4849  9.7716       
+ schoolid (Intercept)  86.2991  9.2897       
+          years_exp     0.1917  0.4378  0.56 
+ Residual             689.1700 26.2520       
+Number of obs: 5751, groups:  classid, 324; schoolid, 79
+
+Fixed effects:
+                              Estimate Std. Error t value
+(Intercept)                   426.7167     3.2880 129.780
+stu_frlNON-FREE LUNCH          15.4287     0.8416  18.332
+years_exp                       0.3062     0.1371   2.233
+classtypeREGULAR CLASS         -6.5443     1.6093  -4.066
+classtypeREGULAR + AIDE CLASS  -5.7706     1.6065  -3.592
+urbanicitySUBURBAN              5.2550     4.4078   1.192
+urbanicityRURAL                 3.0650     3.8166   0.803
+urbanicityURBAN                 5.2002     5.8420   0.890
+
+Correlation of Fixed Effects:
+            (Intr) s_NONL yrs_xp cREGUC cRE+AC uSUBUR uRURAL
+s_NON-FREEL -0.028                                          
+years_exp   -0.184 -0.016                                   
+cREGULARCLA -0.223 -0.002  0.000                            
+cREGULAR+AC -0.203  0.008 -0.059  0.464                     
+urbSUBURBAN -0.660 -0.111 -0.042  0.009 -0.009              
+urbnctRURAL -0.753 -0.102 -0.089 -0.008 -0.001  0.593       
+urbnctURBAN -0.491 -0.069 -0.046 -0.021 -0.006  0.387  0.448
+optimizer (nloptwrap) convergence code: 0 (OK)
+Model failed to converge with max|grad| = 0.0188831 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.</code></pre>
+</div>
+</div>
+<p>Say what this means before reading the output. A random slope for teacher experience at the school level says the payoff to having an experienced teacher is not the same in every school. In some schools an experienced teacher makes a large difference; in others, less. That points at something structural, perhaps how schools assign teachers to classes, or how much support new teachers receive.</p>
+</section></section><section id="should-we-include-that-random-slope-comparing-model.4-with-model.5" class="level2" data-number="7.7"><h2 data-number="7.7" class="anchored" data-anchor-id="should-we-include-that-random-slope-comparing-model.4-with-model.5">
+<span class="header-section-number">7.7</span> Should we include that random slope? Comparing <code>model.4</code> with <code>model.5</code>
+</h2>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model.4</span>, <span class="va">model.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>refitting model(s) with ML (instead of REML)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>        df      AIC
-m_null3  4 60618.78
-m_cond3 11 48768.17</code></pre>
-</div>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">BIC</a></span><span class="op">(</span><span class="va">m_null3</span>, <span class="va">m_cond3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in BIC.default(m_null3, m_cond3): models are not all fitted to the same
-number of observations</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>        df      BIC
-m_null3  4 60645.49
-m_cond3 11 48839.31</code></pre>
+<pre><code>Data: star.clean
+Models:
+model.4: read ~ stu_frl + class_frl + school_frl + years_exp + classtype + urbanicity + (1 | schoolid) + (1 | classid)
+model.5: read ~ stu_frl + years_exp + classtype + urbanicity + (1 | classid) + (years_exp | schoolid)
+        npar   AIC   BIC logLik -2*log(L)  Chisq Df Pr(&gt;Chisq)
+model.4   13 54465 54551 -27219     54439                     
+model.5   13 54458 54545 -27216     54432 6.4427  0           </code></pre>
 </div>
 </div>
-<p>A note on the school mean. Computing a group average from the same outcome you are predicting and then using it as a predictor is common practice, but it deserves care. The school mean is partly composed of the very students whose scores you are modeling, which builds in a mechanical relationship. With large schools the contribution of any one student is small and the practice is generally accepted. With small clusters it can be seriously misleading.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-About convergence warnings
+These two models differ in more than the random slope
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Models this complex frequently produce singularity or convergence warnings. For these data the model still converges and returns usable estimates and standard errors. Do not ignore such warnings by reflex, but do read them as diagnostic information rather than as a verdict. A singular fit usually means one variance component is being estimated at or near zero.</p>
+<p><code>model.4</code> includes the FRL aggregates and <code>model.5</code> does not, so this comparison changes the fixed effects and the random effects at the same time. A significant result therefore cannot be attributed to the random slope alone.</p>
+<p>To isolate the slope, compare <code>model.3</code> and <code>model.5</code>, which have identical fixed effects, or use <code>lmerTest::rand(model.5)</code>, which tests each random term against the same model without it.</p>
 </div>
 </div>
-</section><section id="random-slopes-at-two-levels" class="level2" data-number="7.5"><h2 data-number="7.5" class="anchored" data-anchor-id="random-slopes-at-two-levels">
-<span class="header-section-number">7.5</span> Random slopes at two levels</h2>
-<p>A slope can vary across classrooms, across schools, or both. Fit them separately first, because asking for everything at once is the fastest route to a model that will not converge.</p>
+</section><section id="using-modelsummary-and-broom.mixed-to-organize-your-results" class="level2" data-number="7.8"><h2 data-number="7.8" class="anchored" data-anchor-id="using-modelsummary-and-broom.mixed-to-organize-your-results">
+<span class="header-section-number">7.8</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</h2>
 <div class="cell">
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m_slope_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span></span>
-<span>  <span class="va">gktmathss</span> <span class="op">~</span> <span class="va">gkselfconcraw</span> <span class="op">+</span> <span class="va">classtype_f</span> <span class="op">+</span> <span class="va">highdeg_f</span> <span class="op">+</span> <span class="va">sch_mean_math</span> <span class="op">+</span></span>
-<span>    <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">gkschid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">gkselfconcraw</span> <span class="op">|</span> <span class="va">gktchid</span><span class="op">:</span><span class="va">gkschid</span><span class="op">)</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">star</span>, REML <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>boundary (singular) fit: see help('isSingular')</code></pre>
-</div>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova</a></span><span class="op">(</span><span class="va">m_slope_class</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model failed to converge with max|grad| = 9.72245 (tol = 0.002, component 1)
-  See ?lme4::convergence and ?lme4::troubleshooting.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model is nearly unidentifiable: very large eigenvalue
- - Rescale variables?</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>boundary (singular) fit: see help('isSingular')</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>ANOVA-like table for random-effects: Single term deletions
-
-Model:
-gktmathss ~ gkselfconcraw + classtype_f + highdeg_f + sch_mean_math + (1 | gkschid) + (1 + gkselfconcraw | gktchid:gkschid)
-                                                       npar logLik   AIC    LRT
-&lt;none&gt;                                                   13 -24369 48764       
-(1 | gkschid)                                            12 -24369 48763 0.3352
-gkselfconcraw in (1 + gkselfconcraw | gktchid:gkschid)   11 -24373 48768 7.7055
-                                                       Df Pr(&gt;Chisq)  
-&lt;none&gt;                                                                
-(1 | gkschid)                                           1    0.56263  
-gkselfconcraw in (1 + gkselfconcraw | gktchid:gkschid)  2    0.02122 *
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m_slope_school</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span></span>
-<span>  <span class="va">gktmathss</span> <span class="op">~</span> <span class="va">gkselfconcraw</span> <span class="op">+</span> <span class="va">classtype_f</span> <span class="op">+</span> <span class="va">highdeg_f</span> <span class="op">+</span> <span class="va">sch_mean_math</span> <span class="op">+</span></span>
-<span>    <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">gkselfconcraw</span> <span class="op">|</span> <span class="va">gkschid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">gktchid</span><span class="op">:</span><span class="va">gkschid</span><span class="op">)</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">star</span>, REML <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>boundary (singular) fit: see help('isSingular')</code></pre>
-</div>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova</a></span><span class="op">(</span><span class="va">m_slope_school</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>boundary (singular) fit: see help('isSingular')
-boundary (singular) fit: see help('isSingular')</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>ANOVA-like table for random-effects: Single term deletions
-
-Model:
-gktmathss ~ gkselfconcraw + classtype_f + highdeg_f + sch_mean_math + (1 + gkselfconcraw | gkschid) + (1 | gktchid:gkschid)
-                                               npar logLik   AIC     LRT Df
-&lt;none&gt;                                           13 -24369 48763           
-gkselfconcraw in (1 + gkselfconcraw | gkschid)   11 -24373 48768   8.879  2
-(1 | gktchid:gkschid)                            12 -24458 48940 179.171  1
-                                               Pr(&gt;Chisq)    
-&lt;none&gt;                                                       
-gkselfconcraw in (1 + gkselfconcraw | gkschid)     0.0118 *  
-(1 | gktchid:gkschid)                              &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
-</div>
-<p>State what each would mean before you look at the test. A random slope at the classroom level says the relationship between self-concept and math achievement differs from teacher to teacher, perhaps because some teachers are better at reaching students who doubt themselves. At the school level it says that relationship differs across schools, which points at something more structural: tracking policies, counseling resources, school climate.</p>
-</section><section id="reporting" class="level2" data-number="7.6"><h2 data-number="7.6" class="anchored" data-anchor-id="reporting">
-<span class="header-section-number">7.6</span> Reporting</h2>
-<div class="cell">
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"Null (3-level)"</span> <span class="op">=</span> <span class="va">m_null3</span>, <span class="st">"Conditional"</span> <span class="op">=</span> <span class="va">m_cond3</span><span class="op">)</span>,</span>
-<span>  stars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"*"</span> <span class="op">=</span> <span class="fl">.05</span>, <span class="st">"**"</span> <span class="op">=</span> <span class="fl">.01</span>, <span class="st">"***"</span> <span class="op">=</span> <span class="fl">.001</span><span class="op">)</span>,</span>
-<span>  gof_map <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"nobs"</span>, <span class="st">"aic"</span>, <span class="st">"bic"</span><span class="op">)</span>,</span>
-<span>  title <span class="op">=</span> <span class="st">"Three-level models of kindergarten math achievement"</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bbolker/broom.mixed">broom.mixed</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">model.0</span>, <span class="va">model.1</span>, <span class="va">model.2</span>, <span class="va">model.3</span>, <span class="va">model.4</span>, <span class="va">model.5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>, output <span class="op">=</span> <span class="st">"default"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<!-- preamble start -->
 
     <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
       // Create table-specific functions using external factory
-      const tableFns_991wxqfv6e22w0iveo6k = TinyTable.createTableFunctions("tinytable_991wxqfv6e22w0iveo6k");
+      const tableFns_03rxj058iml446zki4e4 = TinyTable.createTableFunctions("tinytable_03rxj058iml446zki4e4");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '22', j: 2 }, { i: '22', j: 3 } ], css_id: 'tinytable_css_m73mse0onr2rdqc6t2hc',}, 
-          { positions: [ { i: '19', j: 2 }, { i: '19', j: 3 } ], css_id: 'tinytable_css_dw88zkso6lg5qse58dn4',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '20', j: 3 }, { i: '21', j: 3 } ], css_id: 'tinytable_css_8f8khswcm6461feyltly',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_ftvi9uzxz0l2scuvs4v4',}, 
-          { positions: [ { i: '22', j: 1 } ], css_id: 'tinytable_css_esjtq4wrwralrz3nf4t3',}, 
-          { positions: [ { i: '19', j: 1 } ], css_id: 'tinytable_css_2q1q7np3bzvv9esv18tl',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 } ], css_id: 'tinytable_css_0n3u9ftet4sw6l0af3qc',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_k80rhyho1eh4hh4se2ub',}, 
+          { positions: [ { i: '32', j: 2 }, { i: '32', j: 3 }, { i: '32', j: 4 }, { i: '32', j: 5 }, { i: '32', j: 6 }, { i: '32', j: 7 } ], css_id: 'tinytable_css_9k7j2d91e7mgby1wvm8m',}, 
+          { positions: [ { i: '25', j: 2 }, { i: '25', j: 3 }, { i: '25', j: 4 }, { i: '25', j: 5 }, { i: '25', j: 6 }, { i: '25', j: 7 } ], css_id: 'tinytable_css_w9kskwiww9w835m82qtt',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '22', j: 2 }, { i: '23', j: 2 }, { i: '24', j: 2 }, { i: '26', j: 2 }, { i: '27', j: 2 }, { i: '28', j: 2 }, { i: '29', j: 2 }, { i: '30', j: 2 }, { i: '31', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 }, { i: '20', j: 3 }, { i: '21', j: 3 }, { i: '22', j: 3 }, { i: '23', j: 3 }, { i: '24', j: 3 }, { i: '26', j: 3 }, { i: '27', j: 3 }, { i: '28', j: 3 }, { i: '29', j: 3 }, { i: '30', j: 3 }, { i: '31', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '13', j: 4 }, { i: '14', j: 4 }, { i: '15', j: 4 }, { i: '16', j: 4 }, { i: '17', j: 4 }, { i: '18', j: 4 }, { i: '19', j: 4 }, { i: '20', j: 4 }, { i: '21', j: 4 }, { i: '22', j: 4 }, { i: '23', j: 4 }, { i: '24', j: 4 }, { i: '26', j: 4 }, { i: '27', j: 4 }, { i: '28', j: 4 }, { i: '29', j: 4 }, { i: '30', j: 4 }, { i: '31', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 }, { i: '13', j: 5 }, { i: '14', j: 5 }, { i: '15', j: 5 }, { i: '16', j: 5 }, { i: '17', j: 5 }, { i: '18', j: 5 }, { i: '19', j: 5 }, { i: '20', j: 5 }, { i: '21', j: 5 }, { i: '22', j: 5 }, { i: '23', j: 5 }, { i: '24', j: 5 }, { i: '26', j: 5 }, { i: '27', j: 5 }, { i: '28', j: 5 }, { i: '29', j: 5 }, { i: '30', j: 5 }, { i: '31', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '12', j: 6 }, { i: '13', j: 6 }, { i: '14', j: 6 }, { i: '15', j: 6 }, { i: '16', j: 6 }, { i: '17', j: 6 }, { i: '18', j: 6 }, { i: '19', j: 6 }, { i: '20', j: 6 }, { i: '21', j: 6 }, { i: '22', j: 6 }, { i: '23', j: 6 }, { i: '24', j: 6 }, { i: '26', j: 6 }, { i: '27', j: 6 }, { i: '28', j: 6 }, { i: '29', j: 6 }, { i: '30', j: 6 }, { i: '31', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 }, { i: '12', j: 7 }, { i: '13', j: 7 }, { i: '14', j: 7 }, { i: '15', j: 7 }, { i: '16', j: 7 }, { i: '17', j: 7 }, { i: '18', j: 7 }, { i: '19', j: 7 }, { i: '20', j: 7 }, { i: '21', j: 7 }, { i: '22', j: 7 }, { i: '23', j: 7 }, { i: '24', j: 7 }, { i: '26', j: 7 }, { i: '27', j: 7 }, { i: '28', j: 7 }, { i: '29', j: 7 }, { i: '30', j: 7 }, { i: '31', j: 7 } ], css_id: 'tinytable_css_l9vo1i4kke593f91yamn',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 } ], css_id: 'tinytable_css_8hvzv4jxsmexgurt3ohm',}, 
+          { positions: [ { i: '32', j: 1 } ], css_id: 'tinytable_css_f7g8is2s9ylrn341s9v5',}, 
+          { positions: [ { i: '25', j: 1 } ], css_id: 'tinytable_css_2g6ddtqr8bvtiuzqeww9',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '22', j: 1 }, { i: '23', j: 1 }, { i: '24', j: 1 }, { i: '26', j: 1 }, { i: '27', j: 1 }, { i: '28', j: 1 }, { i: '29', j: 1 }, { i: '30', j: 1 }, { i: '31', j: 1 } ], css_id: 'tinytable_css_3cog2x5lm7m0xasx73x6',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_y3zl2xa7x41ds745jvtn',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_991wxqfv6e22w0iveo6k.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_03rxj058iml446zki4e4.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
 <style>
     /* tinytable css entries after */
-    #tinytable_991wxqfv6e22w0iveo6k td.tinytable_css_m73mse0onr2rdqc6t2hc, #tinytable_991wxqfv6e22w0iveo6k th.tinytable_css_m73mse0onr2rdqc6t2hc {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_991wxqfv6e22w0iveo6k td.tinytable_css_dw88zkso6lg5qse58dn4, #tinytable_991wxqfv6e22w0iveo6k th.tinytable_css_dw88zkso6lg5qse58dn4 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_991wxqfv6e22w0iveo6k td.tinytable_css_8f8khswcm6461feyltly, #tinytable_991wxqfv6e22w0iveo6k th.tinytable_css_8f8khswcm6461feyltly { text-align: center }
-    #tinytable_991wxqfv6e22w0iveo6k td.tinytable_css_ftvi9uzxz0l2scuvs4v4, #tinytable_991wxqfv6e22w0iveo6k th.tinytable_css_ftvi9uzxz0l2scuvs4v4 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_991wxqfv6e22w0iveo6k td.tinytable_css_esjtq4wrwralrz3nf4t3, #tinytable_991wxqfv6e22w0iveo6k th.tinytable_css_esjtq4wrwralrz3nf4t3 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_991wxqfv6e22w0iveo6k td.tinytable_css_2q1q7np3bzvv9esv18tl, #tinytable_991wxqfv6e22w0iveo6k th.tinytable_css_2q1q7np3bzvv9esv18tl {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_991wxqfv6e22w0iveo6k td.tinytable_css_0n3u9ftet4sw6l0af3qc, #tinytable_991wxqfv6e22w0iveo6k th.tinytable_css_0n3u9ftet4sw6l0af3qc { text-align: left }
-    #tinytable_991wxqfv6e22w0iveo6k td.tinytable_css_k80rhyho1eh4hh4se2ub, #tinytable_991wxqfv6e22w0iveo6k th.tinytable_css_k80rhyho1eh4hh4se2ub {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_03rxj058iml446zki4e4 td.tinytable_css_9k7j2d91e7mgby1wvm8m, #tinytable_03rxj058iml446zki4e4 th.tinytable_css_9k7j2d91e7mgby1wvm8m {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_03rxj058iml446zki4e4 td.tinytable_css_w9kskwiww9w835m82qtt, #tinytable_03rxj058iml446zki4e4 th.tinytable_css_w9kskwiww9w835m82qtt {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_03rxj058iml446zki4e4 td.tinytable_css_l9vo1i4kke593f91yamn, #tinytable_03rxj058iml446zki4e4 th.tinytable_css_l9vo1i4kke593f91yamn { text-align: center }
+    #tinytable_03rxj058iml446zki4e4 td.tinytable_css_8hvzv4jxsmexgurt3ohm, #tinytable_03rxj058iml446zki4e4 th.tinytable_css_8hvzv4jxsmexgurt3ohm {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_03rxj058iml446zki4e4 td.tinytable_css_f7g8is2s9ylrn341s9v5, #tinytable_03rxj058iml446zki4e4 th.tinytable_css_f7g8is2s9ylrn341s9v5 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_03rxj058iml446zki4e4 td.tinytable_css_2g6ddtqr8bvtiuzqeww9, #tinytable_03rxj058iml446zki4e4 th.tinytable_css_2g6ddtqr8bvtiuzqeww9 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_03rxj058iml446zki4e4 td.tinytable_css_3cog2x5lm7m0xasx73x6, #tinytable_03rxj058iml446zki4e4 th.tinytable_css_3cog2x5lm7m0xasx73x6 { text-align: left }
+    #tinytable_03rxj058iml446zki4e4 td.tinytable_css_y3zl2xa7x41ds745jvtn, #tinytable_03rxj058iml446zki4e4 th.tinytable_css_y3zl2xa7x41ds745jvtn {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
 <div class="container">
-      <table class="tinytable" id="tinytable_991wxqfv6e22w0iveo6k" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-<caption>Three-level models of kindergarten math achievement</caption>
-        <thead><tr>
+      <table class="tinytable" id="tinytable_03rxj058iml446zki4e4" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+<thead><tr>
 <th scope="col" data-row="0" data-col="1"> </th>
-                <th scope="col" data-row="0" data-col="2">Null (3-level)</th>
-                <th scope="col" data-row="0" data-col="3">Conditional</th>
+                <th scope="col" data-row="0" data-col="2">(1)</th>
+                <th scope="col" data-row="0" data-col="3">(2)</th>
+                <th scope="col" data-row="0" data-col="4">(3)</th>
+                <th scope="col" data-row="0" data-col="5">(4)</th>
+                <th scope="col" data-row="0" data-col="6">(5)</th>
+                <th scope="col" data-row="0" data-col="7">(6)</th>
               </tr></thead>
-<tfoot><tr><td colspan="3">* p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
 <tbody>
 <tr>
 <td data-row="1" data-col="1">(Intercept)</td>
-                  <td data-row="1" data-col="2">486.000***</td>
-                  <td data-row="1" data-col="3">-14.153</td>
+                  <td data-row="1" data-col="2">437.049</td>
+                  <td data-row="1" data-col="3">428.839</td>
+                  <td data-row="1" data-col="4">429.677</td>
+                  <td data-row="1" data-col="5">427.291</td>
+                  <td data-row="1" data-col="6">427.248</td>
+                  <td data-row="1" data-col="7">426.717</td>
                 </tr>
 <tr>
 <td data-row="2" data-col="1"></td>
-                  <td data-row="2" data-col="2">(2.450)</td>
-                  <td data-row="2" data-col="3">(22.091)</td>
+                  <td data-row="2" data-col="2">(1.633)</td>
+                  <td data-row="2" data-col="3">(1.581)</td>
+                  <td data-row="2" data-col="4">(2.126)</td>
+                  <td data-row="2" data-col="5">(3.630)</td>
+                  <td data-row="2" data-col="6">(3.815)</td>
+                  <td data-row="2" data-col="7">(3.288)</td>
                 </tr>
 <tr>
-<td data-row="3" data-col="1">gkselfconcraw</td>
+<td data-row="3" data-col="1">stu_frlNON-FREE LUNCH</td>
                   <td data-row="3" data-col="2"></td>
-                  <td data-row="3" data-col="3">0.435***</td>
+                  <td data-row="3" data-col="3">15.611</td>
+                  <td data-row="3" data-col="4">15.560</td>
+                  <td data-row="3" data-col="5">15.474</td>
+                  <td data-row="3" data-col="6">15.434</td>
+                  <td data-row="3" data-col="7">15.429</td>
                 </tr>
 <tr>
 <td data-row="4" data-col="1"></td>
                   <td data-row="4" data-col="2"></td>
-                  <td data-row="4" data-col="3">(0.117)</td>
+                  <td data-row="4" data-col="3">(0.834)</td>
+                  <td data-row="4" data-col="4">(0.836)</td>
+                  <td data-row="4" data-col="5">(0.842)</td>
+                  <td data-row="4" data-col="6">(0.852)</td>
+                  <td data-row="4" data-col="7">(0.842)</td>
                 </tr>
 <tr>
-<td data-row="5" data-col="1">classtype_fREGULAR CLASS</td>
+<td data-row="5" data-col="1">years_exp</td>
                   <td data-row="5" data-col="2"></td>
-                  <td data-row="5" data-col="3">-8.206***</td>
+                  <td data-row="5" data-col="3"></td>
+                  <td data-row="5" data-col="4">0.313</td>
+                  <td data-row="5" data-col="5">0.305</td>
+                  <td data-row="5" data-col="6">0.302</td>
+                  <td data-row="5" data-col="7">0.306</td>
                 </tr>
 <tr>
 <td data-row="6" data-col="1"></td>
                   <td data-row="6" data-col="2"></td>
-                  <td data-row="6" data-col="3">(2.352)</td>
+                  <td data-row="6" data-col="3"></td>
+                  <td data-row="6" data-col="4">(0.126)</td>
+                  <td data-row="6" data-col="5">(0.127)</td>
+                  <td data-row="6" data-col="6">(0.127)</td>
+                  <td data-row="6" data-col="7">(0.137)</td>
                 </tr>
 <tr>
-<td data-row="7" data-col="1">classtype_fREGULAR + AIDE CLASS</td>
+<td data-row="7" data-col="1">classtypeREGULAR CLASS</td>
                   <td data-row="7" data-col="2"></td>
-                  <td data-row="7" data-col="3">-8.700***</td>
+                  <td data-row="7" data-col="3"></td>
+                  <td data-row="7" data-col="4">-6.297</td>
+                  <td data-row="7" data-col="5">-6.281</td>
+                  <td data-row="7" data-col="6">-6.280</td>
+                  <td data-row="7" data-col="7">-6.544</td>
                 </tr>
 <tr>
 <td data-row="8" data-col="1"></td>
                   <td data-row="8" data-col="2"></td>
-                  <td data-row="8" data-col="3">(2.351)</td>
+                  <td data-row="8" data-col="3"></td>
+                  <td data-row="8" data-col="4">(1.631)</td>
+                  <td data-row="8" data-col="5">(1.631)</td>
+                  <td data-row="8" data-col="6">(1.634)</td>
+                  <td data-row="8" data-col="7">(1.609)</td>
                 </tr>
 <tr>
-<td data-row="9" data-col="1">highdeg_fMASTERS</td>
+<td data-row="9" data-col="1">classtypeREGULAR + AIDE CLASS</td>
                   <td data-row="9" data-col="2"></td>
-                  <td data-row="9" data-col="3">-0.336</td>
+                  <td data-row="9" data-col="3"></td>
+                  <td data-row="9" data-col="4">-5.319</td>
+                  <td data-row="9" data-col="5">-5.298</td>
+                  <td data-row="9" data-col="6">-5.260</td>
+                  <td data-row="9" data-col="7">-5.771</td>
                 </tr>
 <tr>
 <td data-row="10" data-col="1"></td>
                   <td data-row="10" data-col="2"></td>
-                  <td data-row="10" data-col="3">(2.109)</td>
+                  <td data-row="10" data-col="3"></td>
+                  <td data-row="10" data-col="4">(1.631)</td>
+                  <td data-row="10" data-col="5">(1.631)</td>
+                  <td data-row="10" data-col="6">(1.638)</td>
+                  <td data-row="10" data-col="7">(1.606)</td>
                 </tr>
 <tr>
-<td data-row="11" data-col="1">highdeg_fMASTERS +</td>
+<td data-row="11" data-col="1">urbanicitySUBURBAN</td>
                   <td data-row="11" data-col="2"></td>
-                  <td data-row="11" data-col="3">-2.377</td>
+                  <td data-row="11" data-col="3"></td>
+                  <td data-row="11" data-col="4"></td>
+                  <td data-row="11" data-col="5">3.880</td>
+                  <td data-row="11" data-col="6">3.624</td>
+                  <td data-row="11" data-col="7">5.255</td>
                 </tr>
 <tr>
 <td data-row="12" data-col="1"></td>
                   <td data-row="12" data-col="2"></td>
-                  <td data-row="12" data-col="3">(5.964)</td>
+                  <td data-row="12" data-col="3"></td>
+                  <td data-row="12" data-col="4"></td>
+                  <td data-row="12" data-col="5">(4.680)</td>
+                  <td data-row="12" data-col="6">(7.278)</td>
+                  <td data-row="12" data-col="7">(4.408)</td>
                 </tr>
 <tr>
-<td data-row="13" data-col="1">highdeg_fSPECIALIST</td>
+<td data-row="13" data-col="1">urbanicityRURAL</td>
                   <td data-row="13" data-col="2"></td>
-                  <td data-row="13" data-col="3">19.251</td>
+                  <td data-row="13" data-col="3"></td>
+                  <td data-row="13" data-col="4"></td>
+                  <td data-row="13" data-col="5">2.536</td>
+                  <td data-row="13" data-col="6">2.345</td>
+                  <td data-row="13" data-col="7">3.065</td>
                 </tr>
 <tr>
 <td data-row="14" data-col="1"></td>
                   <td data-row="14" data-col="2"></td>
-                  <td data-row="14" data-col="3">(10.649)</td>
+                  <td data-row="14" data-col="3"></td>
+                  <td data-row="14" data-col="4"></td>
+                  <td data-row="14" data-col="5">(4.053)</td>
+                  <td data-row="14" data-col="6">(5.910)</td>
+                  <td data-row="14" data-col="7">(3.817)</td>
                 </tr>
 <tr>
-<td data-row="15" data-col="1">sch_mean_math</td>
+<td data-row="15" data-col="1">urbanicityURBAN</td>
                   <td data-row="15" data-col="2"></td>
-                  <td data-row="15" data-col="3">0.994***</td>
+                  <td data-row="15" data-col="3"></td>
+                  <td data-row="15" data-col="4"></td>
+                  <td data-row="15" data-col="5">4.347</td>
+                  <td data-row="15" data-col="6">4.152</td>
+                  <td data-row="15" data-col="7">5.200</td>
                 </tr>
 <tr>
 <td data-row="16" data-col="1"></td>
                   <td data-row="16" data-col="2"></td>
-                  <td data-row="16" data-col="3">(0.044)</td>
+                  <td data-row="16" data-col="3"></td>
+                  <td data-row="16" data-col="4"></td>
+                  <td data-row="16" data-col="5">(6.133)</td>
+                  <td data-row="16" data-col="6">(7.425)</td>
+                  <td data-row="16" data-col="7">(5.842)</td>
                 </tr>
 <tr>
-<td data-row="17" data-col="1">SD (Intercept gktchidgkschid)</td>
-                  <td data-row="17" data-col="2">16.958</td>
-                  <td data-row="17" data-col="3">13.205</td>
+<td data-row="17" data-col="1">class_frl</td>
+                  <td data-row="17" data-col="2"></td>
+                  <td data-row="17" data-col="3"></td>
+                  <td data-row="17" data-col="4"></td>
+                  <td data-row="17" data-col="5"></td>
+                  <td data-row="17" data-col="6">2.600</td>
+                  <td data-row="17" data-col="7"></td>
                 </tr>
 <tr>
-<td data-row="18" data-col="1">SD (Intercept gkschid)</td>
-                  <td data-row="18" data-col="2">19.386</td>
-                  <td data-row="18" data-col="3">0.000</td>
+<td data-row="18" data-col="1"></td>
+                  <td data-row="18" data-col="2"></td>
+                  <td data-row="18" data-col="3"></td>
+                  <td data-row="18" data-col="4"></td>
+                  <td data-row="18" data-col="5"></td>
+                  <td data-row="18" data-col="6">(7.191)</td>
+                  <td data-row="18" data-col="7"></td>
                 </tr>
 <tr>
-<td data-row="19" data-col="1">SD (Observations)</td>
-                  <td data-row="19" data-col="2">40.155</td>
-                  <td data-row="19" data-col="3">39.405</td>
+<td data-row="19" data-col="1">school_frl</td>
+                  <td data-row="19" data-col="2"></td>
+                  <td data-row="19" data-col="3"></td>
+                  <td data-row="19" data-col="4"></td>
+                  <td data-row="19" data-col="5"></td>
+                  <td data-row="19" data-col="6">-2.126</td>
+                  <td data-row="19" data-col="7"></td>
                 </tr>
 <tr>
-<td data-row="20" data-col="1">Num.Obs.</td>
-                  <td data-row="20" data-col="2">5871</td>
-                  <td data-row="20" data-col="3">4756</td>
+<td data-row="20" data-col="1"></td>
+                  <td data-row="20" data-col="2"></td>
+                  <td data-row="20" data-col="3"></td>
+                  <td data-row="20" data-col="4"></td>
+                  <td data-row="20" data-col="5"></td>
+                  <td data-row="20" data-col="6">(11.534)</td>
+                  <td data-row="20" data-col="7"></td>
                 </tr>
 <tr>
-<td data-row="21" data-col="1">AIC</td>
-                  <td data-row="21" data-col="2">60615.1</td>
-                  <td data-row="21" data-col="3">48751.2</td>
+<td data-row="21" data-col="1">SD (Intercept classid)</td>
+                  <td data-row="21" data-col="2">10.721</td>
+                  <td data-row="21" data-col="3">10.651</td>
+                  <td data-row="21" data-col="4">10.119</td>
+                  <td data-row="21" data-col="5">10.120</td>
+                  <td data-row="21" data-col="6">10.147</td>
+                  <td data-row="21" data-col="7">9.772</td>
                 </tr>
 <tr>
-<td data-row="22" data-col="1">BIC</td>
-                  <td data-row="22" data-col="2">60641.9</td>
-                  <td data-row="22" data-col="3">48822.3</td>
+<td data-row="22" data-col="1">SD (Intercept schoolid)</td>
+                  <td data-row="22" data-col="2">13.032</td>
+                  <td data-row="22" data-col="3">11.934</td>
+                  <td data-row="22" data-col="4">11.876</td>
+                  <td data-row="22" data-col="5">12.088</td>
+                  <td data-row="22" data-col="6">12.184</td>
+                  <td data-row="22" data-col="7">9.290</td>
+                </tr>
+<tr>
+<td data-row="23" data-col="1">SD (years_exp schoolid)</td>
+                  <td data-row="23" data-col="2"></td>
+                  <td data-row="23" data-col="3"></td>
+                  <td data-row="23" data-col="4"></td>
+                  <td data-row="23" data-col="5"></td>
+                  <td data-row="23" data-col="6"></td>
+                  <td data-row="23" data-col="7">0.438</td>
+                </tr>
+<tr>
+<td data-row="24" data-col="1">Cor (Intercept~years_exp schoolid)</td>
+                  <td data-row="24" data-col="2"></td>
+                  <td data-row="24" data-col="3"></td>
+                  <td data-row="24" data-col="4"></td>
+                  <td data-row="24" data-col="5"></td>
+                  <td data-row="24" data-col="6"></td>
+                  <td data-row="24" data-col="7">0.561</td>
+                </tr>
+<tr>
+<td data-row="25" data-col="1">SD (Observations)</td>
+                  <td data-row="25" data-col="2">26.986</td>
+                  <td data-row="25" data-col="3">26.221</td>
+                  <td data-row="25" data-col="4">26.250</td>
+                  <td data-row="25" data-col="5">26.250</td>
+                  <td data-row="25" data-col="6">26.249</td>
+                  <td data-row="25" data-col="7">26.252</td>
+                </tr>
+<tr>
+<td data-row="26" data-col="1">Num.Obs.</td>
+                  <td data-row="26" data-col="2">5789</td>
+                  <td data-row="26" data-col="3">5771</td>
+                  <td data-row="26" data-col="4">5751</td>
+                  <td data-row="26" data-col="5">5751</td>
+                  <td data-row="26" data-col="6">5751</td>
+                  <td data-row="26" data-col="7">5751</td>
+                </tr>
+<tr>
+<td data-row="27" data-col="1">R2 Marg.</td>
+                  <td data-row="27" data-col="2">0.000</td>
+                  <td data-row="27" data-col="3">0.061</td>
+                  <td data-row="27" data-col="4">0.073</td>
+                  <td data-row="27" data-col="5">0.083</td>
+                  <td data-row="27" data-col="6">0.083</td>
+                  <td data-row="27" data-col="7">0.087</td>
+                </tr>
+<tr>
+<td data-row="28" data-col="1">R2 Cond.</td>
+                  <td data-row="28" data-col="2">0.281</td>
+                  <td data-row="28" data-col="3">0.315</td>
+                  <td data-row="28" data-col="4">0.315</td>
+                  <td data-row="28" data-col="5">0.326</td>
+                  <td data-row="28" data-col="6">0.328</td>
+                  <td data-row="28" data-col="7">0.328</td>
+                </tr>
+<tr>
+<td data-row="29" data-col="1">AIC</td>
+                  <td data-row="29" data-col="2">55147.6</td>
+                  <td data-row="29" data-col="3">54645.9</td>
+                  <td data-row="29" data-col="4">54448.7</td>
+                  <td data-row="29" data-col="5">54439.6</td>
+                  <td data-row="29" data-col="6">54431.5</td>
+                  <td data-row="29" data-col="7">54437.3</td>
+                </tr>
+<tr>
+<td data-row="30" data-col="1">BIC</td>
+                  <td data-row="30" data-col="2">55174.3</td>
+                  <td data-row="30" data-col="3">54679.2</td>
+                  <td data-row="30" data-col="4">54502.0</td>
+                  <td data-row="30" data-col="5">54512.9</td>
+                  <td data-row="30" data-col="6">54518.0</td>
+                  <td data-row="30" data-col="7">54523.9</td>
+                </tr>
+<tr>
+<td data-row="31" data-col="1">ICC</td>
+                  <td data-row="31" data-col="2">0.3</td>
+                  <td data-row="31" data-col="3">0.3</td>
+                  <td data-row="31" data-col="4">0.3</td>
+                  <td data-row="31" data-col="5">0.3</td>
+                  <td data-row="31" data-col="6">0.3</td>
+                  <td data-row="31" data-col="7">0.3</td>
+                </tr>
+<tr>
+<td data-row="32" data-col="1">RMSE</td>
+                  <td data-row="32" data-col="2">26.39</td>
+                  <td data-row="32" data-col="3">25.63</td>
+                  <td data-row="32" data-col="4">25.67</td>
+                  <td data-row="32" data-col="5">25.67</td>
+                  <td data-row="32" data-col="6">25.67</td>
+                  <td data-row="32" data-col="7">25.68</td>
                 </tr>
 </tbody>
 </table>
 </div>
 <!-- hack to avoid NA insertion in last line -->
 </div>
+</div>
+</section><section id="html-version-that-you-can-open-in-word" class="level2" data-number="7.9"><h2 data-number="7.9" class="anchored" data-anchor-id="html-version-that-you-can-open-in-word">
+<span class="header-section-number">7.9</span> HTML version that you can open in Word</h2>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>, output <span class="op">=</span> <span class="st">'msum.html'</span>, title <span class="op">=</span> <span class="st">'MLM Estimates'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>When you write up a three-level model, report the variance partition from the null model, not just the fixed effects from the final one. Readers need to know how much room there was to explain at each level before they can judge what your predictors accomplished.</p>
 
@@ -1153,186 +1558,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./08-growth-curves.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Longitudinal and Growth Curve Models</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./08a-growth-intro.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb51" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Three-Level Models</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>**Data for this chapter:** <span class="in">`projectSTAR.dta`</span></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data file needed</span></span>
-<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>Copy <span class="in">`projectSTAR.dta`</span> into this project folder before rendering.</span>
-<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>Real data often nest more than two levels deep. Students sit in classrooms, classrooms sit in schools, and each layer can contribute its own variation. This chapter uses the Tennessee Class Size Experiment, with more than 6,000 kindergarten students nested in classrooms nested in over 200 schools.</span>
-<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
-<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb51-20"><a href="#cb51-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb51-21"><a href="#cb51-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
-<span id="cb51-22"><a href="#cb51-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
-<span id="cb51-23"><a href="#cb51-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb51-24"><a href="#cb51-24" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-25"><a href="#cb51-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-28"><a href="#cb51-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-29"><a href="#cb51-29" aria-hidden="true" tabindex="-1"></a>star <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"projectSTAR.dta"</span>)</span>
-<span id="cb51-30"><a href="#cb51-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-31"><a href="#cb51-31" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(star)</span>
-<span id="cb51-32"><a href="#cb51-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-33"><a href="#cb51-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-36"><a href="#cb51-36" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-37"><a href="#cb51-37" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-math</span></span>
-<span id="cb51-38"><a href="#cb51-38" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribution of kindergarten math scores."</span></span>
-<span id="cb51-39"><a href="#cb51-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-40"><a href="#cb51-40" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(star, <span class="fu">aes</span>(<span class="at">x =</span> gktmathss)) <span class="sc">+</span></span>
-<span id="cb51-41"><a href="#cb51-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"#1a7a6e"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb51-42"><a href="#cb51-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Kindergarten Math Scores"</span>,</span>
-<span id="cb51-43"><a href="#cb51-43" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Scale score"</span>, <span class="at">y =</span> <span class="st">"Number of students"</span>) <span class="sc">+</span></span>
-<span id="cb51-44"><a href="#cb51-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb51-45"><a href="#cb51-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-46"><a href="#cb51-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-47"><a href="#cb51-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Specifying three levels</span></span>
-<span id="cb51-48"><a href="#cb51-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-49"><a href="#cb51-49" aria-hidden="true" tabindex="-1"></a>Two syntaxes produce the same model. The nesting shorthand is compact:</span>
-<span id="cb51-50"><a href="#cb51-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-53"><a href="#cb51-53" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-54"><a href="#cb51-54" aria-hidden="true" tabindex="-1"></a>m_null3 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(gktmathss <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> gkschid<span class="sc">/</span>gktchid), <span class="at">data =</span> star, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb51-55"><a href="#cb51-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-56"><a href="#cb51-56" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_null3)</span>
-<span id="cb51-57"><a href="#cb51-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-58"><a href="#cb51-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-59"><a href="#cb51-59" aria-hidden="true" tabindex="-1"></a>The explicit form makes what is happening more visible, and is safer when classroom IDs are not unique across schools:</span>
-<span id="cb51-60"><a href="#cb51-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-63"><a href="#cb51-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-64"><a href="#cb51-64" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb51-65"><a href="#cb51-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-66"><a href="#cb51-66" aria-hidden="true" tabindex="-1"></a>m_null3_alt <span class="ot">&lt;-</span> <span class="fu">lmer</span>(gktmathss <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> gkschid) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> gktchid<span class="sc">:</span>gkschid),</span>
-<span id="cb51-67"><a href="#cb51-67" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> star, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb51-68"><a href="#cb51-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-69"><a href="#cb51-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-70"><a href="#cb51-70" aria-hidden="true" tabindex="-1"></a>If your classroom identifier repeats across schools, for instance if every school numbers its classrooms starting at 1, the explicit syntax is required. Otherwise R will treat classroom 1 in School A and classroom 1 in School B as the same classroom.</span>
-<span id="cb51-71"><a href="#cb51-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-72"><a href="#cb51-72" aria-hidden="true" tabindex="-1"></a><span class="fu">## Partitioning variance across three levels</span></span>
-<span id="cb51-73"><a href="#cb51-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-76"><a href="#cb51-76" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-77"><a href="#cb51-77" aria-hidden="true" tabindex="-1"></a>vc <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">VarCorr</span>(m_null3))</span>
-<span id="cb51-78"><a href="#cb51-78" aria-hidden="true" tabindex="-1"></a>vc</span>
-<span id="cb51-79"><a href="#cb51-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-80"><a href="#cb51-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-83"><a href="#cb51-83" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-84"><a href="#cb51-84" aria-hidden="true" tabindex="-1"></a>tau_class  <span class="ot">&lt;-</span> vc<span class="sc">$</span>vcov[<span class="fu">grepl</span>(<span class="st">"gktchid"</span>, vc<span class="sc">$</span>grp)]</span>
-<span id="cb51-85"><a href="#cb51-85" aria-hidden="true" tabindex="-1"></a>tau_school <span class="ot">&lt;-</span> vc<span class="sc">$</span>vcov[vc<span class="sc">$</span>grp <span class="sc">==</span> <span class="st">"gkschid"</span>]</span>
-<span id="cb51-86"><a href="#cb51-86" aria-hidden="true" tabindex="-1"></a>sigma2     <span class="ot">&lt;-</span> vc<span class="sc">$</span>vcov[vc<span class="sc">$</span>grp <span class="sc">==</span> <span class="st">"Residual"</span>]</span>
-<span id="cb51-87"><a href="#cb51-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-88"><a href="#cb51-88" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> tau_class <span class="sc">+</span> tau_school <span class="sc">+</span> sigma2</span>
-<span id="cb51-89"><a href="#cb51-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-90"><a href="#cb51-90" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">c</span>(</span>
-<span id="cb51-91"><a href="#cb51-91" aria-hidden="true" tabindex="-1"></a>  <span class="at">student   =</span> sigma2 <span class="sc">/</span> total,</span>
-<span id="cb51-92"><a href="#cb51-92" aria-hidden="true" tabindex="-1"></a>  <span class="at">classroom =</span> tau_class <span class="sc">/</span> total,</span>
-<span id="cb51-93"><a href="#cb51-93" aria-hidden="true" tabindex="-1"></a>  <span class="at">school    =</span> tau_school <span class="sc">/</span> total</span>
-<span id="cb51-94"><a href="#cb51-94" aria-hidden="true" tabindex="-1"></a>), <span class="dv">3</span>)</span>
-<span id="cb51-95"><a href="#cb51-95" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-96"><a href="#cb51-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-97"><a href="#cb51-97" aria-hidden="true" tabindex="-1"></a>These three proportions sum to one and describe where the variation in kindergarten math achievement lives. In most educational data the student level dominates, which is worth remembering when you read claims about school effects. The interesting comparison is usually between the classroom and school shares, because it speaks to whether the teacher a child draws matters more than the school they attend.</span>
-<span id="cb51-98"><a href="#cb51-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-101"><a href="#cb51-101" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-102"><a href="#cb51-102" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(m_null3, <span class="at">by_group =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb51-103"><a href="#cb51-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-104"><a href="#cb51-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-105"><a href="#cb51-105" aria-hidden="true" tabindex="-1"></a><span class="fu">## What ignoring a level costs you</span></span>
-<span id="cb51-106"><a href="#cb51-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-107"><a href="#cb51-107" aria-hidden="true" tabindex="-1"></a>Suppose we had modeled only students within schools, ignoring classrooms entirely.</span>
-<span id="cb51-108"><a href="#cb51-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-111"><a href="#cb51-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-112"><a href="#cb51-112" aria-hidden="true" tabindex="-1"></a>m_null2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(gktmathss <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> gkschid), <span class="at">data =</span> star, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb51-113"><a href="#cb51-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-114"><a href="#cb51-114" aria-hidden="true" tabindex="-1"></a>vc2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">VarCorr</span>(m_null2))</span>
-<span id="cb51-115"><a href="#cb51-115" aria-hidden="true" tabindex="-1"></a>vc2</span>
-<span id="cb51-116"><a href="#cb51-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-117"><a href="#cb51-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-118"><a href="#cb51-118" aria-hidden="true" tabindex="-1"></a>Compare the school-level variance in this model to the one in the three-level model. Dropping the classroom level does not make classroom variation disappear. It redistributes it, and much of it lands at whichever level remains. A researcher looking only at the two-level model would conclude that schools matter more than they do, when part of what they are seeing is teachers.</span>
-<span id="cb51-119"><a href="#cb51-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-120"><a href="#cb51-120" aria-hidden="true" tabindex="-1"></a><span class="fu">## Adding predictors at each level</span></span>
-<span id="cb51-121"><a href="#cb51-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-122"><a href="#cb51-122" aria-hidden="true" tabindex="-1"></a>A three-level model can take predictors at any level. Here we use student self-concept, two classroom-level variables, and a school-level aggregate we compute ourselves.</span>
-<span id="cb51-123"><a href="#cb51-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-126"><a href="#cb51-126" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-127"><a href="#cb51-127" aria-hidden="true" tabindex="-1"></a>star <span class="ot">&lt;-</span> star <span class="sc">|&gt;</span></span>
-<span id="cb51-128"><a href="#cb51-128" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gkschid) <span class="sc">|&gt;</span></span>
-<span id="cb51-129"><a href="#cb51-129" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sch_mean_math =</span> <span class="fu">mean</span>(gktmathss, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb51-130"><a href="#cb51-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
-<span id="cb51-131"><a href="#cb51-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb51-132"><a href="#cb51-132" aria-hidden="true" tabindex="-1"></a>    <span class="at">classtype_f =</span> <span class="fu">as_factor</span>(gkclasstype),</span>
-<span id="cb51-133"><a href="#cb51-133" aria-hidden="true" tabindex="-1"></a>    <span class="at">highdeg_f   =</span> <span class="fu">as_factor</span>(gkthighdegree)</span>
-<span id="cb51-134"><a href="#cb51-134" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb51-135"><a href="#cb51-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-136"><a href="#cb51-136" aria-hidden="true" tabindex="-1"></a>m_cond3 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
-<span id="cb51-137"><a href="#cb51-137" aria-hidden="true" tabindex="-1"></a>  gktmathss <span class="sc">~</span> gkselfconcraw <span class="sc">+</span> classtype_f <span class="sc">+</span> highdeg_f <span class="sc">+</span> sch_mean_math <span class="sc">+</span></span>
-<span id="cb51-138"><a href="#cb51-138" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">|</span> gkschid<span class="sc">/</span>gktchid),</span>
-<span id="cb51-139"><a href="#cb51-139" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> star, <span class="at">REML =</span> <span class="cn">FALSE</span></span>
-<span id="cb51-140"><a href="#cb51-140" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb51-141"><a href="#cb51-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-142"><a href="#cb51-142" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_cond3)</span>
-<span id="cb51-143"><a href="#cb51-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-144"><a href="#cb51-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-147"><a href="#cb51-147" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-148"><a href="#cb51-148" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">r2</span>(m_cond3)</span>
-<span id="cb51-149"><a href="#cb51-149" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(m_null3, m_cond3)</span>
-<span id="cb51-150"><a href="#cb51-150" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(m_null3, m_cond3)</span>
-<span id="cb51-151"><a href="#cb51-151" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-152"><a href="#cb51-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-153"><a href="#cb51-153" aria-hidden="true" tabindex="-1"></a>A note on the school mean. Computing a group average from the same outcome you are predicting and then using it as a predictor is common practice, but it deserves care. The school mean is partly composed of the very students whose scores you are modeling, which builds in a mechanical relationship. With large schools the contribution of any one student is small and the practice is generally accepted. With small clusters it can be seriously misleading.</span>
-<span id="cb51-154"><a href="#cb51-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-155"><a href="#cb51-155" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
-<span id="cb51-156"><a href="#cb51-156" aria-hidden="true" tabindex="-1"></a><span class="fu">## About convergence warnings</span></span>
-<span id="cb51-157"><a href="#cb51-157" aria-hidden="true" tabindex="-1"></a>Models this complex frequently produce singularity or convergence warnings. For these data the model still converges and returns usable estimates and standard errors. Do not ignore such warnings by reflex, but do read them as diagnostic information rather than as a verdict. A singular fit usually means one variance component is being estimated at or near zero.</span>
-<span id="cb51-158"><a href="#cb51-158" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb51-159"><a href="#cb51-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-160"><a href="#cb51-160" aria-hidden="true" tabindex="-1"></a><span class="fu">## Random slopes at two levels</span></span>
-<span id="cb51-161"><a href="#cb51-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-162"><a href="#cb51-162" aria-hidden="true" tabindex="-1"></a>A slope can vary across classrooms, across schools, or both. Fit them separately first, because asking for everything at once is the fastest route to a model that will not converge.</span>
-<span id="cb51-163"><a href="#cb51-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-166"><a href="#cb51-166" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-167"><a href="#cb51-167" aria-hidden="true" tabindex="-1"></a>m_slope_class <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
-<span id="cb51-168"><a href="#cb51-168" aria-hidden="true" tabindex="-1"></a>  gktmathss <span class="sc">~</span> gkselfconcraw <span class="sc">+</span> classtype_f <span class="sc">+</span> highdeg_f <span class="sc">+</span> sch_mean_math <span class="sc">+</span></span>
-<span id="cb51-169"><a href="#cb51-169" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">|</span> gkschid) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> gkselfconcraw <span class="sc">|</span> gktchid<span class="sc">:</span>gkschid),</span>
-<span id="cb51-170"><a href="#cb51-170" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> star, <span class="at">REML =</span> <span class="cn">FALSE</span></span>
-<span id="cb51-171"><a href="#cb51-171" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb51-172"><a href="#cb51-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-173"><a href="#cb51-173" aria-hidden="true" tabindex="-1"></a><span class="fu">ranova</span>(m_slope_class)</span>
-<span id="cb51-174"><a href="#cb51-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-175"><a href="#cb51-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-178"><a href="#cb51-178" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-179"><a href="#cb51-179" aria-hidden="true" tabindex="-1"></a>m_slope_school <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
-<span id="cb51-180"><a href="#cb51-180" aria-hidden="true" tabindex="-1"></a>  gktmathss <span class="sc">~</span> gkselfconcraw <span class="sc">+</span> classtype_f <span class="sc">+</span> highdeg_f <span class="sc">+</span> sch_mean_math <span class="sc">+</span></span>
-<span id="cb51-181"><a href="#cb51-181" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">+</span> gkselfconcraw <span class="sc">|</span> gkschid) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> gktchid<span class="sc">:</span>gkschid),</span>
-<span id="cb51-182"><a href="#cb51-182" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> star, <span class="at">REML =</span> <span class="cn">FALSE</span></span>
-<span id="cb51-183"><a href="#cb51-183" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb51-184"><a href="#cb51-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-185"><a href="#cb51-185" aria-hidden="true" tabindex="-1"></a><span class="fu">ranova</span>(m_slope_school)</span>
-<span id="cb51-186"><a href="#cb51-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-187"><a href="#cb51-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-188"><a href="#cb51-188" aria-hidden="true" tabindex="-1"></a>State what each would mean before you look at the test. A random slope at the classroom level says the relationship between self-concept and math achievement differs from teacher to teacher, perhaps because some teachers are better at reaching students who doubt themselves. At the school level it says that relationship differs across schools, which points at something more structural: tracking policies, counseling resources, school climate.</span>
-<span id="cb51-189"><a href="#cb51-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-190"><a href="#cb51-190" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reporting</span></span>
-<span id="cb51-191"><a href="#cb51-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-194"><a href="#cb51-194" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb51-195"><a href="#cb51-195" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(</span>
-<span id="cb51-196"><a href="#cb51-196" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">"Null (3-level)"</span> <span class="ot">=</span> m_null3, <span class="st">"Conditional"</span> <span class="ot">=</span> m_cond3),</span>
-<span id="cb51-197"><a href="#cb51-197" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"*"</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">"**"</span> <span class="ot">=</span> .<span class="dv">01</span>, <span class="st">"***"</span> <span class="ot">=</span> .<span class="dv">001</span>),</span>
-<span id="cb51-198"><a href="#cb51-198" aria-hidden="true" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">"nobs"</span>, <span class="st">"aic"</span>, <span class="st">"bic"</span>),</span>
-<span id="cb51-199"><a href="#cb51-199" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Three-level models of kindergarten math achievement"</span></span>
-<span id="cb51-200"><a href="#cb51-200" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb51-201"><a href="#cb51-201" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb51-202"><a href="#cb51-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-203"><a href="#cb51-203" aria-hidden="true" tabindex="-1"></a>When you write up a three-level model, report the variance partition from the null model, not just the fixed effects from the final one. Readers need to know how much room there was to explain at each level before they can judge what your predictors accomplished.</span>
+<div class="sourceCode" id="cb31" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Three-Level Models</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>**Data for this chapter:** <span class="in">`projectSTAR.dta`</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>This week, we are going to use the Kindergarten data from Project STAR, the Tennessee Class Size Experiment conducted from 1985 to 1990.</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>Real data often nest more than two levels deep. Students sit in classrooms, classrooms sit in schools, and each layer can contribute its own variation.</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load some packages to help with the analysis and data management</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(tidyverse))</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(lme4))</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load and explore the data</span></span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>projectSTAR <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_dta</span>(<span class="st">"projectSTAR.dta"</span>)</span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(projectSTAR)</span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>Note the <span class="in">`haven::`</span> prefix. We never load <span class="in">`haven`</span> with <span class="in">`library()`</span> here, so calling the function with its package name attached is what makes it available. This works for any installed package and is handy when you need one function and do not want the whole namespace.</span>
+<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part one: data exploration and management</span></span>
+<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-34"><a href="#cb31-34" aria-hidden="true" tabindex="-1"></a><span class="fu">### Use `str` to figure out the 2/1 coding scheme and variable labels</span></span>
+<span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-36"><a href="#cb31-36" aria-hidden="true" tabindex="-1"></a>The <span class="in">`str`</span> function (short for structure) will show us any variable labels or values that have been attached to a variable. You can use this to find out how variables have been coded.</span>
+<span id="cb31-37"><a href="#cb31-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-40"><a href="#cb31-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-41"><a href="#cb31-41" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(projectSTAR)</span>
+<span id="cb31-42"><a href="#cb31-42" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-43"><a href="#cb31-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-44"><a href="#cb31-44" aria-hidden="true" tabindex="-1"></a>This output is long, and it is worth scrolling. Project STAR variables carry Stata labels, and the coding is not always what you would guess. Several variables here use 1/2 coding rather than the 0/1 that regression conventions assume, which is exactly the sort of thing that produces a coefficient with a baffling sign if you do not check first.</span>
+<span id="cb31-45"><a href="#cb31-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-46"><a href="#cb31-46" aria-hidden="true" tabindex="-1"></a><span class="fu">### Create a clean dataset ready for modeling</span></span>
+<span id="cb31-47"><a href="#cb31-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-50"><a href="#cb31-50" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-51"><a href="#cb31-51" aria-hidden="true" tabindex="-1"></a>star.clean <span class="ot">&lt;-</span> projectSTAR <span class="sc">%&gt;%</span></span>
+<span id="cb31-52"><a href="#cb31-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(.,</span>
+<span id="cb31-53"><a href="#cb31-53" aria-hidden="true" tabindex="-1"></a>         <span class="at">schoolid =</span> gkschid,</span>
+<span id="cb31-54"><a href="#cb31-54" aria-hidden="true" tabindex="-1"></a>         <span class="at">classid =</span> gktchid,</span>
+<span id="cb31-55"><a href="#cb31-55" aria-hidden="true" tabindex="-1"></a>         <span class="at">read =</span> gktreadss,</span>
+<span id="cb31-56"><a href="#cb31-56" aria-hidden="true" tabindex="-1"></a>         <span class="at">classtype =</span> <span class="fu">as_factor</span>(gkclasstype),</span>
+<span id="cb31-57"><a href="#cb31-57" aria-hidden="true" tabindex="-1"></a>         <span class="at">years_exp =</span> gktyears,</span>
+<span id="cb31-58"><a href="#cb31-58" aria-hidden="true" tabindex="-1"></a>         <span class="at">urbanicity =</span> <span class="fu">as_factor</span>(gksurban),</span>
+<span id="cb31-59"><a href="#cb31-59" aria-hidden="true" tabindex="-1"></a>         <span class="at">stu_frl =</span> <span class="fu">as_factor</span>(gkfreelunch)</span>
+<span id="cb31-60"><a href="#cb31-60" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">%&gt;%</span></span>
+<span id="cb31-61"><a href="#cb31-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(classid) <span class="sc">%&gt;%</span> <span class="co"># Create a new variable, which is the average FRL by classroom:</span></span>
+<span id="cb31-62"><a href="#cb31-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(.,</span>
+<span id="cb31-63"><a href="#cb31-63" aria-hidden="true" tabindex="-1"></a>            <span class="at">class_frl =</span> <span class="fu">mean</span>(gkfreelunch, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb31-64"><a href="#cb31-64" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">%&gt;%</span></span>
+<span id="cb31-65"><a href="#cb31-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb31-66"><a href="#cb31-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolid) <span class="sc">%&gt;%</span> <span class="co"># Create a new variable, which is the average FRL by school:</span></span>
+<span id="cb31-67"><a href="#cb31-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(.,</span>
+<span id="cb31-68"><a href="#cb31-68" aria-hidden="true" tabindex="-1"></a>            <span class="at">school_frl =</span> <span class="fu">mean</span>(gkfreelunch, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb31-69"><a href="#cb31-69" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">%&gt;%</span></span>
+<span id="cb31-70"><a href="#cb31-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb31-71"><a href="#cb31-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(.,</span>
+<span id="cb31-72"><a href="#cb31-72" aria-hidden="true" tabindex="-1"></a>         schoolid,</span>
+<span id="cb31-73"><a href="#cb31-73" aria-hidden="true" tabindex="-1"></a>         classid,</span>
+<span id="cb31-74"><a href="#cb31-74" aria-hidden="true" tabindex="-1"></a>         read,</span>
+<span id="cb31-75"><a href="#cb31-75" aria-hidden="true" tabindex="-1"></a>         classtype,</span>
+<span id="cb31-76"><a href="#cb31-76" aria-hidden="true" tabindex="-1"></a>         years_exp,</span>
+<span id="cb31-77"><a href="#cb31-77" aria-hidden="true" tabindex="-1"></a>         urbanicity,</span>
+<span id="cb31-78"><a href="#cb31-78" aria-hidden="true" tabindex="-1"></a>         stu_frl,</span>
+<span id="cb31-79"><a href="#cb31-79" aria-hidden="true" tabindex="-1"></a>         class_frl,</span>
+<span id="cb31-80"><a href="#cb31-80" aria-hidden="true" tabindex="-1"></a>         school_frl)</span>
+<span id="cb31-81"><a href="#cb31-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-82"><a href="#cb31-82" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(star.clean)</span>
+<span id="cb31-83"><a href="#cb31-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-84"><a href="#cb31-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-85"><a href="#cb31-85" aria-hidden="true" tabindex="-1"></a>This is a great example of when you might "aggregate up" an individual measure to see if it is a significant predictor at level 2 or level 3. We did this in the past with the task significance measure (<span class="in">`TSIG`</span>) and the <span class="in">`lq2002`</span> dataset.</span>
+<span id="cb31-86"><a href="#cb31-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-87"><a href="#cb31-87" aria-hidden="true" tabindex="-1"></a>The above command has two parts. First, we use the <span class="in">`group_by`</span> command from our friend, the <span class="in">`dplyr`</span> package, to group all responses in their groups determined by <span class="in">`classid`</span>. This is a first step to declare that all the operations that follow are to be performed at the cluster (classroom) level. Second, we use the <span class="in">`mutate`</span> command, which we have used before, to create new variables that are equal to the mean of the original variables. Since we just grouped by <span class="in">`classid`</span>, this means we get the mean of the variables by classroom.</span>
+<span id="cb31-88"><a href="#cb31-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-89"><a href="#cb31-89" aria-hidden="true" tabindex="-1"></a>We have to get just a little fancier. Since the values of <span class="in">`gkfreelunch`</span> are 1 for free lunch and 2 for non-free lunch, first we take the mean of that variable. Then, we subtract 1 from that value to give us the proportion of students who are non-free lunch. This gives us the new variable <span class="in">`class_frl`</span>.</span>
+<span id="cb31-90"><a href="#cb31-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-91"><a href="#cb31-91" aria-hidden="true" tabindex="-1"></a>Finally, we do the same thing at the school level, grouping by <span class="in">`schoolid`</span>, and then performing the same operation on <span class="in">`gkfreelunch`</span> to give us <span class="in">`school_frl`</span>, which is the proportion of students at each school who are non-free lunch.</span>
+<span id="cb31-92"><a href="#cb31-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-93"><a href="#cb31-93" aria-hidden="true" tabindex="-1"></a>Other than that, we are just tidying and renaming first, and then at the bottom selecting only the variables we need for the models we will run.</span>
+<span id="cb31-94"><a href="#cb31-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-95"><a href="#cb31-95" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb31-96"><a href="#cb31-96" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why the `- 1` trick works, and when it does not</span></span>
+<span id="cb31-97"><a href="#cb31-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-98"><a href="#cb31-98" aria-hidden="true" tabindex="-1"></a>The subtraction is doing something slightly clever. With a variable coded 1/2, the mean sits somewhere between 1 and 2, and subtracting 1 shifts it to sit between 0 and 1, which is a proportion. It works precisely because the coding is 1/2 with no other values.</span>
+<span id="cb31-99"><a href="#cb31-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-100"><a href="#cb31-100" aria-hidden="true" tabindex="-1"></a>If a variable were coded 1/2/3, or had a missing-data code like 9 mixed in, the same arithmetic would produce something meaningless that still looks like a proportion. This is why the <span class="in">`str()`</span> step above is not optional: the recode is only correct if you have confirmed the coding first.</span>
+<span id="cb31-101"><a href="#cb31-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-102"><a href="#cb31-102" aria-hidden="true" tabindex="-1"></a>Notice also the two <span class="in">`ungroup()`</span> calls. Each aggregation grouped the data, and each has to be undone before the next one groups it differently.</span>
+<span id="cb31-103"><a href="#cb31-103" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb31-104"><a href="#cb31-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-105"><a href="#cb31-105" aria-hidden="true" tabindex="-1"></a>Worth pausing on one more thing: <span class="in">`read`</span> here is <span class="in">`gktreadss`</span>, the kindergarten reading scale score. This is our outcome for the whole chapter.</span>
+<span id="cb31-106"><a href="#cb31-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-107"><a href="#cb31-107" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part two: the null 3-level model</span></span>
+<span id="cb31-108"><a href="#cb31-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-109"><a href="#cb31-109" aria-hidden="true" tabindex="-1"></a><span class="fu">### Run a null 3-level model for reading scores</span></span>
+<span id="cb31-110"><a href="#cb31-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-113"><a href="#cb31-113" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-114"><a href="#cb31-114" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.0</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(read <span class="sc">~</span> (<span class="dv">1</span><span class="sc">|</span>schoolid) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>classid), <span class="at">data =</span> star.clean)</span>
+<span id="cb31-115"><a href="#cb31-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-116"><a href="#cb31-116" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.0</span>)</span>
+<span id="cb31-117"><a href="#cb31-117" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-118"><a href="#cb31-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-119"><a href="#cb31-119" aria-hidden="true" tabindex="-1"></a>Two random intercept terms, joined by <span class="in">`+`</span>, give us three levels: students within classrooms within schools.</span>
+<span id="cb31-120"><a href="#cb31-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-121"><a href="#cb31-121" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb31-122"><a href="#cb31-122" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why this syntax works here</span></span>
+<span id="cb31-123"><a href="#cb31-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-124"><a href="#cb31-124" aria-hidden="true" tabindex="-1"></a>You may also see the nesting shorthand <span class="in">`(1|schoolid/classid)`</span>, which does the same thing when classroom IDs repeat across schools, for instance if every school numbers its classrooms 1, 2, 3.</span>
+<span id="cb31-125"><a href="#cb31-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-126"><a href="#cb31-126" aria-hidden="true" tabindex="-1"></a>Here that is unnecessary because <span class="in">`gktchid`</span> is a unique teacher identifier across the whole dataset, so R can already tell classrooms apart without knowing which school they belong to. The <span class="in">`+`</span> form is correct and simpler.</span>
+<span id="cb31-127"><a href="#cb31-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-128"><a href="#cb31-128" aria-hidden="true" tabindex="-1"></a>If you are ever unsure, check with <span class="in">`n_distinct(star.clean$classid)`</span> and compare it to what you would expect. If two schools genuinely shared a classroom ID, the counts would be too low.</span>
+<span id="cb31-129"><a href="#cb31-129" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb31-130"><a href="#cb31-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-131"><a href="#cb31-131" aria-hidden="true" tabindex="-1"></a><span class="fu">### Calculate L2 ICC (classroom)</span></span>
+<span id="cb31-132"><a href="#cb31-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-135"><a href="#cb31-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-136"><a href="#cb31-136" aria-hidden="true" tabindex="-1"></a>ICC.class <span class="ot">&lt;-</span> <span class="fl">114.9</span><span class="sc">/</span>(<span class="fl">728.2</span> <span class="sc">+</span> <span class="fl">169.8</span> <span class="sc">+</span> <span class="fl">114.9</span>)</span>
+<span id="cb31-137"><a href="#cb31-137" aria-hidden="true" tabindex="-1"></a>ICC.class</span>
+<span id="cb31-138"><a href="#cb31-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-139"><a href="#cb31-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-140"><a href="#cb31-140" aria-hidden="true" tabindex="-1"></a><span class="fu">### Calculate L3 ICC (school)</span></span>
+<span id="cb31-141"><a href="#cb31-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-144"><a href="#cb31-144" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-145"><a href="#cb31-145" aria-hidden="true" tabindex="-1"></a>ICC.school <span class="ot">&lt;-</span> <span class="fl">169.8</span><span class="sc">/</span>(<span class="fl">728.2</span> <span class="sc">+</span> <span class="fl">169.8</span> <span class="sc">+</span> <span class="fl">114.9</span>)</span>
+<span id="cb31-146"><a href="#cb31-146" aria-hidden="true" tabindex="-1"></a>ICC.school</span>
+<span id="cb31-147"><a href="#cb31-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-148"><a href="#cb31-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-149"><a href="#cb31-149" aria-hidden="true" tabindex="-1"></a>These two proportions, plus the student-level share, sum to one and describe where the variation in kindergarten reading achievement lives. Read the comparison between them rather than the absolute numbers: it speaks to whether the classroom a child lands in matters more than the school they attend, which is one of the more consequential questions in education research.</span>
+<span id="cb31-150"><a href="#cb31-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-151"><a href="#cb31-151" aria-hidden="true" tabindex="-1"></a>The denominator is the same in both calculations, and it is the total variance across all three levels. Getting that denominator right is where students most often slip.</span>
+<span id="cb31-152"><a href="#cb31-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-153"><a href="#cb31-153" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part three: add predictors at each level</span></span>
+<span id="cb31-154"><a href="#cb31-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-155"><a href="#cb31-155" aria-hidden="true" tabindex="-1"></a><span class="fu">### Add a student-level predictor, FRL</span></span>
+<span id="cb31-156"><a href="#cb31-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-159"><a href="#cb31-159" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-160"><a href="#cb31-160" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(read <span class="sc">~</span> stu_frl <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>schoolid) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>classid), <span class="at">data =</span> star.clean)</span>
+<span id="cb31-161"><a href="#cb31-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-162"><a href="#cb31-162" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.1</span>)</span>
+<span id="cb31-163"><a href="#cb31-163" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-164"><a href="#cb31-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-165"><a href="#cb31-165" aria-hidden="true" tabindex="-1"></a><span class="fu">### Add teacher-level predictors: years of experience and class type</span></span>
+<span id="cb31-166"><a href="#cb31-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-169"><a href="#cb31-169" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-170"><a href="#cb31-170" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(read <span class="sc">~</span> stu_frl <span class="sc">+</span> years_exp <span class="sc">+</span> classtype <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>schoolid) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>classid), <span class="at">data =</span> star.clean)</span>
+<span id="cb31-171"><a href="#cb31-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-172"><a href="#cb31-172" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.2</span>)</span>
+<span id="cb31-173"><a href="#cb31-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-174"><a href="#cb31-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-175"><a href="#cb31-175" aria-hidden="true" tabindex="-1"></a>Both of these are properties of the classroom, not the student, so they are level-2 predictors. They can shift a whole classroom up or down relative to others.</span>
+<span id="cb31-176"><a href="#cb31-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-177"><a href="#cb31-177" aria-hidden="true" tabindex="-1"></a><span class="fu">### Add a school-level predictor, urbanicity of school</span></span>
+<span id="cb31-178"><a href="#cb31-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-181"><a href="#cb31-181" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-182"><a href="#cb31-182" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(read <span class="sc">~</span> stu_frl <span class="sc">+</span> years_exp <span class="sc">+</span> classtype <span class="sc">+</span> urbanicity <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>schoolid) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>classid), <span class="at">data =</span> star.clean)</span>
+<span id="cb31-183"><a href="#cb31-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-184"><a href="#cb31-184" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.3</span>)</span>
+<span id="cb31-185"><a href="#cb31-185" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-186"><a href="#cb31-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-187"><a href="#cb31-187" aria-hidden="true" tabindex="-1"></a>Now watch the *school*-level variance rather than the classroom-level variance. A level-3 predictor explains between-school differences, so that is where you should expect movement. A level-2 predictor should move the classroom variance. Matching each predictor to the variance component it ought to affect is a good habit and a good diagnostic: if adding a school-level variable moves nothing at the school level, that is informative.</span>
+<span id="cb31-188"><a href="#cb31-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-189"><a href="#cb31-189" aria-hidden="true" tabindex="-1"></a><span class="fu">### Add in FRL at all three levels (student, teacher, school)</span></span>
+<span id="cb31-190"><a href="#cb31-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-193"><a href="#cb31-193" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-194"><a href="#cb31-194" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(read <span class="sc">~</span> stu_frl <span class="sc">+</span>  class_frl <span class="sc">+</span> school_frl <span class="sc">+</span>  years_exp <span class="sc">+</span> classtype <span class="sc">+</span> urbanicity <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>schoolid) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>classid), <span class="at">data =</span> star.clean)</span>
+<span id="cb31-195"><a href="#cb31-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-196"><a href="#cb31-196" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.4</span>)</span>
+<span id="cb31-197"><a href="#cb31-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-198"><a href="#cb31-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-199"><a href="#cb31-199" aria-hidden="true" tabindex="-1"></a>This is the same construct entered three times, at three levels, and the three coefficients answer three different questions. Does a child receiving free lunch score differently from a classmate who does not? Do classrooms with more low-income students score differently overall? Do schools serving more low-income students differ again?</span>
+<span id="cb31-200"><a href="#cb31-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-201"><a href="#cb31-201" aria-hidden="true" tabindex="-1"></a>These can point in different directions, and often do. That is not a contradiction; it is the whole reason for separating them.</span>
+<span id="cb31-202"><a href="#cb31-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-203"><a href="#cb31-203" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part four: try adding a random slope</span></span>
+<span id="cb31-204"><a href="#cb31-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-205"><a href="#cb31-205" aria-hidden="true" tabindex="-1"></a><span class="fu">### Add a random slope for years of experience at level 3 (school)</span></span>
+<span id="cb31-206"><a href="#cb31-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-209"><a href="#cb31-209" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-210"><a href="#cb31-210" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(read <span class="sc">~</span> stu_frl <span class="sc">+</span> years_exp <span class="sc">+</span> classtype <span class="sc">+</span> urbanicity <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>classid) <span class="sc">+</span> (years_exp<span class="sc">|</span>schoolid), <span class="at">data =</span> star.clean)</span>
+<span id="cb31-211"><a href="#cb31-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-212"><a href="#cb31-212" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.5</span>)</span>
+<span id="cb31-213"><a href="#cb31-213" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-214"><a href="#cb31-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-215"><a href="#cb31-215" aria-hidden="true" tabindex="-1"></a>Say what this means before reading the output. A random slope for teacher experience at the school level says the payoff to having an experienced teacher is not the same in every school. In some schools an experienced teacher makes a large difference; in others, less. That points at something structural, perhaps how schools assign teachers to classes, or how much support new teachers receive.</span>
+<span id="cb31-216"><a href="#cb31-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-217"><a href="#cb31-217" aria-hidden="true" tabindex="-1"></a><span class="fu">## Should we include that random slope? Comparing `model.4` with `model.5`</span></span>
+<span id="cb31-218"><a href="#cb31-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-221"><a href="#cb31-221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-222"><a href="#cb31-222" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model<span class="fl">.4</span>, model<span class="fl">.5</span>)</span>
+<span id="cb31-223"><a href="#cb31-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-224"><a href="#cb31-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-225"><a href="#cb31-225" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb31-226"><a href="#cb31-226" aria-hidden="true" tabindex="-1"></a><span class="fu">## These two models differ in more than the random slope</span></span>
+<span id="cb31-227"><a href="#cb31-227" aria-hidden="true" tabindex="-1"></a><span class="in">`model.4`</span> includes the FRL aggregates and <span class="in">`model.5`</span> does not, so this comparison changes the fixed effects and the random effects at the same time. A significant result therefore cannot be attributed to the random slope alone.</span>
+<span id="cb31-228"><a href="#cb31-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-229"><a href="#cb31-229" aria-hidden="true" tabindex="-1"></a>To isolate the slope, compare <span class="in">`model.3`</span> and <span class="in">`model.5`</span>, which have identical fixed effects, or use <span class="in">`lmerTest::rand(model.5)`</span>, which tests each random term against the same model without it.</span>
+<span id="cb31-230"><a href="#cb31-230" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb31-231"><a href="#cb31-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-232"><a href="#cb31-232" aria-hidden="true" tabindex="-1"></a><span class="fu">## Using `modelsummary` and `broom.mixed` to organize your results</span></span>
+<span id="cb31-233"><a href="#cb31-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-236"><a href="#cb31-236" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-237"><a href="#cb31-237" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb31-238"><a href="#cb31-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-239"><a href="#cb31-239" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb31-240"><a href="#cb31-240" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.mixed)</span>
+<span id="cb31-241"><a href="#cb31-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-242"><a href="#cb31-242" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(model<span class="fl">.0</span>, model<span class="fl">.1</span>, model<span class="fl">.2</span>, model<span class="fl">.3</span>, model<span class="fl">.4</span>, model<span class="fl">.5</span>)</span>
+<span id="cb31-243"><a href="#cb31-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-244"><a href="#cb31-244" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models, <span class="at">output =</span> <span class="st">"default"</span>)</span>
+<span id="cb31-245"><a href="#cb31-245" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-246"><a href="#cb31-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-247"><a href="#cb31-247" aria-hidden="true" tabindex="-1"></a><span class="fu">## HTML version that you can open in Word</span></span>
+<span id="cb31-248"><a href="#cb31-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-251"><a href="#cb31-251" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-252"><a href="#cb31-252" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb31-253"><a href="#cb31-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-254"><a href="#cb31-254" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models, <span class="at">output =</span> <span class="st">'msum.html'</span>, <span class="at">title =</span> <span class="st">'MLM Estimates'</span>)</span>
+<span id="cb31-255"><a href="#cb31-255" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-256"><a href="#cb31-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-257"><a href="#cb31-257" aria-hidden="true" tabindex="-1"></a>When you write up a three-level model, report the variance partition from the null model, not just the fixed effects from the final one. Readers need to know how much room there was to explain at each level before they can judge what your predictors accomplished.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

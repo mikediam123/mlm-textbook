@@ -303,6 +303,13 @@ for (qmd in chapters) {
 
 print(summary_tbl, row.names = FALSE)
 
+# Ship the self-check helper alongside the worksheets so students can run
+# check_module() from the same folder.
+if (file.exists("checks.R")) {
+  file.copy("checks.R", "student_files/checks.R", overwrite = TRUE)
+  message("  copied checks.R into student_files/")
+}
+
 old <- setwd("student_files")
 utils::zip("../student_files.zip", files = list.files(".", recursive = TRUE))
 setwd(old)

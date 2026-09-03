@@ -43,7 +43,6 @@ Three functions do the work. The first two come from `dplyr`, and the third from
 
 **`mutate()`** is another function I use constantly. It creates a new variable based on a transformation of an existing one. Here I take the renamed `have_garden` and create `have_garden_fac`, equal to the old variable but converted to a factor, which is what `as_factor()` does. Now R recognizes that "Yes" and "No" are two levels of a categorical variable, which it can use in frequency tables, regression models, and so on.
 
-**`na.omit()`** should come with a warning label. It removes any row in a dataset with missing data, which is the same idea as listwise deletion. We use it here because the original `food` dataset had an extra row that was entirely missing, an error rather than a real response. But run it on a dataset that has genuine missingness and *any* observation missing on *any* variable will be dropped, including variables you were not planning to use. The nice part is that we still have `food` alongside `food.clean`, so we can always look back and see how many observations went away.
 
 ```{r}
 food.clean <- food %>%

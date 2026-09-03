@@ -2,8 +2,9 @@
 
 **Data for this chapter:** `food.csv`
 
-::: {.callout-note}
+::: callout-note
 ## Data file needed
+
 Copy `food.csv` into this project folder before rendering.
 :::
 
@@ -37,12 +38,11 @@ glimpse(food)
 
 ## Data cleaning and coding
 
-Three functions do the work. The first two come from `dplyr`, and the third from base R.
+Two functions do the work, both from the `dplyr` package.
 
 **`rename()`** changes the name of any variable in your dataset. The formula is `newname = oldname`. Here we are getting rid of capital letters and putting underscores between words, which makes everything easier to type and read. (Notice that the original file has a typo in one of the column names. Renaming is a good moment to quietly fix that.)
 
 **`mutate()`** is another function I use constantly. It creates a new variable based on a transformation of an existing one. Here I take the renamed `have_garden` and create `have_garden_fac`, equal to the old variable but converted to a factor, which is what `as_factor()` does. Now R recognizes that "Yes" and "No" are two levels of a categorical variable, which it can use in frequency tables, regression models, and so on.
-
 
 ```{r}
 food.clean <- food %>%
@@ -52,20 +52,12 @@ food.clean <- food %>%
          num_children = NUMCHULDREN,
          have_garden = HAVEGARDEN) %>%
   mutate(.,
-         have_garden_fac = as_factor(have_garden)) %>%
-  na.omit()
+         have_garden_fac = as_factor(have_garden))
 
 glimpse(food.clean)
 ```
 
-```{r}
-# How many observations did we actually lose?
-nrow(food); nrow(food.clean)
-```
-
-Running that comparison every time you clean a dataset is a habit worth forming. A drop of one row is what we expected here. A drop of forty would mean something very different, and you want to find that out now rather than in the results section.
-
-## Use `skim` for a nice summary
+## Use the `skim()` function from `skimr` for a nice summary
 
 ```{r}
 skim(food.clean)
@@ -93,7 +85,7 @@ foodreg2 <- lm(food_consumption ~ family_income + num_children, data = food.clea
 summary(foodreg2)
 ```
 
-Kids make a big difference too. For each additional child, we would expect a family to spend about $826 more per year on food. Because `family_income` is also in the model, we can say this holds while controlling for family income. Another way to put it: take two families with the same income, and the one with one more child is predicted to spend roughly $827 more per year.
+Kids make a big difference too. For each additional child, we would expect a family to spend about \$826 more per year on food. Because `family_income` is also in the model, we can say this holds while controlling for family income. Another way to put it: take two families with the same income, and the one with one more child is predicted to spend roughly \$827 more per year.
 
 Notice also that the estimate for `family_income` has not changed much, from about .06 down to .05. The adjusted $R^2$ rose from .56 to .60, so adding number of children explained about four percent more of the variation.
 
@@ -164,8 +156,9 @@ modelsummary(models, output = "food_models.docx",
              stars = c("*" = .05, "**" = .01, "***" = .001))
 ```
 
-::: {.callout-note}
+::: callout-note
 ## A note on `stargazer`
+
 The demonstration video uses the `stargazer` package for this table, with an `out = "test.html"` option that does the same job. `stargazer` is no longer actively maintained and can fail with current versions of R, so this book uses `modelsummary` instead. The idea is identical, and `modelsummary()` also handles the multilevel models we fit later, which `stargazer` does not.
 :::
 

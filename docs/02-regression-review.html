@@ -298,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="#load-a-few-packages" id="toc-load-a-few-packages" class="nav-link active" data-scroll-target="#load-a-few-packages"><span class="header-section-number">3.1</span> Load a few packages</a></li>
   <li><a href="#input-the-food-dataset" id="toc-input-the-food-dataset" class="nav-link" data-scroll-target="#input-the-food-dataset"><span class="header-section-number">3.2</span> Input the food dataset</a></li>
   <li><a href="#data-cleaning-and-coding" id="toc-data-cleaning-and-coding" class="nav-link" data-scroll-target="#data-cleaning-and-coding"><span class="header-section-number">3.3</span> Data cleaning and coding</a></li>
-  <li><a href="#use-skim-for-a-nice-summary" id="toc-use-skim-for-a-nice-summary" class="nav-link" data-scroll-target="#use-skim-for-a-nice-summary"><span class="header-section-number">3.4</span> Use <code>skim</code> for a nice summary</a></li>
+  <li><a href="#use-the-skim-function-from-skimr-for-a-nice-summary" id="toc-use-the-skim-function-from-skimr-for-a-nice-summary" class="nav-link" data-scroll-target="#use-the-skim-function-from-skimr-for-a-nice-summary"><span class="header-section-number">3.4</span> Use the <code>skim()</code> function from <code>skimr</code> for a nice summary</a></li>
   <li><a href="#a-simple-linear-regression-does-income-predict-food-consumption" id="toc-a-simple-linear-regression-does-income-predict-food-consumption" class="nav-link" data-scroll-target="#a-simple-linear-regression-does-income-predict-food-consumption"><span class="header-section-number">3.5</span> A simple linear regression: does income predict food consumption?</a></li>
   <li><a href="#what-about-kids-do-things-change-when-we-account-for-them" id="toc-what-about-kids-do-things-change-when-we-account-for-them" class="nav-link" data-scroll-target="#what-about-kids-do-things-change-when-we-account-for-them"><span class="header-section-number">3.6</span> What about kids? Do things change when we account for them?</a></li>
   <li><a href="#now-what-about-families-who-have-a-garden" id="toc-now-what-about-families-who-have-a-garden" class="nav-link" data-scroll-target="#now-what-about-families-who-have-a-garden"><span class="header-section-number">3.7</span> Now, what about families who have a garden?</a></li>
@@ -366,7 +366,7 @@ $ HAVEGARDEN      &lt;chr&gt; "NO", "NO", "NO", "YES", "YES", "NO", "YES", "NO",
 <p><code>view(food)</code> opens the data in a spreadsheet-style window, which is useful while exploring but does nothing in a rendered document, so it is left out here.</p>
 </section><section id="data-cleaning-and-coding" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="data-cleaning-and-coding">
 <span class="header-section-number">3.3</span> Data cleaning and coding</h2>
-<p>Three functions do the work. The first two come from <code>dplyr</code>, and the third from base R.</p>
+<p>Two functions do the work, both from the <code>dplyr</code> package.</p>
 <p><strong><code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code></strong> changes the name of any variable in your dataset. The formula is <code>newname = oldname</code>. Here we are getting rid of capital letters and putting underscores between words, which makes everything easier to type and read. (Notice that the original file has a typo in one of the column names. Renaming is a good moment to quietly fix that.)</p>
 <p><strong><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code></strong> is another function I use constantly. It creates a new variable based on a transformation of an existing one. Here I take the renamed <code>have_garden</code> and create <code>have_garden_fac</code>, equal to the old variable but converted to a factor, which is what <code><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor()</a></code> does. Now R recognizes that “Yes” and “No” are two levels of a categorical variable, which it can use in frequency tables, regression models, and so on.</p>
 <div class="cell">
@@ -377,8 +377,7 @@ $ HAVEGARDEN      &lt;chr&gt; "NO", "NO", "NO", "YES", "YES", "NO", "YES", "NO",
 <span>         num_children <span class="op">=</span> <span class="va">NUMCHULDREN</span>,</span>
 <span>         have_garden <span class="op">=</span> <span class="va">HAVEGARDEN</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
-<span>         have_garden_fac <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">have_garden</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>         have_garden_fac <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">have_garden</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">food.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -391,21 +390,10 @@ $ have_garden      &lt;chr&gt; "NO", "NO", "NO", "YES", "YES", "NO", "YES", "NO"
 $ have_garden_fac  &lt;fct&gt; NO, NO, NO, YES, YES, NO, YES, NO, NO, YES, NO, NO, Y…</code></pre>
 </div>
 </div>
+</section><section id="use-the-skim-function-from-skimr-for-a-nice-summary" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="use-the-skim-function-from-skimr-for-a-nice-summary">
+<span class="header-section-number">3.4</span> Use the <code>skim()</code> function from <code>skimr</code> for a nice summary</h2>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># How many observations did we actually lose?</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">food</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">food.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 50</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 50</code></pre>
-</div>
-</div>
-<p>Running that comparison every time you clean a dataset is a habit worth forming. A drop of one row is what we expected here. A drop of forty would mean something very different, and you want to find that out now rather than in the results section.</p>
-</section><section id="use-skim-for-a-nice-summary" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="use-skim-for-a-nice-summary">
-<span class="header-section-number">3.4</span> Use <code>skim</code> for a nice summary</h2>
-<div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="va">food.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="va">food.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Data summary</caption>
@@ -588,7 +576,7 @@ $ have_garden_fac  &lt;fct&gt; NO, NO, NO, YES, YES, NO, YES, NO, NO, YES, NO, N
 </section><section id="a-simple-linear-regression-does-income-predict-food-consumption" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="a-simple-linear-regression-does-income-predict-food-consumption">
 <span class="header-section-number">3.5</span> A simple linear regression: does income predict food consumption?</h2>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">foodreg1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">food_consumption</span> <span class="op">~</span> <span class="va">family_income</span>, data <span class="op">=</span> <span class="va">food.clean</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">foodreg1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">food_consumption</span> <span class="op">~</span> <span class="va">family_income</span>, data <span class="op">=</span> <span class="va">food.clean</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">foodreg1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -617,7 +605,7 @@ F-statistic: 63.93 on 1 and 48 DF,  p-value: 2.236e-10</code></pre>
 </section><section id="what-about-kids-do-things-change-when-we-account-for-them" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="what-about-kids-do-things-change-when-we-account-for-them">
 <span class="header-section-number">3.6</span> What about kids? Do things change when we account for them?</h2>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">foodreg2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">food_consumption</span> <span class="op">~</span> <span class="va">family_income</span> <span class="op">+</span> <span class="va">num_children</span>, data <span class="op">=</span> <span class="va">food.clean</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">foodreg2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">food_consumption</span> <span class="op">~</span> <span class="va">family_income</span> <span class="op">+</span> <span class="va">num_children</span>, data <span class="op">=</span> <span class="va">food.clean</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">foodreg2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -649,7 +637,7 @@ F-statistic: 37.98 on 2 and 47 DF,  p-value: 1.528e-10</code></pre>
 </section><section id="now-what-about-families-who-have-a-garden" class="level2" data-number="3.7"><h2 data-number="3.7" class="anchored" data-anchor-id="now-what-about-families-who-have-a-garden">
 <span class="header-section-number">3.7</span> Now, what about families who have a garden?</h2>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">foodreg3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">food_consumption</span> <span class="op">~</span> <span class="va">family_income</span> <span class="op">+</span> <span class="va">num_children</span> <span class="op">+</span> <span class="va">have_garden_fac</span>,</span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">foodreg3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">food_consumption</span> <span class="op">~</span> <span class="va">family_income</span> <span class="op">+</span> <span class="va">num_children</span> <span class="op">+</span> <span class="va">have_garden_fac</span>,</span>
 <span>               data <span class="op">=</span> <span class="va">food.clean</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">foodreg3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -682,7 +670,7 @@ F-statistic:    25 on 3 and 46 DF,  p-value: 9.576e-10</code></pre>
 </section><section id="does-the-number-of-children-moderate-the-income-food-relationship" class="level2" data-number="3.8"><h2 data-number="3.8" class="anchored" data-anchor-id="does-the-number-of-children-moderate-the-income-food-relationship">
 <span class="header-section-number">3.8</span> Does the number of children moderate the income-food relationship?</h2>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">foodreg4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">food_consumption</span> <span class="op">~</span> <span class="va">family_income</span> <span class="op">+</span> <span class="va">num_children</span> <span class="op">+</span></span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">foodreg4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">food_consumption</span> <span class="op">~</span> <span class="va">family_income</span> <span class="op">+</span> <span class="va">num_children</span> <span class="op">+</span></span>
 <span>                 <span class="va">family_income</span><span class="op">:</span><span class="va">num_children</span>,</span>
 <span>               data <span class="op">=</span> <span class="va">food.clean</span><span class="op">)</span></span>
 <span></span>
@@ -719,7 +707,7 @@ F-statistic: 26.64 on 3 and 46 DF,  p-value: 3.875e-10</code></pre>
 <span class="header-section-number">3.9</span> Organizing your results</h2>
 <p>Last thing: let’s make the results presentable. Reporting four models one <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> at a time is unreadable, and a single comparison table is how this belongs in a paper. We named our models along the way (<code>foodreg1</code>, <code>foodreg2</code>, and so on), so collecting them is easy.</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Income"</span>        <span class="op">=</span> <span class="va">foodreg1</span>,</span>
@@ -740,42 +728,42 @@ F-statistic: 26.64 on 3 and 46 DF,  p-value: 3.875e-10</code></pre>
 
     <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
       // Create table-specific functions using external factory
-      const tableFns_vw8du80pprvn16zbzgqp = TinyTable.createTableFunctions("tinytable_vw8du80pprvn16zbzgqp");
+      const tableFns_ruz7r8uhs5lac53zkz0k = TinyTable.createTableFunctions("tinytable_ruz7r8uhs5lac53zkz0k");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '13', j: 2 }, { i: '13', j: 3 }, { i: '13', j: 4 }, { i: '13', j: 5 } ], css_id: 'tinytable_css_uaz1lej4i4unonng6qvh',}, 
-          { positions: [ { i: '10', j: 2 }, { i: '10', j: 3 }, { i: '10', j: 4 }, { i: '10', j: 5 } ], css_id: 'tinytable_css_vgy50i3uu5o5187u35on',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 } ], css_id: 'tinytable_css_mhuv81k7qm5jhff93ov3',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 } ], css_id: 'tinytable_css_h9d1qyelos56bgjjusu7',}, 
-          { positions: [ { i: '13', j: 1 } ], css_id: 'tinytable_css_otp1hj39egevkl0ub0ah',}, 
-          { positions: [ { i: '10', j: 1 } ], css_id: 'tinytable_css_jbw2xrfbd2umchxp7c4q',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 } ], css_id: 'tinytable_css_ijsxhqbrcqu7su65boyb',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_1urpiz3buevznwng5xuu',}, 
+          { positions: [ { i: '13', j: 2 }, { i: '13', j: 3 }, { i: '13', j: 4 }, { i: '13', j: 5 } ], css_id: 'tinytable_css_wa09lyuelja3fzming69',}, 
+          { positions: [ { i: '10', j: 2 }, { i: '10', j: 3 }, { i: '10', j: 4 }, { i: '10', j: 5 } ], css_id: 'tinytable_css_rutqwduografulh44t81',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 } ], css_id: 'tinytable_css_e4vubf1fm0q3in0uct23',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 } ], css_id: 'tinytable_css_uzflus49nfi4m7nybj2y',}, 
+          { positions: [ { i: '13', j: 1 } ], css_id: 'tinytable_css_1imqismtkyni9qema3yl',}, 
+          { positions: [ { i: '10', j: 1 } ], css_id: 'tinytable_css_rjsiv4flcv5a9q1jh71j',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 } ], css_id: 'tinytable_css_ksvz1g4j1ql9fbytd8e1',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_w9t15xlu0f1cz0friypz',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_vw8du80pprvn16zbzgqp.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_ruz7r8uhs5lac53zkz0k.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
 <style>
     /* tinytable css entries after */
-    #tinytable_vw8du80pprvn16zbzgqp td.tinytable_css_uaz1lej4i4unonng6qvh, #tinytable_vw8du80pprvn16zbzgqp th.tinytable_css_uaz1lej4i4unonng6qvh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_vw8du80pprvn16zbzgqp td.tinytable_css_vgy50i3uu5o5187u35on, #tinytable_vw8du80pprvn16zbzgqp th.tinytable_css_vgy50i3uu5o5187u35on {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_vw8du80pprvn16zbzgqp td.tinytable_css_mhuv81k7qm5jhff93ov3, #tinytable_vw8du80pprvn16zbzgqp th.tinytable_css_mhuv81k7qm5jhff93ov3 { text-align: center }
-    #tinytable_vw8du80pprvn16zbzgqp td.tinytable_css_h9d1qyelos56bgjjusu7, #tinytable_vw8du80pprvn16zbzgqp th.tinytable_css_h9d1qyelos56bgjjusu7 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_vw8du80pprvn16zbzgqp td.tinytable_css_otp1hj39egevkl0ub0ah, #tinytable_vw8du80pprvn16zbzgqp th.tinytable_css_otp1hj39egevkl0ub0ah {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_vw8du80pprvn16zbzgqp td.tinytable_css_jbw2xrfbd2umchxp7c4q, #tinytable_vw8du80pprvn16zbzgqp th.tinytable_css_jbw2xrfbd2umchxp7c4q {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_vw8du80pprvn16zbzgqp td.tinytable_css_ijsxhqbrcqu7su65boyb, #tinytable_vw8du80pprvn16zbzgqp th.tinytable_css_ijsxhqbrcqu7su65boyb { text-align: left }
-    #tinytable_vw8du80pprvn16zbzgqp td.tinytable_css_1urpiz3buevznwng5xuu, #tinytable_vw8du80pprvn16zbzgqp th.tinytable_css_1urpiz3buevznwng5xuu {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_ruz7r8uhs5lac53zkz0k td.tinytable_css_wa09lyuelja3fzming69, #tinytable_ruz7r8uhs5lac53zkz0k th.tinytable_css_wa09lyuelja3fzming69 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_ruz7r8uhs5lac53zkz0k td.tinytable_css_rutqwduografulh44t81, #tinytable_ruz7r8uhs5lac53zkz0k th.tinytable_css_rutqwduografulh44t81 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_ruz7r8uhs5lac53zkz0k td.tinytable_css_e4vubf1fm0q3in0uct23, #tinytable_ruz7r8uhs5lac53zkz0k th.tinytable_css_e4vubf1fm0q3in0uct23 { text-align: center }
+    #tinytable_ruz7r8uhs5lac53zkz0k td.tinytable_css_uzflus49nfi4m7nybj2y, #tinytable_ruz7r8uhs5lac53zkz0k th.tinytable_css_uzflus49nfi4m7nybj2y {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_ruz7r8uhs5lac53zkz0k td.tinytable_css_1imqismtkyni9qema3yl, #tinytable_ruz7r8uhs5lac53zkz0k th.tinytable_css_1imqismtkyni9qema3yl {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_ruz7r8uhs5lac53zkz0k td.tinytable_css_rjsiv4flcv5a9q1jh71j, #tinytable_ruz7r8uhs5lac53zkz0k th.tinytable_css_rjsiv4flcv5a9q1jh71j {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_ruz7r8uhs5lac53zkz0k td.tinytable_css_ksvz1g4j1ql9fbytd8e1, #tinytable_ruz7r8uhs5lac53zkz0k th.tinytable_css_ksvz1g4j1ql9fbytd8e1 { text-align: left }
+    #tinytable_ruz7r8uhs5lac53zkz0k td.tinytable_css_w9t15xlu0f1cz0friypz, #tinytable_ruz7r8uhs5lac53zkz0k th.tinytable_css_w9t15xlu0f1cz0friypz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
 <div class="container">
-      <table class="tinytable" id="tinytable_vw8du80pprvn16zbzgqp" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_ruz7r8uhs5lac53zkz0k" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
 <caption>Regression models predicting annual food expenditures</caption>
         <thead><tr>
 <th scope="col" data-row="0" data-col="1"> </th>
@@ -885,7 +873,7 @@ F-statistic: 26.64 on 3 and 46 DF,  p-value: 3.875e-10</code></pre>
 </div>
 <p>One more useful trick. <code><a href="https://modelsummary.com/man/modelsummary.html">modelsummary()</a></code> will write the table straight out to a file, and Word opens both HTML and .docx directly. So you can generate a formatted table, open it in Word, and paste it into your paper.</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>, output <span class="op">=</span> <span class="st">"food_models.docx"</span>,</span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>, output <span class="op">=</span> <span class="st">"food_models.docx"</span>,</span>
 <span>             stars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"*"</span> <span class="op">=</span> <span class="fl">.05</span>, <span class="st">"**"</span> <span class="op">=</span> <span class="fl">.01</span>, <span class="st">"***"</span> <span class="op">=</span> <span class="fl">.001</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1204,184 +1192,177 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb20" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Review of Linear Regression</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>**Data for this chapter:** <span class="in">`food.csv`</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data file needed</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>Copy <span class="in">`food.csv`</span> into this project folder before rendering.</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>Multilevel models are an extension of regression, so it is worth making sure the foundation is solid before building on it. This chapter reviews simple and multiple regression, interactions, and how to present a series of models. The data come from the reading: 50 families, with information on food expenditures, income, children, and whether the family keeps a garden.</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load a few packages</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a><span class="in">`ggplot2`</span> is part of the tidyverse, so loading it separately is not strictly necessary, but naming it explicitly makes clear that we plan to plot. <span class="in">`broom`</span> tidies model output into data frames. <span class="in">`skimr`</span> gives a compact and readable summary of a dataset.</span>
-<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Input the food dataset</span></span>
-<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>food <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"food.csv"</span>)</span>
-<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(food)</span>
-<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a><span class="in">`view(food)`</span> opens the data in a spreadsheet-style window, which is useful while exploring but does nothing in a rendered document, so it is left out here.</span>
-<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data cleaning and coding</span></span>
-<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a>Three functions do the work. The first two come from <span class="in">`dplyr`</span>, and the third from base R.</span>
-<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a>**`rename()`** changes the name of any variable in your dataset. The formula is <span class="in">`newname = oldname`</span>. Here we are getting rid of capital letters and putting underscores between words, which makes everything easier to type and read. (Notice that the original file has a typo in one of the column names. Renaming is a good moment to quietly fix that.)</span>
-<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a>**`mutate()`** is another function I use constantly. It creates a new variable based on a transformation of an existing one. Here I take the renamed <span class="in">`have_garden`</span> and create <span class="in">`have_garden_fac`</span>, equal to the old variable but converted to a factor, which is what <span class="in">`as_factor()`</span> does. Now R recognizes that "Yes" and "No" are two levels of a categorical variable, which it can use in frequency tables, regression models, and so on.</span>
-<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>food.clean <span class="ot">&lt;-</span> food <span class="sc">%&gt;%</span></span>
-<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(.,</span>
-<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a>         <span class="at">food_consumption =</span> FOODCONSUMPTION,</span>
-<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a>         <span class="at">family_income =</span> FAMILYINCOME,</span>
-<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a>         <span class="at">num_children =</span> NUMCHULDREN,</span>
-<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a>         <span class="at">have_garden =</span> HAVEGARDEN) <span class="sc">%&gt;%</span></span>
-<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(.,</span>
-<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a>         <span class="at">have_garden_fac =</span> <span class="fu">as_factor</span>(have_garden)) <span class="sc">%&gt;%</span></span>
-<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
-<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(food.clean)</span>
-<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a><span class="co"># How many observations did we actually lose?</span></span>
-<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(food); <span class="fu">nrow</span>(food.clean)</span>
-<span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-74"><a href="#cb20-74" aria-hidden="true" tabindex="-1"></a>Running that comparison every time you clean a dataset is a habit worth forming. A drop of one row is what we expected here. A drop of forty would mean something very different, and you want to find that out now rather than in the results section.</span>
-<span id="cb20-75"><a href="#cb20-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-76"><a href="#cb20-76" aria-hidden="true" tabindex="-1"></a><span class="fu">## Use `skim` for a nice summary</span></span>
-<span id="cb20-77"><a href="#cb20-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-80"><a href="#cb20-80" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-81"><a href="#cb20-81" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(food.clean)</span>
-<span id="cb20-82"><a href="#cb20-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-83"><a href="#cb20-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-84"><a href="#cb20-84" aria-hidden="true" tabindex="-1"></a><span class="in">`skim()`</span> splits the output by variable type, so numeric variables get means and quartiles while factors get counts of each level. It also shows a completion rate per variable, which is a quick check for missingness.</span>
-<span id="cb20-85"><a href="#cb20-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-86"><a href="#cb20-86" aria-hidden="true" tabindex="-1"></a><span class="fu">## A simple linear regression: does income predict food consumption?</span></span>
-<span id="cb20-87"><a href="#cb20-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-90"><a href="#cb20-90" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-91"><a href="#cb20-91" aria-hidden="true" tabindex="-1"></a>foodreg1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(food_consumption <span class="sc">~</span> family_income, <span class="at">data =</span> food.clean)</span>
-<span id="cb20-92"><a href="#cb20-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-93"><a href="#cb20-93" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(foodreg1)</span>
-<span id="cb20-94"><a href="#cb20-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-95"><a href="#cb20-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-96"><a href="#cb20-96" aria-hidden="true" tabindex="-1"></a>The short answer is yes. Family income significantly predicts food expenditures, and the two are positively related. For each additional dollar of income, a family would be expected to spend an additional six cents on food. The relationship is highly significant. The adjusted $R^2$ is about .56, meaning family income by itself explains roughly 56 percent of the variation in food expenditures.</span>
-<span id="cb20-97"><a href="#cb20-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-98"><a href="#cb20-98" aria-hidden="true" tabindex="-1"></a>A note on language while we are here. "Predicts" is the right word; "causes" is not. Nobody assigned these families their incomes, and plenty of things that travel with income could be doing the work. Regression describes association, and research design is what licenses causal claims.</span>
-<span id="cb20-99"><a href="#cb20-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-100"><a href="#cb20-100" aria-hidden="true" tabindex="-1"></a><span class="fu">## What about kids? Do things change when we account for them?</span></span>
-<span id="cb20-101"><a href="#cb20-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-104"><a href="#cb20-104" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-105"><a href="#cb20-105" aria-hidden="true" tabindex="-1"></a>foodreg2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(food_consumption <span class="sc">~</span> family_income <span class="sc">+</span> num_children, <span class="at">data =</span> food.clean)</span>
-<span id="cb20-106"><a href="#cb20-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-107"><a href="#cb20-107" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(foodreg2)</span>
-<span id="cb20-108"><a href="#cb20-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-109"><a href="#cb20-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-110"><a href="#cb20-110" aria-hidden="true" tabindex="-1"></a>Kids make a big difference too. For each additional child, we would expect a family to spend about $826 more per year on food. Because <span class="in">`family_income`</span> is also in the model, we can say this holds while controlling for family income. Another way to put it: take two families with the same income, and the one with one more child is predicted to spend roughly $827 more per year.</span>
-<span id="cb20-111"><a href="#cb20-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-112"><a href="#cb20-112" aria-hidden="true" tabindex="-1"></a>Notice also that the estimate for <span class="in">`family_income`</span> has not changed much, from about .06 down to .05. The adjusted $R^2$ rose from .56 to .60, so adding number of children explained about four percent more of the variation.</span>
-<span id="cb20-113"><a href="#cb20-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-114"><a href="#cb20-114" aria-hidden="true" tabindex="-1"></a>That stability in the income coefficient is itself informative. When a coefficient moves substantially after adding a variable, the two predictors are entangled and the first model was attributing to income something that belonged elsewhere. When it barely moves, as here, the two are telling you fairly separate things.</span>
-<span id="cb20-115"><a href="#cb20-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-116"><a href="#cb20-116" aria-hidden="true" tabindex="-1"></a><span class="fu">## Now, what about families who have a garden?</span></span>
-<span id="cb20-117"><a href="#cb20-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-120"><a href="#cb20-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-121"><a href="#cb20-121" aria-hidden="true" tabindex="-1"></a>foodreg3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(food_consumption <span class="sc">~</span> family_income <span class="sc">+</span> num_children <span class="sc">+</span> have_garden_fac,</span>
-<span id="cb20-122"><a href="#cb20-122" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> food.clean)</span>
-<span id="cb20-123"><a href="#cb20-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-124"><a href="#cb20-124" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(foodreg3)</span>
-<span id="cb20-125"><a href="#cb20-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-126"><a href="#cb20-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-127"><a href="#cb20-127" aria-hidden="true" tabindex="-1"></a>Short answer: no, not after controlling for family income and number of children. As a side note, we could test whether gardens relate to food expenditures on their own by running a simple regression with only <span class="in">`have_garden_fac`</span> as the predictor. But here, owning a garden does not appear significantly related to food expenditures once the other two variables are in the model.</span>
-<span id="cb20-128"><a href="#cb20-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-129"><a href="#cb20-129" aria-hidden="true" tabindex="-1"></a>Notice how R handled the factor. It picked a reference category and reports the coefficient as a difference from it. This is exactly why converting to a factor mattered. Left as a raw number, a two-category variable would give the same answer, but a three-category variable would have produced one nonsensical slope instead of two comparisons.</span>
-<span id="cb20-130"><a href="#cb20-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-131"><a href="#cb20-131" aria-hidden="true" tabindex="-1"></a><span class="fu">## Does the number of children moderate the income-food relationship?</span></span>
-<span id="cb20-132"><a href="#cb20-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-135"><a href="#cb20-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-136"><a href="#cb20-136" aria-hidden="true" tabindex="-1"></a>foodreg4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(food_consumption <span class="sc">~</span> family_income <span class="sc">+</span> num_children <span class="sc">+</span></span>
-<span id="cb20-137"><a href="#cb20-137" aria-hidden="true" tabindex="-1"></a>                 family_income<span class="sc">:</span>num_children,</span>
-<span id="cb20-138"><a href="#cb20-138" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> food.clean)</span>
-<span id="cb20-139"><a href="#cb20-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-140"><a href="#cb20-140" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(foodreg4)</span>
-<span id="cb20-141"><a href="#cb20-141" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-142"><a href="#cb20-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-143"><a href="#cb20-143" aria-hidden="true" tabindex="-1"></a>Now for the fancy stuff. The first three models assumed the predictors were additive rather than interactive. That means the relationship between <span class="in">`num_children`</span> and food expenditures is the same regardless of income, and the relationship between <span class="in">`family_income`</span> and food is the same regardless of how many children a family has.</span>
-<span id="cb20-144"><a href="#cb20-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-145"><a href="#cb20-145" aria-hidden="true" tabindex="-1"></a>That is fine as a first step, but another hypothesis is that these two variables *interact*, or moderate one another, so that the slope of one depends on the value of the other. We specify an interaction with the <span class="in">`:`</span> symbol, and we include both main effects as well as the interaction term. If the interaction estimate is significant, some moderation is likely happening.</span>
-<span id="cb20-146"><a href="#cb20-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-147"><a href="#cb20-147" aria-hidden="true" tabindex="-1"></a>In this case we do not have enough evidence to say an interaction exists. Power is likely an issue as well. We have only 50 observations, and interaction effects are notoriously underpowered, meaning you usually need a much larger sample to detect a true effect with any regularity.</span>
-<span id="cb20-148"><a href="#cb20-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-149"><a href="#cb20-149" aria-hidden="true" tabindex="-1"></a>That last point deserves emphasis, because it is the difference between two very different sentences. "There is no interaction" is a claim about the world. "We did not detect an interaction with 50 families" is a claim about this study. Only the second one is supported here.</span>
-<span id="cb20-150"><a href="#cb20-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-151"><a href="#cb20-151" aria-hidden="true" tabindex="-1"></a><span class="fu">## Organizing your results</span></span>
-<span id="cb20-152"><a href="#cb20-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-153"><a href="#cb20-153" aria-hidden="true" tabindex="-1"></a>Last thing: let's make the results presentable. Reporting four models one <span class="in">`summary()`</span> at a time is unreadable, and a single comparison table is how this belongs in a paper. We named our models along the way (<span class="in">`foodreg1`</span>, <span class="in">`foodreg2`</span>, and so on), so collecting them is easy.</span>
-<span id="cb20-154"><a href="#cb20-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-157"><a href="#cb20-157" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-158"><a href="#cb20-158" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb20-159"><a href="#cb20-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-160"><a href="#cb20-160" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb20-161"><a href="#cb20-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-162"><a href="#cb20-162" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb20-163"><a href="#cb20-163" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Income"</span>        <span class="ot">=</span> foodreg1,</span>
-<span id="cb20-164"><a href="#cb20-164" aria-hidden="true" tabindex="-1"></a>  <span class="st">"+ Children"</span>    <span class="ot">=</span> foodreg2,</span>
-<span id="cb20-165"><a href="#cb20-165" aria-hidden="true" tabindex="-1"></a>  <span class="st">"+ Garden"</span>      <span class="ot">=</span> foodreg3,</span>
-<span id="cb20-166"><a href="#cb20-166" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Interaction"</span>   <span class="ot">=</span> foodreg4</span>
-<span id="cb20-167"><a href="#cb20-167" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb20-168"><a href="#cb20-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-169"><a href="#cb20-169" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(</span>
-<span id="cb20-170"><a href="#cb20-170" aria-hidden="true" tabindex="-1"></a>  models,</span>
-<span id="cb20-171"><a href="#cb20-171" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"*"</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">"**"</span> <span class="ot">=</span> .<span class="dv">01</span>, <span class="st">"***"</span> <span class="ot">=</span> .<span class="dv">001</span>),</span>
-<span id="cb20-172"><a href="#cb20-172" aria-hidden="true" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">"nobs"</span>, <span class="st">"r.squared"</span>, <span class="st">"adj.r.squared"</span>),</span>
-<span id="cb20-173"><a href="#cb20-173" aria-hidden="true" tabindex="-1"></a>  <span class="at">fmt =</span> <span class="dv">2</span>,</span>
-<span id="cb20-174"><a href="#cb20-174" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Regression models predicting annual food expenditures"</span></span>
-<span id="cb20-175"><a href="#cb20-175" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb20-176"><a href="#cb20-176" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-177"><a href="#cb20-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-178"><a href="#cb20-178" aria-hidden="true" tabindex="-1"></a>One more useful trick. <span class="in">`modelsummary()`</span> will write the table straight out to a file, and Word opens both HTML and .docx directly. So you can generate a formatted table, open it in Word, and paste it into your paper.</span>
-<span id="cb20-179"><a href="#cb20-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-182"><a href="#cb20-182" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-183"><a href="#cb20-183" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb20-184"><a href="#cb20-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-185"><a href="#cb20-185" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models, <span class="at">output =</span> <span class="st">"food_models.docx"</span>,</span>
-<span id="cb20-186"><a href="#cb20-186" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"*"</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">"**"</span> <span class="ot">=</span> .<span class="dv">01</span>, <span class="st">"***"</span> <span class="ot">=</span> .<span class="dv">001</span>))</span>
-<span id="cb20-187"><a href="#cb20-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-188"><a href="#cb20-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-189"><a href="#cb20-189" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb20-190"><a href="#cb20-190" aria-hidden="true" tabindex="-1"></a><span class="fu">## A note on `stargazer`</span></span>
-<span id="cb20-191"><a href="#cb20-191" aria-hidden="true" tabindex="-1"></a>The demonstration video uses the <span class="in">`stargazer`</span> package for this table, with an <span class="in">`out = "test.html"`</span> option that does the same job. <span class="in">`stargazer`</span> is no longer actively maintained and can fail with current versions of R, so this book uses <span class="in">`modelsummary`</span> instead. The idea is identical, and <span class="in">`modelsummary()`</span> also handles the multilevel models we fit later, which <span class="in">`stargazer`</span> does not.</span>
-<span id="cb20-192"><a href="#cb20-192" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb20-193"><a href="#cb20-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-194"><a href="#cb20-194" aria-hidden="true" tabindex="-1"></a><span class="fu">## Where this goes next</span></span>
-<span id="cb20-195"><a href="#cb20-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-196"><a href="#cb20-196" aria-hidden="true" tabindex="-1"></a>Every standard error in this chapter was computed as though these 50 families were 50 independent observations, which for these data is reasonable. But a great deal of social science data is not like that. Students sit in schools, patients in hospitals, employees in firms, and repeated measures inside people. When observations come in groups, treating them as independent produces standard errors that are too small and p-values that are too optimistic.</span>
-<span id="cb20-197"><a href="#cb20-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-198"><a href="#cb20-198" aria-hidden="true" tabindex="-1"></a>It also raises a question ordinary regression cannot answer cleanly. A regression using everyone at once blends the comparison between two people in the same group with the comparison between two groups, and returns a single number that is neither.</span>
-<span id="cb20-199"><a href="#cb20-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-200"><a href="#cb20-200" aria-hidden="true" tabindex="-1"></a>The next chapter takes up both problems, using 7,185 students nested within 160 schools.</span>
+<div class="sourceCode" id="cb17" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Review of Linear Regression</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>**Data for this chapter:** <span class="in">`food.csv`</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data file needed</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>Copy <span class="in">`food.csv`</span> into this project folder before rendering.</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>Multilevel models are an extension of regression, so it is worth making sure the foundation is solid before building on it. This chapter reviews simple and multiple regression, interactions, and how to present a series of models. The data come from the reading: 50 families, with information on food expenditures, income, children, and whether the family keeps a garden.</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load a few packages</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a><span class="in">`ggplot2`</span> is part of the tidyverse, so loading it separately is not strictly necessary, but naming it explicitly makes clear that we plan to plot. <span class="in">`broom`</span> tidies model output into data frames. <span class="in">`skimr`</span> gives a compact and readable summary of a dataset.</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Input the food dataset</span></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>food <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"food.csv"</span>)</span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(food)</span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a><span class="in">`view(food)`</span> opens the data in a spreadsheet-style window, which is useful while exploring but does nothing in a rendered document, so it is left out here.</span>
+<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data cleaning and coding</span></span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a>Two functions do the work, both from the <span class="in">`dplyr`</span> package.</span>
+<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a>**`rename()`** changes the name of any variable in your dataset. The formula is <span class="in">`newname = oldname`</span>. Here we are getting rid of capital letters and putting underscores between words, which makes everything easier to type and read. (Notice that the original file has a typo in one of the column names. Renaming is a good moment to quietly fix that.)</span>
+<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a>**`mutate()`** is another function I use constantly. It creates a new variable based on a transformation of an existing one. Here I take the renamed <span class="in">`have_garden`</span> and create <span class="in">`have_garden_fac`</span>, equal to the old variable but converted to a factor, which is what <span class="in">`as_factor()`</span> does. Now R recognizes that "Yes" and "No" are two levels of a categorical variable, which it can use in frequency tables, regression models, and so on.</span>
+<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a>food.clean <span class="ot">&lt;-</span> food <span class="sc">%&gt;%</span></span>
+<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(.,</span>
+<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a>         <span class="at">food_consumption =</span> FOODCONSUMPTION,</span>
+<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a>         <span class="at">family_income =</span> FAMILYINCOME,</span>
+<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a>         <span class="at">num_children =</span> NUMCHULDREN,</span>
+<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a>         <span class="at">have_garden =</span> HAVEGARDEN) <span class="sc">%&gt;%</span></span>
+<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(.,</span>
+<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a>         <span class="at">have_garden_fac =</span> <span class="fu">as_factor</span>(have_garden))</span>
+<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(food.clean)</span>
+<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a><span class="fu">## Use the `skim()` function from `skimr` for a nice summary</span></span>
+<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-71"><a href="#cb17-71" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(food.clean)</span>
+<span id="cb17-72"><a href="#cb17-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-73"><a href="#cb17-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-74"><a href="#cb17-74" aria-hidden="true" tabindex="-1"></a><span class="in">`skim()`</span> splits the output by variable type, so numeric variables get means and quartiles while factors get counts of each level. It also shows a completion rate per variable, which is a quick check for missingness.</span>
+<span id="cb17-75"><a href="#cb17-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-76"><a href="#cb17-76" aria-hidden="true" tabindex="-1"></a><span class="fu">## A simple linear regression: does income predict food consumption?</span></span>
+<span id="cb17-77"><a href="#cb17-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-80"><a href="#cb17-80" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-81"><a href="#cb17-81" aria-hidden="true" tabindex="-1"></a>foodreg1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(food_consumption <span class="sc">~</span> family_income, <span class="at">data =</span> food.clean)</span>
+<span id="cb17-82"><a href="#cb17-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-83"><a href="#cb17-83" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(foodreg1)</span>
+<span id="cb17-84"><a href="#cb17-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-85"><a href="#cb17-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-86"><a href="#cb17-86" aria-hidden="true" tabindex="-1"></a>The short answer is yes. Family income significantly predicts food expenditures, and the two are positively related. For each additional dollar of income, a family would be expected to spend an additional six cents on food. The relationship is highly significant. The adjusted $R^2$ is about .56, meaning family income by itself explains roughly 56 percent of the variation in food expenditures.</span>
+<span id="cb17-87"><a href="#cb17-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-88"><a href="#cb17-88" aria-hidden="true" tabindex="-1"></a>A note on language while we are here. "Predicts" is the right word; "causes" is not. Nobody assigned these families their incomes, and plenty of things that travel with income could be doing the work. Regression describes association, and research design is what licenses causal claims.</span>
+<span id="cb17-89"><a href="#cb17-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-90"><a href="#cb17-90" aria-hidden="true" tabindex="-1"></a><span class="fu">## What about kids? Do things change when we account for them?</span></span>
+<span id="cb17-91"><a href="#cb17-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-94"><a href="#cb17-94" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-95"><a href="#cb17-95" aria-hidden="true" tabindex="-1"></a>foodreg2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(food_consumption <span class="sc">~</span> family_income <span class="sc">+</span> num_children, <span class="at">data =</span> food.clean)</span>
+<span id="cb17-96"><a href="#cb17-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-97"><a href="#cb17-97" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(foodreg2)</span>
+<span id="cb17-98"><a href="#cb17-98" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-99"><a href="#cb17-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-100"><a href="#cb17-100" aria-hidden="true" tabindex="-1"></a>Kids make a big difference too. For each additional child, we would expect a family to spend about \$826 more per year on food. Because <span class="in">`family_income`</span> is also in the model, we can say this holds while controlling for family income. Another way to put it: take two families with the same income, and the one with one more child is predicted to spend roughly \$827 more per year.</span>
+<span id="cb17-101"><a href="#cb17-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-102"><a href="#cb17-102" aria-hidden="true" tabindex="-1"></a>Notice also that the estimate for <span class="in">`family_income`</span> has not changed much, from about .06 down to .05. The adjusted $R^2$ rose from .56 to .60, so adding number of children explained about four percent more of the variation.</span>
+<span id="cb17-103"><a href="#cb17-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-104"><a href="#cb17-104" aria-hidden="true" tabindex="-1"></a>That stability in the income coefficient is itself informative. When a coefficient moves substantially after adding a variable, the two predictors are entangled and the first model was attributing to income something that belonged elsewhere. When it barely moves, as here, the two are telling you fairly separate things.</span>
+<span id="cb17-105"><a href="#cb17-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-106"><a href="#cb17-106" aria-hidden="true" tabindex="-1"></a><span class="fu">## Now, what about families who have a garden?</span></span>
+<span id="cb17-107"><a href="#cb17-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-110"><a href="#cb17-110" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-111"><a href="#cb17-111" aria-hidden="true" tabindex="-1"></a>foodreg3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(food_consumption <span class="sc">~</span> family_income <span class="sc">+</span> num_children <span class="sc">+</span> have_garden_fac,</span>
+<span id="cb17-112"><a href="#cb17-112" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> food.clean)</span>
+<span id="cb17-113"><a href="#cb17-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-114"><a href="#cb17-114" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(foodreg3)</span>
+<span id="cb17-115"><a href="#cb17-115" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-116"><a href="#cb17-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-117"><a href="#cb17-117" aria-hidden="true" tabindex="-1"></a>Short answer: no, not after controlling for family income and number of children. As a side note, we could test whether gardens relate to food expenditures on their own by running a simple regression with only <span class="in">`have_garden_fac`</span> as the predictor. But here, owning a garden does not appear significantly related to food expenditures once the other two variables are in the model.</span>
+<span id="cb17-118"><a href="#cb17-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-119"><a href="#cb17-119" aria-hidden="true" tabindex="-1"></a>Notice how R handled the factor. It picked a reference category and reports the coefficient as a difference from it. This is exactly why converting to a factor mattered. Left as a raw number, a two-category variable would give the same answer, but a three-category variable would have produced one nonsensical slope instead of two comparisons.</span>
+<span id="cb17-120"><a href="#cb17-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-121"><a href="#cb17-121" aria-hidden="true" tabindex="-1"></a><span class="fu">## Does the number of children moderate the income-food relationship?</span></span>
+<span id="cb17-122"><a href="#cb17-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-125"><a href="#cb17-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-126"><a href="#cb17-126" aria-hidden="true" tabindex="-1"></a>foodreg4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(food_consumption <span class="sc">~</span> family_income <span class="sc">+</span> num_children <span class="sc">+</span></span>
+<span id="cb17-127"><a href="#cb17-127" aria-hidden="true" tabindex="-1"></a>                 family_income<span class="sc">:</span>num_children,</span>
+<span id="cb17-128"><a href="#cb17-128" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> food.clean)</span>
+<span id="cb17-129"><a href="#cb17-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-130"><a href="#cb17-130" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(foodreg4)</span>
+<span id="cb17-131"><a href="#cb17-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-132"><a href="#cb17-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-133"><a href="#cb17-133" aria-hidden="true" tabindex="-1"></a>Now for the fancy stuff. The first three models assumed the predictors were additive rather than interactive. That means the relationship between <span class="in">`num_children`</span> and food expenditures is the same regardless of income, and the relationship between <span class="in">`family_income`</span> and food is the same regardless of how many children a family has.</span>
+<span id="cb17-134"><a href="#cb17-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-135"><a href="#cb17-135" aria-hidden="true" tabindex="-1"></a>That is fine as a first step, but another hypothesis is that these two variables *interact*, or moderate one another, so that the slope of one depends on the value of the other. We specify an interaction with the <span class="in">`:`</span> symbol, and we include both main effects as well as the interaction term. If the interaction estimate is significant, some moderation is likely happening.</span>
+<span id="cb17-136"><a href="#cb17-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-137"><a href="#cb17-137" aria-hidden="true" tabindex="-1"></a>In this case we do not have enough evidence to say an interaction exists. Power is likely an issue as well. We have only 50 observations, and interaction effects are notoriously underpowered, meaning you usually need a much larger sample to detect a true effect with any regularity.</span>
+<span id="cb17-138"><a href="#cb17-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-139"><a href="#cb17-139" aria-hidden="true" tabindex="-1"></a>That last point deserves emphasis, because it is the difference between two very different sentences. "There is no interaction" is a claim about the world. "We did not detect an interaction with 50 families" is a claim about this study. Only the second one is supported here.</span>
+<span id="cb17-140"><a href="#cb17-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-141"><a href="#cb17-141" aria-hidden="true" tabindex="-1"></a><span class="fu">## Organizing your results</span></span>
+<span id="cb17-142"><a href="#cb17-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-143"><a href="#cb17-143" aria-hidden="true" tabindex="-1"></a>Last thing: let's make the results presentable. Reporting four models one <span class="in">`summary()`</span> at a time is unreadable, and a single comparison table is how this belongs in a paper. We named our models along the way (<span class="in">`foodreg1`</span>, <span class="in">`foodreg2`</span>, and so on), so collecting them is easy.</span>
+<span id="cb17-144"><a href="#cb17-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-147"><a href="#cb17-147" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-148"><a href="#cb17-148" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb17-149"><a href="#cb17-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-150"><a href="#cb17-150" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb17-151"><a href="#cb17-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-152"><a href="#cb17-152" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb17-153"><a href="#cb17-153" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Income"</span>        <span class="ot">=</span> foodreg1,</span>
+<span id="cb17-154"><a href="#cb17-154" aria-hidden="true" tabindex="-1"></a>  <span class="st">"+ Children"</span>    <span class="ot">=</span> foodreg2,</span>
+<span id="cb17-155"><a href="#cb17-155" aria-hidden="true" tabindex="-1"></a>  <span class="st">"+ Garden"</span>      <span class="ot">=</span> foodreg3,</span>
+<span id="cb17-156"><a href="#cb17-156" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Interaction"</span>   <span class="ot">=</span> foodreg4</span>
+<span id="cb17-157"><a href="#cb17-157" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-158"><a href="#cb17-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-159"><a href="#cb17-159" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(</span>
+<span id="cb17-160"><a href="#cb17-160" aria-hidden="true" tabindex="-1"></a>  models,</span>
+<span id="cb17-161"><a href="#cb17-161" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"*"</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">"**"</span> <span class="ot">=</span> .<span class="dv">01</span>, <span class="st">"***"</span> <span class="ot">=</span> .<span class="dv">001</span>),</span>
+<span id="cb17-162"><a href="#cb17-162" aria-hidden="true" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">"nobs"</span>, <span class="st">"r.squared"</span>, <span class="st">"adj.r.squared"</span>),</span>
+<span id="cb17-163"><a href="#cb17-163" aria-hidden="true" tabindex="-1"></a>  <span class="at">fmt =</span> <span class="dv">2</span>,</span>
+<span id="cb17-164"><a href="#cb17-164" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Regression models predicting annual food expenditures"</span></span>
+<span id="cb17-165"><a href="#cb17-165" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-166"><a href="#cb17-166" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-167"><a href="#cb17-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-168"><a href="#cb17-168" aria-hidden="true" tabindex="-1"></a>One more useful trick. <span class="in">`modelsummary()`</span> will write the table straight out to a file, and Word opens both HTML and .docx directly. So you can generate a formatted table, open it in Word, and paste it into your paper.</span>
+<span id="cb17-169"><a href="#cb17-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-172"><a href="#cb17-172" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-173"><a href="#cb17-173" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb17-174"><a href="#cb17-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-175"><a href="#cb17-175" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models, <span class="at">output =</span> <span class="st">"food_models.docx"</span>,</span>
+<span id="cb17-176"><a href="#cb17-176" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"*"</span> <span class="ot">=</span> .<span class="dv">05</span>, <span class="st">"**"</span> <span class="ot">=</span> .<span class="dv">01</span>, <span class="st">"***"</span> <span class="ot">=</span> .<span class="dv">001</span>))</span>
+<span id="cb17-177"><a href="#cb17-177" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-178"><a href="#cb17-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-179"><a href="#cb17-179" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb17-180"><a href="#cb17-180" aria-hidden="true" tabindex="-1"></a><span class="fu">## A note on `stargazer`</span></span>
+<span id="cb17-181"><a href="#cb17-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-182"><a href="#cb17-182" aria-hidden="true" tabindex="-1"></a>The demonstration video uses the <span class="in">`stargazer`</span> package for this table, with an <span class="in">`out = "test.html"`</span> option that does the same job. <span class="in">`stargazer`</span> is no longer actively maintained and can fail with current versions of R, so this book uses <span class="in">`modelsummary`</span> instead. The idea is identical, and <span class="in">`modelsummary()`</span> also handles the multilevel models we fit later, which <span class="in">`stargazer`</span> does not.</span>
+<span id="cb17-183"><a href="#cb17-183" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-184"><a href="#cb17-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-185"><a href="#cb17-185" aria-hidden="true" tabindex="-1"></a><span class="fu">## Where this goes next</span></span>
+<span id="cb17-186"><a href="#cb17-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-187"><a href="#cb17-187" aria-hidden="true" tabindex="-1"></a>Every standard error in this chapter was computed as though these 50 families were 50 independent observations, which for these data is reasonable. But a great deal of social science data is not like that. Students sit in schools, patients in hospitals, employees in firms, and repeated measures inside people. When observations come in groups, treating them as independent produces standard errors that are too small and p-values that are too optimistic.</span>
+<span id="cb17-188"><a href="#cb17-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-189"><a href="#cb17-189" aria-hidden="true" tabindex="-1"></a>It also raises a question ordinary regression cannot answer cleanly. A regression using everyone at once blends the comparison between two people in the same group with the comparison between two groups, and returns a single number that is neither.</span>
+<span id="cb17-190"><a href="#cb17-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-191"><a href="#cb17-191" aria-hidden="true" tabindex="-1"></a>The next chapter takes up both problems, using 7,185 students nested within 160 schools.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -156,12 +156,6 @@ modelsummary(models, output = "food_models.docx",
              stars = c("*" = .05, "**" = .01, "***" = .001))
 ```
 
-::: callout-note
-## A note on `stargazer`
-
-The demonstration video uses the `stargazer` package for this table, with an `out = "test.html"` option that does the same job. `stargazer` is no longer actively maintained and can fail with current versions of R, so this book uses `modelsummary` instead. The idea is identical, and `modelsummary()` also handles the multilevel models we fit later, which `stargazer` does not.
-:::
-
 ## Where this goes next
 
 Every standard error in this chapter was computed as though these 50 families were 50 independent observations, which for these data is reasonable. But a great deal of social science data is not like that. Students sit in schools, patients in hospitals, employees in firms, and repeated measures inside people. When observations come in groups, treating them as independent produces standard errors that are too small and p-values that are too optimistic.

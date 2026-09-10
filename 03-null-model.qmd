@@ -14,6 +14,7 @@ library(tidyverse)
 library(Hmisc)     # label()
 library(lme4)
 library(lmerTest)
+library(performance)
 ```
 
 `Hmisc` is new here. We want it for two things: `label()`, which attaches a description to a variable, and its own version of `describe()`, which reports more detail than the one in `psych`.
@@ -200,6 +201,10 @@ tau00 / (tau00 + sigma2)
 ```
 
 The `performance` package will also compute it directly with `performance::icc(model.null)`.
+```{r}
+performance::icc(model.null)
+```
+
 :::
 
 ## Using `lmerTest` to evaluate random effects

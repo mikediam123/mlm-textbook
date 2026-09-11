@@ -19,8 +19,9 @@ library(performance)
 
 `Hmisc` is new here. We want it for two things: `label()`, which attaches a description to a variable, and its own version of `describe()`, which reports more detail than the one in `psych`.
 
-::: {.callout-warning}
+::: callout-warning
 ## Package conflicts
+
 `Hmisc` and `dplyr` both define functions named `summarize` and `src`. Loading `Hmisc` after the tidyverse means its versions win, and you may see masking messages at load. If a tidyverse function starts behaving oddly, call it explicitly as `dplyr::summarize()`.
 :::
 
@@ -143,7 +144,7 @@ summary(model.null)
 
 The `(1|schoolid)` term is what makes this multilevel. It tells `lmer()` to estimate a separate intercept for each school, drawn from a distribution whose variance we want to estimate.
 
-::: {.callout-important}
+::: callout-important
 ## What makes `schoolid` a clustering variable, and what does not
 
 This is the most common early mistake, so it is worth stopping on. Nearly every dataset has categorical variables, and almost none of them belong inside `(1 | ... )`. Before writing that term, ask three questions.
@@ -163,8 +164,9 @@ Two numbers in the Random effects section carry the story. The variance associat
 
 You also get AIC and BIC, two very common information criterion measures used to assess model fit.
 
-::: {.callout-note}
+::: callout-note
 ## Why `REML = FALSE`?
+
 `lmer()` can estimate a model two ways. Restricted maximum likelihood (REML), the default, gives less biased variance components, especially with few level-2 units. Maximum likelihood (ML), which `REML = FALSE` requests, is required whenever you compare models that differ in their *fixed* effects, because REML likelihoods are not comparable across different fixed-effect specifications.
 
 This book uses ML throughout so that numbers stay consistent from one page to the next and model comparisons are always valid. With 160 schools, the difference between the two is small.
@@ -187,8 +189,9 @@ null.ICC
 
 Roughly 18 percent of the variation in math achievement is between schools. Put another way, two students from the same school are noticeably more similar to each other than two students drawn at random from the full sample. That is the condition that makes ordinary regression standard errors too small.
 
-::: {.callout-tip}
+::: callout-tip
 ## Pulling the numbers out rather than typing them
+
 Typing the variance components by hand works and makes the formula visible, which is why it is worth doing once. For your own analyses it is safer to extract them from the model, since a transposed digit produces a plausible-looking wrong answer:
 
 ```{r}
@@ -201,10 +204,10 @@ tau00 / (tau00 + sigma2)
 ```
 
 The `performance` package will also compute it directly with `performance::icc(model.null)`.
+
 ```{r}
 performance::icc(model.null)
 ```
-
 :::
 
 ## Using `lmerTest` to evaluate random effects
@@ -217,8 +220,9 @@ This is a likelihood ratio test comparing our model to one without the random in
 
 Read it alongside the ICC rather than instead of it. The test tells you whether school-level variance is distinguishable from zero; the ICC tells you how much of it there is. With 7,185 students you have enough power to detect quite small amounts of clustering, so significance alone is weak evidence that multilevel modeling matters substantively.
 
-::: {.callout-note}
+::: callout-note
 ## `rand()` became `ranova()`
+
 Older handouts call `lmerTest::rand()`. The function was renamed to `ranova()` several versions ago. The old name may still work but is no longer the documented one.
 :::
 

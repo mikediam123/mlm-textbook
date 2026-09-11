@@ -1256,229 +1256,233 @@ Residual standard error: 6.878 on 7184 degrees of freedom</code></pre>
 <span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a><span class="in">`Hmisc`</span> is new here. We want it for two things: <span class="in">`label()`</span>, which attaches a description to a variable, and its own version of <span class="in">`describe()`</span>, which reports more detail than the one in <span class="in">`psych`</span>.</span>
 <span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>::: callout-warning</span>
 <span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a><span class="fu">## Package conflicts</span></span>
-<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a><span class="in">`Hmisc`</span> and <span class="in">`dplyr`</span> both define functions named <span class="in">`summarize`</span> and <span class="in">`src`</span>. Loading <span class="in">`Hmisc`</span> after the tidyverse means its versions win, and you may see masking messages at load. If a tidyverse function starts behaving oddly, call it explicitly as <span class="in">`dplyr::summarize()`</span>.</span>
-<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load in the data and use `glimpse` to summarize the structure</span></span>
-<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a>hsb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"hsbmerged.csv"</span>)</span>
-<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(hsb)</span>
-<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a>7,185 students across 160 schools. <span class="in">`mathach`</span> is our outcome, a standardized math achievement score, and <span class="in">`schoolid`</span> identifies the school each student attends. That second variable is what makes multilevel modeling possible here.</span>
-<span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quick data cleaning and coding tips</span></span>
-<span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-45"><a href="#cb34-45" aria-hidden="true" tabindex="-1"></a><span class="fu">### The `summary` command from base R is a quick and easy way to explore a new dataset</span></span>
-<span id="cb34-46"><a href="#cb34-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-49"><a href="#cb34-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-50"><a href="#cb34-50" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hsb)</span>
-<span id="cb34-51"><a href="#cb34-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-52"><a href="#cb34-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-53"><a href="#cb34-53" aria-hidden="true" tabindex="-1"></a>Summary gives you a quick, high-level look at every variable in a dataset. It is also useful for your own records: copy and paste it into a Word file and you have something to refer back to.</span>
-<span id="cb34-54"><a href="#cb34-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-55"><a href="#cb34-55" aria-hidden="true" tabindex="-1"></a>Read it critically, though. Every column here gets a mean and quartiles, including <span class="in">`sector`</span>, <span class="in">`female`</span>, and <span class="in">`minority`</span>, which are categories rather than quantities. The mean of <span class="in">`sector`</span> is the proportion of students in one sector, which is mildly useful, but its quartiles are meaningless. This is the same issue from Chapter 1, and we are about to fix it.</span>
-<span id="cb34-56"><a href="#cb34-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-57"><a href="#cb34-57" aria-hidden="true" tabindex="-1"></a><span class="fu">### Let's give some variables a label</span></span>
-<span id="cb34-58"><a href="#cb34-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-59"><a href="#cb34-59" aria-hidden="true" tabindex="-1"></a>Now, data cleaning and coding. We will apply labels to two things: the variables themselves, and the values within a given variable. Both are good practice for keeping your data readable.</span>
-<span id="cb34-60"><a href="#cb34-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-63"><a href="#cb34-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-64"><a href="#cb34-64" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(hsb<span class="sc">$</span>mathach) <span class="ot">=</span> <span class="st">"Std. Math Score"</span></span>
-<span id="cb34-65"><a href="#cb34-65" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(hsb<span class="sc">$</span>sector) <span class="ot">=</span> <span class="st">"School Sector"</span></span>
-<span id="cb34-66"><a href="#cb34-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-67"><a href="#cb34-67" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(hsb<span class="sc">$</span>sector)</span>
-<span id="cb34-68"><a href="#cb34-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-69"><a href="#cb34-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-70"><a href="#cb34-70" aria-hidden="true" tabindex="-1"></a>The <span class="in">`str()`</span> output now shows the label attached to the variable. This carries through to <span class="in">`Hmisc::describe()`</span> output and to some plotting functions, which means a table six months from now still says "Std. Math Score" rather than <span class="in">`mathach`</span>.</span>
-<span id="cb34-71"><a href="#cb34-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-72"><a href="#cb34-72" aria-hidden="true" tabindex="-1"></a><span class="fu">### Let's create a factor version of `sector` and label its values</span></span>
-<span id="cb34-73"><a href="#cb34-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-76"><a href="#cb34-76" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-77"><a href="#cb34-77" aria-hidden="true" tabindex="-1"></a>hsb.clean <span class="ot">&lt;-</span> hsb <span class="sc">%&gt;%</span></span>
-<span id="cb34-78"><a href="#cb34-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(.,</span>
-<span id="cb34-79"><a href="#cb34-79" aria-hidden="true" tabindex="-1"></a>         <span class="at">sector.factor =</span> <span class="fu">as_factor</span>(sector),</span>
-<span id="cb34-80"><a href="#cb34-80" aria-hidden="true" tabindex="-1"></a>         <span class="at">female.factor =</span> <span class="fu">as_factor</span>(female),</span>
-<span id="cb34-81"><a href="#cb34-81" aria-hidden="true" tabindex="-1"></a>         <span class="at">minority.factor =</span> <span class="fu">as_factor</span>(minority))</span>
-<span id="cb34-82"><a href="#cb34-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-83"><a href="#cb34-83" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(hsb.clean<span class="sc">$</span>sector.factor) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Public"</span>, <span class="st">"Parochial"</span>)</span>
-<span id="cb34-84"><a href="#cb34-84" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(hsb.clean<span class="sc">$</span>female.factor) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>)</span>
-<span id="cb34-85"><a href="#cb34-85" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(hsb.clean<span class="sc">$</span>minority.factor) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Non-Minority"</span>, <span class="st">"Minority"</span>)</span>
-<span id="cb34-86"><a href="#cb34-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-87"><a href="#cb34-87" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(hsb.clean<span class="sc">$</span>sector.factor)</span>
-<span id="cb34-88"><a href="#cb34-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-89"><a href="#cb34-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-90"><a href="#cb34-90" aria-hidden="true" tabindex="-1"></a>Two steps here, and it is worth separating them. <span class="in">`as_factor()`</span> converts the numeric variable into a factor, so R treats it as a category. Assigning to <span class="in">`levels()`</span> then renames those categories from 0 and 1 into words.</span>
-<span id="cb34-91"><a href="#cb34-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-92"><a href="#cb34-92" aria-hidden="true" tabindex="-1"></a>Order matters when you assign levels this way. The names are applied in the order R already has the levels in, so <span class="in">`c("Public", "Parochial")`</span> assumes 0 comes first. Always check the result:</span>
-<span id="cb34-93"><a href="#cb34-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-96"><a href="#cb34-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-97"><a href="#cb34-97" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(hsb.clean<span class="sc">$</span>sector.factor)</span>
-<span id="cb34-98"><a href="#cb34-98" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-99"><a href="#cb34-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-100"><a href="#cb34-100" aria-hidden="true" tabindex="-1"></a>3,642 public and 3,543 Parochial. If those counts had come out reversed from what you expected, the labels went on backwards, and every result from here forward would be silently mislabeled.</span>
-<span id="cb34-101"><a href="#cb34-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-102"><a href="#cb34-102" aria-hidden="true" tabindex="-1"></a><span class="fu">### Run `summary` again and notice how it handles factors</span></span>
-<span id="cb34-103"><a href="#cb34-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-106"><a href="#cb34-106" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-107"><a href="#cb34-107" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hsb.clean)</span>
-<span id="cb34-108"><a href="#cb34-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-109"><a href="#cb34-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-110"><a href="#cb34-110" aria-hidden="true" tabindex="-1"></a>Compare this to the earlier output. The factor versions of the variables no longer report meaningless means and quartiles. Instead they report counts per category, which is what you actually want to know. Same data, same function, but R now understands what kind of variable it is looking at.</span>
-<span id="cb34-111"><a href="#cb34-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-112"><a href="#cb34-112" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exploring our outcome, math achievement</span></span>
-<span id="cb34-113"><a href="#cb34-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-114"><a href="#cb34-114" aria-hidden="true" tabindex="-1"></a>Now let's look at <span class="in">`mathach`</span> using the <span class="in">`describe`</span> function from the <span class="in">`Hmisc`</span> package:</span>
-<span id="cb34-115"><a href="#cb34-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-118"><a href="#cb34-118" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-119"><a href="#cb34-119" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(hsb.clean<span class="sc">$</span>mathach)</span>
-<span id="cb34-120"><a href="#cb34-120" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-121"><a href="#cb34-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-122"><a href="#cb34-122" aria-hidden="true" tabindex="-1"></a><span class="in">`Hmisc::describe()`</span> reports more than the <span class="in">`psych`</span> version: distinct values, several percentiles, and the five lowest and highest observations. That last part is a quiet outlier check. If the highest values were 24, 25, and 9999, you would see it here.</span>
-<span id="cb34-123"><a href="#cb34-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-126"><a href="#cb34-126" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-127"><a href="#cb34-127" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-mathach</span></span>
-<span id="cb34-128"><a href="#cb34-128" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribution of math achievement scores."</span></span>
-<span id="cb34-129"><a href="#cb34-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-130"><a href="#cb34-130" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(hsb.clean<span class="sc">$</span>mathach,</span>
-<span id="cb34-131"><a href="#cb34-131" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Distribution of Math Achievement Scores"</span>,</span>
-<span id="cb34-132"><a href="#cb34-132" aria-hidden="true" tabindex="-1"></a>     <span class="at">sub =</span> <span class="st">"N = 7,185. Students from the High School and Beyond Survey (1988)."</span>,</span>
-<span id="cb34-133"><a href="#cb34-133" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Standardized Math Achievement Score"</span>)</span>
-<span id="cb34-134"><a href="#cb34-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-135"><a href="#cb34-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-136"><a href="#cb34-136" aria-hidden="true" tabindex="-1"></a>This histogram describes students in general, which is useful but hides the thing we actually care about. The question motivating multilevel modeling is whether *schools* differ. One quick way to see it is to plot school averages instead of individual scores:</span>
-<span id="cb34-137"><a href="#cb34-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-140"><a href="#cb34-140" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-141"><a href="#cb34-141" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-schoolmeans</span></span>
-<span id="cb34-142"><a href="#cb34-142" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Average math achievement across the 160 schools."</span></span>
-<span id="cb34-143"><a href="#cb34-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-144"><a href="#cb34-144" aria-hidden="true" tabindex="-1"></a>school_means <span class="ot">&lt;-</span> hsb.clean <span class="sc">%&gt;%</span></span>
-<span id="cb34-145"><a href="#cb34-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolid) <span class="sc">%&gt;%</span></span>
-<span id="cb34-146"><a href="#cb34-146" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">school_mean =</span> <span class="fu">mean</span>(mathach, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb34-147"><a href="#cb34-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-148"><a href="#cb34-148" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(school_means<span class="sc">$</span>school_mean,</span>
-<span id="cb34-149"><a href="#cb34-149" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"School Average Math Achievement"</span>,</span>
-<span id="cb34-150"><a href="#cb34-150" aria-hidden="true" tabindex="-1"></a>     <span class="at">sub =</span> <span class="st">"Each observation is one of 160 schools."</span>,</span>
-<span id="cb34-151"><a href="#cb34-151" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"School mean math achievement"</span>)</span>
-<span id="cb34-152"><a href="#cb34-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-153"><a href="#cb34-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-154"><a href="#cb34-154" aria-hidden="true" tabindex="-1"></a>If every school had the same average, this would be a single narrow spike. It is not, and that spread is exactly what the null model is about to quantify.</span>
-<span id="cb34-155"><a href="#cb34-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-156"><a href="#cb34-156" aria-hidden="true" tabindex="-1"></a><span class="fu">## Running a null model</span></span>
-<span id="cb34-157"><a href="#cb34-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-160"><a href="#cb34-160" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-161"><a href="#cb34-161" aria-hidden="true" tabindex="-1"></a>model.null <span class="ot">&lt;-</span> <span class="fu">lmer</span>(mathach <span class="sc">~</span> (<span class="dv">1</span><span class="sc">|</span>schoolid), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> hsb.clean)</span>
-<span id="cb34-162"><a href="#cb34-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-163"><a href="#cb34-163" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.null)</span>
-<span id="cb34-164"><a href="#cb34-164" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-165"><a href="#cb34-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-166"><a href="#cb34-166" aria-hidden="true" tabindex="-1"></a>The <span class="in">`(1|schoolid)`</span> term is what makes this multilevel. It tells <span class="in">`lmer()`</span> to estimate a separate intercept for each school, drawn from a distribution whose variance we want to estimate.</span>
-<span id="cb34-167"><a href="#cb34-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-168"><a href="#cb34-168" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
-<span id="cb34-169"><a href="#cb34-169" aria-hidden="true" tabindex="-1"></a><span class="fu">## What makes `schoolid` a clustering variable, and what does not</span></span>
-<span id="cb34-170"><a href="#cb34-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-171"><a href="#cb34-171" aria-hidden="true" tabindex="-1"></a>This is the most common early mistake, so it is worth stopping on. Nearly every dataset has categorical variables, and almost none of them belong inside <span class="in">`(1 | ... )`</span>. Before writing that term, ask three questions.</span>
-<span id="cb34-172"><a href="#cb34-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-173"><a href="#cb34-173" aria-hidden="true" tabindex="-1"></a>**How many units are there?** A random intercept does not estimate a set of group means. It estimates a *variance*, and it does so from as many observations as there are groups. Estimating a variance from nine numbers is exactly as unreliable as it sounds. Common guidance wants 30 to 50 level-2 units for reasonable precision, with roughly 20 as a floor below which the estimate should not be trusted. We have 160 schools, which is comfortable.</span>
-<span id="cb34-174"><a href="#cb34-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-175"><a href="#cb34-175" aria-hidden="true" tabindex="-1"></a>**Are these units a sample from a population you want to generalize to?** This is the conceptual heart of it. Random effects treat groups as draws from a population of groups, so your conclusions extend to schools you did not observe. These 160 schools are a sample of American high schools. By contrast, a variable like <span class="in">`sector`</span> has two categories that are not a sample of anything; they are the complete set. There is no larger population of sectors to infer toward.</span>
-<span id="cb34-176"><a href="#cb34-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-177"><a href="#cb34-177" aria-hidden="true" tabindex="-1"></a>**Do you want group-specific effects, or the variation among groups?** If you want to know how each category differs, that is a fixed effect: put it on the right side of the <span class="in">`~`</span> like any other predictor. If you want to know how much groups vary as a class, and to generalize beyond the ones you have, that is a random effect.</span>
-<span id="cb34-178"><a href="#cb34-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-179"><a href="#cb34-179" aria-hidden="true" tabindex="-1"></a>So in this dataset, <span class="in">`schoolid`</span> goes in the random part and <span class="in">`sector`</span>, <span class="in">`female`</span>, and <span class="in">`minority`</span> go in the fixed part. Sex has two categories. Treatment condition has two. Region usually has four. None of those are clustering variables, however naturally the data seem to group by them.</span>
-<span id="cb34-180"><a href="#cb34-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-181"><a href="#cb34-181" aria-hidden="true" tabindex="-1"></a>R will not stop you from writing <span class="in">`(1 | sector)`</span>. It will return a variance component and standard errors and flag nothing at all. The number will simply not mean what you think it means.</span>
-<span id="cb34-182"><a href="#cb34-182" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb34-183"><a href="#cb34-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-184"><a href="#cb34-184" aria-hidden="true" tabindex="-1"></a>Two numbers in the Random effects section carry the story. The variance associated with <span class="in">`schoolid`</span> is the between-school variance, written $\tau_{00}$. The Residual variance is the within-school, student-level variance, written $\sigma^2$.</span>
-<span id="cb34-185"><a href="#cb34-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-186"><a href="#cb34-186" aria-hidden="true" tabindex="-1"></a>You also get AIC and BIC, two very common information criterion measures used to assess model fit.</span>
-<span id="cb34-187"><a href="#cb34-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-188"><a href="#cb34-188" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb34-189"><a href="#cb34-189" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why `REML = FALSE`?</span></span>
-<span id="cb34-190"><a href="#cb34-190" aria-hidden="true" tabindex="-1"></a><span class="in">`lmer()`</span> can estimate a model two ways. Restricted maximum likelihood (REML), the default, gives less biased variance components, especially with few level-2 units. Maximum likelihood (ML), which <span class="in">`REML = FALSE`</span> requests, is required whenever you compare models that differ in their *fixed* effects, because REML likelihoods are not comparable across different fixed-effect specifications.</span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a><span class="in">`Hmisc`</span> and <span class="in">`dplyr`</span> both define functions named <span class="in">`summarize`</span> and <span class="in">`src`</span>. Loading <span class="in">`Hmisc`</span> after the tidyverse means its versions win, and you may see masking messages at load. If a tidyverse function starts behaving oddly, call it explicitly as <span class="in">`dplyr::summarize()`</span>.</span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load in the data and use `glimpse` to summarize the structure</span></span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a>hsb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"hsbmerged.csv"</span>)</span>
+<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(hsb)</span>
+<span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a>7,185 students across 160 schools. <span class="in">`mathach`</span> is our outcome, a standardized math achievement score, and <span class="in">`schoolid`</span> identifies the school each student attends. That second variable is what makes multilevel modeling possible here.</span>
+<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quick data cleaning and coding tips</span></span>
+<span id="cb34-45"><a href="#cb34-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-46"><a href="#cb34-46" aria-hidden="true" tabindex="-1"></a><span class="fu">### The `summary` command from base R is a quick and easy way to explore a new dataset</span></span>
+<span id="cb34-47"><a href="#cb34-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-50"><a href="#cb34-50" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-51"><a href="#cb34-51" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hsb)</span>
+<span id="cb34-52"><a href="#cb34-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-53"><a href="#cb34-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-54"><a href="#cb34-54" aria-hidden="true" tabindex="-1"></a>Summary gives you a quick, high-level look at every variable in a dataset. It is also useful for your own records: copy and paste it into a Word file and you have something to refer back to.</span>
+<span id="cb34-55"><a href="#cb34-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-56"><a href="#cb34-56" aria-hidden="true" tabindex="-1"></a>Read it critically, though. Every column here gets a mean and quartiles, including <span class="in">`sector`</span>, <span class="in">`female`</span>, and <span class="in">`minority`</span>, which are categories rather than quantities. The mean of <span class="in">`sector`</span> is the proportion of students in one sector, which is mildly useful, but its quartiles are meaningless. This is the same issue from Chapter 1, and we are about to fix it.</span>
+<span id="cb34-57"><a href="#cb34-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-58"><a href="#cb34-58" aria-hidden="true" tabindex="-1"></a><span class="fu">### Let's give some variables a label</span></span>
+<span id="cb34-59"><a href="#cb34-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-60"><a href="#cb34-60" aria-hidden="true" tabindex="-1"></a>Now, data cleaning and coding. We will apply labels to two things: the variables themselves, and the values within a given variable. Both are good practice for keeping your data readable.</span>
+<span id="cb34-61"><a href="#cb34-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-64"><a href="#cb34-64" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-65"><a href="#cb34-65" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(hsb<span class="sc">$</span>mathach) <span class="ot">=</span> <span class="st">"Std. Math Score"</span></span>
+<span id="cb34-66"><a href="#cb34-66" aria-hidden="true" tabindex="-1"></a><span class="fu">label</span>(hsb<span class="sc">$</span>sector) <span class="ot">=</span> <span class="st">"School Sector"</span></span>
+<span id="cb34-67"><a href="#cb34-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-68"><a href="#cb34-68" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(hsb<span class="sc">$</span>sector)</span>
+<span id="cb34-69"><a href="#cb34-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-70"><a href="#cb34-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-71"><a href="#cb34-71" aria-hidden="true" tabindex="-1"></a>The <span class="in">`str()`</span> output now shows the label attached to the variable. This carries through to <span class="in">`Hmisc::describe()`</span> output and to some plotting functions, which means a table six months from now still says "Std. Math Score" rather than <span class="in">`mathach`</span>.</span>
+<span id="cb34-72"><a href="#cb34-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-73"><a href="#cb34-73" aria-hidden="true" tabindex="-1"></a><span class="fu">### Let's create a factor version of `sector` and label its values</span></span>
+<span id="cb34-74"><a href="#cb34-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-77"><a href="#cb34-77" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-78"><a href="#cb34-78" aria-hidden="true" tabindex="-1"></a>hsb.clean <span class="ot">&lt;-</span> hsb <span class="sc">%&gt;%</span></span>
+<span id="cb34-79"><a href="#cb34-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(.,</span>
+<span id="cb34-80"><a href="#cb34-80" aria-hidden="true" tabindex="-1"></a>         <span class="at">sector.factor =</span> <span class="fu">as_factor</span>(sector),</span>
+<span id="cb34-81"><a href="#cb34-81" aria-hidden="true" tabindex="-1"></a>         <span class="at">female.factor =</span> <span class="fu">as_factor</span>(female),</span>
+<span id="cb34-82"><a href="#cb34-82" aria-hidden="true" tabindex="-1"></a>         <span class="at">minority.factor =</span> <span class="fu">as_factor</span>(minority))</span>
+<span id="cb34-83"><a href="#cb34-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-84"><a href="#cb34-84" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(hsb.clean<span class="sc">$</span>sector.factor) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Public"</span>, <span class="st">"Parochial"</span>)</span>
+<span id="cb34-85"><a href="#cb34-85" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(hsb.clean<span class="sc">$</span>female.factor) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>)</span>
+<span id="cb34-86"><a href="#cb34-86" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(hsb.clean<span class="sc">$</span>minority.factor) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Non-Minority"</span>, <span class="st">"Minority"</span>)</span>
+<span id="cb34-87"><a href="#cb34-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-88"><a href="#cb34-88" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(hsb.clean<span class="sc">$</span>sector.factor)</span>
+<span id="cb34-89"><a href="#cb34-89" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-90"><a href="#cb34-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-91"><a href="#cb34-91" aria-hidden="true" tabindex="-1"></a>Two steps here, and it is worth separating them. <span class="in">`as_factor()`</span> converts the numeric variable into a factor, so R treats it as a category. Assigning to <span class="in">`levels()`</span> then renames those categories from 0 and 1 into words.</span>
+<span id="cb34-92"><a href="#cb34-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-93"><a href="#cb34-93" aria-hidden="true" tabindex="-1"></a>Order matters when you assign levels this way. The names are applied in the order R already has the levels in, so <span class="in">`c("Public", "Parochial")`</span> assumes 0 comes first. Always check the result:</span>
+<span id="cb34-94"><a href="#cb34-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-97"><a href="#cb34-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-98"><a href="#cb34-98" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(hsb.clean<span class="sc">$</span>sector.factor)</span>
+<span id="cb34-99"><a href="#cb34-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-100"><a href="#cb34-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-101"><a href="#cb34-101" aria-hidden="true" tabindex="-1"></a>3,642 public and 3,543 Parochial. If those counts had come out reversed from what you expected, the labels went on backwards, and every result from here forward would be silently mislabeled.</span>
+<span id="cb34-102"><a href="#cb34-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-103"><a href="#cb34-103" aria-hidden="true" tabindex="-1"></a><span class="fu">### Run `summary` again and notice how it handles factors</span></span>
+<span id="cb34-104"><a href="#cb34-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-107"><a href="#cb34-107" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-108"><a href="#cb34-108" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hsb.clean)</span>
+<span id="cb34-109"><a href="#cb34-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-110"><a href="#cb34-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-111"><a href="#cb34-111" aria-hidden="true" tabindex="-1"></a>Compare this to the earlier output. The factor versions of the variables no longer report meaningless means and quartiles. Instead they report counts per category, which is what you actually want to know. Same data, same function, but R now understands what kind of variable it is looking at.</span>
+<span id="cb34-112"><a href="#cb34-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-113"><a href="#cb34-113" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exploring our outcome, math achievement</span></span>
+<span id="cb34-114"><a href="#cb34-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-115"><a href="#cb34-115" aria-hidden="true" tabindex="-1"></a>Now let's look at <span class="in">`mathach`</span> using the <span class="in">`describe`</span> function from the <span class="in">`Hmisc`</span> package:</span>
+<span id="cb34-116"><a href="#cb34-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-119"><a href="#cb34-119" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-120"><a href="#cb34-120" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(hsb.clean<span class="sc">$</span>mathach)</span>
+<span id="cb34-121"><a href="#cb34-121" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-122"><a href="#cb34-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-123"><a href="#cb34-123" aria-hidden="true" tabindex="-1"></a><span class="in">`Hmisc::describe()`</span> reports more than the <span class="in">`psych`</span> version: distinct values, several percentiles, and the five lowest and highest observations. That last part is a quiet outlier check. If the highest values were 24, 25, and 9999, you would see it here.</span>
+<span id="cb34-124"><a href="#cb34-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-127"><a href="#cb34-127" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-128"><a href="#cb34-128" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-mathach</span></span>
+<span id="cb34-129"><a href="#cb34-129" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribution of math achievement scores."</span></span>
+<span id="cb34-130"><a href="#cb34-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-131"><a href="#cb34-131" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(hsb.clean<span class="sc">$</span>mathach,</span>
+<span id="cb34-132"><a href="#cb34-132" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Distribution of Math Achievement Scores"</span>,</span>
+<span id="cb34-133"><a href="#cb34-133" aria-hidden="true" tabindex="-1"></a>     <span class="at">sub =</span> <span class="st">"N = 7,185. Students from the High School and Beyond Survey (1988)."</span>,</span>
+<span id="cb34-134"><a href="#cb34-134" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Standardized Math Achievement Score"</span>)</span>
+<span id="cb34-135"><a href="#cb34-135" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-136"><a href="#cb34-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-137"><a href="#cb34-137" aria-hidden="true" tabindex="-1"></a>This histogram describes students in general, which is useful but hides the thing we actually care about. The question motivating multilevel modeling is whether *schools* differ. One quick way to see it is to plot school averages instead of individual scores:</span>
+<span id="cb34-138"><a href="#cb34-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-141"><a href="#cb34-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-142"><a href="#cb34-142" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-schoolmeans</span></span>
+<span id="cb34-143"><a href="#cb34-143" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Average math achievement across the 160 schools."</span></span>
+<span id="cb34-144"><a href="#cb34-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-145"><a href="#cb34-145" aria-hidden="true" tabindex="-1"></a>school_means <span class="ot">&lt;-</span> hsb.clean <span class="sc">%&gt;%</span></span>
+<span id="cb34-146"><a href="#cb34-146" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(schoolid) <span class="sc">%&gt;%</span></span>
+<span id="cb34-147"><a href="#cb34-147" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">school_mean =</span> <span class="fu">mean</span>(mathach, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb34-148"><a href="#cb34-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-149"><a href="#cb34-149" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(school_means<span class="sc">$</span>school_mean,</span>
+<span id="cb34-150"><a href="#cb34-150" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"School Average Math Achievement"</span>,</span>
+<span id="cb34-151"><a href="#cb34-151" aria-hidden="true" tabindex="-1"></a>     <span class="at">sub =</span> <span class="st">"Each observation is one of 160 schools."</span>,</span>
+<span id="cb34-152"><a href="#cb34-152" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"School mean math achievement"</span>)</span>
+<span id="cb34-153"><a href="#cb34-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-154"><a href="#cb34-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-155"><a href="#cb34-155" aria-hidden="true" tabindex="-1"></a>If every school had the same average, this would be a single narrow spike. It is not, and that spread is exactly what the null model is about to quantify.</span>
+<span id="cb34-156"><a href="#cb34-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-157"><a href="#cb34-157" aria-hidden="true" tabindex="-1"></a><span class="fu">## Running a null model</span></span>
+<span id="cb34-158"><a href="#cb34-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-161"><a href="#cb34-161" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-162"><a href="#cb34-162" aria-hidden="true" tabindex="-1"></a>model.null <span class="ot">&lt;-</span> <span class="fu">lmer</span>(mathach <span class="sc">~</span> (<span class="dv">1</span><span class="sc">|</span>schoolid), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> hsb.clean)</span>
+<span id="cb34-163"><a href="#cb34-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-164"><a href="#cb34-164" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.null)</span>
+<span id="cb34-165"><a href="#cb34-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-166"><a href="#cb34-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-167"><a href="#cb34-167" aria-hidden="true" tabindex="-1"></a>The <span class="in">`(1|schoolid)`</span> term is what makes this multilevel. It tells <span class="in">`lmer()`</span> to estimate a separate intercept for each school, drawn from a distribution whose variance we want to estimate.</span>
+<span id="cb34-168"><a href="#cb34-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-169"><a href="#cb34-169" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
+<span id="cb34-170"><a href="#cb34-170" aria-hidden="true" tabindex="-1"></a><span class="fu">## What makes `schoolid` a clustering variable, and what does not</span></span>
+<span id="cb34-171"><a href="#cb34-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-172"><a href="#cb34-172" aria-hidden="true" tabindex="-1"></a>This is the most common early mistake, so it is worth stopping on. Nearly every dataset has categorical variables, and almost none of them belong inside <span class="in">`(1 | ... )`</span>. Before writing that term, ask three questions.</span>
+<span id="cb34-173"><a href="#cb34-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-174"><a href="#cb34-174" aria-hidden="true" tabindex="-1"></a>**How many units are there?** A random intercept does not estimate a set of group means. It estimates a *variance*, and it does so from as many observations as there are groups. Estimating a variance from nine numbers is exactly as unreliable as it sounds. Common guidance wants 30 to 50 level-2 units for reasonable precision, with roughly 20 as a floor below which the estimate should not be trusted. We have 160 schools, which is comfortable.</span>
+<span id="cb34-175"><a href="#cb34-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-176"><a href="#cb34-176" aria-hidden="true" tabindex="-1"></a>**Are these units a sample from a population you want to generalize to?** This is the conceptual heart of it. Random effects treat groups as draws from a population of groups, so your conclusions extend to schools you did not observe. These 160 schools are a sample of American high schools. By contrast, a variable like <span class="in">`sector`</span> has two categories that are not a sample of anything; they are the complete set. There is no larger population of sectors to infer toward.</span>
+<span id="cb34-177"><a href="#cb34-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-178"><a href="#cb34-178" aria-hidden="true" tabindex="-1"></a>**Do you want group-specific effects, or the variation among groups?** If you want to know how each category differs, that is a fixed effect: put it on the right side of the <span class="in">`~`</span> like any other predictor. If you want to know how much groups vary as a class, and to generalize beyond the ones you have, that is a random effect.</span>
+<span id="cb34-179"><a href="#cb34-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-180"><a href="#cb34-180" aria-hidden="true" tabindex="-1"></a>So in this dataset, <span class="in">`schoolid`</span> goes in the random part and <span class="in">`sector`</span>, <span class="in">`female`</span>, and <span class="in">`minority`</span> go in the fixed part. Sex has two categories. Treatment condition has two. Region usually has four. None of those are clustering variables, however naturally the data seem to group by them.</span>
+<span id="cb34-181"><a href="#cb34-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-182"><a href="#cb34-182" aria-hidden="true" tabindex="-1"></a>R will not stop you from writing <span class="in">`(1 | sector)`</span>. It will return a variance component and standard errors and flag nothing at all. The number will simply not mean what you think it means.</span>
+<span id="cb34-183"><a href="#cb34-183" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb34-184"><a href="#cb34-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-185"><a href="#cb34-185" aria-hidden="true" tabindex="-1"></a>Two numbers in the Random effects section carry the story. The variance associated with <span class="in">`schoolid`</span> is the between-school variance, written $\tau_{00}$. The Residual variance is the within-school, student-level variance, written $\sigma^2$.</span>
+<span id="cb34-186"><a href="#cb34-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-187"><a href="#cb34-187" aria-hidden="true" tabindex="-1"></a>You also get AIC and BIC, two very common information criterion measures used to assess model fit.</span>
+<span id="cb34-188"><a href="#cb34-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-189"><a href="#cb34-189" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb34-190"><a href="#cb34-190" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why `REML = FALSE`?</span></span>
 <span id="cb34-191"><a href="#cb34-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-192"><a href="#cb34-192" aria-hidden="true" tabindex="-1"></a>This book uses ML throughout so that numbers stay consistent from one page to the next and model comparisons are always valid. With 160 schools, the difference between the two is small.</span>
-<span id="cb34-193"><a href="#cb34-193" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb34-194"><a href="#cb34-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-195"><a href="#cb34-195" aria-hidden="true" tabindex="-1"></a><span class="fu">## Post-estimation task: calculate the ICC</span></span>
+<span id="cb34-192"><a href="#cb34-192" aria-hidden="true" tabindex="-1"></a><span class="in">`lmer()`</span> can estimate a model two ways. Restricted maximum likelihood (REML), the default, gives less biased variance components, especially with few level-2 units. Maximum likelihood (ML), which <span class="in">`REML = FALSE`</span> requests, is required whenever you compare models that differ in their *fixed* effects, because REML likelihoods are not comparable across different fixed-effect specifications.</span>
+<span id="cb34-193"><a href="#cb34-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-194"><a href="#cb34-194" aria-hidden="true" tabindex="-1"></a>This book uses ML throughout so that numbers stay consistent from one page to the next and model comparisons are always valid. With 160 schools, the difference between the two is small.</span>
+<span id="cb34-195"><a href="#cb34-195" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb34-196"><a href="#cb34-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-197"><a href="#cb34-197" aria-hidden="true" tabindex="-1"></a>These commands are run after any kind of MLM. They are called post-estimation commands because they require that the model be saved in memory. If you do something else and then try to run them, you will likely get an error.</span>
+<span id="cb34-197"><a href="#cb34-197" aria-hidden="true" tabindex="-1"></a><span class="fu">## Post-estimation task: calculate the ICC</span></span>
 <span id="cb34-198"><a href="#cb34-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-199"><a href="#cb34-199" aria-hidden="true" tabindex="-1"></a>The intraclass correlation is the proportion of total variance lying between schools:</span>
+<span id="cb34-199"><a href="#cb34-199" aria-hidden="true" tabindex="-1"></a>These commands are run after any kind of MLM. They are called post-estimation commands because they require that the model be saved in memory. If you do something else and then try to run them, you will likely get an error.</span>
 <span id="cb34-200"><a href="#cb34-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-201"><a href="#cb34-201" aria-hidden="true" tabindex="-1"></a>$$\text{ICC} = \frac{\tau_{00}}{\tau_{00} + \sigma^2}$$</span>
+<span id="cb34-201"><a href="#cb34-201" aria-hidden="true" tabindex="-1"></a>The intraclass correlation is the proportion of total variance lying between schools:</span>
 <span id="cb34-202"><a href="#cb34-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-203"><a href="#cb34-203" aria-hidden="true" tabindex="-1"></a>Here's a quick and easy way to get our friend the ICC:</span>
+<span id="cb34-203"><a href="#cb34-203" aria-hidden="true" tabindex="-1"></a>$$\text{ICC} = \frac{\tau_{00}}{\tau_{00} + \sigma^2}$$</span>
 <span id="cb34-204"><a href="#cb34-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-207"><a href="#cb34-207" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-208"><a href="#cb34-208" aria-hidden="true" tabindex="-1"></a>null.ICC <span class="ot">&lt;-</span> <span class="fl">8.553</span><span class="sc">/</span>(<span class="fl">8.553</span> <span class="sc">+</span> <span class="fl">39.148</span>)</span>
-<span id="cb34-209"><a href="#cb34-209" aria-hidden="true" tabindex="-1"></a>null.ICC</span>
-<span id="cb34-210"><a href="#cb34-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-211"><a href="#cb34-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-212"><a href="#cb34-212" aria-hidden="true" tabindex="-1"></a>Roughly 18 percent of the variation in math achievement is between schools. Put another way, two students from the same school are noticeably more similar to each other than two students drawn at random from the full sample. That is the condition that makes ordinary regression standard errors too small.</span>
+<span id="cb34-205"><a href="#cb34-205" aria-hidden="true" tabindex="-1"></a>Here's a quick and easy way to get our friend the ICC:</span>
+<span id="cb34-206"><a href="#cb34-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-209"><a href="#cb34-209" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-210"><a href="#cb34-210" aria-hidden="true" tabindex="-1"></a>null.ICC <span class="ot">&lt;-</span> <span class="fl">8.553</span><span class="sc">/</span>(<span class="fl">8.553</span> <span class="sc">+</span> <span class="fl">39.148</span>)</span>
+<span id="cb34-211"><a href="#cb34-211" aria-hidden="true" tabindex="-1"></a>null.ICC</span>
+<span id="cb34-212"><a href="#cb34-212" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb34-213"><a href="#cb34-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-214"><a href="#cb34-214" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb34-215"><a href="#cb34-215" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pulling the numbers out rather than typing them</span></span>
-<span id="cb34-216"><a href="#cb34-216" aria-hidden="true" tabindex="-1"></a>Typing the variance components by hand works and makes the formula visible, which is why it is worth doing once. For your own analyses it is safer to extract them from the model, since a transposed digit produces a plausible-looking wrong answer:</span>
-<span id="cb34-217"><a href="#cb34-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-220"><a href="#cb34-220" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-221"><a href="#cb34-221" aria-hidden="true" tabindex="-1"></a>vc <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">VarCorr</span>(model.null))</span>
-<span id="cb34-222"><a href="#cb34-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-223"><a href="#cb34-223" aria-hidden="true" tabindex="-1"></a>tau00  <span class="ot">&lt;-</span> vc<span class="sc">$</span>vcov[vc<span class="sc">$</span>grp <span class="sc">==</span> <span class="st">"schoolid"</span>]</span>
-<span id="cb34-224"><a href="#cb34-224" aria-hidden="true" tabindex="-1"></a>sigma2 <span class="ot">&lt;-</span> vc<span class="sc">$</span>vcov[vc<span class="sc">$</span>grp <span class="sc">==</span> <span class="st">"Residual"</span>]</span>
+<span id="cb34-214"><a href="#cb34-214" aria-hidden="true" tabindex="-1"></a>Roughly 18 percent of the variation in math achievement is between schools. Put another way, two students from the same school are noticeably more similar to each other than two students drawn at random from the full sample. That is the condition that makes ordinary regression standard errors too small.</span>
+<span id="cb34-215"><a href="#cb34-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-216"><a href="#cb34-216" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb34-217"><a href="#cb34-217" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pulling the numbers out rather than typing them</span></span>
+<span id="cb34-218"><a href="#cb34-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-219"><a href="#cb34-219" aria-hidden="true" tabindex="-1"></a>Typing the variance components by hand works and makes the formula visible, which is why it is worth doing once. For your own analyses it is safer to extract them from the model, since a transposed digit produces a plausible-looking wrong answer:</span>
+<span id="cb34-220"><a href="#cb34-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-223"><a href="#cb34-223" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-224"><a href="#cb34-224" aria-hidden="true" tabindex="-1"></a>vc <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">VarCorr</span>(model.null))</span>
 <span id="cb34-225"><a href="#cb34-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-226"><a href="#cb34-226" aria-hidden="true" tabindex="-1"></a>tau00 <span class="sc">/</span> (tau00 <span class="sc">+</span> sigma2)</span>
-<span id="cb34-227"><a href="#cb34-227" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-226"><a href="#cb34-226" aria-hidden="true" tabindex="-1"></a>tau00  <span class="ot">&lt;-</span> vc<span class="sc">$</span>vcov[vc<span class="sc">$</span>grp <span class="sc">==</span> <span class="st">"schoolid"</span>]</span>
+<span id="cb34-227"><a href="#cb34-227" aria-hidden="true" tabindex="-1"></a>sigma2 <span class="ot">&lt;-</span> vc<span class="sc">$</span>vcov[vc<span class="sc">$</span>grp <span class="sc">==</span> <span class="st">"Residual"</span>]</span>
 <span id="cb34-228"><a href="#cb34-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-229"><a href="#cb34-229" aria-hidden="true" tabindex="-1"></a>The <span class="in">`performance`</span> package will also compute it directly with <span class="in">`performance::icc(model.null)`</span>.</span>
-<span id="cb34-232"><a href="#cb34-232" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-233"><a href="#cb34-233" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(model.null)</span>
-<span id="cb34-234"><a href="#cb34-234" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-235"><a href="#cb34-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-236"><a href="#cb34-236" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb34-237"><a href="#cb34-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-238"><a href="#cb34-238" aria-hidden="true" tabindex="-1"></a><span class="fu">## Using `lmerTest` to evaluate random effects</span></span>
-<span id="cb34-239"><a href="#cb34-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-242"><a href="#cb34-242" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-243"><a href="#cb34-243" aria-hidden="true" tabindex="-1"></a><span class="fu">ranova</span>(model.null)</span>
-<span id="cb34-244"><a href="#cb34-244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-245"><a href="#cb34-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-246"><a href="#cb34-246" aria-hidden="true" tabindex="-1"></a>This is a likelihood ratio test comparing our model to one without the random intercept. A significant result says that letting schools have their own intercepts improves fit enough to justify the extra parameter.</span>
-<span id="cb34-247"><a href="#cb34-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-248"><a href="#cb34-248" aria-hidden="true" tabindex="-1"></a>Read it alongside the ICC rather than instead of it. The test tells you whether school-level variance is distinguishable from zero; the ICC tells you how much of it there is. With 7,185 students you have enough power to detect quite small amounts of clustering, so significance alone is weak evidence that multilevel modeling matters substantively.</span>
-<span id="cb34-249"><a href="#cb34-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-250"><a href="#cb34-250" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb34-251"><a href="#cb34-251" aria-hidden="true" tabindex="-1"></a><span class="fu">## `rand()` became `ranova()`</span></span>
-<span id="cb34-252"><a href="#cb34-252" aria-hidden="true" tabindex="-1"></a>Older handouts call <span class="in">`lmerTest::rand()`</span>. The function was renamed to <span class="in">`ranova()`</span> several versions ago. The old name may still work but is no longer the documented one.</span>
-<span id="cb34-253"><a href="#cb34-253" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb34-254"><a href="#cb34-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-255"><a href="#cb34-255" aria-hidden="true" tabindex="-1"></a><span class="fu">## Always interesting: compare our MLM to a regular regression</span></span>
-<span id="cb34-256"><a href="#cb34-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-259"><a href="#cb34-259" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-260"><a href="#cb34-260" aria-hidden="true" tabindex="-1"></a>model.regular <span class="ot">&lt;-</span> <span class="fu">lm</span>(mathach <span class="sc">~</span> <span class="cn">NULL</span>, <span class="at">data =</span> hsb.clean)</span>
-<span id="cb34-261"><a href="#cb34-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-262"><a href="#cb34-262" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.regular)</span>
-<span id="cb34-263"><a href="#cb34-263" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-264"><a href="#cb34-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-265"><a href="#cb34-265" aria-hidden="true" tabindex="-1"></a>The intercept estimates are similar, which is expected in a null model. What differs is the standard error, and that difference is the entire practical argument for multilevel modeling. Ordinary regression treats 7,185 students as 7,185 independent pieces of information, when students within a school share teachers, curricula, neighborhoods, and funding. The result is standard errors that are too small and p-values that are too optimistic.</span>
-<span id="cb34-266"><a href="#cb34-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-267"><a href="#cb34-267" aria-hidden="true" tabindex="-1"></a>One last point students routinely get wrong. The fixed-effect intercept in the null model is not simply the mean of all 7,185 scores. It estimates the average of the *school* means, weighting schools by how much information each contributes. With balanced data the two are close; with unbalanced data they differ, and the multilevel estimate is usually the one you want.</span>
+<span id="cb34-229"><a href="#cb34-229" aria-hidden="true" tabindex="-1"></a>tau00 <span class="sc">/</span> (tau00 <span class="sc">+</span> sigma2)</span>
+<span id="cb34-230"><a href="#cb34-230" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-231"><a href="#cb34-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-232"><a href="#cb34-232" aria-hidden="true" tabindex="-1"></a>The <span class="in">`performance`</span> package will also compute it directly with <span class="in">`performance::icc(model.null)`</span>.</span>
+<span id="cb34-233"><a href="#cb34-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-236"><a href="#cb34-236" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-237"><a href="#cb34-237" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(model.null)</span>
+<span id="cb34-238"><a href="#cb34-238" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-239"><a href="#cb34-239" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb34-240"><a href="#cb34-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-241"><a href="#cb34-241" aria-hidden="true" tabindex="-1"></a><span class="fu">## Using `lmerTest` to evaluate random effects</span></span>
+<span id="cb34-242"><a href="#cb34-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-245"><a href="#cb34-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-246"><a href="#cb34-246" aria-hidden="true" tabindex="-1"></a><span class="fu">ranova</span>(model.null)</span>
+<span id="cb34-247"><a href="#cb34-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-248"><a href="#cb34-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-249"><a href="#cb34-249" aria-hidden="true" tabindex="-1"></a>This is a likelihood ratio test comparing our model to one without the random intercept. A significant result says that letting schools have their own intercepts improves fit enough to justify the extra parameter.</span>
+<span id="cb34-250"><a href="#cb34-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-251"><a href="#cb34-251" aria-hidden="true" tabindex="-1"></a>Read it alongside the ICC rather than instead of it. The test tells you whether school-level variance is distinguishable from zero; the ICC tells you how much of it there is. With 7,185 students you have enough power to detect quite small amounts of clustering, so significance alone is weak evidence that multilevel modeling matters substantively.</span>
+<span id="cb34-252"><a href="#cb34-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-253"><a href="#cb34-253" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb34-254"><a href="#cb34-254" aria-hidden="true" tabindex="-1"></a><span class="fu">## `rand()` became `ranova()`</span></span>
+<span id="cb34-255"><a href="#cb34-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-256"><a href="#cb34-256" aria-hidden="true" tabindex="-1"></a>Older handouts call <span class="in">`lmerTest::rand()`</span>. The function was renamed to <span class="in">`ranova()`</span> several versions ago. The old name may still work but is no longer the documented one.</span>
+<span id="cb34-257"><a href="#cb34-257" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb34-258"><a href="#cb34-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-259"><a href="#cb34-259" aria-hidden="true" tabindex="-1"></a><span class="fu">## Always interesting: compare our MLM to a regular regression</span></span>
+<span id="cb34-260"><a href="#cb34-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-263"><a href="#cb34-263" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-264"><a href="#cb34-264" aria-hidden="true" tabindex="-1"></a>model.regular <span class="ot">&lt;-</span> <span class="fu">lm</span>(mathach <span class="sc">~</span> <span class="cn">NULL</span>, <span class="at">data =</span> hsb.clean)</span>
+<span id="cb34-265"><a href="#cb34-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-266"><a href="#cb34-266" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.regular)</span>
+<span id="cb34-267"><a href="#cb34-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb34-268"><a href="#cb34-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-271"><a href="#cb34-271" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-272"><a href="#cb34-272" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(hsb.clean<span class="sc">$</span>mathach, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)   <span class="co"># grand mean of all students</span></span>
-<span id="cb34-273"><a href="#cb34-273" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>(model.null)                       <span class="co"># model-based estimate</span></span>
-<span id="cb34-274"><a href="#cb34-274" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-275"><a href="#cb34-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-276"><a href="#cb34-276" aria-hidden="true" tabindex="-1"></a><span class="fu">## What comes next</span></span>
-<span id="cb34-277"><a href="#cb34-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-278"><a href="#cb34-278" aria-hidden="true" tabindex="-1"></a>The null model tells us schools differ. It does not tell us why. The next chapter starts adding predictors, at both the student and school levels, to explain some of the variance we just found.</span>
+<span id="cb34-269"><a href="#cb34-269" aria-hidden="true" tabindex="-1"></a>The intercept estimates are similar, which is expected in a null model. What differs is the standard error, and that difference is the entire practical argument for multilevel modeling. Ordinary regression treats 7,185 students as 7,185 independent pieces of information, when students within a school share teachers, curricula, neighborhoods, and funding. The result is standard errors that are too small and p-values that are too optimistic.</span>
+<span id="cb34-270"><a href="#cb34-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-271"><a href="#cb34-271" aria-hidden="true" tabindex="-1"></a>One last point students routinely get wrong. The fixed-effect intercept in the null model is not simply the mean of all 7,185 scores. It estimates the average of the *school* means, weighting schools by how much information each contributes. With balanced data the two are close; with unbalanced data they differ, and the multilevel estimate is usually the one you want.</span>
+<span id="cb34-272"><a href="#cb34-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-275"><a href="#cb34-275" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-276"><a href="#cb34-276" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(hsb.clean<span class="sc">$</span>mathach, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)   <span class="co"># grand mean of all students</span></span>
+<span id="cb34-277"><a href="#cb34-277" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>(model.null)                       <span class="co"># model-based estimate</span></span>
+<span id="cb34-278"><a href="#cb34-278" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-279"><a href="#cb34-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-280"><a href="#cb34-280" aria-hidden="true" tabindex="-1"></a><span class="fu">## What comes next</span></span>
+<span id="cb34-281"><a href="#cb34-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-282"><a href="#cb34-282" aria-hidden="true" tabindex="-1"></a>The null model tells us schools differ. It does not tell us why. The next chapter starts adding predictors, at both the student and school levels, to explain some of the variance we just found.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

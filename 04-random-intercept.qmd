@@ -72,7 +72,7 @@ lq2002 %>%
                             labels = c("Hostility", "Task Significance", "Leadership Climate"))) %>%
   ggplot(aes(x = value)) +
   geom_histogram(bins = 20, fill = "grey70", color = "white") +
-  facet_wrap(~ variable, scales = "free_x", nrow = 1) +
+  facet_wrap(~ variable, scales = "free_x", nrow = 2) +
   labs(x = NULL, y = "Count",
        caption = "N = 2,042 U.S. Army active duty soldiers. Data from Gavin and Hofmann (2002).") +
   theme_minimal()

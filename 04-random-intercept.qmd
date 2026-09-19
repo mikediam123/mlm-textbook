@@ -85,6 +85,8 @@ Notice the shape of the hostility distribution in the leftmost panel. It piles u
 ### Step one: the null model
 
 ```{r}
+library(lmerTest)
+
 model.0 <- lmer(HOSTILE ~ (1|COMPID), REML = FALSE, data = lq2002)
 
 summary(model.0)

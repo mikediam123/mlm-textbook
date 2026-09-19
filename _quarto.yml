@@ -1,6 +1,8 @@
 project:
   type: book
   output-dir: docs        # GitHub Pages serves from this folder
+  resources:
+    - activities/**
   post-render:
     - _postrender.R       # creates docs/.nojekyll, checks for stray CDN scripts
 

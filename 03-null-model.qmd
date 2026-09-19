@@ -174,6 +174,12 @@ This book uses ML throughout so that numbers stay consistent from one page to th
 
 ## Post-estimation task: calculate the ICC
 
+::: {.callout-tip}
+## Explore the ICC interactively
+
+[Open the school-variance simulation](activities/icc-simulation.html) to change between-school and within-school variance and watch the ICC respond. Predict each change before moving the sliders, then try the four questions below the plot.
+:::
+
 These commands are run after any kind of MLM. They are called post-estimation commands because they require that the model be saved in memory. If you do something else and then try to run them, you will likely get an error.
 
 The intraclass correlation is the proportion of total variance lying between schools:

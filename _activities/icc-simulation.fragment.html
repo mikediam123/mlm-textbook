@@ -1,0 +1,119 @@
+<div id="icc-school-simulation">
+  <h3>School variation and the ICC</h3>
+  <p>Predict what will happen, move a slider, then explain the change. These are simulated scores, not the HSB data.</p>
+  <p>ICC = between-school variance ÷ (between-school variance + within-school variance).</p>
+  <div class="viz-row"><button class="btn" id="icc-reset" type="button">Reset to textbook example</button></div>
+  <div class="icc-control-stack">
+  <div class="viz-controls">
+    <label class="form-label" for="icc-between">Between-school variance (τ₀₀): <output id="icc-between-value" class="tabular-nums">8.55</output> score²
+      <input class="form-range" id="icc-between" type="range" min="0" max="40" step="0.05" value="8.55">
+    </label>
+  </div>
+  <div class="viz-controls">
+    <label class="form-label" for="icc-within">Within-school variance (σ²): <output id="icc-within-value" class="tabular-nums">39.15</output> score²
+      <input class="form-range" id="icc-within" type="range" min="0" max="80" step="0.05" value="39.15">
+    </label>
+  </div>
+  </div>
+  <div class="viz-row" aria-live="polite" id="icc-result"><strong>Population ICC: <span id="icc-value" class="tabular-nums">0.179</span></strong><span id="icc-share">17.9% of variance between schools</span></div>
+  <div id="icc-meter" role="img" aria-label="17.9 percent between schools and 82.1 percent within schools"><span id="icc-between-bar"></span><span id="icc-within-bar"></span></div>
+  <div class="viz-row text-small" id="icc-legend"><span><span class="icc-key icc-between-key"></span>Between schools</span><span><span class="icc-key icc-within-key"></span>Within schools</span></div>
+  <div id="icc-plot-wrap"><svg id="icc-plot" role="img" aria-label="Simulated achievement scores for six schools"></svg></div>
+  <div class="viz-row text-small"><span>● Simulated student</span><span>┃ School expected mean</span><span>6 schools · 20 students each · fixed random draws</span></div>
+  <span class="sr-only" id="icc-a11y">The displayed ICC is calculated from population variance settings, not estimated from this small simulated sample.</span>
+  <h3>Try these experiments</h3>
+  <ol>
+    <li>Hold within-school variance constant. Increase between-school variance. What changes in the plot and the ICC?</li>
+    <li>Hold between-school variance constant. Can the ICC decrease without school expected means moving closer together?</li>
+    <li>Find two different pairs of settings that give ICC = 0.50. Is the total spread of scores the same?</li>
+    <li>Set between-school variance to zero. Can students within a school still have different scores?</li>
+  </ol>
+  <p>The ICC shown is a population value calculated from your settings. It is not estimated from the six displayed schools. The same random draws and score axis are retained so changes remain comparable. School markers indicate expected means, not sample averages.</p>
+  <p>Your answers are not submitted or collected here. Record your predictions, settings, and explanations in your course worksheet or Canvas assignment.</p>
+</div>
+<style>
+#icc-school-simulation { color:var(--foreground); }
+#icc-school-simulation .icc-control-stack { display:grid; grid-template-columns:minmax(0,1fr); gap:20px; margin-bottom:20px; }
+#icc-school-simulation #icc-meter { display:flex; height:18px; margin-top:12px; background:var(--muted); overflow:hidden; }
+#icc-school-simulation #icc-between-bar { background:var(--viz-series-1); width:17.9%; }
+#icc-school-simulation #icc-within-bar { background:var(--viz-series-2); flex:1; opacity:.45; }
+#icc-school-simulation .icc-key { display:inline-block; width:12px; height:8px; margin-right:4px; }
+#icc-school-simulation .icc-between-key { background:var(--viz-series-1); }
+#icc-school-simulation .icc-within-key { background:var(--viz-series-2); opacity:.45; }
+#icc-school-simulation #icc-legend { margin-top:6px; }
+#icc-school-simulation #icc-plot-wrap { width:100%; margin-top:10px; }
+#icc-school-simulation #icc-plot { display:block; width:100%; }
+#icc-school-simulation #icc-plot text { fill:var(--foreground); }
+#icc-school-simulation #icc-plot .icc-guide { stroke:var(--border); stroke-width:1; }
+#icc-school-simulation #icc-plot .icc-student { fill:var(--viz-series-2); fill-opacity:.55; }
+#icc-school-simulation #icc-plot .icc-mean { stroke:var(--viz-series-1); stroke-width:4; }
+</style>
+<script>
+(() => {
+  const root=document.getElementById('icc-school-simulation');
+  const el=id=>root.querySelector('#'+id);
+  const between=el('icc-between'), within=el('icc-within'), svg=el('icc-plot');
+  let rng=77221;
+  const uniform=()=>{rng=(Math.imul(1664525,rng)+1013904223)>>>0;return (rng+1)/4294967297;};
+  const normal=()=>Math.sqrt(-2*Math.log(uniform()))*Math.cos(2*Math.PI*uniform());
+  const groups=Array.from({length:6},(_,j)=>({name:String.fromCharCode(65+j),z:normal(),students:Array.from({length:20},()=>({z:normal(),jitter:(uniform()-.5)*22}))}));
+  // Keep both the random draws and the score axis fixed while parameters change.
+  // The axis covers the full control range for every generated observation.
+  const bound=Math.ceil(Math.max(...groups.flatMap(g=>g.students.map(s=>Math.abs(g.z)*Math.sqrt(40)+Math.abs(s.z)*Math.sqrt(80))))/10)*10;
+  let current={tau:8.55,sigma:39.15}, frame=0;
+  const sanitize=s=>({tau:Math.max(0,Math.min(40,Number.isFinite(s?.tau)?s.tau:8.55)),sigma:Math.max(0,Math.min(80,Number.isFinite(s?.sigma)?s.sigma:39.15))});
+  function plot(state) {
+    const width=Math.max(280,el('icc-plot-wrap').getBoundingClientRect().width);
+    const height=344,left=70,right=20,top=18,bottom=48;
+    const x=v=>left+(v+bound)/(2*bound)*(width-left-right);
+    const y=j=>top+24+j*45;
+    svg.setAttribute('viewBox',`0 0 ${width} ${height}`);
+    svg.setAttribute('height',height);
+    let markup='<title>Students nested within schools</title><desc>Dots show simulated students. Vertical marks show school expected means. The score axis and random draws remain fixed while variances change. ICC describes the generating population, not an estimate from these six schools.</desc>';
+    const ticks=width<430?[-bound,0,bound]:[-bound,-bound/2,0,bound/2,bound];
+    for(const t of ticks) markup+=`<line class="icc-guide" x1="${x(t)}" x2="${x(t)}" y1="${top}" y2="${height-bottom}"/><text class="text-small" x="${x(t)}" y="${height-bottom+22}" text-anchor="middle">${t}</text>`;
+    groups.forEach((g,j)=>{
+      const mu=Math.sqrt(state.tau)*g.z;
+      markup+=`<text class="text-small" x="${left-12}" y="${y(j)+4}" text-anchor="end">School ${g.name}</text>`;
+      g.students.forEach((s,i)=>{
+        const value=mu+Math.sqrt(state.sigma)*s.z;
+        markup+=`<circle class="icc-student" cx="${x(value)}" cy="${y(j)+s.jitter}" r="3.5" data-tooltip="School ${g.name}, student ${i+1}: ${value.toFixed(2)} score points"/>`;
+      });
+      markup+=`<line class="icc-mean" x1="${x(mu)}" x2="${x(mu)}" y1="${y(j)-16}" y2="${y(j)+16}" data-tooltip="School ${g.name} expected mean: ${mu.toFixed(2)} score points"/>`;
+    });
+    markup+=`<text class="text-small axis-title" data-axis="x" x="${(left+width-right)/2}" y="${height-4}" text-anchor="middle">Achievement score (overall mean = 0)</text>`;
+    svg.innerHTML=markup;
+  }
+  function metrics(s) {
+    const total=s.tau+s.sigma, icc=total?s.tau/total:null;
+    el('icc-between-value').textContent=s.tau.toFixed(2);
+    el('icc-within-value').textContent=s.sigma.toFixed(2);
+    el('icc-value').textContent=icc===null?'undefined':icc.toFixed(3);
+    el('icc-share').textContent=icc===null?'No variation: both variances are zero':`${(icc*100).toFixed(1)}% of variance between schools`;
+    el('icc-meter').setAttribute('aria-label',icc===null?'No variance to partition':`${(icc*100).toFixed(1)} percent between schools and ${((1-icc)*100).toFixed(1)} percent within schools`);
+    el('icc-between-bar').style.width=`${icc===null?0:icc*100}%`;
+    el('icc-within-bar').style.visibility=icc===null?'hidden':'visible';
+  }
+  function update(s,animate) {
+    cancelAnimationFrame(frame);
+    metrics(s);
+    if(!animate || matchMedia('(prefers-reduced-motion: reduce)').matches){current=s;plot(s);return;}
+    const from={...current},start=performance.now();
+    function tick(now){const t=Math.min(1,(now-start)/160);current={tau:from.tau+(s.tau-from.tau)*t,sigma:from.sigma+(s.sigma-from.sigma)*t};plot(current);if(t<1)frame=requestAnimationFrame(tick);}
+    frame=requestAnimationFrame(tick);
+  }
+  function persist(){
+    const s={tau:Number(between.value),sigma:Number(within.value)};
+    if(window.openai?.setWidgetState)window.openai.setWidgetState({modelContent:{...s,populationICC:s.tau+s.sigma?s.tau/(s.tau+s.sigma):null},privateContent:null}).catch(()=>{});
+  }
+  for(const input of [between,within]){
+    input.addEventListener('input',()=>update({tau:Number(between.value),sigma:Number(within.value)},true));
+    input.addEventListener('change',persist);
+  }
+  function restore(saved){const s=sanitize(saved?.modelContent);between.value=s.tau;within.value=s.sigma;update(s,false);}
+  el('icc-reset').addEventListener('click',()=>{restore(null);persist();});
+  window.addEventListener('openai:set_globals',e=>{if(e.detail?.globals?.widgetState)restore(e.detail.globals.widgetState);});
+  restore(window.openai?.widgetState);
+  new ResizeObserver(()=>plot(current)).observe(el('icc-plot-wrap'));
+})();
+</script>

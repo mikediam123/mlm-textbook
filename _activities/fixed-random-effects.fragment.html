@@ -1,0 +1,89 @@
+<div id="school-lines-sim">
+<style>
+#school-lines-sim {color:var(--foreground)}
+#school-lines-sim .controls {display:grid;gap:16px;margin-top:16px}
+#school-lines-sim .control-label {display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+#school-lines-sim .plot {width:100%;display:block}
+#school-lines-sim .plot text {fill:var(--foreground);font-size:12px}
+#school-lines-sim .legend {display:flex;gap:12px;flex-wrap:wrap;margin:8px 0}
+#school-lines-sim .swatch {display:inline-block;width:22px;vertical-align:middle;border-top:2px solid var(--foreground);margin-right:5px}
+#school-lines-sim .school-legend {appearance:none;background:transparent;color:var(--foreground);border:0;padding:4px;font:inherit}
+</style>
+<h3>Exploring Fixed vs. Random Slopes and Intercepts in Multilevel Modeling</h3>
+<div class="viz-row">
+<label class="form-check form-switch"><input id="sl-ri" class="form-check-input" type="checkbox"><span class="form-check-label">Random intercepts</span></label>
+<label class="form-check form-switch"><input id="sl-rs" class="form-check-input" type="checkbox"><span class="form-check-label">Random slopes</span></label>
+</div>
+<section aria-label="Current model formula" aria-live="polite">
+<p id="sl-model-name"></p>
+<p id="sl-formula"></p>
+<p id="sl-numeric" class="tabular-nums"></p>
+<p class="text-small">γ₀₀, γ₁₀: fixed intercept and slope · u₀ⱼ, u₁ⱼ: school deviations · eᵢⱼ: student residual. i = student; j = school.</p>
+<p class="text-small">Lines show expected scores within each school; student residuals are not plotted.</p>
+<p id="sl-distribution" class="text-small tabular-nums"></p>
+</section>
+<div class="chart"><svg class="plot" role="img" aria-label="Expected achievement by centered predictor for six simulated schools and the population line"></svg></div>
+<div class="legend"><span><span class="swatch" style="border-top-style:dashed"></span>Population line</span><span>Schools:</span><span class="school-buttons"></span></div>
+<div class="text-small tabular-nums" aria-live="polite" id="sl-detail"></div>
+<div class="controls">
+<div><label class="control-label" for="sl-fixed-i"><span>Fixed intercept · score at x = 0</span><output id="sl-fixed-i-value"></output></label><input class="form-range" id="sl-fixed-i" type="range" min="40" max="60" step="1" value="50"></div>
+<div><label class="control-label" for="sl-fixed-s"><span>Fixed slope · points per x unit</span><output id="sl-fixed-s-value"></output></label><input class="form-range" id="sl-fixed-s" type="range" min="-5" max="5" step="0.5" value="3"></div>
+<div><label class="control-label" for="sl-random-i"><span>School intercept SD · points</span><output id="sl-random-i-value"></output></label><input class="form-range" id="sl-random-i" type="range" min="0" max="8" step="0.5" value="4"></div>
+<div><label class="control-label" for="sl-random-s"><span>School slope SD · points per x unit</span><output id="sl-random-s-value"></output></label><input class="form-range" id="sl-random-s" type="range" min="0" max="4" step="0.25" value="2"></div>
+</div>
+</div>
+<script>
+(()=>{
+const root=document.getElementById('school-lines-sim');
+const find=id=>root.querySelector('#sl-'+id);
+const svg=root.querySelector('svg'), NS='http://www.w3.org/2000/svg';
+const inputs=['fixed-i','fixed-s','random-i','random-s'];
+// Fixed seeded independent standard-normal draws: retain the same schools as controls move.
+let seed=713; function uniform(){seed=(Math.imul(1664525,seed)+1013904223)>>>0;return (seed+0.5)/4294967296;}
+function normal(){return Math.sqrt(-2*Math.log(uniform()))*Math.cos(2*Math.PI*uniform());}
+const schools=Array.from({length:6},(_,i)=>({name:String.fromCharCode(65+i),zi:normal(),zs:normal(),visible:true}));
+const bounds=[];for(const g of schools)for(const b of [40,60])for(const a of [-5,5])for(const x of [-2,2])for(const si of [0,8])for(const ss of [0,4])bounds.push(b+g.zi*si+(a+g.zs*ss)*x);
+const lo=Math.floor((Math.min(...bounds)-3)/10)*10,hi=Math.ceil((Math.max(...bounds)+3)/10)*10;
+function el(tag,attrs,parent=svg){const n=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);parent.append(n);return n;}
+function txt(text,x,y,attrs={}){const n=el('text',{x,y,...attrs});n.textContent=text;return n;}
+let paths=[], scales=null, prior=null, animation=null;
+function values(){return {b:+find('fixed-i').value,a:+find('fixed-s').value,si:find('ri').checked?+find('random-i').value:0,ss:find('rs').checked?+find('random-s').value:0};}
+function drawLines(v){const {X,Y}=scales;schools.forEach((g,i)=>{paths[i].setAttribute('d',`M${X(-2)},${Y(v.b+g.zi*v.si-2*(v.a+g.zs*v.ss))}L${X(2)},${Y(v.b+g.zi*v.si+2*(v.a+g.zs*v.ss))}`);});paths[6].setAttribute('d',`M${X(-2)},${Y(v.b-2*v.a)}L${X(2)},${Y(v.b+2*v.a)}`);}
+function draw(animate=false){
+if(animation)cancelAnimationFrame(animation);
+svg.replaceChildren(); const w=Math.max(280,root.querySelector('.chart').clientWidth),h=320,L=66,R=w-18,T=16,B=262;
+svg.setAttribute('viewBox',`0 0 ${w} ${h}`);const X=x=>L+8+(x+2)/4*(R-L-16),Y=y=>B-8-(y-lo)/(hi-lo)*(B-T-16);scales={X,Y};
+el('rect',{x:L,y:T,width:R-L,height:B-T,fill:'none',stroke:'var(--border)','data-chart-frame':''});
+for(let y=lo;y<=hi;y+=20){el('line',{x1:L,y1:Y(y),x2:R,y2:Y(y),stroke:'var(--border)'});txt(y,L-10,Y(y)+4,{'text-anchor':'end'});}
+for(const x of (w<400?[-2,0,2]:[-2,-1,0,1,2]))txt(x,X(x),B+21,{'text-anchor':'middle'});
+el('line',{x1:X(0),y1:T,x2:X(0),y2:B,stroke:'var(--border)'});
+txt('Centered predictor (x units)',(L+R)/2,h-10,{'text-anchor':'middle',class:'axis-title','data-axis':'x'});
+txt('Expected achievement (points)',17,(T+B)/2,{transform:`rotate(-90 17 ${(T+B)/2})`,'text-anchor':'middle',class:'axis-title','data-axis':'y'});
+paths=schools.map((g,i)=>el('path',{fill:'none',stroke:`var(--viz-series-${i+1})`,'stroke-width':2,display:g.visible?'':'none'}));
+paths.push(el('path',{fill:'none',stroke:'var(--foreground)','stroke-width':3,'stroke-dasharray':'7 5'}));
+const v=values();
+const ri=find('ri').checked,rs=find('rs').checked;
+find('model-name').textContent=`${ri?'Random':'Fixed'} intercept, ${rs?'random':'fixed'} slope`;
+const intercept=ri?'(γ₀₀ + u₀ⱼ)':'γ₀₀';
+const slope=rs?'(γ₁₀ + u₁ⱼ)':'γ₁₀';
+find('formula').textContent=`yᵢⱼ = ${intercept} + ${slope} xᵢⱼ + eᵢⱼ`;
+const ni=ri?`(${v.b.toFixed(1)} + u₀ⱼ)`:v.b.toFixed(1);
+const ns=rs?`(${v.a.toFixed(1)} + u₁ⱼ)`:`(${v.a.toFixed(1)})`;
+find('numeric').textContent=`School line: μᵢⱼ = ${ni} + ${ns} xᵢⱼ`;
+const assumptions=[];
+if(ri)assumptions.push(`u₀ⱼ ∼ N(0, ${(v.si*v.si).toFixed(2)})`);
+if(rs)assumptions.push(`u₁ⱼ ∼ N(0, ${(v.ss*v.ss).toFixed(2)})`);
+if(ri&&rs)assumptions.push('Cov(u₀ⱼ, u₁ⱼ) = 0');
+find('distribution').textContent=assumptions.length?assumptions.join(' · ')+' (normal distributions shown as mean, variance)':'No school-specific random effects.';
+for(const key of inputs)find(key+'-value').textContent=Number(find(key).value).toFixed(key.includes('random')?2:1);
+find('random-i').disabled=!find('ri').checked;find('random-s').disabled=!find('rs').checked;
+find('detail').textContent=`Intercept variance: ${(v.si*v.si).toFixed(2)} · Slope variance: ${(v.ss*v.ss).toFixed(2)} · ${!v.si&&!v.ss?'All six school lines coincide':v.si&&!v.ss?'Parallel school lines':!v.si&&v.ss?'School lines meet at x = 0':'School intercepts and slopes both vary'}`;
+if(animate&&prior&&!matchMedia('(prefers-reduced-motion: reduce)').matches){const start=performance.now(),from=prior;function frame(t){const f=Math.min(1,(t-start)/180),z={};for(const k of Object.keys(v))z[k]=from[k]+f*(v[k]-from[k]);drawLines(z);if(f<1)animation=requestAnimationFrame(frame);}animation=requestAnimationFrame(frame);}else drawLines(v);prior=v;
+}
+function save(){if(window.openai?.setWidgetState)window.openai.setWidgetState({modelContent:{fixedIntercept:+find('fixed-i').value,fixedSlope:+find('fixed-s').value,randomIntercepts:find('ri').checked,randomSlopes:find('rs').checked,interceptSD:+find('random-i').value,slopeSD:+find('random-s').value},privateContent:{visible:schools.map(g=>g.visible)}}).catch(()=>{});}
+function restore(state){const s=state?.modelContent;if(!s)return;for(const [id,key] of [['fixed-i','fixedIntercept'],['fixed-s','fixedSlope'],['random-i','interceptSD'],['random-s','slopeSD']])if(Number.isFinite(s[key]))find(id).value=s[key];for(const [id,key] of [['ri','randomIntercepts'],['rs','randomSlopes']])if(typeof s[key]==='boolean')find(id).checked=s[key];const visible=state.privateContent?.visible;if(Array.isArray(visible))schools.forEach((g,i)=>{g.visible=visible[i]!==false;buttons[i].setAttribute('aria-pressed',g.visible);});}
+const buttons=schools.map((g,i)=>{const b=document.createElement('button');b.type='button';b.className='school-legend cursor-interaction';b.setAttribute('aria-pressed','true');b.setAttribute('aria-label',`Show school ${g.name}`);b.innerHTML=`<span class="swatch" style="border-color:var(--viz-series-${i+1})"></span>${g.name}`;b.onclick=()=>{g.visible=!g.visible;b.setAttribute('aria-pressed',g.visible);draw();save();};root.querySelector('.school-buttons').append(b);return b;});
+for(const id of [...inputs,'ri','rs'])find(id).addEventListener('input',()=>{draw(true);save();});
+restore(window.openai?.widgetState);new ResizeObserver(()=>draw()).observe(root.querySelector('.chart'));draw();window.addEventListener('openai:set_globals',e=>{restore(e.detail?.globals?.widgetState);draw();});
+})();
+</script>

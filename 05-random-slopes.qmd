@@ -178,30 +178,21 @@ summary(model.5)
 anova(model.5, model.4)
 ```
 
-## Step three: use `interplot` to obtain more easily interpretable results
+## Step three: use `ggeffects` to obtain more easily interpretable results
 
-Interpreting significant interactions is hard, there's no way around it. But the `margins` command can be super useful for this. We will use margins to compare hypothetical soldiers with different levels of `TSIG` who are in companies that have different levels of `GTSIG`. And then we will plot the results to create a nice visual.
+Interpreting a significant interaction from a coefficient alone is hard. The `ggeffects` package helps by turning the model into predicted values you can plot directly, rather than asking you to reason about what a coefficient on a coefficient means. We will use it to see predicted hostility across `TSIG`, separately for companies at three representative levels of `GTSIG`.
 
 ```{r}
-#| label: fig-interplot
-#| fig-cap: "The estimated effect of company task significance across levels of individual task significance."
+#| label: fig-ggpredict
+#| fig-cap: "Predicted hostility across individual task significance, at three levels of company task significance."
+#| message: false
 
-interplot::interplot(model.5, var1 = "gtsig_cent", var2 = "tsig_cent")
-```
-
-Read this plot carefully, because it is not the same as the trajectory plots we make elsewhere. The vertical axis is the *coefficient* on `gtsig_cent`, not a predicted hostility score, and the horizontal axis moves across values of `tsig_cent`. So the line shows how the company-level effect changes depending on the individual-level value. If the line is flat, there is no interaction. If the confidence band excludes zero over part of the range, the moderation is meaningful there.
-
-::: {.callout-note}
-## If `interplot` will not install
-The `interplot` package has seen little maintenance recently. If it is unavailable, `ggeffects` produces a comparable picture from predicted values rather than coefficients:
-
-```r
 library(ggeffects)
+
 plot(ggpredict(model.5, terms = c("tsig_cent", "gtsig_cent [-0.5, 0, 0.5]")))
 ```
 
-That version plots predicted hostility across task significance at three levels of company task significance, which many people find easier to read.
-:::
+Read this the same way you would read any other predicted-value plot in this book: the vertical axis is predicted `HOSTILE`, not a coefficient, and each of the three lines traces predicted hostility across `tsig_cent` at one fixed level of `gtsig_cent` (a below-average, average, and above-average company). If the three lines were parallel, `TSIG` and `GTSIG` would not interact — an individual soldier's own sense of task significance would predict hostility the same way no matter the company. That is not what happens here. The lines are clearly separated on the left and converge on the right: among soldiers who feel their own work is *not* very significant, company climate matters a lot, with predicted hostility ranging from about 1.6 in low-`GTSIG` companies down to about 1.0 in high-`GTSIG` companies. Among soldiers who already feel their own work is highly significant, that company-level gap nearly disappears, and all three lines converge toward the same, low predicted hostility. Put in plain language: a company's overall sense that the work matters seems to compensate for an individual soldier not feeling that way personally, but has little left to add once a soldier already feels that way on their own.
 
 ## Using `modelsummary` and `broom.mixed` to organize your results
 

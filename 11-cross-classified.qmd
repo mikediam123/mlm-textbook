@@ -251,26 +251,21 @@ summary(model.6)
 
 This interaction is unusual and worth stating carefully. It crosses a *neighborhood*-level variable with a *school*-level variable, asking whether the effect of neighborhood deprivation depends on the socioeconomic composition of the school a child attends. Does attending a more advantaged school buffer the association between a deprived neighborhood and attainment? That is a genuinely interesting policy question, and it is only askable in a cross-classified framework.
 
-### Use `interplot` to visualize the interaction between `deprive` and `dadocc`
+### Use `ggeffects` to visualize the interaction between `deprive` and `dadocc`
+
+Interpreting a significant cross-level interaction from a coefficient alone is hard, especially one that crosses two different level-2 variables. The `ggeffects` package turns the model into predicted attainment scores you can plot directly.
 
 ```{r}
-#| label: fig-interplot
-#| fig-cap: "The estimated effect of neighborhood deprivation across levels of school-mean father's occupation."
+#| label: fig-ggpredict-cross
+#| fig-cap: "Predicted educational attainment across neighborhood deprivation, at three levels of school-mean father's occupation."
+#| message: false
 
-interplot::interplot(model.6, var1 = "deprive", var2 = "dadocc")
-```
-
-Read the axes carefully. The vertical axis is the *coefficient* on `deprive`, not a predicted attainment score, and the horizontal axis moves across values of `dadocc`. So the line shows how the deprivation effect changes depending on school composition. A downward-sloping line would mean deprivation matters less in more advantaged schools, which is the buffering hypothesis.
-
-::: {.callout-note}
-## If `interplot` will not install
-The package has seen little maintenance recently. `ggeffects` gives a comparable picture from predicted values:
-
-```r
 library(ggeffects)
-plot(ggpredict(model.6, terms = c("deprive", "dadocc")))
+
+plot(ggpredict(model.6, terms = c("deprive", "dadocc [-15, 0, 15]")))
 ```
-:::
+
+Read this the same way you would read the predicted-value plots elsewhere in this book: the vertical axis is predicted `attain`, not a coefficient, and each line traces predicted attainment across `deprive` at one fixed level of `dadocc` (a low-, average-, and high-occupation school). If the three lines were parallel, the deprivation-attainment relationship would not depend on school composition, and the buffering hypothesis would be off the table either way. That is not what happens here — but the pattern is not the buffering story either. At low deprivation, school composition matters a great deal: a child from the least-deprived neighborhoods scores noticeably higher in a high-`dadocc` school (predicted attainment around 1.5) than in a low-`dadocc` school (around 0.3). That gap nearly disappears at high deprivation — among the most deprived neighborhoods, all three lines converge to roughly the same low predicted attainment, regardless of which school a child attends. In other words, a more advantaged school's benefit is concentrated among children who are already from less-deprived neighborhoods; it does little to offset the disadvantage facing children from the most deprived ones. That is closer to a *differential-benefit* pattern than a buffering one, and it is worth sitting with rather than assuming the more comfortable story.
 
 ## Comparing the models
 

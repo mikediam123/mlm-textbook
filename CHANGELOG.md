@@ -4,6 +4,20 @@ A record of how the Quarto book differs from the original bookdown project and f
 
 ---
 
+## 2026-09-22 — Chapter 5: `ggeffects` restored as the primary interaction plot
+
+**Changed:** The cross-level interaction section in Chapter 5 (`05-random-slopes.qmd`) now uses `ggeffects::ggpredict()` as the primary — and only — demonstrated visualization. `interplot::interplot()` and its accompanying "if interplot will not install" fallback callout have been removed.
+
+**Why:** This reverses the earlier decision (see the Chapter 5 entry below) to restore `interplot` as primary because "matching the video takes priority." Chapter 5 is being refilmed, so that constraint no longer applies, and the original reasoning for preferring `ggeffects` — `interplot` is thinly maintained, `ggeffects` is actively developed and handles a wider range of models — stands on its own again.
+
+**Also fixed while in this section:** the lead-in paragraph referenced the `margins` package, which was never actually used in the chapter's code (a leftover from an earlier draft). It now describes what `ggeffects` actually does.
+
+**Verified:** rendered the chapter end-to-end against `lq2002.csv`. The `TSIG:GTSIG` interaction is real (*b* = 0.158, SE = 0.068; LRT χ²(1) = 5.46, *p* = .020), and the revised prose describes the actual pattern in the fitted plot — predicted hostility fans out across `GTSIG` levels for soldiers low on individual `TSIG` and converges for soldiers high on it — rather than generic boilerplate.
+
+**Not touched:** `11-cross-classified.qmd` still uses `interplot` for the `deprive` × `dadocc` interaction, with the same fallback pattern. Left as-is since it wasn't part of this request; the same swap is worth making whenever that chapter comes up for filming.
+
+---
+
 ## 2026-08-15 — Decisions applied
 
 Three decisions were made and implemented across the book: maximum likelihood as the default estimator, `lq2002` as the Chapter 5 dataset, and current package output rather than preserved 2020 output.

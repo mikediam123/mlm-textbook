@@ -13,6 +13,7 @@ Every model so far has assumed that a predictor relates to the outcome the same 
 
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(lme4))
+suppressPackageStartupMessages(library(lmerTest))
 ```
 
 `suppressPackageStartupMessages()` hides the loading banners these packages print. Those messages are informative the first few times, particularly the tidyverse conflict list, and clutter after that.
@@ -37,7 +38,7 @@ lq2002.1 <- lq2002 %>%
   mutate(.,
             glead = mean(LEAD),
             gtsig = mean(TSIG),
-            ghostile = mean(GHOSTILE)) %>%
+            ghostile = mean(HOSTILE)) %>%
   ungroup()
 
 glimpse(lq2002.1)

@@ -672,13 +672,16 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>Note the difference from a random slope. A random slope says slopes vary across companies but does not say why. A cross-level interaction tries to <em>explain</em> that variation using a level-2 variable.</p>
 <section id="step-one-create-centered-versions-of-your-two-predictors" class="level3" data-number="6.5.1"><h3 data-number="6.5.1" class="anchored" data-anchor-id="step-one-create-centered-versions-of-your-two-predictors">
 <span class="header-section-number">6.5.1</span> Step one: create centered versions of your two predictors</h3>
-<p>Centering a variable means to subtract the mean from every observation. So now that variable has a mean of 0 (0 now means average). When we look at interaction effects, it is usually a good idea to center any continuous predictors before analyzing. This facilitates easier interpretation of the results, and it ensures that the interaction is being evaluated near the sample mean.</p>
+<p>Centering a variable means to subtract the mean from every observation. So now that variable has a mean of 0 (0 now means average). When we look at interaction effects, it is usually a good idea to center any continuous predictors before analyzing. In multilevel modeling, we typically group mean center predictors at level-1, and grand mean center predictors at level 2. This facilitates easier interpretation of the results, and it ensures that the interaction is being evaluated near the sample mean.</p>
 <p>Centering works like this: you use the <code>mutate</code> function from <code>dplyr</code> to create a new variable that is equal to the original variable minus the mean (which we get using the <code>mean</code> function). Just to check our work, we can call the <code>describe</code> function from <code>psych</code> and make sure that the means of those new variables are 0.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lq2002.2</span> <span class="op">&lt;-</span> <span class="va">lq2002.1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
-<span>         tsig_cent <span class="op">=</span> <span class="va">TSIG</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">TSIG</span><span class="op">)</span>,</span>
-<span>         gtsig_cent <span class="op">=</span> <span class="va">GTSIG</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">GTSIG</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>, <span class="co">#Grand mean center the level-2 variable</span></span>
+<span>         gtsig_cent <span class="op">=</span> <span class="va">GTSIG</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">GTSIG</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">COMPID</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>         <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>, <span class="co">#Group mean center the level-1 variable</span></span>
+<span>                tsig_cent <span class="op">=</span> <span class="va">TSIG</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">TSIG</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/describe.html">describe</a></span><span class="op">(</span><span class="va">lq2002.2</span>, fast <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -714,8 +717,8 @@ GHOSTILE     28 2042    0.95   0.28    0.91  0.22    1.52    1.31  0.15
 glead        29 2042    3.00   0.27    2.98  2.38    3.74    1.36  0.36
 gtsig        30 2042    3.13   0.32    3.12  2.54    3.78    1.24  0.16
 ghostile     31 2042    0.95   0.28    0.91  0.22    1.52    1.31  0.15
-tsig_cent    32 2042    0.00   1.02    0.20 -2.13    1.87    4.00 -0.38
-gtsig_cent   33 2042    0.00   0.32   -0.01 -0.59    0.64    1.24  0.16
+gtsig_cent   32 2042    0.00   0.32   -0.01 -0.59    0.64    1.24  0.16
+tsig_cent    33 2042    0.00   0.97    0.09 -2.71    2.46    5.17 -0.36
            kurtosis    se
 ROWID         -1.20 13.05
 COMPID        -0.84  0.31
@@ -748,8 +751,8 @@ GHOSTILE      -0.71  0.01
 glead          0.34  0.01
 gtsig         -1.05  0.01
 ghostile      -0.71  0.01
-tsig_cent     -0.47  0.02
-gtsig_cent    -1.05  0.01</code></pre>
+gtsig_cent    -1.05  0.01
+tsig_cent     -0.34  0.02</code></pre>
 </div>
 </div>
 </section><section id="step-two-run-the-mlm-and-interpret-the-results" class="level3" data-number="6.5.2"><h3 data-number="6.5.2" class="anchored" data-anchor-id="step-two-run-the-mlm-and-interpret-the-results">
@@ -779,10 +782,10 @@ Number of obs: 2042, groups:  COMPID, 49
 
 Fixed effects:
               Estimate Std. Error         df t value Pr(&gt;|t|)    
-(Intercept)    1.99845    0.09384 1048.28028  21.296  &lt; 2e-16 ***
+(Intercept)    1.99845    0.09384 1048.28023  21.296  &lt; 2e-16 ***
 tsig_cent     -0.17234    0.02479 2041.22422  -6.953 4.79e-12 ***
-LEAD          -0.35177    0.02996 1824.44440 -11.741  &lt; 2e-16 ***
-gtsig_cent    -0.27729    0.08258   46.65424  -3.358  0.00157 ** 
+LEAD          -0.35177    0.02996 1824.44441 -11.741  &lt; 2e-16 ***
+gtsig_cent    -0.44964    0.08066   42.15475  -5.575 1.60e-06 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -790,7 +793,7 @@ Correlation of Fixed Effects:
            (Intr) tsg_cn LEAD  
 tsig_cent   0.491              
 LEAD       -0.960 -0.511       
-gtsig_cent -0.020 -0.227  0.010</code></pre>
+gtsig_cent  0.130  0.075 -0.147</code></pre>
 </div>
 </div>
 <p>Compare this to <code>model.1</code>. The coefficients on the predictors are identical, and only the intercept changed. That is centering working exactly as advertised: it relocates the origin without altering any relationship. What it buys you is an interpretable intercept, now the predicted hostility for a soldier of average task significance in a company of average task significance, which is a sentence you can put in a paper.</p>
@@ -808,34 +811,34 @@ Formula: HOSTILE ~ tsig_cent + LEAD + gtsig_cent + tsig_cent:gtsig_cent +
    Data: lq2002.2
 
       AIC       BIC    logLik -2*log(L)  df.resid 
-   5530.2    5569.6   -2758.1    5516.2      2035 
+   5531.7    5571.0   -2758.8    5517.7      2035 
 
 Scaled residuals: 
     Min      1Q  Median      3Q     Max 
--2.4241 -0.6923 -0.2381  0.5068  3.4601 
+-2.4085 -0.6919 -0.2362  0.5083  3.4744 
 
 Random effects:
  Groups   Name        Variance Std.Dev.
- COMPID   (Intercept) 0.009531 0.09763 
- Residual             0.864954 0.93003 
+ COMPID   (Intercept) 0.009955 0.09978 
+ Residual             0.865314 0.93022 
 Number of obs: 2042, groups:  COMPID, 49
 
 Fixed effects:
                        Estimate Std. Error         df t value Pr(&gt;|t|)    
-(Intercept)             1.97511    0.09418 1080.30416  20.971  &lt; 2e-16 ***
-tsig_cent              -0.16826    0.02481 2041.74697  -6.781 1.56e-11 ***
-LEAD                   -0.34961    0.02993 1829.96220 -11.682  &lt; 2e-16 ***
-gtsig_cent             -0.29177    0.08223   48.16072  -3.548 0.000876 ***
-tsig_cent:gtsig_cent    0.15799    0.06757 1824.87112   2.338 0.019491 *  
+(Intercept)             1.99386    0.09379 1047.60810  21.258  &lt; 2e-16 ***
+tsig_cent              -0.16855    0.02483 2041.06030  -6.787 1.50e-11 ***
+LEAD                   -0.35026    0.02994 1824.87068 -11.698  &lt; 2e-16 ***
+gtsig_cent             -0.45009    0.08067   42.13466  -5.579 1.58e-06 ***
+tsig_cent:gtsig_cent    0.14023    0.07014 1998.08800   1.999   0.0457 *  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Correlation of Fixed Effects:
             (Intr) tsg_cn LEAD   gtsg_c
-tsig_cent    0.479                     
-LEAD        -0.958 -0.507              
-gtsig_cent  -0.012 -0.232  0.008       
-tsg_cnt:gt_ -0.107  0.070  0.032 -0.071</code></pre>
+tsig_cent    0.487                     
+LEAD        -0.960 -0.507              
+gtsig_cent   0.130  0.074 -0.147       
+tsg_cnt:gt_ -0.024  0.076  0.025 -0.004</code></pre>
 </div>
 </div>
 </section><section id="should-we-include-that-interaction-comparing-model.4-with-model.5" class="level2" data-number="6.7"><h2 data-number="6.7" class="anchored" data-anchor-id="should-we-include-that-interaction-comparing-model.4-with-model.5">
@@ -850,7 +853,7 @@ model.4: HOSTILE ~ tsig_cent + LEAD + gtsig_cent + (1 | COMPID)
 model.5: HOSTILE ~ tsig_cent + LEAD + gtsig_cent + tsig_cent:gtsig_cent + (1 | COMPID)
         npar    AIC    BIC  logLik -2*log(L)  Chisq Df Pr(&gt;Chisq)  
 model.4    6 5533.7 5567.4 -2760.8    5521.7                       
-model.5    7 5530.2 5569.6 -2758.1    5516.2 5.4564  1     0.0195 *
+model.5    7 5531.7 5571.0 -2758.8    5517.7 3.9928  1     0.0457 *
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -903,7 +906,7 @@ Figure&nbsp;6.1: Predicted hostility across individual task significance, at thr
 <tr class="odd">
 <td>(Intercept)</td>
 <td>1.998</td>
-<td>1.975</td>
+<td>1.994</td>
 </tr>
 <tr class="even">
 <td></td>
@@ -913,7 +916,7 @@ Figure&nbsp;6.1: Predicted hostility across individual task significance, at thr
 <tr class="odd">
 <td>tsig_cent</td>
 <td>-0.172</td>
-<td>-0.168</td>
+<td>-0.169</td>
 </tr>
 <tr class="even">
 <td></td>
@@ -932,28 +935,28 @@ Figure&nbsp;6.1: Predicted hostility across individual task significance, at thr
 </tr>
 <tr class="odd">
 <td>gtsig_cent</td>
-<td>-0.277</td>
-<td>-0.292</td>
+<td>-0.450</td>
+<td>-0.450</td>
 </tr>
 <tr class="even">
 <td></td>
-<td>(0.083)</td>
-<td>(0.082)</td>
+<td>(0.081)</td>
+<td>(0.081)</td>
 </tr>
 <tr class="odd">
 <td>tsig_cent × gtsig_cent</td>
 <td></td>
-<td>0.158</td>
+<td>0.140</td>
 </tr>
 <tr class="even">
 <td></td>
 <td></td>
-<td>(0.068)</td>
+<td>(0.070)</td>
 </tr>
 <tr class="odd">
 <td>SD (Intercept COMPID)</td>
 <td>0.100</td>
-<td>0.098</td>
+<td>0.100</td>
 </tr>
 <tr class="even">
 <td>SD (Observations)</td>
@@ -968,22 +971,22 @@ Figure&nbsp;6.1: Predicted hostility across individual task significance, at thr
 <tr class="even">
 <td>R2 Marg.</td>
 <td>0.180</td>
-<td>0.183</td>
+<td>0.182</td>
 </tr>
 <tr class="odd">
 <td>R2 Cond.</td>
 <td>0.190</td>
-<td>0.192</td>
+<td>0.191</td>
 </tr>
 <tr class="even">
 <td>AIC</td>
 <td>5553.4</td>
-<td>5553.5</td>
+<td>5554.8</td>
 </tr>
 <tr class="odd">
 <td>BIC</td>
 <td>5587.1</td>
-<td>5592.8</td>
+<td>5594.2</td>
 </tr>
 <tr class="even">
 <td>ICC</td>
@@ -1616,83 +1619,86 @@ Figure&nbsp;6.1: Predicted hostility across individual task significance, at thr
 <span id="cb34-160"><a href="#cb34-160" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-161"><a href="#cb34-161" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step one: create centered versions of your two predictors</span></span>
 <span id="cb34-162"><a href="#cb34-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-163"><a href="#cb34-163" aria-hidden="true" tabindex="-1"></a>Centering a variable means to subtract the mean from every observation. So now that variable has a mean of 0 (0 now means average). When we look at interaction effects, it is usually a good idea to center any continuous predictors before analyzing. This facilitates easier interpretation of the results, and it ensures that the interaction is being evaluated near the sample mean.</span>
+<span id="cb34-163"><a href="#cb34-163" aria-hidden="true" tabindex="-1"></a>Centering a variable means to subtract the mean from every observation. So now that variable has a mean of 0 (0 now means average). When we look at interaction effects, it is usually a good idea to center any continuous predictors before analyzing. In multilevel modeling, we typically group mean center predictors at level-1, and grand mean center predictors at level 2. This facilitates easier interpretation of the results, and it ensures that the interaction is being evaluated near the sample mean.</span>
 <span id="cb34-164"><a href="#cb34-164" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-165"><a href="#cb34-165" aria-hidden="true" tabindex="-1"></a>Centering works like this: you use the <span class="in">`mutate`</span> function from <span class="in">`dplyr`</span> to create a new variable that is equal to the original variable minus the mean (which we get using the <span class="in">`mean`</span> function). Just to check our work, we can call the <span class="in">`describe`</span> function from <span class="in">`psych`</span> and make sure that the means of those new variables are 0.</span>
 <span id="cb34-166"><a href="#cb34-166" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-169"><a href="#cb34-169" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb34-170"><a href="#cb34-170" aria-hidden="true" tabindex="-1"></a>lq2002<span class="fl">.2</span> <span class="ot">&lt;-</span> lq2002<span class="fl">.1</span> <span class="sc">%&gt;%</span></span>
-<span id="cb34-171"><a href="#cb34-171" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(.,</span>
-<span id="cb34-172"><a href="#cb34-172" aria-hidden="true" tabindex="-1"></a>         <span class="at">tsig_cent =</span> TSIG <span class="sc">-</span> <span class="fu">mean</span>(TSIG),</span>
-<span id="cb34-173"><a href="#cb34-173" aria-hidden="true" tabindex="-1"></a>         <span class="at">gtsig_cent =</span> GTSIG <span class="sc">-</span> <span class="fu">mean</span>(GTSIG))</span>
-<span id="cb34-174"><a href="#cb34-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-175"><a href="#cb34-175" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(lq2002<span class="fl">.2</span>, <span class="at">fast =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb34-176"><a href="#cb34-176" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-171"><a href="#cb34-171" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(., <span class="co">#Grand mean center the level-2 variable</span></span>
+<span id="cb34-172"><a href="#cb34-172" aria-hidden="true" tabindex="-1"></a>         <span class="at">gtsig_cent =</span> GTSIG <span class="sc">-</span> <span class="fu">mean</span>(GTSIG)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-173"><a href="#cb34-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(COMPID) <span class="sc">%&gt;%</span></span>
+<span id="cb34-174"><a href="#cb34-174" aria-hidden="true" tabindex="-1"></a>         <span class="fu">mutate</span>(., <span class="co">#Group mean center the level-1 variable</span></span>
+<span id="cb34-175"><a href="#cb34-175" aria-hidden="true" tabindex="-1"></a>                <span class="at">tsig_cent =</span> TSIG <span class="sc">-</span> <span class="fu">mean</span>(TSIG)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-176"><a href="#cb34-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
 <span id="cb34-177"><a href="#cb34-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-178"><a href="#cb34-178" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step two: run the MLM and interpret the results</span></span>
-<span id="cb34-179"><a href="#cb34-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-182"><a href="#cb34-182" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-183"><a href="#cb34-183" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> tsig_cent <span class="sc">+</span> LEAD <span class="sc">+</span> gtsig_cent <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>COMPID), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002<span class="fl">.2</span>)</span>
-<span id="cb34-184"><a href="#cb34-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-185"><a href="#cb34-185" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.4</span>)</span>
-<span id="cb34-186"><a href="#cb34-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-178"><a href="#cb34-178" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(lq2002<span class="fl">.2</span>, <span class="at">fast =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb34-179"><a href="#cb34-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-180"><a href="#cb34-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-181"><a href="#cb34-181" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step two: run the MLM and interpret the results</span></span>
+<span id="cb34-182"><a href="#cb34-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-185"><a href="#cb34-185" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-186"><a href="#cb34-186" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> tsig_cent <span class="sc">+</span> LEAD <span class="sc">+</span> gtsig_cent <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>COMPID), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002<span class="fl">.2</span>)</span>
 <span id="cb34-187"><a href="#cb34-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-188"><a href="#cb34-188" aria-hidden="true" tabindex="-1"></a>Compare this to <span class="in">`model.1`</span>. The coefficients on the predictors are identical, and only the intercept changed. That is centering working exactly as advertised: it relocates the origin without altering any relationship. What it buys you is an interpretable intercept, now the predicted hostility for a soldier of average task significance in a company of average task significance, which is a sentence you can put in a paper.</span>
-<span id="cb34-189"><a href="#cb34-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-190"><a href="#cb34-190" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaction effects model</span></span>
-<span id="cb34-191"><a href="#cb34-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-194"><a href="#cb34-194" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-195"><a href="#cb34-195" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> tsig_cent <span class="sc">+</span> LEAD <span class="sc">+</span> gtsig_cent <span class="sc">+</span> tsig_cent<span class="sc">:</span>gtsig_cent <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>COMPID), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002<span class="fl">.2</span>)</span>
-<span id="cb34-196"><a href="#cb34-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-197"><a href="#cb34-197" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.5</span>)</span>
-<span id="cb34-198"><a href="#cb34-198" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-188"><a href="#cb34-188" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.4</span>)</span>
+<span id="cb34-189"><a href="#cb34-189" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-190"><a href="#cb34-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-191"><a href="#cb34-191" aria-hidden="true" tabindex="-1"></a>Compare this to <span class="in">`model.1`</span>. The coefficients on the predictors are identical, and only the intercept changed. That is centering working exactly as advertised: it relocates the origin without altering any relationship. What it buys you is an interpretable intercept, now the predicted hostility for a soldier of average task significance in a company of average task significance, which is a sentence you can put in a paper.</span>
+<span id="cb34-192"><a href="#cb34-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-193"><a href="#cb34-193" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaction effects model</span></span>
+<span id="cb34-194"><a href="#cb34-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-197"><a href="#cb34-197" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-198"><a href="#cb34-198" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(HOSTILE <span class="sc">~</span> tsig_cent <span class="sc">+</span> LEAD <span class="sc">+</span> gtsig_cent <span class="sc">+</span> tsig_cent<span class="sc">:</span>gtsig_cent <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>COMPID), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> lq2002<span class="fl">.2</span>)</span>
 <span id="cb34-199"><a href="#cb34-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-200"><a href="#cb34-200" aria-hidden="true" tabindex="-1"></a><span class="fu">## Should we include that interaction? Comparing `model.4` with `model.5`</span></span>
-<span id="cb34-201"><a href="#cb34-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-204"><a href="#cb34-204" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-205"><a href="#cb34-205" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model<span class="fl">.5</span>, model<span class="fl">.4</span>)</span>
-<span id="cb34-206"><a href="#cb34-206" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-207"><a href="#cb34-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-208"><a href="#cb34-208" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step three: use `ggeffects` to obtain more easily interpretable results</span></span>
-<span id="cb34-209"><a href="#cb34-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-210"><a href="#cb34-210" aria-hidden="true" tabindex="-1"></a>Interpreting a significant interaction from a coefficient alone is hard. The <span class="in">`ggeffects`</span> package helps by turning the model into predicted values you can plot directly, rather than asking you to reason about what a coefficient on a coefficient means. We will use it to see predicted hostility across <span class="in">`TSIG`</span>, separately for companies at three representative levels of <span class="in">`GTSIG`</span>.</span>
-<span id="cb34-211"><a href="#cb34-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-214"><a href="#cb34-214" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-215"><a href="#cb34-215" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-ggpredict</span></span>
-<span id="cb34-216"><a href="#cb34-216" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Predicted hostility across individual task significance, at three levels of company task significance."</span></span>
-<span id="cb34-217"><a href="#cb34-217" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb34-218"><a href="#cb34-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-219"><a href="#cb34-219" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggeffects)</span>
-<span id="cb34-220"><a href="#cb34-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-221"><a href="#cb34-221" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ggpredict</span>(model<span class="fl">.5</span>, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"tsig_cent"</span>, <span class="st">"gtsig_cent [-0.5, 0, 0.5]"</span>)))</span>
-<span id="cb34-222"><a href="#cb34-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-200"><a href="#cb34-200" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.5</span>)</span>
+<span id="cb34-201"><a href="#cb34-201" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-202"><a href="#cb34-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-203"><a href="#cb34-203" aria-hidden="true" tabindex="-1"></a><span class="fu">## Should we include that interaction? Comparing `model.4` with `model.5`</span></span>
+<span id="cb34-204"><a href="#cb34-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-207"><a href="#cb34-207" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-208"><a href="#cb34-208" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model<span class="fl">.5</span>, model<span class="fl">.4</span>)</span>
+<span id="cb34-209"><a href="#cb34-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-210"><a href="#cb34-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-211"><a href="#cb34-211" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step three: use `ggeffects` to obtain more easily interpretable results</span></span>
+<span id="cb34-212"><a href="#cb34-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-213"><a href="#cb34-213" aria-hidden="true" tabindex="-1"></a>Interpreting a significant interaction from a coefficient alone is hard. The <span class="in">`ggeffects`</span> package helps by turning the model into predicted values you can plot directly, rather than asking you to reason about what a coefficient on a coefficient means. We will use it to see predicted hostility across <span class="in">`TSIG`</span>, separately for companies at three representative levels of <span class="in">`GTSIG`</span>.</span>
+<span id="cb34-214"><a href="#cb34-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-217"><a href="#cb34-217" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-218"><a href="#cb34-218" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-ggpredict</span></span>
+<span id="cb34-219"><a href="#cb34-219" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Predicted hostility across individual task significance, at three levels of company task significance."</span></span>
+<span id="cb34-220"><a href="#cb34-220" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb34-221"><a href="#cb34-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-222"><a href="#cb34-222" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggeffects)</span>
 <span id="cb34-223"><a href="#cb34-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-224"><a href="#cb34-224" aria-hidden="true" tabindex="-1"></a>Read this the same way you would read any other predicted-value plot in this book: the vertical axis is predicted <span class="in">`HOSTILE`</span>, not a coefficient, and each of the three lines traces predicted hostility across <span class="in">`tsig_cent`</span> at one fixed level of <span class="in">`gtsig_cent`</span> (a below-average, average, and above-average company). If the three lines were parallel, <span class="in">`TSIG`</span> and <span class="in">`GTSIG`</span> would not interact — an individual soldier's own sense of task significance would predict hostility the same way no matter the company. That is not what happens here. The lines are clearly separated on the left and converge on the right: among soldiers who feel their own work is *not* very significant, company climate matters a lot, with predicted hostility ranging from about 1.6 in low-<span class="in">`GTSIG`</span> companies down to about 1.0 in high-<span class="in">`GTSIG`</span> companies. Among soldiers who already feel their own work is highly significant, that company-level gap nearly disappears, and all three lines converge toward the same, low predicted hostility. Put in plain language: a company's overall sense that the work matters seems to compensate for an individual soldier not feeling that way personally, but has little left to add once a soldier already feels that way on their own.</span>
-<span id="cb34-225"><a href="#cb34-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-226"><a href="#cb34-226" aria-hidden="true" tabindex="-1"></a><span class="fu">## Using `modelsummary` and `broom.mixed` to organize your results</span></span>
-<span id="cb34-227"><a href="#cb34-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-230"><a href="#cb34-230" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-231"><a href="#cb34-231" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb34-232"><a href="#cb34-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-233"><a href="#cb34-233" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb34-234"><a href="#cb34-234" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.mixed)</span>
+<span id="cb34-224"><a href="#cb34-224" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ggpredict</span>(model<span class="fl">.5</span>, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"tsig_cent"</span>, <span class="st">"gtsig_cent [-0.5, 0, 0.5]"</span>)))</span>
+<span id="cb34-225"><a href="#cb34-225" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-226"><a href="#cb34-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-227"><a href="#cb34-227" aria-hidden="true" tabindex="-1"></a>Read this the same way you would read any other predicted-value plot in this book: the vertical axis is predicted <span class="in">`HOSTILE`</span>, not a coefficient, and each of the three lines traces predicted hostility across <span class="in">`tsig_cent`</span> at one fixed level of <span class="in">`gtsig_cent`</span> (a below-average, average, and above-average company). If the three lines were parallel, <span class="in">`TSIG`</span> and <span class="in">`GTSIG`</span> would not interact — an individual soldier's own sense of task significance would predict hostility the same way no matter the company. That is not what happens here. The lines are clearly separated on the left and converge on the right: among soldiers who feel their own work is *not* very significant, company climate matters a lot, with predicted hostility ranging from about 1.6 in low-<span class="in">`GTSIG`</span> companies down to about 1.0 in high-<span class="in">`GTSIG`</span> companies. Among soldiers who already feel their own work is highly significant, that company-level gap nearly disappears, and all three lines converge toward the same, low predicted hostility. Put in plain language: a company's overall sense that the work matters seems to compensate for an individual soldier not feeling that way personally, but has little left to add once a soldier already feels that way on their own.</span>
+<span id="cb34-228"><a href="#cb34-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-229"><a href="#cb34-229" aria-hidden="true" tabindex="-1"></a><span class="fu">## Using `modelsummary` and `broom.mixed` to organize your results</span></span>
+<span id="cb34-230"><a href="#cb34-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-233"><a href="#cb34-233" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-234"><a href="#cb34-234" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
 <span id="cb34-235"><a href="#cb34-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-236"><a href="#cb34-236" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(model<span class="fl">.4</span>, model<span class="fl">.5</span>)</span>
-<span id="cb34-237"><a href="#cb34-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-238"><a href="#cb34-238" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models, <span class="at">output =</span> <span class="st">"markdown"</span>)</span>
-<span id="cb34-239"><a href="#cb34-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-236"><a href="#cb34-236" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb34-237"><a href="#cb34-237" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.mixed)</span>
+<span id="cb34-238"><a href="#cb34-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-239"><a href="#cb34-239" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">list</span>(model<span class="fl">.4</span>, model<span class="fl">.5</span>)</span>
 <span id="cb34-240"><a href="#cb34-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-241"><a href="#cb34-241" aria-hidden="true" tabindex="-1"></a><span class="fu">## HTML version that you can open in Word</span></span>
-<span id="cb34-242"><a href="#cb34-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-245"><a href="#cb34-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-246"><a href="#cb34-246" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb34-247"><a href="#cb34-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-248"><a href="#cb34-248" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models, <span class="at">output =</span> <span class="st">'msum.html'</span>, <span class="at">title =</span> <span class="st">'MLM Estimates'</span>)</span>
-<span id="cb34-249"><a href="#cb34-249" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-241"><a href="#cb34-241" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models, <span class="at">output =</span> <span class="st">"markdown"</span>)</span>
+<span id="cb34-242"><a href="#cb34-242" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-243"><a href="#cb34-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-244"><a href="#cb34-244" aria-hidden="true" tabindex="-1"></a><span class="fu">## HTML version that you can open in Word</span></span>
+<span id="cb34-245"><a href="#cb34-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-248"><a href="#cb34-248" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb34-249"><a href="#cb34-249" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
 <span id="cb34-250"><a href="#cb34-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-251"><a href="#cb34-251" aria-hidden="true" tabindex="-1"></a><span class="fu">## A note on your content review</span></span>
-<span id="cb34-252"><a href="#cb34-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-253"><a href="#cb34-253" aria-hidden="true" tabindex="-1"></a>The Module 5 content review uses the Best in Class data rather than these Army data. The steps are identical: fit a random intercept model, add a random slope, evaluate it with <span class="in">`rand()`</span>, then test a cross-level interaction. What changes is the substance of the question, not the code.</span>
+<span id="cb34-251"><a href="#cb34-251" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models, <span class="at">output =</span> <span class="st">'msum.html'</span>, <span class="at">title =</span> <span class="st">'MLM Estimates'</span>)</span>
+<span id="cb34-252"><a href="#cb34-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb34-253"><a href="#cb34-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-254"><a href="#cb34-254" aria-hidden="true" tabindex="-1"></a><span class="fu">## A note on your content review</span></span>
+<span id="cb34-255"><a href="#cb34-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-256"><a href="#cb34-256" aria-hidden="true" tabindex="-1"></a>The Module 5 content review uses the Best in Class data rather than these Army data. The steps are identical: fit a random intercept model, add a random slope, evaluate it with <span class="in">`rand()`</span>, then test a cross-level interaction. What changes is the substance of the question, not the code.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

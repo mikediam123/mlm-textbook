@@ -142,15 +142,18 @@ Note the difference from a random slope. A random slope says slopes vary across 
 
 ### Step one: create centered versions of your two predictors
 
-Centering a variable means to subtract the mean from every observation. So now that variable has a mean of 0 (0 now means average). When we look at interaction effects, it is usually a good idea to center any continuous predictors before analyzing. This facilitates easier interpretation of the results, and it ensures that the interaction is being evaluated near the sample mean.
+Centering a variable means to subtract the mean from every observation. So now that variable has a mean of 0 (0 now means average). When we look at interaction effects, it is usually a good idea to center any continuous predictors before analyzing. In multilevel modeling, we typically group mean center predictors at level-1, and grand mean center predictors at level 2. This facilitates easier interpretation of the results, and it ensures that the interaction is being evaluated near the sample mean.
 
 Centering works like this: you use the `mutate` function from `dplyr` to create a new variable that is equal to the original variable minus the mean (which we get using the `mean` function). Just to check our work, we can call the `describe` function from `psych` and make sure that the means of those new variables are 0.
 
 ```{r}
 lq2002.2 <- lq2002.1 %>%
-  mutate(.,
-         tsig_cent = TSIG - mean(TSIG),
-         gtsig_cent = GTSIG - mean(GTSIG))
+  mutate(., #Grand mean center the level-2 variable
+         gtsig_cent = GTSIG - mean(GTSIG)) %>%
+  group_by(COMPID) %>%
+         mutate(., #Group mean center the level-1 variable
+                tsig_cent = TSIG - mean(TSIG)) %>%
+  ungroup()
 
 psych::describe(lq2002.2, fast = TRUE)
 ```

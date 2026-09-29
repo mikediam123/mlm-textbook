@@ -1,0 +1,70 @@
+<div id="lmer-anatomy">
+<style>
+#lmer-anatomy .code-row{display:flex;align-items:flex-start;flex-wrap:wrap;gap:8px;margin:18px 0}
+#lmer-anatomy .token{display:flex;flex-direction:column;align-items:center;gap:4px;max-width:100%}
+#lmer-anatomy .bracket{align-self:stretch;border-bottom:1px solid var(--foreground);border-left:1px solid var(--foreground);border-right:1px solid var(--foreground);height:6px}
+#lmer-anatomy .indent{padding-left:18px}
+#lmer-anatomy .equation{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;align-items:center}
+#lmer-anatomy .term{padding:4px}
+#lmer-anatomy .active-term{background:var(--accent);color:var(--accent-foreground);text-decoration:underline;text-underline-offset:4px}
+#lmer-anatomy .explain{margin-top:16px}
+#lmer-anatomy pre{white-space:pre-wrap;overflow-wrap:anywhere}
+</style>
+<h3>Anatomy of an lmer model</h3>
+<div class="viz-controls">
+<label class="form-label">Example<select id="la-example" class="form-select"><option value="soldiers">Soldiers within companies</option><option value="schools">Students within schools</option><option value="longitudinal">Observations within persons</option></select></label>
+<label class="form-label">Model<select id="la-model" class="form-select"><option value="intercept">Random intercept</option><option value="slope">Random intercept + slope</option></select></label>
+</div>
+<div aria-label="Annotated R call; select a component to inspect it">
+<div class="code-row"><div class="token"><button type="button" class="btn" data-part="function">lme4::lmer</button><span class="bracket"></span><span class="text-small">↓ Function</span></div><code>(</code></div>
+<div class="code-row indent">
+<div class="token"><button type="button" class="btn" data-part="outcome"></button><span class="bracket"></span><span class="text-small">↓ Outcome</span></div>
+<div class="token"><button type="button" class="btn" data-part="syntax">~</button><span class="bracket"></span><span class="text-small">↓ Syntax</span></div>
+<div class="token"><button type="button" class="btn" data-part="predictor"></button><span class="bracket"></span><span class="text-small">↓ Fixed predictor</span></div>
+<code>+</code>
+<div class="token"><button type="button" class="btn" data-part="random"></button><span class="bracket"></span><span class="text-small">↓ Random structure</span></div><code>,</code>
+</div>
+<div class="code-row indent"><code>data =</code><div class="token"><button type="button" class="btn" data-part="data"></button><span class="bracket"></span><span class="text-small">↓ Data frame</span></div><code>,</code><code>REML =</code><div class="token"><button type="button" class="btn" data-part="reml">FALSE</button><span class="bracket"></span><span class="text-small">↓ Estimator choice</span></div></div>
+<code>)</code>
+</div>
+<div class="explain card" aria-live="polite"><div id="la-category" class="text-small"></div><h3 id="la-title"></h3><p id="la-description"></p><div id="la-map" class="text-small"></div></div>
+<div class="equation" aria-label="Corresponding statistical equation"><span class="term" data-term="outcome">Yᵢⱼ</span><span>=</span><span class="term" data-term="intercept">γ₀₀</span><span>+</span><span class="term" data-term="predictor">γ₁₀ Xᵢⱼ</span><span>+</span><span class="term" data-term="random" id="la-random-term"></span><span>+</span><span class="term" data-term="residual">eᵢⱼ</span></div>
+<div class="text-small" id="la-units"></div>
+<details><summary>Plain R code</summary><pre><code id="la-code"></code></pre></details>
+<div class="text-small">Illustrative model templates; no data are loaded or models fitted.</div>
+</div>
+<script>
+(()=>{
+const root=document.getElementById('lmer-anatomy');const $=s=>root.querySelector(s);
+const examples={soldiers:{y:'HOSTILE',x:'TSIG',g:'COMPID',d:'lq2002.1',unit:'soldier',group:'company'},schools:{y:'mathach',x:'ses',g:'schoolid',d:'school_data',unit:'student',group:'school'},longitudinal:{y:'score',x:'time',g:'person_id',d:'repeated_data',unit:'occasion',group:'person'}};
+let selected='random';const buttons=Array.from(root.querySelectorAll('[data-part]'));
+function draw(){const e=examples[$('#la-example').value],slope=$('#la-model').value==='slope';const random=`(1${slope?' + '+e.x:''} | ${e.g})`;
+const info={
+function:['Usually retain · Function and syntax','Fit a linear mixed model','lme4:: names the package; lmer names the function. Keep this for a linear mixed model with a continuous outcome. Different outcome families may require a different function.','This function fits both the fixed effects and the random-effects covariance structure.'],
+outcome:['Customize · Your data','Choose the outcome',`${e.y} is the outcome column in ${e.d}. Replace it with the name of your continuous outcome; spelling and capitalization must match.`,`Equation: Yᵢⱼ is the outcome for ${e.unit} i in ${e.group} j.`],
+syntax:['Usually retain · Function and syntax','Read the formula separator','In an R model formula, ~ separates the outcome on the left from the model terms on the right. Keep commas between function arguments and parentheses around the call.','The R tilde is formula syntax; it is not the statistical “is distributed as” symbol here.'],
+predictor:['Customize · Your data and research question','Choose the fixed predictor',`${e.x} is a predictor column. Here its fixed coefficient describes the population slope. Rename it for your data, or deliberately add predictors. An overall fixed intercept is included automatically.`, 'Equation: γ₁₀ multiplies Xᵢⱼ; γ₀₀ is the implicit fixed intercept. Centering determines the meaning of zero.'],
+random:['Choose deliberately · Model structure','Specify how groups differ',`1 requests a random intercept${slope?'; '+e.x+' also requests a random slope':''}. The | separates these terms from ${e.g}, the grouping ID. Replace that ID with your grouping column${slope?' and use your predictor name inside and outside the parentheses':''}.`,slope?'Equation: u₀ⱼ + u₁ⱼXᵢⱼ. This | specification also estimates intercept–slope covariance; for a numeric predictor, || instead requests uncorrelated components.':'Equation: u₀ⱼ is the group deviation. Its variance is estimated; it is not an arbitrary score assigned to each group.'],
+data:['Customize · Your data','Name the R data frame',`${e.d} is an R object containing the outcome, predictor, and grouping columns. Replace this object name after importing your data. Keep the argument name data =.`, 'This is a data-frame object, not a quoted CSV filename. No separate algebraic term.'],
+reml:['Choose deliberately · Estimation','Choose ML or REML','FALSE uses maximum likelihood, as in our course comparisons that change fixed effects using the same observations. TRUE uses restricted maximum likelihood, often useful for variance estimation with a chosen fixed-effects specification.','The estimator changes how the model is fitted, not the equation. lmer defaults to REML = TRUE when this argument is omitted.']};
+if($('#la-example').value==='longitudinal'){
+info.outcome[2]='score is the continuous outcome measured repeatedly for each person. Replace it with your outcome column. Each row represents one observation occasion for one person.';
+info.predictor[2]='time records elapsed time since baseline, for example in weeks. Its fixed coefficient is average linear change per week. Time = 0 defines baseline, so the fixed intercept is the population expected baseline score.';
+info.predictor[3]='Equation: Xᵢⱼ is time at occasion i for person j; γ₁₀ is average change and γ₀₀ is the population baseline. Coding time in months instead changes the slope’s units.';
+info.random[2]=slope?'(1 + time | person_id) lets people differ in baseline score and rate of change. person_id identifies repeated observations belonging to the same person.':'(1 | person_id) lets people differ in baseline score while sharing the same linear rate of change. Person ID is the cluster; time is the predictor.';
+info.random[3]=(slope?'u₀ⱼ is the person’s baseline deviation; u₁ⱼ is their slope deviation. The | form estimates their covariance. ':'u₀ⱼ is the person’s baseline deviation. ')+'These random effects do not automatically capture all remaining serial correlation between occasions.';
+info.data[2]='repeated_data is a data frame in long format: one row per person per occasion, with score, time, and person_id columns. The same person_id appears across that person’s rows. Keep data = and replace the object name.';
+}
+const names={outcome:e.y,predictor:e.x,random:random,data:e.d};for(const b of buttons){if(names[b.dataset.part])b.textContent=names[b.dataset.part];b.setAttribute('aria-pressed',String(b.dataset.part===selected));}
+const d=info[selected];$('#la-category').textContent=d[0];$('#la-title').textContent=d[1];$('#la-description').textContent=d[2];$('#la-map').textContent=d[3];
+$('#la-random-term').textContent=slope?'u₀ⱼ + u₁ⱼ Xᵢⱼ':'u₀ⱼ';
+for(const term of root.querySelectorAll('[data-term]'))term.classList.toggle('active-term',term.dataset.term===selected || selected==='predictor'&&term.dataset.term==='intercept');
+$('#la-units').textContent=`i = ${e.unit}; j = ${e.group}. γ terms are fixed effects; u terms are group deviations; eᵢⱼ is the observation-level residual.`;
+$('#la-code').textContent=`lme4::lmer(\n  ${e.y} ~ ${e.x} + ${random},\n  data = ${e.d},\n  REML = FALSE\n)`;
+}
+function save(){window.openai?.setWidgetState({modelContent:{example:$('#la-example').value,model:$('#la-model').value,selectedComponent:selected}}).catch(()=>{});}
+function restore(state){const s=state?.modelContent;if(!s)return;if(examples[s.example])$('#la-example').value=s.example;if(['intercept','slope'].includes(s.model))$('#la-model').value=s.model;if(buttons.some(b=>b.dataset.part===s.selectedComponent))selected=s.selectedComponent;}
+buttons.forEach(b=>b.addEventListener('click',()=>{selected=b.dataset.part;draw();save();}));
+for(const id of ['#la-example','#la-model'])$(id).addEventListener('change',()=>{draw();save();});restore(window.openai?.widgetState);draw();window.addEventListener('openai:set_globals',e=>{restore(e.detail?.globals?.widgetState);draw();});
+})();
+</script>

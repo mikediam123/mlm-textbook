@@ -13,8 +13,7 @@ Significance tells you whether an association is distinguishable from zero. It d
 #| label: setup
 #| message: false
 
-library(tidyverse)
-library(readr)
+suppressPackageStartupMessages(library(tidyverse))
 library(lme4)
 library(lmerTest)
 library(performance)
@@ -28,6 +27,8 @@ strs <- readr::read_csv("expanded_strs_no_miss.csv") |>
     closeness_pre_c = closeness_pre - mean(closeness_pre, na.rm = TRUE),
     treat = factor(creg23, levels = c(2, 1), labels = c("Control", "Best in Class"))
   )
+
+glimpse(strs)
 ```
 
 ## Two models to compare
@@ -157,9 +158,9 @@ This one does not merely warn. It refuses to fit at all, and the error message t
 
 It is worth doing that arithmetic yourself before fitting a complex random effects structure. Multiply the number of level-two units by the number of random effects you are requesting per unit, and compare it to your sample size. If the first number approaches the second, the model is in trouble whether or not R throws an error.
 
-The more common situation is milder. Instead of an outright refusal you get a singular fit, a variance component estimated at essentially zero, or a correlation of exactly 1 or -1. Those are the same message delivered more politely. The data cannot support that many random effects.
+The more common situation is not quite as extreme as this one. Instead of an outright refusal you get a singular fit, you might get a variance component estimated at essentially zero, or a correlation of exactly 1 or -1. Those are the same messages, just delivered a little more politely. The data cannot support that many random effects.
 
-The usual responses, in order of how much you give up: drop the correlations and keep both slopes uncorrelated; drop the less theoretically important slope; or return to a random intercept model and acknowledge in your write-up that slope variation could not be estimated with these data. All three are defensible. Silently reporting a singular model as though nothing happened is not.
+So how might you respond? You basically have three choices, in order from most to least preferred: 1) drop the random slope correlations and keep both slopes uncorrelated; 2) drop the less theoretically important slope; or 3) return to a random intercept model and acknowledge in your write-up that slope variation could not be estimated with these data. All three are defensible, and all are better than reporting a singular model as though it converged normally.
 
 ```{r}
 #| eval: false

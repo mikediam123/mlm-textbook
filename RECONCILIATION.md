@@ -42,9 +42,11 @@ This is the finding that most affects the plan. There are now three sources that
 | 2 | not yet checked | `nlsw88.dta` | `nlsw88.dta` |
 | 3 | `hsbmerged.csv` | `hsbmerged` | `hsbmerged.csv` |
 | 4 | `lq2002.csv` | `strs_mlm_wide` | `lq2002.csv` |
-| 5 | **`lq2002.csv`** | `expanded_strs_no_miss` | **`expanded_strs_no_miss`** |
-| 6 | no demo exists | `expanded_strs_no_miss` | `expanded_strs_no_miss` |
+| 5 | **`lq2002.csv`** | `expanded_strs_simulated` | `lq2002.csv` |
+| 6 | no demo exists | `expanded_strs_simulated` | `lq2002.csv` |
 | 7–11 | not yet checked | various | matches assignments |
+
+*Status update:* Chapter 5 has since been reverted to `lq2002.csv`, as recommended below, and Chapter 6 now uses `lq2002.csv` as well, so the demonstration chapters for Modules 4 through 6 all run on the Army data. The Module 5 and Module 6 assignments now use `expanded_strs_simulated`, and the Module 4 assignment still uses `strs_mlm_wide`.
 
 Module 5 is the clear conflict. Your demo teaches random slopes and cross-level interactions on the Army data, continuing directly from Module 4. My chapter teaches the same material on Best in Class. Your continuity is pedagogically stronger: students already know `lq2002` from the previous week, so the new concept arrives without a new dataset attached to it. Your cross-level interaction is also more elegant than mine, testing `TSIG` against `GTSIG`, the same construct at two levels, which makes the idea of a cross-level interaction almost self-explaining.
 

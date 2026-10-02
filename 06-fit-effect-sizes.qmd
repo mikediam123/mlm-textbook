@@ -1,13 +1,10 @@
 # Goodness-of-Fit and Effect Sizes
 
-**Data for this chapter:** `expanded_strs_no_miss.csv`
-
-::: {.callout-note}
-## Data file needed
-Copy `expanded_strs_no_miss.csv` into this project folder before rendering.
-:::
+**Data for this chapter:** `lq2002.csv`
 
 Significance tells you whether an association is distinguishable from zero. It does not tell you whether the association matters, and with large samples the two questions come apart badly. This chapter covers effect sizes for multilevel models and the fit statistics used to choose among competing models.
+
+We return to the Gavin and Hofmann (2002) Army data from the last two chapters: 2,042 soldiers nested within 49 companies. The outcome is `HOSTILE`, a hostility scale score that runs from 0 to 4. The predictors are `TSIG` (task significance) and `LEAD` (leadership climate), both measured on each soldier, plus `GTSIG`, the company average of task significance. `COMPID` identifies the company.
 
 ```{r}
 #| label: setup
@@ -21,26 +18,34 @@ library(modelsummary)
 ```
 
 ```{r}
-strs <- readr::read_csv("expanded_strs_no_miss.csv") |>
+lq2002 <- readr::read_csv("lq2002.csv") |>
+  group_by(COMPID) |>
   mutate(
-    conflict_pre_c  = conflict_pre - mean(conflict_pre, na.rm = TRUE),
-    closeness_pre_c = closeness_pre - mean(closeness_pre, na.rm = TRUE),
-    treat = factor(creg23, levels = c(2, 1), labels = c("Control", "Best in Class"))
+    TSIG_gc = TSIG - mean(TSIG, na.rm = TRUE),   # group-mean center the level-1 predictors
+    LEAD_gc = LEAD - mean(LEAD, na.rm = TRUE)
+  ) |>
+  ungroup() |>
+  mutate(
+    GTSIG_c = GTSIG - mean(GTSIG, na.rm = TRUE)  # grand-mean center the level-2 predictor
   )
 
-glimpse(strs)
+glimpse(lq2002)
 ```
+
+As in the last chapter, we group-mean center the level-1 predictors and grand-mean center the level-2 predictor. `TSIG_gc` and `LEAD_gc` express each soldier's score as a distance from their *own* company's average, so they carry only within-company variation. `GTSIG_c` expresses each company's average task significance as a distance from the average company. The intercept in every model below describes a soldier who sits exactly at their company's average on both predictors, in a company of average task significance.
 
 ## Two models to compare
 
 ```{r}
-m_null <- lmer(conflict_post ~ 1 + (1 | strs3), data = strs, REML = FALSE)
+m_null <- lmer(HOSTILE ~ 1 + (1 | COMPID), data = lq2002, REML = FALSE)
 
-m_cond <- lmer(conflict_post ~ treat + conflict_pre_c + closeness_pre_c + (1 | strs3),
-               data = strs, REML = FALSE)
+m_cond <- lmer(HOSTILE ~ GTSIG_c + TSIG_gc + LEAD_gc + (1 | COMPID),
+               data = lq2002, REML = FALSE)
 
 summary(m_cond)
 ```
+
+The null model tells us that company membership accounts for only about 5% of the variance in hostility (an ICC of about .05, with $\tau_{00}$ = .058 and $\sigma^2$ = 1.017). In the conditional model, all three predictors are negatively related to hostility, and all three coefficients are clearly distinguishable from zero. Because of the centering, they answer different questions. The `TSIG_gc` and `LEAD_gc` coefficients are *within-company* effects: a soldier who finds the work more significant than their company-mates do, or who reports a better leadership climate than they do, reports less hostility. The `GTSIG_c` coefficient is a *between-company* effect: companies where task significance is high on average have lower average hostility, and the estimate (about $-.57$) is more than three times the within-company one for `TSIG_gc` ($-.17$). The question for the rest of the chapter is how much that matters.
 
 ## Proportional reduction in variance
 
@@ -50,24 +55,24 @@ The most interpretable multilevel effect sizes ask how much variance a model exp
 vc_null <- as.data.frame(VarCorr(m_null))
 vc_cond <- as.data.frame(VarCorr(m_cond))
 
-tau_null   <- vc_null$vcov[vc_null$grp == "strs3"]
+tau_null   <- vc_null$vcov[vc_null$grp == "COMPID"]
 sigma_null <- vc_null$vcov[vc_null$grp == "Residual"]
 
-tau_cond   <- vc_cond$vcov[vc_cond$grp == "strs3"]
+tau_cond   <- vc_cond$vcov[vc_cond$grp == "COMPID"]
 sigma_cond <- vc_cond$vcov[vc_cond$grp == "Residual"]
 
 c(tau_null = tau_null, sigma_null = sigma_null,
   tau_cond = tau_cond, sigma_cond = sigma_cond)
 ```
 
-Within-group proportional reduction in variance is the share of student-level variance the predictors account for:
+Within-group proportional reduction in variance is the share of soldier-level variance the predictors account for:
 
 ```{r}
 wg_prv <- (sigma_null - sigma_cond) / sigma_null
 wg_prv
 ```
 
-Between-group PRV does the same at the teacher level:
+Between-group PRV does the same at the company level:
 
 ```{r}
 bg_prv <- (tau_null - tau_cond) / tau_null
@@ -84,11 +89,31 @@ ml_r2 <- (total_null - total_cond) / total_null
 ml_r2
 ```
 
-Be precise about what each denominator refers to when you write these up. WG-PRV is the proportion of *student-level* variance explained, not the proportion of all variance. Reporting it as though it were an overall $R^2$ overstates your model considerably.
+Be precise about what each denominator refers to when you write these up. WG-PRV is the proportion of *soldier-level* variance explained, not the proportion of all variance. Reporting it as though it were an overall $R^2$ overstates your model considerably.
+
+These data show why. The predictors account for about 15% of the within-company variance (WG-PRV = .146) and about 66% of the between-company variance (BG-PRV = .656). That second number sounds impressive until you remember how little between-company variance there was to explain: $\tau_{00}$ fell from .058 to .020, and company differences were only about 5% of the total to begin with. The multilevel $R^2$ of .174 is the fairer summary of how much of the variation in hostility the model accounts for, and almost all of that explained variance is *within* companies.
+
+Notice also where the between-company reduction comes from. The group-mean centered predictors contain no between-company information by construction, so the only predictor that can explain company differences is `GTSIG_c`. A model with `GTSIG_c` alone has a BG-PRV of about .73, higher than the .66 for the full model, which leads directly to the next point.
 
 ### When PRV comes out negative
 
 A negative PRV looks like an arithmetic mistake and usually is not. Adding a level-one predictor can increase the estimated level-two variance, because the level-two variance is estimated conditional on everything else in the model. If a student-level predictor is unevenly distributed across teachers, controlling for it can reveal teacher differences that were previously masked. Report the negative value and explain it. Deleting it from your table is the one clearly wrong response.
+
+These data produce a clean example. Fit a model with only the two group-mean centered level-1 predictors:
+
+```{r}
+m_within <- lmer(HOSTILE ~ TSIG_gc + LEAD_gc + (1 | COMPID),
+                 data = lq2002, REML = FALSE)
+
+vc_within    <- as.data.frame(VarCorr(m_within))
+tau_within   <- vc_within$vcov[vc_within$grp == "COMPID"]
+sigma_within <- vc_within$vcov[vc_within$grp == "Residual"]
+
+c(wg_prv = (sigma_null - sigma_within) / sigma_null,
+  bg_prv = (tau_null - tau_within) / tau_null)
+```
+
+The within-company PRV is positive, about .149, because these predictors do explain soldier-level variance. The between-company PRV is negative, about $-.069$, because $\tau_{00}$ rose slightly, from .058 to .062. Group-mean centered predictors have nothing to say about differences between companies, so there was no reduction to expect. Once the within-company variance is accounted for, the estimate of the company-level variance shifts a little. The right reading is "no reduction in between-company variance," and the right response is to report it.
 
 ## The `performance` package version
 
@@ -96,30 +121,30 @@ A negative PRV looks like an arithmetic mistake and usually is not. Adding a lev
 performance::r2(m_cond)
 ```
 
-This reports marginal $R^2$, the variance explained by fixed effects alone, and conditional $R^2$, the variance explained by fixed and random effects together. These are Nakagawa's measures, and they answer a slightly different question than the PRV statistics above. Both are defensible. Say which you used.
+This reports marginal $R^2$, the variance explained by fixed effects alone (.171), and conditional $R^2$, the variance explained by fixed and random effects together (.189). These are Nakagawa's measures, and they answer a slightly different question than the PRV statistics above. Marginal $R^2$ lands close to our multilevel $R^2$ of .174 but is not identical to it. The conditional value is only a little larger than the marginal one because company differences are such a small share of the variance. Both are defensible. Say which you used.
 
 ## Translating for a non-technical audience
 
-Suppose a district administrator asks how big the program effect is. Effect sizes in variance units rarely land. Predicted values usually do:
+Suppose a battalion commander asks how much leadership climate matters for hostility. Effect sizes in variance units rarely land. Predicted values usually do:
 
 ```{r}
 #| message: false
 
 library(ggeffects)
 
-ggpredict(m_cond, terms = "treat")
+ggpredict(m_cond, terms = "LEAD_gc [meansd]")
 ```
 
-Reporting that the predicted conflict score is some specific amount lower in treated classrooms, on a scale that runs from 1 to 5, communicates more than a proportional reduction in variance ever will. A standardized mean difference is another good option when your audience is used to reading them.
+The three rows show predicted hostility for a soldier one standard deviation below their company's average on leadership climate (1.20), at their company's average (0.94), and one standard deviation above (0.67), holding the other predictors at their means. Because `LEAD_gc` is centered within companies, one standard deviation here is the typical spread among soldiers in the same company (0.77), not the spread across the whole Army. Reporting that a soldier who rates leadership climate one standard deviation higher than their company-mates do is predicted to score about 0.27 points lower on hostility, on a scale that runs from 0 to 4, communicates more than a proportional reduction in variance ever will. A standardized mean difference is another good option when your audience is used to reading them: 0.27 points is about a quarter of a standard deviation of hostility (SD = 1.04).
 
 ## Model comparison with information criteria
 
-Now a different question: which model should we report? Start by adding a random slope for pretest conflict.
+Now a different question: which model should we report? Start by adding a random slope for task significance.
 
 ```{r}
-m_slope <- lmer(conflict_post ~ treat + conflict_pre_c + closeness_pre_c +
-                  (1 + conflict_pre_c | strs3),
-                data = strs, REML = FALSE)
+m_slope <- lmer(HOSTILE ~ GTSIG_c + TSIG_gc + LEAD_gc +
+                  (1 + TSIG_gc | COMPID),
+                data = lq2002, REML = FALSE)
 
 ranova(m_slope)
 ```
@@ -137,47 +162,75 @@ BIC(m_cond, m_slope)
 
 They often will, and understanding why is more useful than memorizing a rule. AIC and BIC both penalize complexity, but BIC's penalty grows with sample size while AIC's does not. With a large sample, BIC prefers simpler models more aggressively than AIC does. The likelihood ratio test is a third thing again: a hypothesis test with a null of no improvement, which inherits all the usual sensitivities to sample size.
 
-For random effects there is an additional wrinkle. Testing whether a variance component equals zero puts the null on the boundary of the parameter space, which makes the usual chi-square reference distribution conservative. The `ranova()` function handles this, but it is a reason not to treat a p-value of .06 on a variance component as decisive.
+For random effects there is an additional wrinkle. Testing whether a variance component equals zero puts the null on the boundary of the parameter space, which makes the usual chi-square reference distribution conservative, and `ranova()` does not correct for it. It is a reason not to treat a p-value of .06 on a variance component as decisive.
 
 When the criteria disagree, say so, state which you weighted and why, and check whether your substantive conclusions change between the two models. If the treatment effect is essentially identical either way, the model choice matters less than it appears to.
 
-## When a model will not converge
+For this random slope, the criteria do not disagree. The likelihood ratio test is clearly significant, $\chi^2$(2) = 21.72, $p$ < .001. AIC drops from 5547.9 to 5530.2, and even BIC, with its heavier penalty, drops from 5581.6 to 5575.2. Everything points toward keeping the slope.
 
-Ask for two random slopes and the data may refuse:
+Agreement among the criteria does not make a model trustworthy, though. Look inside it:
 
 ```{r}
-#| error: true
-#| warning: true
-
-m_two_slopes <- lmer(conflict_post ~ treat + conflict_pre_c + closeness_pre_c +
-                       (1 + conflict_pre_c + closeness_pre_c | strs3),
-                     data = strs, REML = FALSE)
+VarCorr(m_slope)
 ```
 
-This one does not merely warn. It refuses to fit at all, and the error message tells you exactly why. Asking for an intercept and two slopes for each of 322 teachers means asking for 966 random effects, and we have only 828 observations. There are more quantities to estimate than there are data points to estimate them from, so the model is unidentifiable.
+R printed `boundary (singular) fit` when it fitted this model, and the correlation between the intercept and the `TSIG_gc` slope is exactly $-1.00$. That is not a finding about the Army. It is the model reporting that it has run out of information, which is the same thing we saw in the last chapter. The slope variance is real enough that the fit statistics reward it, but the *correlation* is more than 49 companies can support.
 
-It is worth doing that arithmetic yourself before fitting a complex random effects structure. Multiply the number of level-two units by the number of random effects you are requesting per unit, and compare it to your sample size. If the first number approaches the second, the model is in trouble whether or not R throws an error.
+## When a model will not converge
 
-The more common situation is not quite as extreme as this one. Instead of an outright refusal you get a singular fit, you might get a variance component estimated at essentially zero, or a correlation of exactly 1 or -1. Those are the same messages, just delivered a little more politely. The data cannot support that many random effects.
+Ask for two random slopes and things get worse:
+
+```{r}
+#| warning: true
+
+m_two_slopes <- lmer(HOSTILE ~ GTSIG_c + TSIG_gc + LEAD_gc +
+                       (1 + TSIG_gc + LEAD_gc | COMPID),
+                     data = lq2002, REML = FALSE)
+
+VarCorr(m_two_slopes)
+```
+
+This one fits, but R again reports a singular fit. The printed correlations ($-.87$, $-.10$, and $-.41$) look unremarkable, which is what makes this case easy to miss. The problem is hiding in the covariance matrix of the three random effects: it has a zero eigenvalue, meaning some combination of the intercept and the two slopes has no variance at all. The model has collapsed onto something smaller than the structure we asked for.
+
+It is worth doing the arithmetic yourself before fitting a complex random effects structure. A model with $q$ random effects per company needs $q(q + 1)/2$ variance and covariance parameters: 1 for a random intercept alone, 3 for an intercept and one slope, and 6 for an intercept and two slopes. Compare that to the number of level-two units, not the number of soldiers. Slope variance is learned from how much slopes *differ across companies*, and we have only 49 companies, so 2,042 soldiers do not help as much as you might hope. The more parameters you ask 49 companies to support, the less well each one is determined, and the first thing to give is usually a correlation.
+
+The more common situation is a message like this one rather than a failure to run. Instead of an outright refusal you get a singular fit, you might get a variance component estimated at essentially zero, or a correlation of exactly 1 or -1. Those are the same messages, just delivered a little more politely. The data cannot support that many random effects.
 
 So how might you respond? You basically have three choices, in order from most to least preferred: 1) drop the random slope correlations and keep both slopes uncorrelated; 2) drop the less theoretically important slope; or 3) return to a random intercept model and acknowledge in your write-up that slope variation could not be estimated with these data. All three are defensible, and all are better than reporting a singular model as though it converged normally.
 
-```{r}
-#| eval: false
+Here is the first option:
 
+```{r}
 # Uncorrelated random effects
-m_uncorr <- lmer(conflict_post ~ treat + conflict_pre_c + closeness_pre_c +
-                   (1 | strs3) + (0 + conflict_pre_c | strs3),
-                 data = strs, REML = FALSE)
+m_uncorr <- lmer(HOSTILE ~ GTSIG_c + TSIG_gc + LEAD_gc +
+                   (1 | COMPID) + (0 + TSIG_gc | COMPID) + (0 + LEAD_gc | COMPID),
+                 data = lq2002, REML = FALSE)
+
+isSingular(m_uncorr)
 ```
+
+```{r}
+anova(m_cond, m_uncorr)
+AIC(m_cond, m_uncorr)
+BIC(m_cond, m_uncorr)
+```
+
+This model is not singular, so it is a fit we can report honestly. It also gives us the disagreement described above, in miniature. The likelihood ratio test lands right at the edge of conventional significance ($\chi^2$(2) = 6.00, $p$ = .050), and AIC edges toward the model with random slopes (5545.9 versus 5547.9), while BIC clearly favors the simpler random intercept model (5590.9 versus 5581.6). BIC charges each extra parameter ln(2,042) $\approx$ 7.6, against 2 for AIC, so two additional variance components cost about 15 on the BIC scale and only 4 on the AIC scale.
+
+So which do we report? Check whether the substantive story changes. The fixed effects barely move: `GTSIG_c` goes from $-.573$ to $-.571$, `TSIG_gc` from $-.175$ to $-.162$, and `LEAD_gc` from $-.346$ to $-.339$. All three stay negative and clearly distinguishable from zero in both models. Because the conclusions about the predictors do not depend on the choice, either model is defensible as long as you say which you used and why, and report the other as a check.
 
 ## Putting it together
 
 ```{r}
 modelsummary(
-  list("Null" = m_null, "Conditional" = m_cond, "+ Random slope" = m_slope),
+  list("Null" = m_null, "Conditional" = m_cond,
+       "+ Random slope" = m_slope, "+ Uncorrelated slopes" = m_uncorr),
   stars = c("*" = .05, "**" = .01, "***" = .001),
   gof_map = c("nobs", "aic", "bic"),
-  title = "Models predicting end-of-year teacher-student conflict"
+  title = "Models predicting soldier hostility"
 )
 ```
+
+## A note on your content review
+
+Your Module 6 content review uses the Best in Class classroom data rather than these Army data. The steps are the same: calculate effect sizes from the null and conditional models, compare a random slope model using the fit indices, and see what happens when you ask for more random slopes than the data can support. What changes is the substance of the question, not the code.

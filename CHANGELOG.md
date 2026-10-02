@@ -4,6 +4,33 @@ A record of how the Quarto book differs from the original bookdown project and f
 
 ---
 
+## 2026-10-02 — Chapter 6: moved from Best in Class to the Army data (`lq2002.csv`)
+
+**Changed:** Chapter 6 (`06-fit-effect-sizes.qmd`) now uses `lq2002.csv` instead of `expanded_strs_no_miss.csv`. The code and the order of topics are unchanged: null and conditional models, PRV and multilevel R², the `performance` cross-check, predicted values for a non-technical audience, random slope comparison with AIC, BIC and the LRT, the over-specified random effects model, and a `modelsummary()` table. Only the variables and the interpretation changed.
+
+**Why:** The Module 6 demonstration video is being filmed on the Army data, and the Module 6 content review now uses `expanded_strs_simulated.csv`. Keeping the chapter on Best in Class would have duplicated the content review's model. This also matches Chapters 4 and 5, which already run on `lq2002`.
+
+**Variable mapping:** the outcome `conflict_post` became `HOSTILE` (0 to 4, not 1 to 5), and clustering by teacher (`strs3`) became clustering by company (`COMPID`). The conditional model is `HOSTILE ~ GTSIG_c + TSIG_gc + LEAD_gc + (1 | COMPID)`, with the level-1 predictors group-mean centered within company (`TSIG_gc`, `LEAD_gc`) and the level-2 predictor grand-mean centered (`GTSIG_c`), matching Chapter 5. The random slope is for `TSIG_gc`, and the two-slope model adds `LEAD_gc`. The administrator question became a battalion commander asking how much leadership climate matters, answered with predicted values at the mean and one standard deviation either side.
+
+**What the data produce (lme4, ML):** ICC = .054. WG-PRV = .146, BG-PRV = .656, multilevel R² = .174, marginal and conditional R² = .171 and .189. The group-mean centered predictors carry no between-company information, so the only source of between-company explained variance is `GTSIG_c` (BG-PRV = .73 for `GTSIG_c` alone, falling to .66 once the within-company predictors are added). A model with only `TSIG_gc` and `LEAD_gc` gives a BG-PRV of −.069 ($\tau_{00}$ rises from .058 to .062), a clean instance of a negative PRV. The `TSIG_gc` random slope is favored by the LRT, AIC and BIC (χ²(2) = 21.72; AIC 5547.9 to 5530.2; BIC 5581.6 to 5575.2), but the fit is singular, with an intercept-slope correlation of exactly −1.00. Two random slopes fit but are also singular. Uncorrelated slopes are not singular, and there the criteria split: the LRT sits at the .05 edge (χ²(2) = 6.00, *p* = .050) and AIC barely favors the slopes (5545.9 vs. 5547.9), while BIC favors the random intercept model (5590.9 vs. 5581.6).
+
+**Centering revision (same day):** the first version of the chapter grand-mean centered all three predictors. It was revised to group-mean center `TSIG` and `LEAD` and grand-mean center `GTSIG` to match the Module 6 demonstration. The within- and between-company coefficients are now separated: `TSIG_gc` and `LEAD_gc` are within-company effects, `GTSIG_c` is the between-company effect (b = −.57), and the leadership prediction uses the within-company standard deviation (0.77). The earlier negative-PRV example (a within-company PRV of −.003 for a `GTSIG_c`-only model) was replaced by the stronger between-company example above.
+
+**Changed in the prose, beyond the data swap:**
+
+- The old text said `ranova()` "handles" the boundary problem for variance tests. It does not correct for it, so the sentence now says so.
+- The old over-specified random effects demonstration relied on 322 teachers × 3 random effects exceeding 828 observations. With 49 companies and 2,042 soldiers, the model fits but is singular, so the text now explains the parameter-count arithmetic against the number of *companies* rather than predicting a hard error.
+- The old `m_uncorr` chunk did not run and freed only one slope while the prose described both. It now frees both slopes, runs, and appears in the `modelsummary()` table.
+- Added a closing "A note on your content review," as in Chapters 4 and 5.
+
+**Supersedes:** the Chapter 6 entry under "Render-error fixes" below (over-specified random effects halted the render) described the Best in Class version. The `#| error: true` option it added is no longer needed.
+
+**Verified:** every chunk was executed against `lq2002.csv` and each number in the prose was checked against the output. The final `modelsummary()` chunk was not run in the environment used for verification, so check it on the first full render.
+
+**Also updated:** `README.md` (chapter table and dataset note), `RECONCILIATION.md` (dataset table and status note), and `SETUP.md` (data file list, `error: true` note).
+
+---
+
 ## 2026-09-22 — Chapter 5: `ggeffects` restored as the primary interaction plot
 
 **Changed:** The cross-level interaction section in Chapter 5 (`05-random-slopes.qmd`) now uses `ggeffects::ggpredict()` as the primary — and only — demonstrated visualization. `interplot::interplot()` and its accompanying "if interplot will not install" fallback callout have been removed.

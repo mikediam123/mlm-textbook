@@ -28,7 +28,7 @@ Copy these into the project folder, alongside the `.qmd` files:
 - `nsch_2018_topical.dta` (chapter 9)
 - `productivity.dta` (chapter 10)
 
-The others are already in place: `descriptive_gss.dta`, `food.csv`, `hsbmerged.csv`, `lq2002.csv`, `expanded_strs_no_miss.csv`, `projectSTAR.dta`, and `scotland.dta`.
+The others are already in place: `descriptive_gss.dta`, `food.csv`, `hsbmerged.csv`, `lq2002.csv`, `projectSTAR.dta`, and `scotland.dta`.
 
 Every dataset is the one used in the corresponding demonstration handout, so they should already exist alongside the videos.
 
@@ -266,7 +266,7 @@ More generally, anything the rendered pages load from a domain you do not contro
 ```
 ````
 
-Chapter 6 uses this for the over-specified random effects model. Chapter 10's diagnostic code is the next most likely place to need it, since `influence.ME` and `clubSandwich` can be slow or fussy on large datasets.
+No chapter needs this at the moment: Chapter 6 used it for an over-specified random effects model until it moved to the Army data, where the same demonstration produces a singular-fit warning instead of an error. Chapter 10's diagnostic code is the most likely place to need it next, since `influence.ME` and `clubSandwich` can be slow or fussy on large datasets.
 
 ## On the old bookdown project
 

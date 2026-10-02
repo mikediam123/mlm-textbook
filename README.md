@@ -18,7 +18,7 @@ Every chapter except 6 follows the corresponding demonstration handout in `Video
 | 3 | Intro to MLM and the Null Model | `hsbmerged.csv` | `MLM_Week_3_Handout.Rmd` |
 | 4 | Conditional Random Intercept Models | `lq2002.csv` | `MLM_Week_4_Handout.Rmd` |
 | 5 | Random Slope Models | `lq2002.csv` | `MLM_Module_5_Handout.Rmd` |
-| 6 | Goodness-of-Fit and Effect Sizes | `expanded_strs_no_miss.csv` | no handout, written fresh |
+| 6 | Goodness-of-Fit and Effect Sizes | `lq2002.csv` | no handout, written fresh |
 | 7 | Three-Level Models | `projectSTAR.dta` | `MLM_Module_7_Handout.Rmd` |
 | 8a | Intro to Growth Models | `egmerged.dta` | `MLM_Module_8_Handout_Part_1.Rmd` |
 | 8b | Advanced Growth Models | `egmerged.dta` | `MLM_Module_8_Handout_Part_2.Rmd` |
@@ -28,7 +28,7 @@ Every chapter except 6 follows the corresponding demonstration handout in `Video
 
 Module 8 is split into two chapters, matching the two handouts and the two content reviews.
 
-Chapters and content reviews often use different datasets. That is by design: the demonstration teaches the mechanics on one dataset, and the assignment applies them to another.
+Chapters and content reviews often use different datasets. That is by design: the demonstration teaches the mechanics on one dataset, and the assignment applies them to another. Chapter 6 follows the same pattern: it uses the Army data (`lq2002.csv`), while the Module 6 content review uses `expanded_strs_simulated.csv`.
 
 ## Data files
 

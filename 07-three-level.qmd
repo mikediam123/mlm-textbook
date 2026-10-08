@@ -12,7 +12,9 @@ Real data often nest more than two levels deep. Students sit in classrooms, clas
 #| label: setup
 
 suppressPackageStartupMessages(library(tidyverse))
-suppressPackageStartupMessages(library(lme4))
+library(lme4)
+library(lmerTest)
+
 ```
 
 ## Load and explore the data
@@ -136,6 +138,16 @@ These two proportions, plus the student-level share, sum to one and describe whe
 
 The denominator is the same in both calculations, and it is the total variance across all three levels. Getting that denominator right is where students most often slip.
 
+### Same thing, with the `performance` package
+
+```{r}
+performance::icc(model.0, by_group = TRUE)
+```
+
+::: {.callout-note}
+Notice that we have to use the `by_group = TRUE` option here. This splits the ICC estimates out into separate levels. Otherwise, we just get one combined ICC (for school plus classrooms), and this is less informative.
+:::
+
 ## Part three: add predictors at each level
 
 ### Add a student-level predictor, FRL
@@ -180,10 +192,10 @@ These can point in different directions, and often do. That is not a contradicti
 
 ## Part four: try adding a random slope
 
-### Add a random slope for years of experience at level 3 (school)
+### Add a random slope for years of experience at level 2 (school)
 
 ```{r}
-model.5 <- lmer(read ~ stu_frl + years_exp + classtype + urbanicity + (1|classid) + (years_exp|schoolid), data = star.clean)
+model.5 <- lmer(read ~ stu_frl + class_frl + school_frl + years_exp + classtype + urbanicity + (years_exp|classid) + (1|schoolid), data = star.clean)
 
 summary(model.5)
 ```
@@ -193,15 +205,9 @@ Say what this means before reading the output. A random slope for teacher experi
 ## Should we include that random slope? Comparing `model.4` with `model.5`
 
 ```{r}
-anova(model.4, model.5)
+ranova(model.5)
+
 ```
-
-::: {.callout-warning}
-## These two models differ in more than the random slope
-`model.4` includes the FRL aggregates and `model.5` does not, so this comparison changes the fixed effects and the random effects at the same time. A significant result therefore cannot be attributed to the random slope alone.
-
-To isolate the slope, compare `model.3` and `model.5`, which have identical fixed effects, or use `lmerTest::rand(model.5)`, which tests each random term against the same model without it.
-:::
 
 ## Using `modelsummary` and `broom.mixed` to organize your results
 

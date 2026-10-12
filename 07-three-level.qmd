@@ -192,7 +192,7 @@ These can point in different directions, and often do. That is not a contradicti
 
 ## Part four: try adding a random slope
 
-### Add a random slope for years of experience at level 2 (school)
+### Add a random slope for years of experience at level 3 (school)
 
 ```{r}
 model.5 <- lmer(read ~ stu_frl + class_frl + school_frl + years_exp + classtype + urbanicity + (1|classid) + (years_exp|schoolid), data = star.clean)

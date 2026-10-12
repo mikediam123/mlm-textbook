@@ -2,11 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.361">
+<meta name="generator" content="quarto-1.9.38">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
-<title>Applied Multilevel Modeling in R - 8&nbsp; Three-Level Models</title>
+<title>8&nbsp; Three-Level Models – Applied Multilevel Modeling in R</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -19,6 +22,7 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -63,21 +67,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="./">
 <link href="./08a-growth-intro.html" rel="next">
 <link href="./06-fit-effect-sizes.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-0f3a71d5963b834a2d5774f6f36c66af.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -86,45 +97,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 </head>
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-three-level.html">Extending the Model</a></li><li class="breadcrumb-item"><a href="./07-three-level.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-three-level.html">Extending the Model</a></li><li class="breadcrumb-item"><a href="./07-three-level.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Applied Multilevel Modeling in R</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/mikediam123/mlm-textbook" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
 <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
-              <i class="bi bi-bi-twitter pe-1"></i>
+              <i class="bi bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
-              <i class="bi bi-bi-linkedin pe-1"></i>
+              <i class="bi bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
@@ -148,9 +160,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Foundations</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -177,9 +189,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Two-Level Models</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -212,9 +224,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Extending the Model</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -247,9 +259,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Checking and Complicating</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -276,7 +288,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
     </ul>
 </div>
-</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
@@ -318,10 +330,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#should-we-include-that-random-slope-comparing-model.4-with-model.5" id="toc-should-we-include-that-random-slope-comparing-model.4-with-model.5" class="nav-link" data-scroll-target="#should-we-include-that-random-slope-comparing-model.4-with-model.5"><span class="header-section-number">8.7</span> Should we include that random slope? Comparing <code>model.4</code> with <code>model.5</code></a></li>
   <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">8.8</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
   <li><a href="#html-version-that-you-can-open-in-word" id="toc-html-version-that-you-can-open-in-word" class="nav-link" data-scroll-target="#html-version-that-you-can-open-in-word"><span class="header-section-number">8.9</span> HTML version that you can open in Word</a></li>
-  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mikediam123/mlm-textbook/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/mikediam123/mlm-textbook/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-three-level.html">Extending the Model</a></li><li class="breadcrumb-item"><a href="./07-three-level.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span></a></li></ol></nav><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
 <span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Three-Level Models</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
@@ -337,14 +349,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header><p><strong>Data for this chapter:</strong> <code>projectSTAR.dta</code></p>
 <p>This week, we are going to use the Kindergarten data from Project STAR, the Tennessee Class Size Experiment conducted from 1985 to 1990.</p>
 <p>Real data often nest more than two levels deep. Students sit in classrooms, classrooms sit in schools, and each layer can contribute its own variation.</p>
 <section id="load-some-packages-to-help-with-the-analysis-and-data-management" class="level2" data-number="8.1"><h2 data-number="8.1" class="anchored" data-anchor-id="load-some-packages-to-help-with-the-analysis-and-data-management">
 <span class="header-section-number">8.1</span> Load some packages to help with the analysis and data management</h2>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: Matrix</code></pre>
 </div>
@@ -357,7 +370,7 @@ Attaching package: 'Matrix'</code></pre>
 
     expand, pack, unpack</code></pre>
 </div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/runehaubo/lmerTestR">lmerTest</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/runehaubo/lmerTestR">lmerTest</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'lmerTest'</code></pre>
@@ -376,9 +389,9 @@ Attaching package: 'lmerTest'</code></pre>
 </section><section id="load-and-explore-the-data" class="level2" data-number="8.2"><h2 data-number="8.2" class="anchored" data-anchor-id="load-and-explore-the-data">
 <span class="header-section-number">8.2</span> Load and explore the data</h2>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">projectSTAR</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"projectSTAR.dta"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">projectSTAR</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"projectSTAR.dta"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">projectSTAR</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">projectSTAR</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 6,325
 Columns: 27
@@ -418,7 +431,7 @@ $ gkselfconcraw &lt;dbl&gt; 52, 53, 56, 61, 54, 55, NA, NA, 52, 61, 55, 49, 49, 
 <span class="header-section-number">8.3.1</span> Use <code>str</code> to figure out the 2/1 coding scheme and variable labels</h3>
 <p>The <code>str</code> function (short for structure) will show us any variable labels or values that have been attached to a variable. You can use this to find out how variables have been coded.</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">projectSTAR</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">projectSTAR</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [6,325 × 27] (S3: tbl_df/tbl/data.frame)
  $ stdntid      : num [1:6325] 10001 10133 10246 10263 10266 ...
@@ -536,7 +549,7 @@ $ gkselfconcraw &lt;dbl&gt; 52, 53, 56, 61, 54, 55, NA, NA, 52, 61, 55, 49, 49, 
 </section><section id="create-a-clean-dataset-ready-for-modeling" class="level3" data-number="8.3.2"><h3 data-number="8.3.2" class="anchored" data-anchor-id="create-a-clean-dataset-ready-for-modeling">
 <span class="header-section-number">8.3.2</span> Create a clean dataset ready for modeling</h3>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">star.clean</span> <span class="op">&lt;-</span> <span class="va">projectSTAR</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">star.clean</span> <span class="op">&lt;-</span> <span class="va">projectSTAR</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
 <span>         schoolid <span class="op">=</span> <span class="va">gkschid</span>,</span>
 <span>         classid <span class="op">=</span> <span class="va">gktchid</span>,</span>
@@ -567,7 +580,7 @@ $ gkselfconcraw &lt;dbl&gt; 52, 53, 56, 61, 54, 55, NA, NA, 52, 61, 55, 49, 49, 
 <span>         <span class="va">class_frl</span>,</span>
 <span>         <span class="va">school_frl</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">star.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">star.clean</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 6,325
 Columns: 9
@@ -593,7 +606,7 @@ $ school_frl &lt;dbl&gt; 0.86206897, 0.86206897, 0.71666667, 0.15189873, 0.62857
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Why the <code>- 1</code> trick works, and when it does not
+<span class="screen-reader-only">Tip</span>Why the <code>- 1</code> trick works, and when it does not
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -608,9 +621,9 @@ Why the <code>- 1</code> trick works, and when it does not
 <section id="run-a-null-3-level-model-for-reading-scores" class="level3" data-number="8.4.1"><h3 data-number="8.4.1" class="anchored" data-anchor-id="run-a-null-3-level-model-for-reading-scores">
 <span class="header-section-number">8.4.1</span> Run a null 3-level model for reading scores</h3>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.0</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.0</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
 lmerModLmerTest]
@@ -644,7 +657,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Why this syntax works here
+<span class="screen-reader-only">Note</span>Why this syntax works here
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -656,8 +669,8 @@ Why this syntax works here
 </section><section id="calculate-l2-icc-classroom" class="level3" data-number="8.4.2"><h3 data-number="8.4.2" class="anchored" data-anchor-id="calculate-l2-icc-classroom">
 <span class="header-section-number">8.4.2</span> Calculate L2 ICC (classroom)</h3>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ICC.class</span> <span class="op">&lt;-</span> <span class="fl">114.9</span><span class="op">/</span><span class="op">(</span><span class="fl">728.2</span> <span class="op">+</span> <span class="fl">169.8</span> <span class="op">+</span> <span class="fl">114.9</span><span class="op">)</span></span>
-<span><span class="va">ICC.class</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ICC.class</span> <span class="op">&lt;-</span> <span class="fl">114.9</span><span class="op">/</span><span class="op">(</span><span class="fl">728.2</span> <span class="op">+</span> <span class="fl">169.8</span> <span class="op">+</span> <span class="fl">114.9</span><span class="op">)</span></span>
+<span><span class="va">ICC.class</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1134367</code></pre>
 </div>
@@ -665,8 +678,8 @@ Why this syntax works here
 </section><section id="calculate-l3-icc-school" class="level3" data-number="8.4.3"><h3 data-number="8.4.3" class="anchored" data-anchor-id="calculate-l3-icc-school">
 <span class="header-section-number">8.4.3</span> Calculate L3 ICC (school)</h3>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ICC.school</span> <span class="op">&lt;-</span> <span class="fl">169.8</span><span class="op">/</span><span class="op">(</span><span class="fl">728.2</span> <span class="op">+</span> <span class="fl">169.8</span> <span class="op">+</span> <span class="fl">114.9</span><span class="op">)</span></span>
-<span><span class="va">ICC.school</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ICC.school</span> <span class="op">&lt;-</span> <span class="fl">169.8</span><span class="op">/</span><span class="op">(</span><span class="fl">728.2</span> <span class="op">+</span> <span class="fl">169.8</span> <span class="op">+</span> <span class="fl">114.9</span><span class="op">)</span></span>
+<span><span class="va">ICC.school</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1676375</code></pre>
 </div>
@@ -676,7 +689,7 @@ Why this syntax works here
 </section><section id="same-thing-with-the-performance-package" class="level3" data-number="8.4.4"><h3 data-number="8.4.4" class="anchored" data-anchor-id="same-thing-with-the-performance-package">
 <span class="header-section-number">8.4.4</span> Same thing, with the <code>performance</code> package</h3>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/performance/reference/icc.html">icc</a></span><span class="op">(</span><span class="va">model.0</span>, by_group <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/performance/reference/icc.html">icc</a></span><span class="op">(</span><span class="va">model.0</span>, by_group <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># ICC by Group
 
@@ -704,9 +717,9 @@ Note
 <section id="add-a-student-level-predictor-frl" class="level3" data-number="8.5.1"><h3 data-number="8.5.1" class="anchored" data-anchor-id="add-a-student-level-predictor-frl">
 <span class="header-section-number">8.5.1</span> Add a student-level predictor, FRL</h3>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.1</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
 lmerModLmerTest]
@@ -741,9 +754,9 @@ s_NON-FREEL -0.278</code></pre>
 </section><section id="add-teacher-level-predictors-years-of-experience-and-class-type" class="level3" data-number="8.5.2"><h3 data-number="8.5.2" class="anchored" data-anchor-id="add-teacher-level-predictors-years-of-experience-and-class-type">
 <span class="header-section-number">8.5.2</span> Add teacher-level predictors: years of experience and class type</h3>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span> <span class="va">years_exp</span> <span class="op">+</span> <span class="va">classtype</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span> <span class="va">years_exp</span> <span class="op">+</span> <span class="va">classtype</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.2</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
 lmerModLmerTest]
@@ -792,9 +805,9 @@ cREGULAR+AC -0.324  0.009 -0.065  0.464</code></pre>
 </section><section id="add-a-school-level-predictor-urbanicity-of-school" class="level3" data-number="8.5.3"><h3 data-number="8.5.3" class="anchored" data-anchor-id="add-a-school-level-predictor-urbanicity-of-school">
 <span class="header-section-number">8.5.3</span> Add a school-level predictor, urbanicity of school</h3>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span> <span class="va">years_exp</span> <span class="op">+</span> <span class="va">classtype</span> <span class="op">+</span> <span class="va">urbanicity</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span> <span class="va">years_exp</span> <span class="op">+</span> <span class="va">classtype</span> <span class="op">+</span> <span class="va">urbanicity</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.3</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
 lmerModLmerTest]
@@ -853,9 +866,9 @@ urbnctURBAN -0.505 -0.063 -0.030  0.012  0.013  0.405  0.466</code></pre>
 </section><section id="add-in-frl-at-all-three-levels-student-teacher-school" class="level3" data-number="8.5.4"><h3 data-number="8.5.4" class="anchored" data-anchor-id="add-in-frl-at-all-three-levels-student-teacher-school">
 <span class="header-section-number">8.5.4</span> Add in FRL at all three levels (student, teacher, school)</h3>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span>  <span class="va">class_frl</span> <span class="op">+</span> <span class="va">school_frl</span> <span class="op">+</span>  <span class="va">years_exp</span> <span class="op">+</span> <span class="va">classtype</span> <span class="op">+</span> <span class="va">urbanicity</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span>  <span class="va">class_frl</span> <span class="op">+</span> <span class="va">school_frl</span> <span class="op">+</span>  <span class="va">years_exp</span> <span class="op">+</span> <span class="va">classtype</span> <span class="op">+</span> <span class="va">urbanicity</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.4</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
 lmerModLmerTest]
@@ -922,45 +935,45 @@ urbnctURBAN -0.242 -0.002 -0.005 -0.439 -0.022  0.016  0.010  0.641  0.669</code
 <section id="add-a-random-slope-for-years-of-experience-at-level-2-school" class="level3" data-number="8.6.1"><h3 data-number="8.6.1" class="anchored" data-anchor-id="add-a-random-slope-for-years-of-experience-at-level-2-school">
 <span class="header-section-number">8.6.1</span> Add a random slope for years of experience at level 2 (school)</h3>
 <div class="cell">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span> <span class="va">class_frl</span> <span class="op">+</span> <span class="va">school_frl</span> <span class="op">+</span> <span class="va">years_exp</span> <span class="op">+</span> <span class="va">classtype</span> <span class="op">+</span> <span class="va">urbanicity</span> <span class="op">+</span> <span class="op">(</span><span class="va">years_exp</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">read</span> <span class="op">~</span> <span class="va">stu_frl</span> <span class="op">+</span> <span class="va">class_frl</span> <span class="op">+</span> <span class="va">school_frl</span> <span class="op">+</span> <span class="va">years_exp</span> <span class="op">+</span> <span class="va">classtype</span> <span class="op">+</span> <span class="va">urbanicity</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">classid</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">years_exp</span><span class="op">|</span><span class="va">schoolid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">star.clean</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model failed to converge with max|grad| = 0.0179231 (tol = 0.002, component 1)
+<pre><code>Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model failed to converge with max|grad| = 0.0182659 (tol = 0.002, component 1)
   See ?lme4::convergence and ?lme4::troubleshooting.</code></pre>
 </div>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.5</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
 lmerModLmerTest]
 Formula: read ~ stu_frl + class_frl + school_frl + years_exp + classtype +  
-    urbanicity + (years_exp | classid) + (1 | schoolid)
+    urbanicity + (1 | classid) + (years_exp | schoolid)
    Data: star.clean
 
-REML criterion at convergence: 54392.3
+REML criterion at convergence: 54398.5
 
 Scaled residuals: 
     Min      1Q  Median      3Q     Max 
--3.8167 -0.5864 -0.1000  0.4392  7.2197 
+-3.8587 -0.5877 -0.1008  0.4435  7.3212 
 
 Random effects:
- Groups   Name        Variance Std.Dev. Corr  
- classid  (Intercept) 204.577  14.303         
-          years_exp     1.342   1.159   -0.85 
- schoolid (Intercept) 152.111  12.333         
- Residual             688.924  26.247         
+ Groups   Name        Variance Std.Dev. Corr 
+ classid  (Intercept)  95.6718  9.7812       
+ schoolid (Intercept)  80.5161  8.9731       
+          years_exp     0.2047  0.4524  0.67 
+ Residual             689.1851 26.2523       
 Number of obs: 5751, groups:  classid, 324; schoolid, 79
 
 Fixed effects:
                                Estimate Std. Error        df t value Pr(&gt;|t|)
-(Intercept)                    425.7820     3.8748   96.0166 109.884  &lt; 2e-16
-stu_frlNON-FREE LUNCH           15.4336     0.8514 5432.9727  18.127  &lt; 2e-16
-class_frl                        2.6752     6.5843  191.6561   0.406 0.684982
-school_frl                      -2.2000    11.1986  154.0644  -0.196 0.844512
-years_exp                        0.3391     0.1433  147.9089   2.365 0.019310
-classtypeREGULAR CLASS          -5.8668     1.5622  227.6333  -3.756 0.000220
-classtypeREGULAR + AIDE CLASS   -5.1893     1.5483  217.0795  -3.352 0.000948
-urbanicitySUBURBAN               4.1514     7.3585   77.2786   0.564 0.574272
-urbanicityRURAL                  3.2141     5.9416   75.6846   0.541 0.590139
-urbanicityURBAN                  4.8562     7.4433   74.7007   0.652 0.516129
+(Intercept)                    427.4835     3.3916   58.4550 126.042  &lt; 2e-16
+stu_frlNON-FREE LUNCH           15.4382     0.8516 5429.2785  18.128  &lt; 2e-16
+class_frl                        3.5851     7.0533  237.9353   0.508 0.611729
+school_frl                     -10.8596    11.1446  165.6718  -0.974 0.331263
+years_exp                        0.3079     0.1382   65.2266   2.227 0.029377
+classtypeREGULAR CLASS          -6.5229     1.6094  236.5416  -4.053 6.86e-05
+classtypeREGULAR + AIDE CLASS   -5.7573     1.6097  233.5567  -3.577 0.000423
+urbanicitySUBURBAN               9.8099     6.7875   64.2785   1.445 0.153236
+urbanicityRURAL                  6.5577     5.5878   69.1694   1.174 0.244592
+urbanicityURBAN                  8.5563     7.0774   71.0720   1.209 0.230683
                                  
 (Intercept)                   ***
 stu_frlNON-FREE LUNCH         ***
@@ -977,17 +990,17 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Correlation of Fixed Effects:
             (Intr) s_NONL clss_f schl_f yrs_xp cREGUC cRE+AC uSUBUR uRURAL
-s_NON-FREEL  0.001                                                        
-class_frl   -0.010 -0.128                                                 
-school_frl  -0.229  0.001 -0.561                                          
-years_exp   -0.289 -0.003 -0.039  0.000                                   
-cREGULARCLA -0.190  0.000  0.020 -0.027 -0.009                            
-cREGULAR+AC -0.177  0.000  0.073 -0.045 -0.062  0.477                     
-urbSUBURBAN -0.184 -0.001 -0.013 -0.626 -0.010  0.027  0.011              
-urbnctRURAL -0.290 -0.002 -0.012 -0.594 -0.012  0.016  0.004  0.828       
-urbnctURBAN -0.238 -0.002 -0.002 -0.460 -0.018  0.027  0.009  0.644  0.673
+s_NON-FREEL  0.000                                                        
+class_frl   -0.003 -0.120                                                 
+school_frl  -0.216  0.000 -0.623                                          
+years_exp   -0.142 -0.003 -0.055 -0.024                                   
+cREGULARCLA -0.208  0.000  0.005 -0.025  0.002                            
+cREGULAR+AC -0.196  0.000  0.066 -0.037 -0.063  0.463                     
+urbSUBURBAN -0.199  0.000  0.010 -0.603  0.030  0.027 -0.010              
+urbnctRURAL -0.289 -0.001  0.011 -0.580 -0.010  0.014 -0.004  0.819       
+urbnctURBAN -0.230 -0.001 -0.014 -0.434  0.004 -0.005 -0.010  0.637  0.664
 optimizer (nloptwrap) convergence code: 0 (OK)
-Model failed to converge with max|grad| = 0.0179231 (tol = 0.002, component 1)
+Model failed to converge with max|grad| = 0.0182659 (tol = 0.002, component 1)
   See ?lme4::convergence and ?lme4::troubleshooting.</code></pre>
 </div>
 </div>
@@ -996,20 +1009,20 @@ Model failed to converge with max|grad| = 0.0179231 (tol = 0.002, component 1)
 <span class="header-section-number">8.7</span> Should we include that random slope? Comparing <code>model.4</code> with <code>model.5</code>
 </h2>
 <div class="cell">
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova</a></span><span class="op">(</span><span class="va">model.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova</a></span><span class="op">(</span><span class="va">model.5</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model failed to converge with max|grad| = 0.0258379 (tol = 0.002, component 1)
+<pre><code>Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model failed to converge with max|grad| = 0.00376796 (tol = 0.002, component 1)
   See ?lme4::convergence and ?lme4::troubleshooting.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ANOVA-like table for random-effects: Single term deletions
 
 Model:
-read ~ stu_frl + class_frl + school_frl + years_exp + classtype + urbanicity + (years_exp | classid) + (1 | schoolid)
-                                   npar logLik   AIC    LRT Df Pr(&gt;Chisq)    
-&lt;none&gt;                               15 -27196 54422                         
-years_exp in (years_exp | classid)   13 -27203 54431 13.129  2    0.00141 ** 
-(1 | schoolid)                       14 -27246 54520 99.533  1    &lt; 2e-16 ***
+read ~ stu_frl + class_frl + school_frl + years_exp + classtype + urbanicity + (1 | classid) + (years_exp | schoolid)
+                                    npar logLik   AIC     LRT Df Pr(&gt;Chisq)    
+&lt;none&gt;                                15 -27199 54429                          
+(1 | classid)                         14 -27302 54633 206.335  1    &lt; 2e-16 ***
+years_exp in (years_exp | schoolid)   13 -27203 54431   6.913  2    0.03154 *  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -1017,53 +1030,51 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section><section id="using-modelsummary-and-broom.mixed-to-organize-your-results" class="level2" data-number="8.8"><h2 data-number="8.8" class="anchored" data-anchor-id="using-modelsummary-and-broom.mixed-to-organize-your-results">
 <span class="header-section-number">8.8</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</h2>
 <div class="cell">
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bbolker/broom.mixed">broom.mixed</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">model.0</span>, <span class="va">model.1</span>, <span class="va">model.2</span>, <span class="va">model.3</span>, <span class="va">model.4</span>, <span class="va">model.5</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>, output <span class="op">=</span> <span class="st">"default"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>, output <span class="op">=</span> <span class="st">"default"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-
-
-    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
+<script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
       // Create table-specific functions using external factory
-      const tableFns_bsenye55ubcx11qcdojb = TinyTable.createTableFunctions("tinytable_bsenye55ubcx11qcdojb");
+      const tableFns_4dl9isungainh8h2iv94 = TinyTable.createTableFunctions("tinytable_4dl9isungainh8h2iv94");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '32', j: 2 }, { i: '32', j: 3 }, { i: '32', j: 4 }, { i: '32', j: 5 }, { i: '32', j: 6 }, { i: '32', j: 7 } ], css_id: 'tinytable_css_pci9dsp4zq65g4sl1lbr',}, 
-          { positions: [ { i: '25', j: 2 }, { i: '25', j: 3 }, { i: '25', j: 4 }, { i: '25', j: 5 }, { i: '25', j: 6 }, { i: '25', j: 7 } ], css_id: 'tinytable_css_6br92a83f74sdbxuch8v',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '22', j: 2 }, { i: '23', j: 2 }, { i: '24', j: 2 }, { i: '26', j: 2 }, { i: '27', j: 2 }, { i: '28', j: 2 }, { i: '29', j: 2 }, { i: '30', j: 2 }, { i: '31', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 }, { i: '20', j: 3 }, { i: '21', j: 3 }, { i: '22', j: 3 }, { i: '23', j: 3 }, { i: '24', j: 3 }, { i: '26', j: 3 }, { i: '27', j: 3 }, { i: '28', j: 3 }, { i: '29', j: 3 }, { i: '30', j: 3 }, { i: '31', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '13', j: 4 }, { i: '14', j: 4 }, { i: '15', j: 4 }, { i: '16', j: 4 }, { i: '17', j: 4 }, { i: '18', j: 4 }, { i: '19', j: 4 }, { i: '20', j: 4 }, { i: '21', j: 4 }, { i: '22', j: 4 }, { i: '23', j: 4 }, { i: '24', j: 4 }, { i: '26', j: 4 }, { i: '27', j: 4 }, { i: '28', j: 4 }, { i: '29', j: 4 }, { i: '30', j: 4 }, { i: '31', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 }, { i: '13', j: 5 }, { i: '14', j: 5 }, { i: '15', j: 5 }, { i: '16', j: 5 }, { i: '17', j: 5 }, { i: '18', j: 5 }, { i: '19', j: 5 }, { i: '20', j: 5 }, { i: '21', j: 5 }, { i: '22', j: 5 }, { i: '23', j: 5 }, { i: '24', j: 5 }, { i: '26', j: 5 }, { i: '27', j: 5 }, { i: '28', j: 5 }, { i: '29', j: 5 }, { i: '30', j: 5 }, { i: '31', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '12', j: 6 }, { i: '13', j: 6 }, { i: '14', j: 6 }, { i: '15', j: 6 }, { i: '16', j: 6 }, { i: '17', j: 6 }, { i: '18', j: 6 }, { i: '19', j: 6 }, { i: '20', j: 6 }, { i: '21', j: 6 }, { i: '22', j: 6 }, { i: '23', j: 6 }, { i: '24', j: 6 }, { i: '26', j: 6 }, { i: '27', j: 6 }, { i: '28', j: 6 }, { i: '29', j: 6 }, { i: '30', j: 6 }, { i: '31', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 }, { i: '12', j: 7 }, { i: '13', j: 7 }, { i: '14', j: 7 }, { i: '15', j: 7 }, { i: '16', j: 7 }, { i: '17', j: 7 }, { i: '18', j: 7 }, { i: '19', j: 7 }, { i: '20', j: 7 }, { i: '21', j: 7 }, { i: '22', j: 7 }, { i: '23', j: 7 }, { i: '24', j: 7 }, { i: '26', j: 7 }, { i: '27', j: 7 }, { i: '28', j: 7 }, { i: '29', j: 7 }, { i: '30', j: 7 }, { i: '31', j: 7 } ], css_id: 'tinytable_css_fs4zg1mr6crghuy57ax0',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 } ], css_id: 'tinytable_css_fp7l45pnln20lkue78yg',}, 
-          { positions: [ { i: '32', j: 1 } ], css_id: 'tinytable_css_8759z2kq3qk0gx683n2g',}, 
-          { positions: [ { i: '25', j: 1 } ], css_id: 'tinytable_css_jetgo9wyskagpjr1n7ho',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '22', j: 1 }, { i: '23', j: 1 }, { i: '24', j: 1 }, { i: '26', j: 1 }, { i: '27', j: 1 }, { i: '28', j: 1 }, { i: '29', j: 1 }, { i: '30', j: 1 }, { i: '31', j: 1 } ], css_id: 'tinytable_css_uprakwpnkxdtqbtedug6',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_gv5xeur64w642mfpvzv0',}, 
+          { positions: [ { i: '32', j: 2 }, { i: '32', j: 3 }, { i: '32', j: 4 }, { i: '32', j: 5 }, { i: '32', j: 6 }, { i: '32', j: 7 } ], css_id: 'tinytable_css_fgad9ubhkkq2n2ehrqyv',}, 
+          { positions: [ { i: '25', j: 2 }, { i: '25', j: 3 }, { i: '25', j: 4 }, { i: '25', j: 5 }, { i: '25', j: 6 }, { i: '25', j: 7 } ], css_id: 'tinytable_css_9zmin9fnl6hpw7u6nkgh',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '22', j: 2 }, { i: '23', j: 2 }, { i: '24', j: 2 }, { i: '26', j: 2 }, { i: '27', j: 2 }, { i: '28', j: 2 }, { i: '29', j: 2 }, { i: '30', j: 2 }, { i: '31', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 }, { i: '20', j: 3 }, { i: '21', j: 3 }, { i: '22', j: 3 }, { i: '23', j: 3 }, { i: '24', j: 3 }, { i: '26', j: 3 }, { i: '27', j: 3 }, { i: '28', j: 3 }, { i: '29', j: 3 }, { i: '30', j: 3 }, { i: '31', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '12', j: 4 }, { i: '13', j: 4 }, { i: '14', j: 4 }, { i: '15', j: 4 }, { i: '16', j: 4 }, { i: '17', j: 4 }, { i: '18', j: 4 }, { i: '19', j: 4 }, { i: '20', j: 4 }, { i: '21', j: 4 }, { i: '22', j: 4 }, { i: '23', j: 4 }, { i: '24', j: 4 }, { i: '26', j: 4 }, { i: '27', j: 4 }, { i: '28', j: 4 }, { i: '29', j: 4 }, { i: '30', j: 4 }, { i: '31', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '12', j: 5 }, { i: '13', j: 5 }, { i: '14', j: 5 }, { i: '15', j: 5 }, { i: '16', j: 5 }, { i: '17', j: 5 }, { i: '18', j: 5 }, { i: '19', j: 5 }, { i: '20', j: 5 }, { i: '21', j: 5 }, { i: '22', j: 5 }, { i: '23', j: 5 }, { i: '24', j: 5 }, { i: '26', j: 5 }, { i: '27', j: 5 }, { i: '28', j: 5 }, { i: '29', j: 5 }, { i: '30', j: 5 }, { i: '31', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '12', j: 6 }, { i: '13', j: 6 }, { i: '14', j: 6 }, { i: '15', j: 6 }, { i: '16', j: 6 }, { i: '17', j: 6 }, { i: '18', j: 6 }, { i: '19', j: 6 }, { i: '20', j: 6 }, { i: '21', j: 6 }, { i: '22', j: 6 }, { i: '23', j: 6 }, { i: '24', j: 6 }, { i: '26', j: 6 }, { i: '27', j: 6 }, { i: '28', j: 6 }, { i: '29', j: 6 }, { i: '30', j: 6 }, { i: '31', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '6', j: 7 }, { i: '7', j: 7 }, { i: '8', j: 7 }, { i: '9', j: 7 }, { i: '10', j: 7 }, { i: '11', j: 7 }, { i: '12', j: 7 }, { i: '13', j: 7 }, { i: '14', j: 7 }, { i: '15', j: 7 }, { i: '16', j: 7 }, { i: '17', j: 7 }, { i: '18', j: 7 }, { i: '19', j: 7 }, { i: '20', j: 7 }, { i: '21', j: 7 }, { i: '22', j: 7 }, { i: '23', j: 7 }, { i: '24', j: 7 }, { i: '26', j: 7 }, { i: '27', j: 7 }, { i: '28', j: 7 }, { i: '29', j: 7 }, { i: '30', j: 7 }, { i: '31', j: 7 } ], css_id: 'tinytable_css_rm1j326pi50lcfes05xz',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 } ], css_id: 'tinytable_css_00yk7i4uucgzcntzalvp',}, 
+          { positions: [ { i: '32', j: 1 } ], css_id: 'tinytable_css_1slhizxus7t97xw2p8mb',}, 
+          { positions: [ { i: '25', j: 1 } ], css_id: 'tinytable_css_r6r59g33ba0o7de1qw89',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '22', j: 1 }, { i: '23', j: 1 }, { i: '24', j: 1 }, { i: '26', j: 1 }, { i: '27', j: 1 }, { i: '28', j: 1 }, { i: '29', j: 1 }, { i: '30', j: 1 }, { i: '31', j: 1 } ], css_id: 'tinytable_css_tv2zmx5byljle3dcpf5g',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_0fudhp0o6is066d7asgl',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_bsenye55ubcx11qcdojb.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_4dl9isungainh8h2iv94.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
 <style>
     /* tinytable css entries after */
-    #tinytable_bsenye55ubcx11qcdojb td.tinytable_css_pci9dsp4zq65g4sl1lbr, #tinytable_bsenye55ubcx11qcdojb th.tinytable_css_pci9dsp4zq65g4sl1lbr {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_bsenye55ubcx11qcdojb td.tinytable_css_6br92a83f74sdbxuch8v, #tinytable_bsenye55ubcx11qcdojb th.tinytable_css_6br92a83f74sdbxuch8v {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_bsenye55ubcx11qcdojb td.tinytable_css_fs4zg1mr6crghuy57ax0, #tinytable_bsenye55ubcx11qcdojb th.tinytable_css_fs4zg1mr6crghuy57ax0 { text-align: center }
-    #tinytable_bsenye55ubcx11qcdojb td.tinytable_css_fp7l45pnln20lkue78yg, #tinytable_bsenye55ubcx11qcdojb th.tinytable_css_fp7l45pnln20lkue78yg {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_bsenye55ubcx11qcdojb td.tinytable_css_8759z2kq3qk0gx683n2g, #tinytable_bsenye55ubcx11qcdojb th.tinytable_css_8759z2kq3qk0gx683n2g {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_bsenye55ubcx11qcdojb td.tinytable_css_jetgo9wyskagpjr1n7ho, #tinytable_bsenye55ubcx11qcdojb th.tinytable_css_jetgo9wyskagpjr1n7ho {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_bsenye55ubcx11qcdojb td.tinytable_css_uprakwpnkxdtqbtedug6, #tinytable_bsenye55ubcx11qcdojb th.tinytable_css_uprakwpnkxdtqbtedug6 { text-align: left }
-    #tinytable_bsenye55ubcx11qcdojb td.tinytable_css_gv5xeur64w642mfpvzv0, #tinytable_bsenye55ubcx11qcdojb th.tinytable_css_gv5xeur64w642mfpvzv0 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_4dl9isungainh8h2iv94 td.tinytable_css_fgad9ubhkkq2n2ehrqyv, #tinytable_4dl9isungainh8h2iv94 th.tinytable_css_fgad9ubhkkq2n2ehrqyv {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_4dl9isungainh8h2iv94 td.tinytable_css_9zmin9fnl6hpw7u6nkgh, #tinytable_4dl9isungainh8h2iv94 th.tinytable_css_9zmin9fnl6hpw7u6nkgh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_4dl9isungainh8h2iv94 td.tinytable_css_rm1j326pi50lcfes05xz, #tinytable_4dl9isungainh8h2iv94 th.tinytable_css_rm1j326pi50lcfes05xz { text-align: center }
+    #tinytable_4dl9isungainh8h2iv94 td.tinytable_css_00yk7i4uucgzcntzalvp, #tinytable_4dl9isungainh8h2iv94 th.tinytable_css_00yk7i4uucgzcntzalvp {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_4dl9isungainh8h2iv94 td.tinytable_css_1slhizxus7t97xw2p8mb, #tinytable_4dl9isungainh8h2iv94 th.tinytable_css_1slhizxus7t97xw2p8mb {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_4dl9isungainh8h2iv94 td.tinytable_css_r6r59g33ba0o7de1qw89, #tinytable_4dl9isungainh8h2iv94 th.tinytable_css_r6r59g33ba0o7de1qw89 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_4dl9isungainh8h2iv94 td.tinytable_css_tv2zmx5byljle3dcpf5g, #tinytable_4dl9isungainh8h2iv94 th.tinytable_css_tv2zmx5byljle3dcpf5g { text-align: left }
+    #tinytable_4dl9isungainh8h2iv94 td.tinytable_css_0fudhp0o6is066d7asgl, #tinytable_4dl9isungainh8h2iv94 th.tinytable_css_0fudhp0o6is066d7asgl {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
 <div class="container">
-      <table class="tinytable" id="tinytable_bsenye55ubcx11qcdojb" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_4dl9isungainh8h2iv94" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
 <thead><tr>
 <th scope="col" data-row="0" data-col="1"> </th>
                 <th scope="col" data-row="0" data-col="2">(1)</th>
@@ -1081,7 +1092,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="1" data-col="4">429.677</td>
                   <td data-row="1" data-col="5">427.291</td>
                   <td data-row="1" data-col="6">427.248</td>
-                  <td data-row="1" data-col="7">425.782</td>
+                  <td data-row="1" data-col="7">427.484</td>
                 </tr>
 <tr>
 <td data-row="2" data-col="1"></td>
@@ -1090,7 +1101,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="2" data-col="4">(2.126)</td>
                   <td data-row="2" data-col="5">(3.630)</td>
                   <td data-row="2" data-col="6">(3.815)</td>
-                  <td data-row="2" data-col="7">(3.875)</td>
+                  <td data-row="2" data-col="7">(3.392)</td>
                 </tr>
 <tr>
 <td data-row="3" data-col="1">stu_frlNON-FREE LUNCH</td>
@@ -1099,7 +1110,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="3" data-col="4">15.560</td>
                   <td data-row="3" data-col="5">15.474</td>
                   <td data-row="3" data-col="6">15.434</td>
-                  <td data-row="3" data-col="7">15.434</td>
+                  <td data-row="3" data-col="7">15.438</td>
                 </tr>
 <tr>
 <td data-row="4" data-col="1"></td>
@@ -1108,7 +1119,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="4" data-col="4">(0.836)</td>
                   <td data-row="4" data-col="5">(0.842)</td>
                   <td data-row="4" data-col="6">(0.852)</td>
-                  <td data-row="4" data-col="7">(0.851)</td>
+                  <td data-row="4" data-col="7">(0.852)</td>
                 </tr>
 <tr>
 <td data-row="5" data-col="1">years_exp</td>
@@ -1117,7 +1128,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="5" data-col="4">0.313</td>
                   <td data-row="5" data-col="5">0.305</td>
                   <td data-row="5" data-col="6">0.302</td>
-                  <td data-row="5" data-col="7">0.339</td>
+                  <td data-row="5" data-col="7">0.308</td>
                 </tr>
 <tr>
 <td data-row="6" data-col="1"></td>
@@ -1126,7 +1137,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="6" data-col="4">(0.126)</td>
                   <td data-row="6" data-col="5">(0.127)</td>
                   <td data-row="6" data-col="6">(0.127)</td>
-                  <td data-row="6" data-col="7">(0.143)</td>
+                  <td data-row="6" data-col="7">(0.138)</td>
                 </tr>
 <tr>
 <td data-row="7" data-col="1">classtypeREGULAR CLASS</td>
@@ -1135,7 +1146,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="7" data-col="4">-6.297</td>
                   <td data-row="7" data-col="5">-6.281</td>
                   <td data-row="7" data-col="6">-6.280</td>
-                  <td data-row="7" data-col="7">-5.867</td>
+                  <td data-row="7" data-col="7">-6.523</td>
                 </tr>
 <tr>
 <td data-row="8" data-col="1"></td>
@@ -1144,7 +1155,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="8" data-col="4">(1.631)</td>
                   <td data-row="8" data-col="5">(1.631)</td>
                   <td data-row="8" data-col="6">(1.634)</td>
-                  <td data-row="8" data-col="7">(1.562)</td>
+                  <td data-row="8" data-col="7">(1.609)</td>
                 </tr>
 <tr>
 <td data-row="9" data-col="1">classtypeREGULAR + AIDE CLASS</td>
@@ -1153,7 +1164,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="9" data-col="4">-5.319</td>
                   <td data-row="9" data-col="5">-5.298</td>
                   <td data-row="9" data-col="6">-5.260</td>
-                  <td data-row="9" data-col="7">-5.189</td>
+                  <td data-row="9" data-col="7">-5.757</td>
                 </tr>
 <tr>
 <td data-row="10" data-col="1"></td>
@@ -1162,7 +1173,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="10" data-col="4">(1.631)</td>
                   <td data-row="10" data-col="5">(1.631)</td>
                   <td data-row="10" data-col="6">(1.638)</td>
-                  <td data-row="10" data-col="7">(1.548)</td>
+                  <td data-row="10" data-col="7">(1.610)</td>
                 </tr>
 <tr>
 <td data-row="11" data-col="1">urbanicitySUBURBAN</td>
@@ -1171,7 +1182,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="11" data-col="4"></td>
                   <td data-row="11" data-col="5">3.880</td>
                   <td data-row="11" data-col="6">3.624</td>
-                  <td data-row="11" data-col="7">4.151</td>
+                  <td data-row="11" data-col="7">9.810</td>
                 </tr>
 <tr>
 <td data-row="12" data-col="1"></td>
@@ -1180,7 +1191,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="12" data-col="4"></td>
                   <td data-row="12" data-col="5">(4.680)</td>
                   <td data-row="12" data-col="6">(7.278)</td>
-                  <td data-row="12" data-col="7">(7.359)</td>
+                  <td data-row="12" data-col="7">(6.787)</td>
                 </tr>
 <tr>
 <td data-row="13" data-col="1">urbanicityRURAL</td>
@@ -1189,7 +1200,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="13" data-col="4"></td>
                   <td data-row="13" data-col="5">2.536</td>
                   <td data-row="13" data-col="6">2.345</td>
-                  <td data-row="13" data-col="7">3.214</td>
+                  <td data-row="13" data-col="7">6.558</td>
                 </tr>
 <tr>
 <td data-row="14" data-col="1"></td>
@@ -1198,7 +1209,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="14" data-col="4"></td>
                   <td data-row="14" data-col="5">(4.053)</td>
                   <td data-row="14" data-col="6">(5.910)</td>
-                  <td data-row="14" data-col="7">(5.942)</td>
+                  <td data-row="14" data-col="7">(5.588)</td>
                 </tr>
 <tr>
 <td data-row="15" data-col="1">urbanicityURBAN</td>
@@ -1207,7 +1218,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="15" data-col="4"></td>
                   <td data-row="15" data-col="5">4.347</td>
                   <td data-row="15" data-col="6">4.152</td>
-                  <td data-row="15" data-col="7">4.856</td>
+                  <td data-row="15" data-col="7">8.556</td>
                 </tr>
 <tr>
 <td data-row="16" data-col="1"></td>
@@ -1216,7 +1227,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="16" data-col="4"></td>
                   <td data-row="16" data-col="5">(6.133)</td>
                   <td data-row="16" data-col="6">(7.425)</td>
-                  <td data-row="16" data-col="7">(7.443)</td>
+                  <td data-row="16" data-col="7">(7.077)</td>
                 </tr>
 <tr>
 <td data-row="17" data-col="1">class_frl</td>
@@ -1225,7 +1236,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="17" data-col="4"></td>
                   <td data-row="17" data-col="5"></td>
                   <td data-row="17" data-col="6">2.600</td>
-                  <td data-row="17" data-col="7">2.675</td>
+                  <td data-row="17" data-col="7">3.585</td>
                 </tr>
 <tr>
 <td data-row="18" data-col="1"></td>
@@ -1234,7 +1245,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="18" data-col="4"></td>
                   <td data-row="18" data-col="5"></td>
                   <td data-row="18" data-col="6">(7.191)</td>
-                  <td data-row="18" data-col="7">(6.584)</td>
+                  <td data-row="18" data-col="7">(7.053)</td>
                 </tr>
 <tr>
 <td data-row="19" data-col="1">school_frl</td>
@@ -1243,7 +1254,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="19" data-col="4"></td>
                   <td data-row="19" data-col="5"></td>
                   <td data-row="19" data-col="6">-2.126</td>
-                  <td data-row="19" data-col="7">-2.200</td>
+                  <td data-row="19" data-col="7">-10.860</td>
                 </tr>
 <tr>
 <td data-row="20" data-col="1"></td>
@@ -1252,7 +1263,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="20" data-col="4"></td>
                   <td data-row="20" data-col="5"></td>
                   <td data-row="20" data-col="6">(11.534)</td>
-                  <td data-row="20" data-col="7">(11.199)</td>
+                  <td data-row="20" data-col="7">(11.145)</td>
                 </tr>
 <tr>
 <td data-row="21" data-col="1">SD (Intercept classid)</td>
@@ -1261,34 +1272,34 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="21" data-col="4">10.119</td>
                   <td data-row="21" data-col="5">10.120</td>
                   <td data-row="21" data-col="6">10.147</td>
-                  <td data-row="21" data-col="7">14.303</td>
+                  <td data-row="21" data-col="7">9.781</td>
                 </tr>
 <tr>
-<td data-row="22" data-col="1">SD (years_exp classid)</td>
-                  <td data-row="22" data-col="2"></td>
-                  <td data-row="22" data-col="3"></td>
-                  <td data-row="22" data-col="4"></td>
-                  <td data-row="22" data-col="5"></td>
-                  <td data-row="22" data-col="6"></td>
-                  <td data-row="22" data-col="7">1.159</td>
+<td data-row="22" data-col="1">SD (Intercept schoolid)</td>
+                  <td data-row="22" data-col="2">13.032</td>
+                  <td data-row="22" data-col="3">11.934</td>
+                  <td data-row="22" data-col="4">11.876</td>
+                  <td data-row="22" data-col="5">12.088</td>
+                  <td data-row="22" data-col="6">12.184</td>
+                  <td data-row="22" data-col="7">8.973</td>
                 </tr>
 <tr>
-<td data-row="23" data-col="1">Cor (Intercept~years_exp classid)</td>
+<td data-row="23" data-col="1">SD (years_exp schoolid)</td>
                   <td data-row="23" data-col="2"></td>
                   <td data-row="23" data-col="3"></td>
                   <td data-row="23" data-col="4"></td>
                   <td data-row="23" data-col="5"></td>
                   <td data-row="23" data-col="6"></td>
-                  <td data-row="23" data-col="7">-0.854</td>
+                  <td data-row="23" data-col="7">0.452</td>
                 </tr>
 <tr>
-<td data-row="24" data-col="1">SD (Intercept schoolid)</td>
-                  <td data-row="24" data-col="2">13.032</td>
-                  <td data-row="24" data-col="3">11.934</td>
-                  <td data-row="24" data-col="4">11.876</td>
-                  <td data-row="24" data-col="5">12.088</td>
-                  <td data-row="24" data-col="6">12.184</td>
-                  <td data-row="24" data-col="7">12.333</td>
+<td data-row="24" data-col="1">Cor (Intercept~years_exp schoolid)</td>
+                  <td data-row="24" data-col="2"></td>
+                  <td data-row="24" data-col="3"></td>
+                  <td data-row="24" data-col="4"></td>
+                  <td data-row="24" data-col="5"></td>
+                  <td data-row="24" data-col="6"></td>
+                  <td data-row="24" data-col="7">0.666</td>
                 </tr>
 <tr>
 <td data-row="25" data-col="1">SD (Observations)</td>
@@ -1297,7 +1308,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="25" data-col="4">26.250</td>
                   <td data-row="25" data-col="5">26.250</td>
                   <td data-row="25" data-col="6">26.249</td>
-                  <td data-row="25" data-col="7">26.247</td>
+                  <td data-row="25" data-col="7">26.252</td>
                 </tr>
 <tr>
 <td data-row="26" data-col="1">Num.Obs.</td>
@@ -1315,7 +1326,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="27" data-col="4">0.073</td>
                   <td data-row="27" data-col="5">0.083</td>
                   <td data-row="27" data-col="6">0.083</td>
-                  <td data-row="27" data-col="7">0.086</td>
+                  <td data-row="27" data-col="7">0.084</td>
                 </tr>
 <tr>
 <td data-row="28" data-col="1">R2 Cond.</td>
@@ -1324,7 +1335,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="28" data-col="4">0.315</td>
                   <td data-row="28" data-col="5">0.326</td>
                   <td data-row="28" data-col="6">0.328</td>
-                  <td data-row="28" data-col="7">0.332</td>
+                  <td data-row="28" data-col="7">0.329</td>
                 </tr>
 <tr>
 <td data-row="29" data-col="1">AIC</td>
@@ -1333,7 +1344,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="29" data-col="4">54448.7</td>
                   <td data-row="29" data-col="5">54439.6</td>
                   <td data-row="29" data-col="6">54431.5</td>
-                  <td data-row="29" data-col="7">54422.3</td>
+                  <td data-row="29" data-col="7">54428.5</td>
                 </tr>
 <tr>
 <td data-row="30" data-col="1">BIC</td>
@@ -1342,7 +1353,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
                   <td data-row="30" data-col="4">54502.0</td>
                   <td data-row="30" data-col="5">54512.9</td>
                   <td data-row="30" data-col="6">54518.0</td>
-                  <td data-row="30" data-col="7">54522.2</td>
+                  <td data-row="30" data-col="7">54528.4</td>
                 </tr>
 <tr>
 <td data-row="31" data-col="1">ICC</td>
@@ -1371,7 +1382,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section><section id="html-version-that-you-can-open-in-word" class="level2" data-number="8.9"><h2 data-number="8.9" class="anchored" data-anchor-id="html-version-that-you-can-open-in-word">
 <span class="header-section-number">8.9</span> HTML version that you can open in Word</h2>
 <div class="cell">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>, output <span class="op">=</span> <span class="st">'msum.html'</span>, title <span class="op">=</span> <span class="st">'MLM Estimates'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>, output <span class="op">=</span> <span class="st">'msum.html'</span>, title <span class="op">=</span> <span class="st">'MLM Estimates'</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>When you write up a three-level model, report the variance partition from the null model, not just the fixed effects from the final one. Readers need to know how much room there was to explain at each level before they can judge what your predictors accomplished.</p>
 
@@ -1379,43 +1390,58 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <!-- -->
 
 </section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
@@ -1423,256 +1449,408 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
       return codeEl.innerText;
     }
-  });
-  clipboard.on('success', function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  });
-  const viewSource = window.document.getElementById('quarto-view-source') ||
-                     window.document.getElementById('quarto-code-tools-source');
-  if (viewSource) {
-    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-    viewSource.addEventListener("click", function(e) {
-      if (sourceUrl) {
-        // rstudio viewer pane
-        if (/\bcapabilities=\b/.test(window.location)) {
-          window.open(sourceUrl);
-        } else {
-          window.location.href = sourceUrl;
-        }
-      } else {
-        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-        modal.show();
-      }
-      return false;
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-  }
-  function toggleCodeHandler(show) {
-    return function(e) {
-      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-      for (let i=0; i<detailsSrc.length; i++) {
-        const details = detailsSrc[i].parentElement;
-        if (show) {
-          details.open = true;
-        } else {
-          details.removeAttribute("open");
-        }
-      }
-      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-      const fromCls = show ? "hidden" : "unhidden";
-      const toCls = show ? "unhidden" : "hidden";
-      for (let i=0; i<cellCodeDivs.length; i++) {
-        const codeDiv = cellCodeDivs[i];
-        if (codeDiv.classList.contains(fromCls)) {
-          codeDiv.classList.remove(fromCls);
-          codeDiv.classList.add(toCls);
-        } 
-      }
-      return false;
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-  }
-  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-  if (hideAllCode) {
-    hideAllCode.addEventListener("click", toggleCodeHandler(false));
-  }
-  const showAllCode = window.document.getElementById("quarto-show-all-code");
-  if (showAllCode) {
-    showAllCode.addEventListener("click", toggleCodeHandler(true));
-  }
-  function tippyHover(el, contentFn) {
-    const config = {
-      allowHTML: true,
-      content: contentFn,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start'
-    };
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      return note.innerHTML;
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
           } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
+            window.location.href = sourceUrl;
           }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
       });
     }
-  }
-});
-</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./06-fit-effect-sizes.html" class="pagination-link">
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./06-fit-effect-sizes.html" class="pagination-link" aria-label="Goodness-of-Fit and Effect Sizes">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Goodness-of-Fit and Effect Sizes</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./08a-growth-intro.html" class="pagination-link">
+      <a href="./08a-growth-intro.html" class="pagination-link" aria-label="Intro to Growth Models">
         <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Intro to Growth Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb40" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Three-Level Models</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Three-Level Models</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>**Data for this chapter:** <span class="in">`projectSTAR.dta`</span></span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1869,7 +2047,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb40-219"><a href="#cb40-219" aria-hidden="true" tabindex="-1"></a><span class="fu">### Add a random slope for years of experience at level 2 (school)</span></span>
 <span id="cb40-220"><a href="#cb40-220" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-223"><a href="#cb40-223" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-224"><a href="#cb40-224" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(read <span class="sc">~</span> stu_frl <span class="sc">+</span> class_frl <span class="sc">+</span> school_frl <span class="sc">+</span> years_exp <span class="sc">+</span> classtype <span class="sc">+</span> urbanicity <span class="sc">+</span> (years_exp<span class="sc">|</span>classid) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>schoolid), <span class="at">data =</span> star.clean)</span>
+<span id="cb40-224"><a href="#cb40-224" aria-hidden="true" tabindex="-1"></a>model<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(read <span class="sc">~</span> stu_frl <span class="sc">+</span> class_frl <span class="sc">+</span> school_frl <span class="sc">+</span> years_exp <span class="sc">+</span> classtype <span class="sc">+</span> urbanicity <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>classid) <span class="sc">+</span> (years_exp<span class="sc">|</span>schoolid), <span class="at">data =</span> star.clean)</span>
 <span id="cb40-225"><a href="#cb40-225" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-226"><a href="#cb40-226" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model<span class="fl">.5</span>)</span>
 <span id="cb40-227"><a href="#cb40-227" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
@@ -1905,15 +2083,19 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb40-263"><a href="#cb40-263" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb40-264"><a href="#cb40-264" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-265"><a href="#cb40-265" aria-hidden="true" tabindex="-1"></a>When you write up a three-level model, report the variance partition from the null model, not just the fixed effects from the final one. Readers need to know how much room there was to explain at each level before they can judge what your predictors accomplished.</span>
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
-    <div class="nav-footer-left">Applied Multilevel Modeling in R</div>   
+    <div class="nav-footer-left">
+<p>Applied Multilevel Modeling in R</p>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
-    </div>
-    <div class="nav-footer-right">Built with <a href="https://quarto.org">Quarto</a></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/mikediam123/mlm-textbook/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org">Quarto</a></p>
+</div>
   </div>
 </footer>
 

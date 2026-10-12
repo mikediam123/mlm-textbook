@@ -195,7 +195,7 @@ These can point in different directions, and often do. That is not a contradicti
 ### Add a random slope for years of experience at level 2 (school)
 
 ```{r}
-model.5 <- lmer(read ~ stu_frl + class_frl + school_frl + years_exp + classtype + urbanicity + (years_exp|classid) + (1|schoolid), data = star.clean)
+model.5 <- lmer(read ~ stu_frl + class_frl + school_frl + years_exp + classtype + urbanicity + (1|classid) + (years_exp|schoolid), data = star.clean)
 
 summary(model.5)
 ```

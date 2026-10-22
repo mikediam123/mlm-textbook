@@ -296,12 +296,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
 <li><a href="#load-in-our-mvp-packages" id="toc-load-in-our-mvp-packages" class="nav-link active" data-scroll-target="#load-in-our-mvp-packages"><span class="header-section-number">10.1</span> Load in our MVP packages</a></li>
   <li>
-<a href="#part-1-loading-in-the-data-reshaping-from-long-to-wide-creating-new-variables" id="toc-part-1-loading-in-the-data-reshaping-from-long-to-wide-creating-new-variables" class="nav-link" data-scroll-target="#part-1-loading-in-the-data-reshaping-from-long-to-wide-creating-new-variables"><span class="header-section-number">10.2</span> Part 1: loading in the data, reshaping from long to wide, creating new variables</a>
+<a href="#part-1-loading-in-the-data-and-creating-new-variables" id="toc-part-1-loading-in-the-data-and-creating-new-variables" class="nav-link" data-scroll-target="#part-1-loading-in-the-data-and-creating-new-variables"><span class="header-section-number">10.2</span> Part 1: loading in the data and creating new variables</a>
   <ul class="collapse">
 <li><a href="#load-in-the-data" id="toc-load-in-the-data" class="nav-link" data-scroll-target="#load-in-the-data"><span class="header-section-number">10.2.1</span> Load in the data</a></li>
-  <li><a href="#super-handy-trick-reshaping-data" id="toc-super-handy-trick-reshaping-data" class="nav-link" data-scroll-target="#super-handy-trick-reshaping-data"><span class="header-section-number">10.2.2</span> Super handy trick: reshaping data</a></li>
-  <li><a href="#a-little-more-cleanup-change-year-to-numeric-drop-observations-with-missing-math-scores" id="toc-a-little-more-cleanup-change-year-to-numeric-drop-observations-with-missing-math-scores" class="nav-link" data-scroll-target="#a-little-more-cleanup-change-year-to-numeric-drop-observations-with-missing-math-scores"><span class="header-section-number">10.2.3</span> A little more cleanup: change <code>year</code> to numeric, drop observations with missing math scores</a></li>
-  <li><a href="#a-little-housekeeping-creating-squared-and-cubic-terms-for-time" id="toc-a-little-housekeeping-creating-squared-and-cubic-terms-for-time" class="nav-link" data-scroll-target="#a-little-housekeeping-creating-squared-and-cubic-terms-for-time"><span class="header-section-number">10.2.4</span> A little housekeeping: creating squared and cubic terms for time</a></li>
+  <li><a href="#a-little-housekeeping-creating-squared-and-cubic-terms-for-time" id="toc-a-little-housekeeping-creating-squared-and-cubic-terms-for-time" class="nav-link" data-scroll-target="#a-little-housekeeping-creating-squared-and-cubic-terms-for-time"><span class="header-section-number">10.2.2</span> A little housekeeping: creating squared and cubic terms for time</a></li>
   </ul>
 </li>
   <li>
@@ -313,14 +311,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#add-nonlinear-growth-terms-square-and-cubic" id="toc-add-nonlinear-growth-terms-square-and-cubic" class="nav-link" data-scroll-target="#add-nonlinear-growth-terms-square-and-cubic"><span class="header-section-number">10.3.4</span> Add nonlinear growth terms (square AND cubic)</a></li>
   <li><a href="#which-of-these-models-fits-our-data-the-best-use-anova-to-test" id="toc-which-of-these-models-fits-our-data-the-best-use-anova-to-test" class="nav-link" data-scroll-target="#which-of-these-models-fits-our-data-the-best-use-anova-to-test"><span class="header-section-number">10.3.5</span> Which of these models fits our data the best? Use <code>anova</code> to test</a></li>
   <li><a href="#same-thing-plus-adding-a-random-slope-for-year0" id="toc-same-thing-plus-adding-a-random-slope-for-year0" class="nav-link" data-scroll-target="#same-thing-plus-adding-a-random-slope-for-year0"><span class="header-section-number">10.3.6</span> Same thing, PLUS adding a random slope for year0</a></li>
-  <li><a href="#should-we-keep-that-random-slope-for-time-use-rand-to-test" id="toc-should-we-keep-that-random-slope-for-time-use-rand-to-test" class="nav-link" data-scroll-target="#should-we-keep-that-random-slope-for-time-use-rand-to-test"><span class="header-section-number">10.3.7</span> Should we keep that random slope for time? Use <code>rand</code> to test</a></li>
+  <li><a href="#should-we-keep-that-random-slope-for-time-use-ranova-to-test" id="toc-should-we-keep-that-random-slope-for-time-use-ranova-to-test" class="nav-link" data-scroll-target="#should-we-keep-that-random-slope-for-time-use-ranova-to-test"><span class="header-section-number">10.3.7</span> Should we keep that random slope for time? Use <code>ranova</code> to test</a></li>
   </ul>
 </li>
   <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">10.4</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
   <li><a href="#visualize-our-model-by-predicting-scores" id="toc-visualize-our-model-by-predicting-scores" class="nav-link" data-scroll-target="#visualize-our-model-by-predicting-scores"><span class="header-section-number">10.5</span> Visualize our model by predicting scores</a></li>
   <li><a href="#and-then-plotting-them" id="toc-and-then-plotting-them" class="nav-link" data-scroll-target="#and-then-plotting-them"><span class="header-section-number">10.6</span> And then plotting them</a></li>
   <li><a href="#random-slopes-for-a-sample-of-50-students" id="toc-random-slopes-for-a-sample-of-50-students" class="nav-link" data-scroll-target="#random-slopes-for-a-sample-of-50-students"><span class="header-section-number">10.7</span> Random slopes for a sample of 50 students</a></li>
-  <li><a href="#part-2-heterogeneous-variance-repeated-measures-model" id="toc-part-2-heterogeneous-variance-repeated-measures-model" class="nav-link" data-scroll-target="#part-2-heterogeneous-variance-repeated-measures-model"><span class="header-section-number">10.8</span> Part 2: heterogeneous variance repeated measures model</a></li>
+  <li><a href="#part-3-heterogeneous-variance-repeated-measures-model" id="toc-part-3-heterogeneous-variance-repeated-measures-model" class="nav-link" data-scroll-target="#part-3-heterogeneous-variance-repeated-measures-model"><span class="header-section-number">10.8</span> Part 3: heterogeneous variance repeated measures model</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/mikediam123/mlm-textbook/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
@@ -373,13 +371,28 @@ Attaching package: 'Matrix'</code></pre>
 
     expand, pack, unpack</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/runehaubo/lmerTestR">lmerTest</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'lmerTest'</code></pre>
 </div>
-</section><section id="part-1-loading-in-the-data-reshaping-from-long-to-wide-creating-new-variables" class="level2" data-number="10.2"><h2 data-number="10.2" class="anchored" data-anchor-id="part-1-loading-in-the-data-reshaping-from-long-to-wide-creating-new-variables">
-<span class="header-section-number">10.2</span> Part 1: loading in the data, reshaping from long to wide, creating new variables</h2>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:lme4':
+
+    lmer</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stats':
+
+    step</code></pre>
+</div>
+</div>
+</section><section id="part-1-loading-in-the-data-and-creating-new-variables" class="level2" data-number="10.2"><h2 data-number="10.2" class="anchored" data-anchor-id="part-1-loading-in-the-data-and-creating-new-variables">
+<span class="header-section-number">10.2</span> Part 1: loading in the data and creating new variables</h2>
 <section id="load-in-the-data" class="level3" data-number="10.2.1"><h3 data-number="10.2.1" class="anchored" data-anchor-id="load-in-the-data">
 <span class="header-section-number">10.2.1</span> Load in the data</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">egmerged</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"egmerged.dta"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">egmerged</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"egmerged.dta"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">egmerged</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -399,106 +412,12 @@ $ lowinc   &lt;dbl&gt; 84.8, 97.8, 96.6, 45.3, 94.6, 100.0, 66.2, 66.4, 97.8, 97
 $ mobility &lt;dbl&gt; 38.2, 26.8, 44.4, 18.7, 47.4, 55.4, 25.4, 20.9, 26.8, 26.8, 2…</code></pre>
 </div>
 </div>
-</section><section id="super-handy-trick-reshaping-data" class="level3" data-number="10.2.2"><h3 data-number="10.2.2" class="anchored" data-anchor-id="super-handy-trick-reshaping-data">
-<span class="header-section-number">10.2.2</span> Super handy trick: reshaping data</h3>
-<section id="using-pivot_wider-to-reshape-from-long-to-wide" class="level4" data-number="10.2.2.1"><h4 data-number="10.2.2.1" class="anchored" data-anchor-id="using-pivot_wider-to-reshape-from-long-to-wide">
-<span class="header-section-number">10.2.2.1</span> Using <code>pivot_wider</code> to reshape from long to wide</h4>
+<p>As in the last chapter, the data are already in long format, which is what growth models need. See the previous chapter for how to move between long and wide with <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer()</a></code> and <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code>.</p>
+</section><section id="a-little-housekeeping-creating-squared-and-cubic-terms-for-time" class="level3" data-number="10.2.2"><h3 data-number="10.2.2" class="anchored" data-anchor-id="a-little-housekeeping-creating-squared-and-cubic-terms-for-time">
+<span class="header-section-number">10.2.2</span> A little housekeeping: creating squared and cubic terms for time</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">egmerged.wide</span> <span class="op">&lt;-</span> <span class="va">egmerged</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span><span class="va">.</span>,</span>
-<span>              id_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"childid"</span>, <span class="st">"schoolid"</span>, <span class="st">"female"</span>, <span class="st">"black"</span>, <span class="st">"hispanic"</span>, <span class="st">"size"</span>, <span class="st">"lowinc"</span>, <span class="st">"mobility"</span><span class="op">)</span>,</span>
-<span>              names_from <span class="op">=</span> <span class="va">year</span>,</span>
-<span>              values_from <span class="op">=</span> <span class="va">math</span>,</span>
-<span>              names_prefix <span class="op">=</span> <span class="st">"math_year"</span>,</span>
-<span>              <span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">egmerged.wide</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 1,721
-Columns: 14
-$ childid    &lt;dbl&gt; 289376791, 288278731, 292789461, 275898121, 300246721, 2448…
-$ schoolid   &lt;dbl&gt; 3430, 3610, 2180, 3040, 3221, 3360, 4450, 4390, 3610, 3610,…
-$ female     &lt;dbl&gt; 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0,…
-$ black      &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1,…
-$ hispanic   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,…
-$ size       &lt;dbl&gt; 641, 1062, 777, 724, 185, 526, 710, 532, 1062, 1062, 1062, …
-$ lowinc     &lt;dbl&gt; 84.8, 97.8, 96.6, 45.3, 94.6, 100.0, 66.2, 66.4, 97.8, 97.8…
-$ mobility   &lt;dbl&gt; 38.2, 26.8, 44.4, 18.7, 47.4, 55.4, 25.4, 20.9, 26.8, 26.8,…
-$ math_year1 &lt;dbl&gt; -3.887, -4.055, -3.525, -3.592, -3.525, -3.068, -2.596, -3.…
-$ math_year2 &lt;dbl&gt; -2.839, -3.395, -0.365, -1.130, -2.097, -1.538, -1.218, -2.…
-$ math_year3 &lt;dbl&gt; -2.596, -3.395, -0.574, -2.009, -1.314, -1.757, -1.120, -0.…
-$ math_year4 &lt;dbl&gt; -1.236, -1.641, NA, NA, NA, -2.270, -0.419, NA, -0.522, -1.…
-$ math_year5 &lt;dbl&gt; -0.456, -2.263, NA, NA, NA, -1.484, -0.403, NA, -0.945, -1.…
-$ math_year6 &lt;dbl&gt; 0.601, -1.552, NA, NA, NA, NA, NA, NA, -0.170, -1.763, -0.3…</code></pre>
-</div>
-</div>
-<p>Reshaping is one of the most useful data management skills you will pick up, and one of the most error-prone, so it is worth understanding each argument.</p>
-<p><code>id_cols</code> lists the variables that identify a row in the new wide dataset and stay constant. <code>names_from</code> says which variable supplies the new column <em>names</em>, here <code>year</code>. <code>values_from</code> says which variable fills the cells. <code>names_prefix</code> puts readable text in front of the new column names, so you get <code>math_year1</code> rather than a column called <code>1</code>, which R would find awkward.</p>
-<p>Note what happens to the row count. The long file has one row per student-year; the wide file has one row per student. That change is the whole point, and checking it is a quick way to confirm the reshape did what you intended.</p>
-</section><section id="using-pivot_longer-to-reshape-from-wide-to-long" class="level4" data-number="10.2.2.2"><h4 data-number="10.2.2.2" class="anchored" data-anchor-id="using-pivot_longer-to-reshape-from-wide-to-long">
-<span class="header-section-number">10.2.2.2</span> Using <code>pivot_longer</code> to reshape from wide to long</h4>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">egmerged.long</span> <span class="op">&lt;-</span> <span class="va">egmerged.wide</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="va">.</span>,</span>
-<span>              cols <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"math"</span><span class="op">)</span>,</span>
-<span>              names_to <span class="op">=</span> <span class="st">"year"</span>,</span>
-<span>              values_to <span class="op">=</span> <span class="st">"math"</span>,</span>
-<span>              names_prefix <span class="op">=</span> <span class="st">"math_year"</span>,</span>
-<span>              <span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">egmerged.long</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 10,326
-Columns: 10
-$ childid  &lt;dbl&gt; 289376791, 289376791, 289376791, 289376791, 289376791, 289376…
-$ schoolid &lt;dbl&gt; 3430, 3430, 3430, 3430, 3430, 3430, 3610, 3610, 3610, 3610, 3…
-$ female   &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0…
-$ black    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-$ hispanic &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
-$ size     &lt;dbl&gt; 641, 641, 641, 641, 641, 641, 1062, 1062, 1062, 1062, 1062, 1…
-$ lowinc   &lt;dbl&gt; 84.8, 84.8, 84.8, 84.8, 84.8, 84.8, 97.8, 97.8, 97.8, 97.8, 9…
-$ mobility &lt;dbl&gt; 38.2, 38.2, 38.2, 38.2, 38.2, 38.2, 26.8, 26.8, 26.8, 26.8, 2…
-$ year     &lt;chr&gt; "1", "2", "3", "4", "5", "6", "1", "2", "3", "4", "5", "6", "…
-$ math     &lt;dbl&gt; -3.887, -2.839, -2.596, -1.236, -0.456, 0.601, -4.055, -3.395…</code></pre>
-</div>
-</div>
-<p>And back again. <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer()</a></code> reverses the operation: <code>cols</code> selects which columns to stack, <code>names_to</code> names the new column holding the old column names, and <code>values_to</code> names the column holding the values. Stripping <code>names_prefix</code> on the way back recovers the bare year numbers.</p>
-<p>Being able to go both directions matters because different tools want different shapes. Growth models need long format. Many descriptive tables and correlation matrices want wide.</p>
-</section></section><section id="a-little-more-cleanup-change-year-to-numeric-drop-observations-with-missing-math-scores" class="level3" data-number="10.2.3"><h3 data-number="10.2.3" class="anchored" data-anchor-id="a-little-more-cleanup-change-year-to-numeric-drop-observations-with-missing-math-scores">
-<span class="header-section-number">10.2.3</span> A little more cleanup: change <code>year</code> to numeric, drop observations with missing math scores</h3>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">egmerged.long.clean</span> <span class="op">&lt;-</span> <span class="va">egmerged.long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">egmerged.clean</span> <span class="op">&lt;-</span> <span class="va">egmerged</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
-<span>         year  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">egmerged.long.clean</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 7,230
-Columns: 10
-$ childid  &lt;dbl&gt; 289376791, 289376791, 289376791, 289376791, 289376791, 289376…
-$ schoolid &lt;dbl&gt; 3430, 3430, 3430, 3430, 3430, 3430, 3610, 3610, 3610, 3610, 3…
-$ female   &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0…
-$ black    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-$ hispanic &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
-$ size     &lt;dbl&gt; 641, 641, 641, 641, 641, 641, 1062, 1062, 1062, 1062, 1062, 1…
-$ lowinc   &lt;dbl&gt; 84.8, 84.8, 84.8, 84.8, 84.8, 84.8, 97.8, 97.8, 97.8, 97.8, 9…
-$ mobility &lt;dbl&gt; 38.2, 38.2, 38.2, 38.2, 38.2, 38.2, 26.8, 26.8, 26.8, 26.8, 2…
-$ year     &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3, 1, 2, 3, 1, 2, 3…
-$ math     &lt;dbl&gt; -3.887, -2.839, -2.596, -1.236, -0.456, 0.601, -4.055, -3.395…</code></pre>
-</div>
-</div>
-<p>The <code><a href="https://rdrr.io/r/base/numeric.html">as.numeric()</a></code> step is easy to forget and consequential. Column names are text, so after reshaping, <code>year</code> arrives as a character variable. Left that way, R would treat it as a categorical variable with six unrelated levels rather than as a quantity you can fit a slope to.</p>
-<p><code><a href="https://rdrr.io/r/stats/na.fail.html">na.omit()</a></code> here removes the empty cells created by the reshape: students who were not measured in every year got <code>NA</code> in the wide file, and those became rows with missing math scores when we went back to long. As always, this function deserves care, since it drops any row missing on <em>any</em> variable.</p>
-</section><section id="a-little-housekeeping-creating-squared-and-cubic-terms-for-time" class="level3" data-number="10.2.4"><h3 data-number="10.2.4" class="anchored" data-anchor-id="a-little-housekeeping-creating-squared-and-cubic-terms-for-time">
-<span class="header-section-number">10.2.4</span> A little housekeeping: creating squared and cubic terms for time</h3>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">egmerged.clean</span> <span class="op">&lt;-</span> <span class="va">egmerged</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
-<span>         retained.fac <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">retained</span><span class="op">)</span>,</span>
-<span>         female.fac <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">female</span><span class="op">)</span>,</span>
-<span>         black.fac <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">black</span><span class="op">)</span>,</span>
-<span>         hispanic.fac <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">hispanic</span><span class="op">)</span>,</span>
 <span>         year0 <span class="op">=</span> <span class="va">year</span> <span class="op">-</span> <span class="fl">1</span>,</span>
 <span>         year_sq <span class="op">=</span> <span class="va">year0</span><span class="op">^</span><span class="fl">2</span>,</span>
 <span>         year_cube <span class="op">=</span> <span class="va">year0</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span></span>
@@ -506,40 +425,36 @@ $ math     &lt;dbl&gt; -3.887, -2.839, -2.596, -1.236, -0.456, 0.601, -4.055, -3
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">egmerged.clean</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 7,230
-Columns: 19
-$ schoolid     &lt;dbl&gt; 3430, 3610, 2180, 3040, 3221, 3360, 4450, 4390, 3610, 361…
-$ childid      &lt;dbl&gt; 289376791, 288278731, 292789461, 275898121, 300246721, 24…
-$ year         &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
-$ grade        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
-$ math         &lt;dbl&gt; -3.887, -4.055, -3.525, -3.592, -3.525, -3.068, -2.596, -…
-$ retained     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
-$ female       &lt;dbl&gt; 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, …
-$ black        &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, …
-$ hispanic     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, …
-$ size         &lt;dbl&gt; 641, 1062, 777, 724, 185, 526, 710, 532, 1062, 1062, 1062…
-$ lowinc       &lt;dbl&gt; 84.8, 97.8, 96.6, 45.3, 94.6, 100.0, 66.2, 66.4, 97.8, 97…
-$ mobility     &lt;dbl&gt; 38.2, 26.8, 44.4, 18.7, 47.4, 55.4, 25.4, 20.9, 26.8, 26.…
-$ retained.fac &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
-$ female.fac   &lt;fct&gt; 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, …
-$ black.fac    &lt;fct&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, …
-$ hispanic.fac &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, …
-$ year0        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
-$ year_sq      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
-$ year_cube    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</code></pre>
+Columns: 15
+$ schoolid  &lt;dbl&gt; 3430, 3610, 2180, 3040, 3221, 3360, 4450, 4390, 3610, 3610, …
+$ childid   &lt;dbl&gt; 289376791, 288278731, 292789461, 275898121, 300246721, 24483…
+$ year      &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ grade     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ math      &lt;dbl&gt; -3.887, -4.055, -3.525, -3.592, -3.525, -3.068, -2.596, -3.7…
+$ retained  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ female    &lt;dbl&gt; 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, …
+$ black     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ hispanic  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ size      &lt;dbl&gt; 641, 1062, 777, 724, 185, 526, 710, 532, 1062, 1062, 1062, 1…
+$ lowinc    &lt;dbl&gt; 84.8, 97.8, 96.6, 45.3, 94.6, 100.0, 66.2, 66.4, 97.8, 97.8,…
+$ mobility  &lt;dbl&gt; 38.2, 26.8, 44.4, 18.7, 47.4, 55.4, 25.4, 20.9, 26.8, 26.8, …
+$ year0     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ year_sq   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ year_cube &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</code></pre>
 </div>
 </div>
-<p>Note that this builds from the original <code>egmerged</code>, not from the reshaped version. The reshaping above was a demonstration of a technique; the modeling that follows uses the data as they came.</p>
 <p>Building the polynomial terms from <code>year0</code> rather than <code>year</code> matters. Squaring a variable that starts at 0 keeps the terms interpretable and keeps them less correlated with one another than they would otherwise be.</p>
 </section></section><section id="part-2-nonlinear-growth-models" class="level2" data-number="10.3"><h2 data-number="10.3" class="anchored" data-anchor-id="part-2-nonlinear-growth-models">
 <span class="header-section-number">10.3</span> Part 2: nonlinear growth models</h2>
 <section id="now-run-a-growth-null-model-for-math-scores-with-year-included" class="level3" data-number="10.3.1"><h3 data-number="10.3.1" class="anchored" data-anchor-id="now-run-a-growth-null-model-for-math-scores-with-year-included">
 <span class="header-section-number">10.3.1</span> Now, run a GROWTH null model for math scores (with year included)</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.null.growth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.null.growth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.null.growth</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
+<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
+  method [lmerModLmerTest]
 Formula: math ~ year0 + (1 | childid)
    Data: egmerged.clean
 
@@ -557,9 +472,11 @@ Random effects:
 Number of obs: 7230, groups:  childid, 1721
 
 Fixed effects:
-            Estimate Std. Error t value
-(Intercept) -2.70731    0.02816  -96.13
-year0        0.74745    0.00540  138.41
+              Estimate Std. Error         df t value Pr(&gt;|t|)    
+(Intercept)   -2.70731    0.02816 3278.13354  -96.13   &lt;2e-16 ***
+year0          0.74745    0.00540 5750.06342  138.41   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Correlation of Fixed Effects:
       (Intr)
@@ -569,20 +486,23 @@ year0 -0.548</code></pre>
 <section id="calculate-growth-icc" class="level4" data-number="10.3.1.1"><h4 data-number="10.3.1.1" class="anchored" data-anchor-id="calculate-growth-icc">
 <span class="header-section-number">10.3.1.1</span> Calculate GROWTH ICC</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">null.growth.icc</span> <span class="op">&lt;-</span> <span class="fl">0.8683</span><span class="op">/</span><span class="op">(</span><span class="fl">0.8683</span> <span class="op">+</span> <span class="fl">0.3470</span><span class="op">)</span></span>
-<span><span class="va">null.growth.icc</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/performance/reference/icc.html">icc</a></span><span class="op">(</span><span class="va">model.null.growth</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.7144738</code></pre>
+<pre><code># Intraclass Correlation Coefficient
+
+    Adjusted ICC: 0.714
+  Unadjusted ICC: 0.377</code></pre>
 </div>
 </div>
 </section></section><section id="add-nonlinear-growth-terms-square" class="level3" data-number="10.3.2"><h3 data-number="10.3.2" class="anchored" data-anchor-id="add-nonlinear-growth-terms-square">
 <span class="header-section-number">10.3.2</span> Add nonlinear growth terms (square)</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.square</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_sq</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.square</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_sq</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.square</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
+<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
+  method [lmerModLmerTest]
 Formula: math ~ year0 + year_sq + (1 | childid)
    Data: egmerged.clean
 
@@ -600,10 +520,12 @@ Random effects:
 Number of obs: 7230, groups:  childid, 1721
 
 Fixed effects:
-            Estimate Std. Error t value
-(Intercept) -2.96054    0.03745  -79.05
-year0        0.97320    0.02275   42.77
-year_sq     -0.03890    0.00381  -10.21
+              Estimate Std. Error         df t value Pr(&gt;|t|)    
+(Intercept)   -2.96054    0.03745 6278.17939  -79.05   &lt;2e-16 ***
+year0          0.97320    0.02275 5629.37625   42.77   &lt;2e-16 ***
+year_sq       -0.03890    0.00381 5601.88452  -10.21   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Correlation of Fixed Effects:
         (Intr) year0 
@@ -616,11 +538,12 @@ year_sq  0.662 -0.972</code></pre>
 </section><section id="add-nonlinear-growth-terms-cubic" class="level3" data-number="10.3.3"><h3 data-number="10.3.3" class="anchored" data-anchor-id="add-nonlinear-growth-terms-cubic">
 <span class="header-section-number">10.3.3</span> Add nonlinear growth terms (cubic)</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.cube</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_cube</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.cube</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_cube</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.cube</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
+<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
+  method [lmerModLmerTest]
 Formula: math ~ year0 + year_cube + (1 | childid)
    Data: egmerged.clean
 
@@ -638,10 +561,12 @@ Random effects:
 Number of obs: 7230, groups:  childid, 1721
 
 Fixed effects:
-              Estimate Std. Error t value
-(Intercept) -2.8770202  0.0339616 -84.714
-year0        0.8617968  0.0139358  61.840
-year_cube   -0.0039513  0.0004444  -8.892
+              Estimate Std. Error         df t value Pr(&gt;|t|)    
+(Intercept) -2.877e+00  3.396e-02  5.373e+03 -84.714   &lt;2e-16 ***
+year0        8.618e-01  1.394e-02  5.631e+03  61.840   &lt;2e-16 ***
+year_cube   -3.951e-03  4.444e-04  5.580e+03  -8.892   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Correlation of Fixed Effects:
           (Intr) year0 
@@ -652,11 +577,12 @@ year_cube  0.562 -0.923</code></pre>
 </section><section id="add-nonlinear-growth-terms-square-and-cubic" class="level3" data-number="10.3.4"><h3 data-number="10.3.4" class="anchored" data-anchor-id="add-nonlinear-growth-terms-square-and-cubic">
 <span class="header-section-number">10.3.4</span> Add nonlinear growth terms (square AND cubic)</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.both</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_sq</span> <span class="op">+</span> <span class="va">year_cube</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.both</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_sq</span> <span class="op">+</span> <span class="va">year_cube</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.both</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
+<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
+  method [lmerModLmerTest]
 Formula: math ~ year0 + year_sq + year_cube + (1 | childid)
    Data: egmerged.clean
 
@@ -674,11 +600,13 @@ Random effects:
 Number of obs: 7230, groups:  childid, 1721
 
 Fixed effects:
-             Estimate Std. Error t value
-(Intercept) -3.223851   0.051032 -63.173
-year0        1.408171   0.061794  22.788
-year_sq     -0.220628   0.024317  -9.073
-year_cube    0.021417   0.002831   7.566
+              Estimate Std. Error         df t value Pr(&gt;|t|)    
+(Intercept) -3.224e+00  5.103e-02  7.225e+03 -63.173  &lt; 2e-16 ***
+year0        1.408e+00  6.179e-02  5.666e+03  22.788  &lt; 2e-16 ***
+year_sq     -2.206e-01  2.432e-02  5.632e+03  -9.073  &lt; 2e-16 ***
+year_cube    2.142e-02  2.831e-03  5.611e+03   7.566 4.46e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Correlation of Fixed Effects:
           (Intr) year0  yer_sq
@@ -691,7 +619,7 @@ year_cube -0.682  0.930 -0.988</code></pre>
 </section><section id="which-of-these-models-fits-our-data-the-best-use-anova-to-test" class="level3" data-number="10.3.5"><h3 data-number="10.3.5" class="anchored" data-anchor-id="which-of-these-models-fits-our-data-the-best-use-anova-to-test">
 <span class="header-section-number">10.3.5</span> Which of these models fits our data the best? Use <code>anova</code> to test</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model.null.growth</span>, <span class="va">model.square</span>, <span class="va">model.cube</span>, <span class="va">model.both</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">model.null.growth</span>, <span class="va">model.square</span>, <span class="va">model.cube</span>, <span class="va">model.both</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Data: egmerged.clean
 Models:
@@ -711,11 +639,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section><section id="same-thing-plus-adding-a-random-slope-for-year0" class="level3" data-number="10.3.6"><h3 data-number="10.3.6" class="anchored" data-anchor-id="same-thing-plus-adding-a-random-slope-for-year0">
 <span class="header-section-number">10.3.6</span> Same thing, PLUS adding a random slope for year0</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.both.rand</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_sq</span> <span class="op">+</span> <span class="va">year_cube</span> <span class="op">+</span> <span class="op">(</span><span class="va">year0</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.both.rand</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_sq</span> <span class="op">+</span> <span class="va">year_cube</span> <span class="op">+</span> <span class="op">(</span><span class="va">year0</span><span class="op">|</span><span class="va">childid</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">egmerged.clean</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.both.rand</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by maximum likelihood  ['lmerMod']
+<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
+  method [lmerModLmerTest]
 Formula: math ~ year0 + year_sq + year_cube + (year0 | childid)
    Data: egmerged.clean
 
@@ -734,11 +663,13 @@ Random effects:
 Number of obs: 7230, groups:  childid, 1721
 
 Fixed effects:
-             Estimate Std. Error t value
-(Intercept) -3.322138   0.048116 -69.044
-year0        1.541861   0.059322  25.991
-year_sq     -0.269158   0.023175 -11.614
-year_cube    0.026471   0.002685   9.857
+              Estimate Std. Error         df t value Pr(&gt;|t|)    
+(Intercept) -3.322e+00  4.812e-02  4.789e+03 -69.044   &lt;2e-16 ***
+year0        1.542e+00  5.932e-02  5.538e+03  25.991   &lt;2e-16 ***
+year_sq     -2.692e-01  2.318e-02  5.504e+03 -11.614   &lt;2e-16 ***
+year_cube    2.647e-02  2.685e-03  5.419e+03   9.857   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Correlation of Fixed Effects:
           (Intr) year0  yer_sq
@@ -748,10 +679,10 @@ year_cube -0.706  0.930 -0.988</code></pre>
 </div>
 </div>
 <p>Note what is random and what is not. The linear component of time varies across children; the quadratic and cubic terms are fixed, so the <em>shape</em> of the curve is assumed common while its steepness varies. Letting the higher-order terms vary too is possible but demands far more data.</p>
-</section><section id="should-we-keep-that-random-slope-for-time-use-rand-to-test" class="level3" data-number="10.3.7"><h3 data-number="10.3.7" class="anchored" data-anchor-id="should-we-keep-that-random-slope-for-time-use-rand-to-test">
-<span class="header-section-number">10.3.7</span> Should we keep that random slope for time? Use <code>rand</code> to test</h3>
+</section><section id="should-we-keep-that-random-slope-for-time-use-ranova-to-test" class="level3" data-number="10.3.7"><h3 data-number="10.3.7" class="anchored" data-anchor-id="should-we-keep-that-random-slope-for-time-use-ranova-to-test">
+<span class="header-section-number">10.3.7</span> Should we keep that random slope for time? Use <code>ranova</code> to test</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">lmerTest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">rand</a></span><span class="op">(</span><span class="va">model.both.rand</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/ranova.html">ranova</a></span><span class="op">(</span><span class="va">model.both.rand</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ANOVA-like table for random-effects: Single term deletions
 
@@ -767,7 +698,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section></section><section id="using-modelsummary-and-broom.mixed-to-organize-your-results" class="level2" data-number="10.4"><h2 data-number="10.4" class="anchored" data-anchor-id="using-modelsummary-and-broom.mixed-to-organize-your-results">
 <span class="header-section-number">10.4</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelsummary.com">modelsummary</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bbolker/broom.mixed">broom.mixed</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">models1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">model.null.growth</span>, <span class="va">model.square</span>, <span class="va">model.cube</span>, <span class="va">model.both</span>, <span class="va">model.both.rand</span><span class="op">)</span></span>
@@ -776,42 +707,42 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell-output-display">
 <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script><script>
       // Create table-specific functions using external factory
-      const tableFns_xy4vivln2jamky1rnh43 = TinyTable.createTableFunctions("tinytable_xy4vivln2jamky1rnh43");
+      const tableFns_hw691wurbsa24nro3viv = TinyTable.createTableFunctions("tinytable_hw691wurbsa24nro3viv");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '19', j: 2 }, { i: '19', j: 3 }, { i: '19', j: 4 }, { i: '19', j: 5 }, { i: '19', j: 6 } ], css_id: 'tinytable_css_542xktd1mra4p51gbhfb',}, 
-          { positions: [ { i: '12', j: 2 }, { i: '12', j: 3 }, { i: '12', j: 4 }, { i: '12', j: 5 }, { i: '12', j: 6 } ], css_id: 'tinytable_css_dqyjnam9b0wq4x4n5arl',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '13', j: 4 }, { i: '14', j: 4 }, { i: '15', j: 4 }, { i: '16', j: 4 }, { i: '17', j: 4 }, { i: '18', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '13', j: 5 }, { i: '14', j: 5 }, { i: '15', j: 5 }, { i: '16', j: 5 }, { i: '17', j: 5 }, { i: '18', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '13', j: 6 }, { i: '14', j: 6 }, { i: '15', j: 6 }, { i: '16', j: 6 }, { i: '17', j: 6 }, { i: '18', j: 6 } ], css_id: 'tinytable_css_56h0mg17icq6uxhjnx9n',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_edy6ryglwwe24anxzuzh',}, 
-          { positions: [ { i: '19', j: 1 } ], css_id: 'tinytable_css_pm6rb28upmg1lvjnhp5t',}, 
-          { positions: [ { i: '12', j: 1 } ], css_id: 'tinytable_css_avaxzz4pigb12pbm0j10',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 } ], css_id: 'tinytable_css_aylxu5f3kqqo1npsja7m',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_xuhmjjeqsrgsoos8iosd',}, 
+          { positions: [ { i: '19', j: 2 }, { i: '19', j: 3 }, { i: '19', j: 4 }, { i: '19', j: 5 }, { i: '19', j: 6 } ], css_id: 'tinytable_css_if0uxt3lvdq1vc3w14f4',}, 
+          { positions: [ { i: '12', j: 2 }, { i: '12', j: 3 }, { i: '12', j: 4 }, { i: '12', j: 5 }, { i: '12', j: 6 } ], css_id: 'tinytable_css_9bnhyqolvwf092v5pagn',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '13', j: 4 }, { i: '14', j: 4 }, { i: '15', j: 4 }, { i: '16', j: 4 }, { i: '17', j: 4 }, { i: '18', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '6', j: 5 }, { i: '7', j: 5 }, { i: '8', j: 5 }, { i: '9', j: 5 }, { i: '10', j: 5 }, { i: '11', j: 5 }, { i: '13', j: 5 }, { i: '14', j: 5 }, { i: '15', j: 5 }, { i: '16', j: 5 }, { i: '17', j: 5 }, { i: '18', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '6', j: 6 }, { i: '7', j: 6 }, { i: '8', j: 6 }, { i: '9', j: 6 }, { i: '10', j: 6 }, { i: '11', j: 6 }, { i: '13', j: 6 }, { i: '14', j: 6 }, { i: '15', j: 6 }, { i: '16', j: 6 }, { i: '17', j: 6 }, { i: '18', j: 6 } ], css_id: 'tinytable_css_i7bb7mza37j0ejuubk2d',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_eg747qxz9u89bpeqoz59',}, 
+          { positions: [ { i: '19', j: 1 } ], css_id: 'tinytable_css_rnpuhvvmq24z7teheck0',}, 
+          { positions: [ { i: '12', j: 1 } ], css_id: 'tinytable_css_zp70wdp5p3vr1n7wn009',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 } ], css_id: 'tinytable_css_ohef3y2eb1n1kjznt8xe',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_ys123pxpwv27qrmtbe2m',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_xy4vivln2jamky1rnh43.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_hw691wurbsa24nro3viv.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
 <style>
     /* tinytable css entries after */
-    #tinytable_xy4vivln2jamky1rnh43 td.tinytable_css_542xktd1mra4p51gbhfb, #tinytable_xy4vivln2jamky1rnh43 th.tinytable_css_542xktd1mra4p51gbhfb {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_xy4vivln2jamky1rnh43 td.tinytable_css_dqyjnam9b0wq4x4n5arl, #tinytable_xy4vivln2jamky1rnh43 th.tinytable_css_dqyjnam9b0wq4x4n5arl {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_xy4vivln2jamky1rnh43 td.tinytable_css_56h0mg17icq6uxhjnx9n, #tinytable_xy4vivln2jamky1rnh43 th.tinytable_css_56h0mg17icq6uxhjnx9n { text-align: center }
-    #tinytable_xy4vivln2jamky1rnh43 td.tinytable_css_edy6ryglwwe24anxzuzh, #tinytable_xy4vivln2jamky1rnh43 th.tinytable_css_edy6ryglwwe24anxzuzh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_xy4vivln2jamky1rnh43 td.tinytable_css_pm6rb28upmg1lvjnhp5t, #tinytable_xy4vivln2jamky1rnh43 th.tinytable_css_pm6rb28upmg1lvjnhp5t {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_xy4vivln2jamky1rnh43 td.tinytable_css_avaxzz4pigb12pbm0j10, #tinytable_xy4vivln2jamky1rnh43 th.tinytable_css_avaxzz4pigb12pbm0j10 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_xy4vivln2jamky1rnh43 td.tinytable_css_aylxu5f3kqqo1npsja7m, #tinytable_xy4vivln2jamky1rnh43 th.tinytable_css_aylxu5f3kqqo1npsja7m { text-align: left }
-    #tinytable_xy4vivln2jamky1rnh43 td.tinytable_css_xuhmjjeqsrgsoos8iosd, #tinytable_xy4vivln2jamky1rnh43 th.tinytable_css_xuhmjjeqsrgsoos8iosd {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_hw691wurbsa24nro3viv td.tinytable_css_if0uxt3lvdq1vc3w14f4, #tinytable_hw691wurbsa24nro3viv th.tinytable_css_if0uxt3lvdq1vc3w14f4 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_hw691wurbsa24nro3viv td.tinytable_css_9bnhyqolvwf092v5pagn, #tinytable_hw691wurbsa24nro3viv th.tinytable_css_9bnhyqolvwf092v5pagn {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_hw691wurbsa24nro3viv td.tinytable_css_i7bb7mza37j0ejuubk2d, #tinytable_hw691wurbsa24nro3viv th.tinytable_css_i7bb7mza37j0ejuubk2d { text-align: center }
+    #tinytable_hw691wurbsa24nro3viv td.tinytable_css_eg747qxz9u89bpeqoz59, #tinytable_hw691wurbsa24nro3viv th.tinytable_css_eg747qxz9u89bpeqoz59 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_hw691wurbsa24nro3viv td.tinytable_css_rnpuhvvmq24z7teheck0, #tinytable_hw691wurbsa24nro3viv th.tinytable_css_rnpuhvvmq24z7teheck0 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_hw691wurbsa24nro3viv td.tinytable_css_zp70wdp5p3vr1n7wn009, #tinytable_hw691wurbsa24nro3viv th.tinytable_css_zp70wdp5p3vr1n7wn009 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_hw691wurbsa24nro3viv td.tinytable_css_ohef3y2eb1n1kjznt8xe, #tinytable_hw691wurbsa24nro3viv th.tinytable_css_ohef3y2eb1n1kjznt8xe { text-align: left }
+    #tinytable_hw691wurbsa24nro3viv td.tinytable_css_ys123pxpwv27qrmtbe2m, #tinytable_hw691wurbsa24nro3viv th.tinytable_css_ys123pxpwv27qrmtbe2m {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --line-type-bottom: solid; --line-type-left: solid; --line-type-right: solid; --line-type-top: solid; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
 <div class="container">
-      <table class="tinytable" id="tinytable_xy4vivln2jamky1rnh43" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_hw691wurbsa24nro3viv" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
 <thead><tr>
 <th scope="col" data-row="0" data-col="1"> </th>
                 <th scope="col" data-row="0" data-col="2">(1)</th>
@@ -982,7 +913,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section><section id="visualize-our-model-by-predicting-scores" class="level2" data-number="10.5"><h2 data-number="10.5" class="anchored" data-anchor-id="visualize-our-model-by-predicting-scores">
 <span class="header-section-number">10.5</span> Visualize our model by predicting scores</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">predicted.vals</span> <span class="op">&lt;-</span> <span class="fu">broom.mixed</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/augment.html">augment</a></span><span class="op">(</span><span class="va">model.both.rand</span>, effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ran_pars"</span>, <span class="st">"fixed"</span><span class="op">)</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">predicted.vals</span> <span class="op">&lt;-</span> <span class="fu">broom.mixed</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/augment.html">augment</a></span><span class="op">(</span><span class="va">model.both.rand</span>, effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ran_pars"</span>, <span class="st">"fixed"</span><span class="op">)</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">predicted.vals</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1009,12 +940,12 @@ $ .wtres    &lt;dbl&gt; 0.17104854, 0.36383866, -0.71251725, -0.22686787, -0.068
 </section><section id="and-then-plotting-them" class="level2" data-number="10.6"><h2 data-number="10.6" class="anchored" data-anchor-id="and-then-plotting-them">
 <span class="header-section-number">10.6</span> And then plotting them</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">predicted.vals</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year0</span>, y <span class="op">=</span> <span class="va">.fitted</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">predicted.vals</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year0</span>, y <span class="op">=</span> <span class="va">.fitted</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.40</span>, color <span class="op">=</span> <span class="st">"seagreen1"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"loess"</span>, formula <span class="op">=</span> <span class="st">'y ~ x'</span>, color <span class="op">=</span> <span class="st">"seagreen"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Predicted Change in Math Scores Over Time"</span>,</span>
 <span>      subtitle <span class="op">=</span> <span class="st">"With Square and Cubic Effects for Nonlinear Growth"</span>,</span>
-<span>      caption <span class="op">=</span> <span class="st">"Notes. N = 1,731 students in the Sustaining Effects Study (Carter, 1984). Year 0 = Kindergarten."</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      caption <span class="op">=</span> <span class="st">"Notes. N = 1,721 students in the Sustaining Effects Study (Carter, 1984). Year 0 = Kindergarten."</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Predicted Math Score"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Year"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1034,9 +965,11 @@ Figure&nbsp;10.1: Predicted math scores over time with quadratic and cubic terms
 <span class="header-section-number">10.7</span> Random slopes for a sample of 50 students</h2>
 <p>This gives a sense of the variability in slopes.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">predicted.vals50</span> <span class="op">&lt;-</span> <span class="va">predicted.vals</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">childid</span>, <span class="va">year0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="va">.</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">252</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">664</span><span class="op">)</span></span>
+<span><span class="va">sample.ids50</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">predicted.vals</span><span class="op">$</span><span class="va">childid</span><span class="op">)</span>, <span class="fl">50</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">predicted.vals50</span> <span class="op">&lt;-</span> <span class="va">predicted.vals</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">childid</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">sample.ids50</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">predicted.vals50</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year0</span>, y <span class="op">=</span> <span class="va">.fitted</span>, color <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">childid</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.50</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1059,10 +992,10 @@ Figure&nbsp;10.2: Individual predicted trajectories for a subset of students.
 </div>
 </div>
 <p>Here <code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code> connects each child’s own predicted points rather than fitting a smoother through everything, so you see the actual curves the model assigns to individuals.</p>
-</section><section id="part-2-heterogeneous-variance-repeated-measures-model" class="level2" data-number="10.8"><h2 data-number="10.8" class="anchored" data-anchor-id="part-2-heterogeneous-variance-repeated-measures-model">
-<span class="header-section-number">10.8</span> Part 2: heterogeneous variance repeated measures model</h2>
+</section><section id="part-3-heterogeneous-variance-repeated-measures-model" class="level2" data-number="10.8"><h2 data-number="10.8" class="anchored" data-anchor-id="part-3-heterogeneous-variance-repeated-measures-model">
+<span class="header-section-number">10.8</span> Part 3: heterogeneous variance repeated measures model</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://svn.r-project.org/R-packages/trunk/nlme/">nlme</a></span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://svn.r-project.org/R-packages/trunk/nlme/">nlme</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">model.null.growth.homog</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/nlme/man/lme.html">lme</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span>,</span>
 <span>                         random <span class="op">=</span> <span class="op">~</span> <span class="va">year0</span><span class="op">|</span><span class="va">childid</span>,</span>
@@ -1101,9 +1034,9 @@ Number of Groups: 1721 </code></pre>
 </div>
 </div>
 <p>We switch packages here. <code>nlme</code> and <code>lme4</code> fit overlapping families of models with different syntax, and <code>nlme</code> can do something <code>lme4</code> cannot: let the level-1 residual variance differ across occasions.</p>
-<p>The syntax differs in a few visible ways. Random effects go in a separate <code>random =</code> argument rather than inside the formula, and the estimator is named with <code>method = "ML"</code> rather than <code>REML = FALSE</code>. This first model is the homogeneous-variance version, equivalent to what <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer()</a></code> would give you, fit here as a baseline for comparison.</p>
+<p>The syntax differs in a few visible ways. Random effects go in a separate <code>random =</code> argument rather than inside the formula, and the estimator is named with <code>method = "ML"</code> rather than <code>REML = FALSE</code>. This first model is the homogeneous-variance version, equivalent to what <code><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer()</a></code> would give you, fit here as a baseline for comparison.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.null.growth.het</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/nlme/man/lme.html">lme</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.null.growth.het</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/nlme/man/lme.html">lme</a></span><span class="op">(</span><span class="va">math</span> <span class="op">~</span> <span class="va">year0</span>,</span>
 <span>                             random <span class="op">=</span>  <span class="op">~</span> <span class="va">year0</span><span class="op">|</span><span class="va">childid</span>,</span>
 <span>                             data <span class="op">=</span> <span class="va">egmerged.clean</span>,</span>
 <span>                             method <span class="op">=</span> <span class="st">"ML"</span>,</span>
@@ -1160,7 +1093,7 @@ Number of Groups: 1721 </code></pre>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code>lme4</code> and <code>nlme</code> compute likelihoods slightly differently, so small numerical differences between an <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer()</a></code> and an <code><a href="https://rdrr.io/pkg/nlme/man/lme.html">lme()</a></code> fit of the same model are expected and do not indicate an error.</p>
+<p><code>lme4</code> and <code>nlme</code> compute likelihoods slightly differently, so small numerical differences between an <code><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer()</a></code> and an <code><a href="https://rdrr.io/pkg/nlme/man/lme.html">lme()</a></code> fit of the same model are expected and do not indicate an error.</p>
 <p>Also note that loading <code>nlme</code> after <code>lme4</code> masks a few function names in both directions. If something misbehaves after this point, restart R and load only what that section needs.</p>
 </div>
 </div>
@@ -1629,287 +1562,230 @@ Number of Groups: 1721 </code></pre>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Advanced Growth Models</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>**Data for this chapter:** <span class="in">`egmerged.dta`</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data file needed</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>Copy <span class="in">`egmerged.dta`</span> into this project folder before rendering.</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>This week, we continue with the data from the US Sustaining Effects Study (Carter 1984), which attempted to assess the sustaining impacts of compensatory schooling for students over time. We will dig into nonlinear growth patterns and heterogeneous variance models, two advanced topics in growth modeling.</span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load in our MVP packages</span></span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(tidyverse))</span>
-<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 1: loading in the data, reshaping from long to wide, creating new variables</span></span>
-<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a><span class="fu">### Load in the data</span></span>
-<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a>egmerged <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_dta</span>(<span class="st">"egmerged.dta"</span>)</span>
-<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(egmerged)</span>
-<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-34"><a href="#cb40-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-35"><a href="#cb40-35" aria-hidden="true" tabindex="-1"></a><span class="fu">### Super handy trick: reshaping data</span></span>
-<span id="cb40-36"><a href="#cb40-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-37"><a href="#cb40-37" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using `pivot_wider` to reshape from long to wide</span></span>
-<span id="cb40-38"><a href="#cb40-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-41"><a href="#cb40-41" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-42"><a href="#cb40-42" aria-hidden="true" tabindex="-1"></a>egmerged.wide <span class="ot">&lt;-</span> egmerged <span class="sc">%&gt;%</span></span>
-<span id="cb40-43"><a href="#cb40-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(.,</span>
-<span id="cb40-44"><a href="#cb40-44" aria-hidden="true" tabindex="-1"></a>              <span class="at">id_cols =</span> <span class="fu">c</span>(<span class="st">"childid"</span>, <span class="st">"schoolid"</span>, <span class="st">"female"</span>, <span class="st">"black"</span>, <span class="st">"hispanic"</span>, <span class="st">"size"</span>, <span class="st">"lowinc"</span>, <span class="st">"mobility"</span>),</span>
-<span id="cb40-45"><a href="#cb40-45" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> year,</span>
-<span id="cb40-46"><a href="#cb40-46" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> math,</span>
-<span id="cb40-47"><a href="#cb40-47" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_prefix =</span> <span class="st">"math_year"</span>,</span>
-<span id="cb40-48"><a href="#cb40-48" aria-hidden="true" tabindex="-1"></a>              )</span>
-<span id="cb40-49"><a href="#cb40-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-50"><a href="#cb40-50" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(egmerged.wide)</span>
-<span id="cb40-51"><a href="#cb40-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-52"><a href="#cb40-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-53"><a href="#cb40-53" aria-hidden="true" tabindex="-1"></a>Reshaping is one of the most useful data management skills you will pick up, and one of the most error-prone, so it is worth understanding each argument.</span>
-<span id="cb40-54"><a href="#cb40-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-55"><a href="#cb40-55" aria-hidden="true" tabindex="-1"></a><span class="in">`id_cols`</span> lists the variables that identify a row in the new wide dataset and stay constant. <span class="in">`names_from`</span> says which variable supplies the new column *names*, here <span class="in">`year`</span>. <span class="in">`values_from`</span> says which variable fills the cells. <span class="in">`names_prefix`</span> puts readable text in front of the new column names, so you get <span class="in">`math_year1`</span> rather than a column called <span class="in">`1`</span>, which R would find awkward.</span>
-<span id="cb40-56"><a href="#cb40-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-57"><a href="#cb40-57" aria-hidden="true" tabindex="-1"></a>Note what happens to the row count. The long file has one row per student-year; the wide file has one row per student. That change is the whole point, and checking it is a quick way to confirm the reshape did what you intended.</span>
-<span id="cb40-58"><a href="#cb40-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-59"><a href="#cb40-59" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Using `pivot_longer` to reshape from wide to long</span></span>
-<span id="cb40-60"><a href="#cb40-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-63"><a href="#cb40-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-64"><a href="#cb40-64" aria-hidden="true" tabindex="-1"></a>egmerged.long <span class="ot">&lt;-</span> egmerged.wide <span class="sc">%&gt;%</span></span>
-<span id="cb40-65"><a href="#cb40-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(.,</span>
-<span id="cb40-66"><a href="#cb40-66" aria-hidden="true" tabindex="-1"></a>              <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"math"</span>),</span>
-<span id="cb40-67"><a href="#cb40-67" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
-<span id="cb40-68"><a href="#cb40-68" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_to =</span> <span class="st">"math"</span>,</span>
-<span id="cb40-69"><a href="#cb40-69" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_prefix =</span> <span class="st">"math_year"</span>,</span>
-<span id="cb40-70"><a href="#cb40-70" aria-hidden="true" tabindex="-1"></a>              )</span>
-<span id="cb40-71"><a href="#cb40-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-72"><a href="#cb40-72" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(egmerged.long)</span>
-<span id="cb40-73"><a href="#cb40-73" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-74"><a href="#cb40-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-75"><a href="#cb40-75" aria-hidden="true" tabindex="-1"></a>And back again. <span class="in">`pivot_longer()`</span> reverses the operation: <span class="in">`cols`</span> selects which columns to stack, <span class="in">`names_to`</span> names the new column holding the old column names, and <span class="in">`values_to`</span> names the column holding the values. Stripping <span class="in">`names_prefix`</span> on the way back recovers the bare year numbers.</span>
-<span id="cb40-76"><a href="#cb40-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-77"><a href="#cb40-77" aria-hidden="true" tabindex="-1"></a>Being able to go both directions matters because different tools want different shapes. Growth models need long format. Many descriptive tables and correlation matrices want wide.</span>
-<span id="cb40-78"><a href="#cb40-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-79"><a href="#cb40-79" aria-hidden="true" tabindex="-1"></a><span class="fu">### A little more cleanup: change `year` to numeric, drop observations with missing math scores</span></span>
-<span id="cb40-80"><a href="#cb40-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-83"><a href="#cb40-83" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-84"><a href="#cb40-84" aria-hidden="true" tabindex="-1"></a>egmerged.long.clean <span class="ot">&lt;-</span> egmerged.long <span class="sc">%&gt;%</span></span>
-<span id="cb40-85"><a href="#cb40-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(.,</span>
-<span id="cb40-86"><a href="#cb40-86" aria-hidden="true" tabindex="-1"></a>         <span class="at">year  =</span> <span class="fu">as.numeric</span>(year)) <span class="sc">%&gt;%</span></span>
-<span id="cb40-87"><a href="#cb40-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
-<span id="cb40-88"><a href="#cb40-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-89"><a href="#cb40-89" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(egmerged.long.clean)</span>
-<span id="cb40-90"><a href="#cb40-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-91"><a href="#cb40-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-92"><a href="#cb40-92" aria-hidden="true" tabindex="-1"></a>The <span class="in">`as.numeric()`</span> step is easy to forget and consequential. Column names are text, so after reshaping, <span class="in">`year`</span> arrives as a character variable. Left that way, R would treat it as a categorical variable with six unrelated levels rather than as a quantity you can fit a slope to.</span>
-<span id="cb40-93"><a href="#cb40-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-94"><a href="#cb40-94" aria-hidden="true" tabindex="-1"></a><span class="in">`na.omit()`</span> here removes the empty cells created by the reshape: students who were not measured in every year got <span class="in">`NA`</span> in the wide file, and those became rows with missing math scores when we went back to long. As always, this function deserves care, since it drops any row missing on *any* variable.</span>
-<span id="cb40-95"><a href="#cb40-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-96"><a href="#cb40-96" aria-hidden="true" tabindex="-1"></a><span class="fu">### A little housekeeping: creating squared and cubic terms for time</span></span>
-<span id="cb40-97"><a href="#cb40-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-100"><a href="#cb40-100" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-101"><a href="#cb40-101" aria-hidden="true" tabindex="-1"></a>egmerged.clean <span class="ot">&lt;-</span> egmerged <span class="sc">%&gt;%</span></span>
-<span id="cb40-102"><a href="#cb40-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(.,</span>
-<span id="cb40-103"><a href="#cb40-103" aria-hidden="true" tabindex="-1"></a>         <span class="at">retained.fac =</span> <span class="fu">as_factor</span>(retained),</span>
-<span id="cb40-104"><a href="#cb40-104" aria-hidden="true" tabindex="-1"></a>         <span class="at">female.fac =</span> <span class="fu">as_factor</span>(female),</span>
-<span id="cb40-105"><a href="#cb40-105" aria-hidden="true" tabindex="-1"></a>         <span class="at">black.fac =</span> <span class="fu">as_factor</span>(black),</span>
-<span id="cb40-106"><a href="#cb40-106" aria-hidden="true" tabindex="-1"></a>         <span class="at">hispanic.fac =</span> <span class="fu">as_factor</span>(hispanic),</span>
-<span id="cb40-107"><a href="#cb40-107" aria-hidden="true" tabindex="-1"></a>         <span class="at">year0 =</span> year <span class="sc">-</span> <span class="dv">1</span>,</span>
-<span id="cb40-108"><a href="#cb40-108" aria-hidden="true" tabindex="-1"></a>         <span class="at">year_sq =</span> year0<span class="sc">^</span><span class="dv">2</span>,</span>
-<span id="cb40-109"><a href="#cb40-109" aria-hidden="true" tabindex="-1"></a>         <span class="at">year_cube =</span> year0<span class="sc">^</span><span class="dv">3</span>)</span>
-<span id="cb40-110"><a href="#cb40-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-111"><a href="#cb40-111" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(egmerged.clean)</span>
-<span id="cb40-112"><a href="#cb40-112" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-113"><a href="#cb40-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-114"><a href="#cb40-114" aria-hidden="true" tabindex="-1"></a>Note that this builds from the original <span class="in">`egmerged`</span>, not from the reshaped version. The reshaping above was a demonstration of a technique; the modeling that follows uses the data as they came.</span>
-<span id="cb40-115"><a href="#cb40-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-116"><a href="#cb40-116" aria-hidden="true" tabindex="-1"></a>Building the polynomial terms from <span class="in">`year0`</span> rather than <span class="in">`year`</span> matters. Squaring a variable that starts at 0 keeps the terms interpretable and keeps them less correlated with one another than they would otherwise be.</span>
-<span id="cb40-117"><a href="#cb40-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-118"><a href="#cb40-118" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 2: nonlinear growth models</span></span>
-<span id="cb40-119"><a href="#cb40-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-120"><a href="#cb40-120" aria-hidden="true" tabindex="-1"></a><span class="fu">### Now, run a GROWTH null model for math scores (with year included)</span></span>
-<span id="cb40-121"><a href="#cb40-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-124"><a href="#cb40-124" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-125"><a href="#cb40-125" aria-hidden="true" tabindex="-1"></a>model.null.growth <span class="ot">&lt;-</span> <span class="fu">lmer</span>(math <span class="sc">~</span> year0 <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>childid), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> egmerged.clean)</span>
-<span id="cb40-126"><a href="#cb40-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-127"><a href="#cb40-127" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.null.growth)</span>
-<span id="cb40-128"><a href="#cb40-128" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-129"><a href="#cb40-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-130"><a href="#cb40-130" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Calculate GROWTH ICC</span></span>
-<span id="cb40-131"><a href="#cb40-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-134"><a href="#cb40-134" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-135"><a href="#cb40-135" aria-hidden="true" tabindex="-1"></a>null.growth.icc <span class="ot">&lt;-</span> <span class="fl">0.8683</span><span class="sc">/</span>(<span class="fl">0.8683</span> <span class="sc">+</span> <span class="fl">0.3470</span>)</span>
-<span id="cb40-136"><a href="#cb40-136" aria-hidden="true" tabindex="-1"></a>null.growth.icc</span>
-<span id="cb40-137"><a href="#cb40-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-138"><a href="#cb40-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-139"><a href="#cb40-139" aria-hidden="true" tabindex="-1"></a><span class="fu">### Add nonlinear growth terms (square)</span></span>
-<span id="cb40-140"><a href="#cb40-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-143"><a href="#cb40-143" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-144"><a href="#cb40-144" aria-hidden="true" tabindex="-1"></a>model.square <span class="ot">&lt;-</span> <span class="fu">lmer</span>(math <span class="sc">~</span> year0 <span class="sc">+</span> year_sq <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>childid), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> egmerged.clean)</span>
-<span id="cb40-145"><a href="#cb40-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-146"><a href="#cb40-146" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.square)</span>
-<span id="cb40-147"><a href="#cb40-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-148"><a href="#cb40-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-149"><a href="#cb40-149" aria-hidden="true" tabindex="-1"></a>A quadratic term lets the trajectory bend. A negative coefficient means growth decelerates, with gains getting smaller in later years. A positive one means it accelerates.</span>
-<span id="cb40-150"><a href="#cb40-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-151"><a href="#cb40-151" aria-hidden="true" tabindex="-1"></a>Be careful with the language here. Deceleration does *not* mean scores decline. Scores decline only if the curve actually turns over within the range of the data, which is a separate question you answer by looking at the plot. That misreading appears constantly in published work.</span>
-<span id="cb40-152"><a href="#cb40-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-153"><a href="#cb40-153" aria-hidden="true" tabindex="-1"></a><span class="fu">### Add nonlinear growth terms (cubic)</span></span>
-<span id="cb40-154"><a href="#cb40-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-157"><a href="#cb40-157" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-158"><a href="#cb40-158" aria-hidden="true" tabindex="-1"></a>model.cube <span class="ot">&lt;-</span> <span class="fu">lmer</span>(math <span class="sc">~</span> year0 <span class="sc">+</span> year_cube <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>childid), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> egmerged.clean)</span>
-<span id="cb40-159"><a href="#cb40-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-160"><a href="#cb40-160" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.cube)</span>
-<span id="cb40-161"><a href="#cb40-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-162"><a href="#cb40-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-163"><a href="#cb40-163" aria-hidden="true" tabindex="-1"></a><span class="fu">### Add nonlinear growth terms (square AND cubic)</span></span>
-<span id="cb40-164"><a href="#cb40-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-167"><a href="#cb40-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-168"><a href="#cb40-168" aria-hidden="true" tabindex="-1"></a>model.both <span class="ot">&lt;-</span> <span class="fu">lmer</span>(math <span class="sc">~</span> year0 <span class="sc">+</span> year_sq <span class="sc">+</span> year_cube <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>childid), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> egmerged.clean)</span>
-<span id="cb40-169"><a href="#cb40-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-170"><a href="#cb40-170" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.both)</span>
-<span id="cb40-171"><a href="#cb40-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-172"><a href="#cb40-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-173"><a href="#cb40-173" aria-hidden="true" tabindex="-1"></a>A cubic term allows one more change of direction: growth that decelerates and then picks back up, or the reverse. Each additional polynomial term buys flexibility and costs a degree of freedom, and beyond cubic the terms rarely correspond to anything you can describe substantively.</span>
-<span id="cb40-174"><a href="#cb40-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-175"><a href="#cb40-175" aria-hidden="true" tabindex="-1"></a><span class="fu">### Which of these models fits our data the best? Use `anova` to test</span></span>
-<span id="cb40-176"><a href="#cb40-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-179"><a href="#cb40-179" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-180"><a href="#cb40-180" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model.null.growth, model.square, model.cube, model.both)</span>
-<span id="cb40-181"><a href="#cb40-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-182"><a href="#cb40-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-183"><a href="#cb40-183" aria-hidden="true" tabindex="-1"></a><span class="fu">### Same thing, PLUS adding a random slope for year0</span></span>
-<span id="cb40-184"><a href="#cb40-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-187"><a href="#cb40-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-188"><a href="#cb40-188" aria-hidden="true" tabindex="-1"></a>model.both.rand <span class="ot">&lt;-</span> <span class="fu">lmer</span>(math <span class="sc">~</span> year0 <span class="sc">+</span> year_sq <span class="sc">+</span> year_cube <span class="sc">+</span> (year0<span class="sc">|</span>childid), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> egmerged.clean)</span>
-<span id="cb40-189"><a href="#cb40-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-190"><a href="#cb40-190" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.both.rand)</span>
-<span id="cb40-191"><a href="#cb40-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-192"><a href="#cb40-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-193"><a href="#cb40-193" aria-hidden="true" tabindex="-1"></a>Note what is random and what is not. The linear component of time varies across children; the quadratic and cubic terms are fixed, so the *shape* of the curve is assumed common while its steepness varies. Letting the higher-order terms vary too is possible but demands far more data.</span>
-<span id="cb40-194"><a href="#cb40-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-195"><a href="#cb40-195" aria-hidden="true" tabindex="-1"></a><span class="fu">### Should we keep that random slope for time? Use `rand` to test</span></span>
-<span id="cb40-196"><a href="#cb40-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-199"><a href="#cb40-199" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-200"><a href="#cb40-200" aria-hidden="true" tabindex="-1"></a>lmerTest<span class="sc">::</span><span class="fu">rand</span>(model.both.rand)</span>
-<span id="cb40-201"><a href="#cb40-201" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-202"><a href="#cb40-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-203"><a href="#cb40-203" aria-hidden="true" tabindex="-1"></a><span class="fu">## Using `modelsummary` and `broom.mixed` to organize your results</span></span>
-<span id="cb40-204"><a href="#cb40-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-207"><a href="#cb40-207" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-208"><a href="#cb40-208" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb40-209"><a href="#cb40-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-210"><a href="#cb40-210" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb40-211"><a href="#cb40-211" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.mixed)</span>
-<span id="cb40-212"><a href="#cb40-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-213"><a href="#cb40-213" aria-hidden="true" tabindex="-1"></a>models1 <span class="ot">&lt;-</span> <span class="fu">list</span>(model.null.growth, model.square, model.cube, model.both, model.both.rand)</span>
-<span id="cb40-214"><a href="#cb40-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-215"><a href="#cb40-215" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models1, <span class="at">output =</span> <span class="st">"default"</span>)</span>
-<span id="cb40-216"><a href="#cb40-216" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-217"><a href="#cb40-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-218"><a href="#cb40-218" aria-hidden="true" tabindex="-1"></a><span class="fu">## Visualize our model by predicting scores</span></span>
-<span id="cb40-219"><a href="#cb40-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-222"><a href="#cb40-222" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-223"><a href="#cb40-223" aria-hidden="true" tabindex="-1"></a>predicted.vals <span class="ot">&lt;-</span> broom.mixed<span class="sc">::</span><span class="fu">augment</span>(model.both.rand, <span class="at">effects =</span> <span class="fu">c</span>(<span class="st">"ran_pars"</span>, <span class="st">"fixed"</span>), <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb40-224"><a href="#cb40-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-225"><a href="#cb40-225" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(predicted.vals)</span>
-<span id="cb40-226"><a href="#cb40-226" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-227"><a href="#cb40-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-228"><a href="#cb40-228" aria-hidden="true" tabindex="-1"></a><span class="fu">## And then plotting them</span></span>
-<span id="cb40-229"><a href="#cb40-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-232"><a href="#cb40-232" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-233"><a href="#cb40-233" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-nonlinear</span></span>
-<span id="cb40-234"><a href="#cb40-234" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Predicted math scores over time with quadratic and cubic terms."</span></span>
-<span id="cb40-235"><a href="#cb40-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-236"><a href="#cb40-236" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> predicted.vals, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> year0, <span class="at">y =</span> .fitted)) <span class="sc">+</span></span>
-<span id="cb40-237"><a href="#cb40-237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> .<span class="dv">40</span>, <span class="at">color =</span> <span class="st">"seagreen1"</span>) <span class="sc">+</span></span>
-<span id="cb40-238"><a href="#cb40-238" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">formula =</span> <span class="st">'y ~ x'</span>, <span class="at">color =</span> <span class="st">"seagreen"</span>) <span class="sc">+</span></span>
-<span id="cb40-239"><a href="#cb40-239" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Predicted Change in Math Scores Over Time"</span>,</span>
-<span id="cb40-240"><a href="#cb40-240" aria-hidden="true" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="st">"With Square and Cubic Effects for Nonlinear Growth"</span>,</span>
-<span id="cb40-241"><a href="#cb40-241" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Notes. N = 1,731 students in the Sustaining Effects Study (Carter, 1984). Year 0 = Kindergarten."</span>) <span class="sc">+</span></span>
-<span id="cb40-242"><a href="#cb40-242" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Predicted Math Score"</span>) <span class="sc">+</span></span>
-<span id="cb40-243"><a href="#cb40-243" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span></span>
-<span id="cb40-244"><a href="#cb40-244" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb40-245"><a href="#cb40-245" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-246"><a href="#cb40-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-247"><a href="#cb40-247" aria-hidden="true" tabindex="-1"></a>This is where you check whether the polynomial terms describe something real. Look at whether the curve bends within the range of the observed years, and in which direction. A curve that only bends beyond your last measurement occasion is extrapolation, not a finding.</span>
-<span id="cb40-248"><a href="#cb40-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-249"><a href="#cb40-249" aria-hidden="true" tabindex="-1"></a><span class="fu">## Random slopes for a sample of 50 students</span></span>
-<span id="cb40-250"><a href="#cb40-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-251"><a href="#cb40-251" aria-hidden="true" tabindex="-1"></a>This gives a sense of the variability in slopes.</span>
-<span id="cb40-252"><a href="#cb40-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-255"><a href="#cb40-255" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-256"><a href="#cb40-256" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-fifty</span></span>
-<span id="cb40-257"><a href="#cb40-257" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Individual predicted trajectories for a subset of students."</span></span>
-<span id="cb40-258"><a href="#cb40-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-259"><a href="#cb40-259" aria-hidden="true" tabindex="-1"></a>predicted.vals50 <span class="ot">&lt;-</span> predicted.vals <span class="sc">%&gt;%</span></span>
-<span id="cb40-260"><a href="#cb40-260" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(childid, year0) <span class="sc">%&gt;%</span></span>
-<span id="cb40-261"><a href="#cb40-261" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(., <span class="dv">1</span><span class="sc">:</span><span class="dv">252</span>)</span>
-<span id="cb40-262"><a href="#cb40-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-263"><a href="#cb40-263" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> predicted.vals50, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> year0, <span class="at">y =</span> .fitted, <span class="at">color =</span> <span class="fu">as_factor</span>(childid))) <span class="sc">+</span></span>
-<span id="cb40-264"><a href="#cb40-264" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">50</span>) <span class="sc">+</span></span>
-<span id="cb40-265"><a href="#cb40-265" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb40-266"><a href="#cb40-266" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Predicted Change in Math Scores Over Time"</span>,</span>
-<span id="cb40-267"><a href="#cb40-267" aria-hidden="true" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="st">"With Square and Cubic Effects for Nonlinear Growth"</span>,</span>
-<span id="cb40-268"><a href="#cb40-268" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Notes. Subset of N = 50 students in the Sustaining Effects Study (Carter, 1984). Year 0 = Kindergarten."</span>) <span class="sc">+</span></span>
-<span id="cb40-269"><a href="#cb40-269" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Predicted Math Score"</span>) <span class="sc">+</span></span>
-<span id="cb40-270"><a href="#cb40-270" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span></span>
-<span id="cb40-271"><a href="#cb40-271" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb40-272"><a href="#cb40-272" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-273"><a href="#cb40-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-274"><a href="#cb40-274" aria-hidden="true" tabindex="-1"></a>Here <span class="in">`geom_line()`</span> connects each child's own predicted points rather than fitting a smoother through everything, so you see the actual curves the model assigns to individuals.</span>
-<span id="cb40-275"><a href="#cb40-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-276"><a href="#cb40-276" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 2: heterogeneous variance repeated measures model</span></span>
-<span id="cb40-277"><a href="#cb40-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-280"><a href="#cb40-280" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-281"><a href="#cb40-281" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb40-282"><a href="#cb40-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-283"><a href="#cb40-283" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span>
-<span id="cb40-284"><a href="#cb40-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-285"><a href="#cb40-285" aria-hidden="true" tabindex="-1"></a>model.null.growth.homog <span class="ot">&lt;-</span> <span class="fu">lme</span>(math <span class="sc">~</span> year0,</span>
-<span id="cb40-286"><a href="#cb40-286" aria-hidden="true" tabindex="-1"></a>                         <span class="at">random =</span> <span class="sc">~</span> year0<span class="sc">|</span>childid,</span>
-<span id="cb40-287"><a href="#cb40-287" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> egmerged.clean,</span>
-<span id="cb40-288"><a href="#cb40-288" aria-hidden="true" tabindex="-1"></a>                         <span class="at">method =</span> <span class="st">"ML"</span>)</span>
-<span id="cb40-289"><a href="#cb40-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-290"><a href="#cb40-290" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.null.growth.homog)</span>
-<span id="cb40-291"><a href="#cb40-291" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-292"><a href="#cb40-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-293"><a href="#cb40-293" aria-hidden="true" tabindex="-1"></a>We switch packages here. <span class="in">`nlme`</span> and <span class="in">`lme4`</span> fit overlapping families of models with different syntax, and <span class="in">`nlme`</span> can do something <span class="in">`lme4`</span> cannot: let the level-1 residual variance differ across occasions.</span>
-<span id="cb40-294"><a href="#cb40-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-295"><a href="#cb40-295" aria-hidden="true" tabindex="-1"></a>The syntax differs in a few visible ways. Random effects go in a separate <span class="in">`random =`</span> argument rather than inside the formula, and the estimator is named with <span class="in">`method = "ML"`</span> rather than <span class="in">`REML = FALSE`</span>. This first model is the homogeneous-variance version, equivalent to what <span class="in">`lmer()`</span> would give you, fit here as a baseline for comparison.</span>
-<span id="cb40-296"><a href="#cb40-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-299"><a href="#cb40-299" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-300"><a href="#cb40-300" aria-hidden="true" tabindex="-1"></a>model.null.growth.het <span class="ot">&lt;-</span> <span class="fu">lme</span>(math <span class="sc">~</span> year0,</span>
-<span id="cb40-301"><a href="#cb40-301" aria-hidden="true" tabindex="-1"></a>                             <span class="at">random =</span>  <span class="sc">~</span> year0<span class="sc">|</span>childid,</span>
-<span id="cb40-302"><a href="#cb40-302" aria-hidden="true" tabindex="-1"></a>                             <span class="at">data =</span> egmerged.clean,</span>
-<span id="cb40-303"><a href="#cb40-303" aria-hidden="true" tabindex="-1"></a>                             <span class="at">method =</span> <span class="st">"ML"</span>,</span>
-<span id="cb40-304"><a href="#cb40-304" aria-hidden="true" tabindex="-1"></a>                             <span class="at">weights =</span> <span class="fu">varIdent</span>(<span class="at">form =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> year0)</span>
-<span id="cb40-305"><a href="#cb40-305" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb40-306"><a href="#cb40-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-307"><a href="#cb40-307" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.null.growth.het)</span>
-<span id="cb40-308"><a href="#cb40-308" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-309"><a href="#cb40-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-310"><a href="#cb40-310" aria-hidden="true" tabindex="-1"></a><span class="in">`varIdent(form = ~ 1 | year0)`</span> is the piece that matters. It asks for a separate residual variance at each value of <span class="in">`year0`</span> rather than one shared value.</span>
-<span id="cb40-311"><a href="#cb40-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-312"><a href="#cb40-312" aria-hidden="true" tabindex="-1"></a>Here is the assumption being relaxed, in plain terms. The standard model assumes measurements are equally noisy at every occasion: a third grader's score sits as close to their predicted trajectory as a sixth grader's does. That is often false. Scores tend to spread out as children develop, tests differ in difficulty and reliability across grades, and floor or ceiling effects can compress the variance at one end of the range.</span>
-<span id="cb40-313"><a href="#cb40-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-314"><a href="#cb40-314" aria-hidden="true" tabindex="-1"></a>The output reports variance function parameters, which are multipliers relative to the first occasion. Values above 1 mean more variability at that year than at baseline; below 1, less. A clear trend upward across years is the signature of a construct that is still developing.</span>
-<span id="cb40-315"><a href="#cb40-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-316"><a href="#cb40-316" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb40-317"><a href="#cb40-317" aria-hidden="true" tabindex="-1"></a><span class="fu">## Comparing across packages</span></span>
-<span id="cb40-318"><a href="#cb40-318" aria-hidden="true" tabindex="-1"></a><span class="in">`lme4`</span> and <span class="in">`nlme`</span> compute likelihoods slightly differently, so small numerical differences between an <span class="in">`lmer()`</span> and an <span class="in">`lme()`</span> fit of the same model are expected and do not indicate an error.</span>
-<span id="cb40-319"><a href="#cb40-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-320"><a href="#cb40-320" aria-hidden="true" tabindex="-1"></a>Also note that loading <span class="in">`nlme`</span> after <span class="in">`lme4`</span> masks a few function names in both directions. If something misbehaves after this point, restart R and load only what that section needs.</span>
-<span id="cb40-321"><a href="#cb40-321" aria-hidden="true" tabindex="-1"></a>:::</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Advanced Growth Models</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>**Data for this chapter:** <span class="in">`egmerged.dta`</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data file needed</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>Copy <span class="in">`egmerged.dta`</span> into this project folder before rendering.</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>This week, we continue with the data from the US Sustaining Effects Study (Carter 1984), which attempted to assess the sustaining impacts of compensatory schooling for students over time. We will dig into nonlinear growth patterns and heterogeneous variance models, two advanced topics in growth modeling.</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load in our MVP packages</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(tidyverse))</span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 1: loading in the data and creating new variables</span></span>
+<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-26"><a href="#cb38-26" aria-hidden="true" tabindex="-1"></a><span class="fu">### Load in the data</span></span>
+<span id="cb38-27"><a href="#cb38-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-30"><a href="#cb38-30" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-31"><a href="#cb38-31" aria-hidden="true" tabindex="-1"></a>egmerged <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_dta</span>(<span class="st">"egmerged.dta"</span>)</span>
+<span id="cb38-32"><a href="#cb38-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-33"><a href="#cb38-33" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(egmerged)</span>
+<span id="cb38-34"><a href="#cb38-34" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-35"><a href="#cb38-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-36"><a href="#cb38-36" aria-hidden="true" tabindex="-1"></a>As in the last chapter, the data are already in long format, which is what growth models need. See the previous chapter for how to move between long and wide with <span class="in">`pivot_longer()`</span> and <span class="in">`pivot_wider()`</span>.</span>
+<span id="cb38-37"><a href="#cb38-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-38"><a href="#cb38-38" aria-hidden="true" tabindex="-1"></a><span class="fu">### A little housekeeping: creating squared and cubic terms for time</span></span>
+<span id="cb38-39"><a href="#cb38-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-42"><a href="#cb38-42" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-43"><a href="#cb38-43" aria-hidden="true" tabindex="-1"></a>egmerged.clean <span class="ot">&lt;-</span> egmerged <span class="sc">%&gt;%</span></span>
+<span id="cb38-44"><a href="#cb38-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(.,</span>
+<span id="cb38-45"><a href="#cb38-45" aria-hidden="true" tabindex="-1"></a>         <span class="at">year0 =</span> year <span class="sc">-</span> <span class="dv">1</span>,</span>
+<span id="cb38-46"><a href="#cb38-46" aria-hidden="true" tabindex="-1"></a>         <span class="at">year_sq =</span> year0<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb38-47"><a href="#cb38-47" aria-hidden="true" tabindex="-1"></a>         <span class="at">year_cube =</span> year0<span class="sc">^</span><span class="dv">3</span>)</span>
+<span id="cb38-48"><a href="#cb38-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-49"><a href="#cb38-49" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(egmerged.clean)</span>
+<span id="cb38-50"><a href="#cb38-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-51"><a href="#cb38-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-52"><a href="#cb38-52" aria-hidden="true" tabindex="-1"></a>Building the polynomial terms from <span class="in">`year0`</span> rather than <span class="in">`year`</span> matters. Squaring a variable that starts at 0 keeps the terms interpretable and keeps them less correlated with one another than they would otherwise be.</span>
+<span id="cb38-53"><a href="#cb38-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-54"><a href="#cb38-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 2: nonlinear growth models</span></span>
+<span id="cb38-55"><a href="#cb38-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-56"><a href="#cb38-56" aria-hidden="true" tabindex="-1"></a><span class="fu">### Now, run a GROWTH null model for math scores (with year included)</span></span>
+<span id="cb38-57"><a href="#cb38-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-60"><a href="#cb38-60" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-61"><a href="#cb38-61" aria-hidden="true" tabindex="-1"></a>model.null.growth <span class="ot">&lt;-</span> <span class="fu">lmer</span>(math <span class="sc">~</span> year0 <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>childid), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> egmerged.clean)</span>
+<span id="cb38-62"><a href="#cb38-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-63"><a href="#cb38-63" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.null.growth)</span>
+<span id="cb38-64"><a href="#cb38-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-65"><a href="#cb38-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-66"><a href="#cb38-66" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Calculate GROWTH ICC</span></span>
+<span id="cb38-67"><a href="#cb38-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-70"><a href="#cb38-70" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-71"><a href="#cb38-71" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(model.null.growth)</span>
+<span id="cb38-72"><a href="#cb38-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-73"><a href="#cb38-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-74"><a href="#cb38-74" aria-hidden="true" tabindex="-1"></a><span class="fu">### Add nonlinear growth terms (square)</span></span>
+<span id="cb38-75"><a href="#cb38-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-78"><a href="#cb38-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-79"><a href="#cb38-79" aria-hidden="true" tabindex="-1"></a>model.square <span class="ot">&lt;-</span> <span class="fu">lmer</span>(math <span class="sc">~</span> year0 <span class="sc">+</span> year_sq <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>childid), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> egmerged.clean)</span>
+<span id="cb38-80"><a href="#cb38-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-81"><a href="#cb38-81" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.square)</span>
+<span id="cb38-82"><a href="#cb38-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-83"><a href="#cb38-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-84"><a href="#cb38-84" aria-hidden="true" tabindex="-1"></a>A quadratic term lets the trajectory bend. A negative coefficient means growth decelerates, with gains getting smaller in later years. A positive one means it accelerates.</span>
+<span id="cb38-85"><a href="#cb38-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-86"><a href="#cb38-86" aria-hidden="true" tabindex="-1"></a>Be careful with the language here. Deceleration does *not* mean scores decline. Scores decline only if the curve actually turns over within the range of the data, which is a separate question you answer by looking at the plot. That misreading appears constantly in published work.</span>
+<span id="cb38-87"><a href="#cb38-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-88"><a href="#cb38-88" aria-hidden="true" tabindex="-1"></a><span class="fu">### Add nonlinear growth terms (cubic)</span></span>
+<span id="cb38-89"><a href="#cb38-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-92"><a href="#cb38-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-93"><a href="#cb38-93" aria-hidden="true" tabindex="-1"></a>model.cube <span class="ot">&lt;-</span> <span class="fu">lmer</span>(math <span class="sc">~</span> year0 <span class="sc">+</span> year_cube <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>childid), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> egmerged.clean)</span>
+<span id="cb38-94"><a href="#cb38-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-95"><a href="#cb38-95" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.cube)</span>
+<span id="cb38-96"><a href="#cb38-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-97"><a href="#cb38-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-98"><a href="#cb38-98" aria-hidden="true" tabindex="-1"></a><span class="fu">### Add nonlinear growth terms (square AND cubic)</span></span>
+<span id="cb38-99"><a href="#cb38-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-102"><a href="#cb38-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-103"><a href="#cb38-103" aria-hidden="true" tabindex="-1"></a>model.both <span class="ot">&lt;-</span> <span class="fu">lmer</span>(math <span class="sc">~</span> year0 <span class="sc">+</span> year_sq <span class="sc">+</span> year_cube <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>childid), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> egmerged.clean)</span>
+<span id="cb38-104"><a href="#cb38-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-105"><a href="#cb38-105" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.both)</span>
+<span id="cb38-106"><a href="#cb38-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-107"><a href="#cb38-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-108"><a href="#cb38-108" aria-hidden="true" tabindex="-1"></a>A cubic term allows one more change of direction: growth that decelerates and then picks back up, or the reverse. Each additional polynomial term buys flexibility and costs a degree of freedom, and beyond cubic the terms rarely correspond to anything you can describe substantively.</span>
+<span id="cb38-109"><a href="#cb38-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-110"><a href="#cb38-110" aria-hidden="true" tabindex="-1"></a><span class="fu">### Which of these models fits our data the best? Use `anova` to test</span></span>
+<span id="cb38-111"><a href="#cb38-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-114"><a href="#cb38-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-115"><a href="#cb38-115" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model.null.growth, model.square, model.cube, model.both)</span>
+<span id="cb38-116"><a href="#cb38-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-117"><a href="#cb38-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-118"><a href="#cb38-118" aria-hidden="true" tabindex="-1"></a><span class="fu">### Same thing, PLUS adding a random slope for year0</span></span>
+<span id="cb38-119"><a href="#cb38-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-122"><a href="#cb38-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-123"><a href="#cb38-123" aria-hidden="true" tabindex="-1"></a>model.both.rand <span class="ot">&lt;-</span> <span class="fu">lmer</span>(math <span class="sc">~</span> year0 <span class="sc">+</span> year_sq <span class="sc">+</span> year_cube <span class="sc">+</span> (year0<span class="sc">|</span>childid), <span class="at">REML =</span> <span class="cn">FALSE</span>, <span class="at">data =</span> egmerged.clean)</span>
+<span id="cb38-124"><a href="#cb38-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-125"><a href="#cb38-125" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.both.rand)</span>
+<span id="cb38-126"><a href="#cb38-126" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-127"><a href="#cb38-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-128"><a href="#cb38-128" aria-hidden="true" tabindex="-1"></a>Note what is random and what is not. The linear component of time varies across children; the quadratic and cubic terms are fixed, so the *shape* of the curve is assumed common while its steepness varies. Letting the higher-order terms vary too is possible but demands far more data.</span>
+<span id="cb38-129"><a href="#cb38-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-130"><a href="#cb38-130" aria-hidden="true" tabindex="-1"></a><span class="fu">### Should we keep that random slope for time? Use `ranova` to test</span></span>
+<span id="cb38-131"><a href="#cb38-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-134"><a href="#cb38-134" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-135"><a href="#cb38-135" aria-hidden="true" tabindex="-1"></a><span class="fu">ranova</span>(model.both.rand)</span>
+<span id="cb38-136"><a href="#cb38-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-137"><a href="#cb38-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-138"><a href="#cb38-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## Using `modelsummary` and `broom.mixed` to organize your results</span></span>
+<span id="cb38-139"><a href="#cb38-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-142"><a href="#cb38-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-143"><a href="#cb38-143" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb38-144"><a href="#cb38-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-145"><a href="#cb38-145" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb38-146"><a href="#cb38-146" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.mixed)</span>
+<span id="cb38-147"><a href="#cb38-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-148"><a href="#cb38-148" aria-hidden="true" tabindex="-1"></a>models1 <span class="ot">&lt;-</span> <span class="fu">list</span>(model.null.growth, model.square, model.cube, model.both, model.both.rand)</span>
+<span id="cb38-149"><a href="#cb38-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-150"><a href="#cb38-150" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models1, <span class="at">output =</span> <span class="st">"default"</span>)</span>
+<span id="cb38-151"><a href="#cb38-151" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-152"><a href="#cb38-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-153"><a href="#cb38-153" aria-hidden="true" tabindex="-1"></a><span class="fu">## Visualize our model by predicting scores</span></span>
+<span id="cb38-154"><a href="#cb38-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-157"><a href="#cb38-157" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-158"><a href="#cb38-158" aria-hidden="true" tabindex="-1"></a>predicted.vals <span class="ot">&lt;-</span> broom.mixed<span class="sc">::</span><span class="fu">augment</span>(model.both.rand, <span class="at">effects =</span> <span class="fu">c</span>(<span class="st">"ran_pars"</span>, <span class="st">"fixed"</span>), <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb38-159"><a href="#cb38-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-160"><a href="#cb38-160" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(predicted.vals)</span>
+<span id="cb38-161"><a href="#cb38-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-162"><a href="#cb38-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-163"><a href="#cb38-163" aria-hidden="true" tabindex="-1"></a><span class="fu">## And then plotting them</span></span>
+<span id="cb38-164"><a href="#cb38-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-167"><a href="#cb38-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-168"><a href="#cb38-168" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-nonlinear</span></span>
+<span id="cb38-169"><a href="#cb38-169" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Predicted math scores over time with quadratic and cubic terms."</span></span>
+<span id="cb38-170"><a href="#cb38-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-171"><a href="#cb38-171" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> predicted.vals, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> year0, <span class="at">y =</span> .fitted)) <span class="sc">+</span></span>
+<span id="cb38-172"><a href="#cb38-172" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> .<span class="dv">40</span>, <span class="at">color =</span> <span class="st">"seagreen1"</span>) <span class="sc">+</span></span>
+<span id="cb38-173"><a href="#cb38-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">formula =</span> <span class="st">'y ~ x'</span>, <span class="at">color =</span> <span class="st">"seagreen"</span>) <span class="sc">+</span></span>
+<span id="cb38-174"><a href="#cb38-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Predicted Change in Math Scores Over Time"</span>,</span>
+<span id="cb38-175"><a href="#cb38-175" aria-hidden="true" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="st">"With Square and Cubic Effects for Nonlinear Growth"</span>,</span>
+<span id="cb38-176"><a href="#cb38-176" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Notes. N = 1,721 students in the Sustaining Effects Study (Carter, 1984). Year 0 = Kindergarten."</span>) <span class="sc">+</span></span>
+<span id="cb38-177"><a href="#cb38-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Predicted Math Score"</span>) <span class="sc">+</span></span>
+<span id="cb38-178"><a href="#cb38-178" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span></span>
+<span id="cb38-179"><a href="#cb38-179" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb38-180"><a href="#cb38-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-181"><a href="#cb38-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-182"><a href="#cb38-182" aria-hidden="true" tabindex="-1"></a>This is where you check whether the polynomial terms describe something real. Look at whether the curve bends within the range of the observed years, and in which direction. A curve that only bends beyond your last measurement occasion is extrapolation, not a finding.</span>
+<span id="cb38-183"><a href="#cb38-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-184"><a href="#cb38-184" aria-hidden="true" tabindex="-1"></a><span class="fu">## Random slopes for a sample of 50 students</span></span>
+<span id="cb38-185"><a href="#cb38-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-186"><a href="#cb38-186" aria-hidden="true" tabindex="-1"></a>This gives a sense of the variability in slopes.</span>
+<span id="cb38-187"><a href="#cb38-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-190"><a href="#cb38-190" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-191"><a href="#cb38-191" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-fifty</span></span>
+<span id="cb38-192"><a href="#cb38-192" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Individual predicted trajectories for a subset of students."</span></span>
+<span id="cb38-193"><a href="#cb38-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-194"><a href="#cb38-194" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">664</span>)</span>
+<span id="cb38-195"><a href="#cb38-195" aria-hidden="true" tabindex="-1"></a>sample.ids50 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">unique</span>(predicted.vals<span class="sc">$</span>childid), <span class="dv">50</span>)</span>
+<span id="cb38-196"><a href="#cb38-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-197"><a href="#cb38-197" aria-hidden="true" tabindex="-1"></a>predicted.vals50 <span class="ot">&lt;-</span> predicted.vals <span class="sc">%&gt;%</span></span>
+<span id="cb38-198"><a href="#cb38-198" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(childid <span class="sc">%in%</span> sample.ids50)</span>
+<span id="cb38-199"><a href="#cb38-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-200"><a href="#cb38-200" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> predicted.vals50, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> year0, <span class="at">y =</span> .fitted, <span class="at">color =</span> <span class="fu">as_factor</span>(childid))) <span class="sc">+</span></span>
+<span id="cb38-201"><a href="#cb38-201" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">50</span>) <span class="sc">+</span></span>
+<span id="cb38-202"><a href="#cb38-202" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb38-203"><a href="#cb38-203" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Predicted Change in Math Scores Over Time"</span>,</span>
+<span id="cb38-204"><a href="#cb38-204" aria-hidden="true" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="st">"With Square and Cubic Effects for Nonlinear Growth"</span>,</span>
+<span id="cb38-205"><a href="#cb38-205" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Notes. Subset of N = 50 students in the Sustaining Effects Study (Carter, 1984). Year 0 = Kindergarten."</span>) <span class="sc">+</span></span>
+<span id="cb38-206"><a href="#cb38-206" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Predicted Math Score"</span>) <span class="sc">+</span></span>
+<span id="cb38-207"><a href="#cb38-207" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span></span>
+<span id="cb38-208"><a href="#cb38-208" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb38-209"><a href="#cb38-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-210"><a href="#cb38-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-211"><a href="#cb38-211" aria-hidden="true" tabindex="-1"></a>Here <span class="in">`geom_line()`</span> connects each child's own predicted points rather than fitting a smoother through everything, so you see the actual curves the model assigns to individuals.</span>
+<span id="cb38-212"><a href="#cb38-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-213"><a href="#cb38-213" aria-hidden="true" tabindex="-1"></a><span class="fu">## Part 3: heterogeneous variance repeated measures model</span></span>
+<span id="cb38-214"><a href="#cb38-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-217"><a href="#cb38-217" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-218"><a href="#cb38-218" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb38-219"><a href="#cb38-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-220"><a href="#cb38-220" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span>
+<span id="cb38-221"><a href="#cb38-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-222"><a href="#cb38-222" aria-hidden="true" tabindex="-1"></a>model.null.growth.homog <span class="ot">&lt;-</span> <span class="fu">lme</span>(math <span class="sc">~</span> year0,</span>
+<span id="cb38-223"><a href="#cb38-223" aria-hidden="true" tabindex="-1"></a>                         <span class="at">random =</span> <span class="sc">~</span> year0<span class="sc">|</span>childid,</span>
+<span id="cb38-224"><a href="#cb38-224" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> egmerged.clean,</span>
+<span id="cb38-225"><a href="#cb38-225" aria-hidden="true" tabindex="-1"></a>                         <span class="at">method =</span> <span class="st">"ML"</span>)</span>
+<span id="cb38-226"><a href="#cb38-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-227"><a href="#cb38-227" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.null.growth.homog)</span>
+<span id="cb38-228"><a href="#cb38-228" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-229"><a href="#cb38-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-230"><a href="#cb38-230" aria-hidden="true" tabindex="-1"></a>We switch packages here. <span class="in">`nlme`</span> and <span class="in">`lme4`</span> fit overlapping families of models with different syntax, and <span class="in">`nlme`</span> can do something <span class="in">`lme4`</span> cannot: let the level-1 residual variance differ across occasions.</span>
+<span id="cb38-231"><a href="#cb38-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-232"><a href="#cb38-232" aria-hidden="true" tabindex="-1"></a>The syntax differs in a few visible ways. Random effects go in a separate <span class="in">`random =`</span> argument rather than inside the formula, and the estimator is named with <span class="in">`method = "ML"`</span> rather than <span class="in">`REML = FALSE`</span>. This first model is the homogeneous-variance version, equivalent to what <span class="in">`lmer()`</span> would give you, fit here as a baseline for comparison.</span>
+<span id="cb38-233"><a href="#cb38-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-236"><a href="#cb38-236" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-237"><a href="#cb38-237" aria-hidden="true" tabindex="-1"></a>model.null.growth.het <span class="ot">&lt;-</span> <span class="fu">lme</span>(math <span class="sc">~</span> year0,</span>
+<span id="cb38-238"><a href="#cb38-238" aria-hidden="true" tabindex="-1"></a>                             <span class="at">random =</span>  <span class="sc">~</span> year0<span class="sc">|</span>childid,</span>
+<span id="cb38-239"><a href="#cb38-239" aria-hidden="true" tabindex="-1"></a>                             <span class="at">data =</span> egmerged.clean,</span>
+<span id="cb38-240"><a href="#cb38-240" aria-hidden="true" tabindex="-1"></a>                             <span class="at">method =</span> <span class="st">"ML"</span>,</span>
+<span id="cb38-241"><a href="#cb38-241" aria-hidden="true" tabindex="-1"></a>                             <span class="at">weights =</span> <span class="fu">varIdent</span>(<span class="at">form =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> year0)</span>
+<span id="cb38-242"><a href="#cb38-242" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb38-243"><a href="#cb38-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-244"><a href="#cb38-244" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.null.growth.het)</span>
+<span id="cb38-245"><a href="#cb38-245" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-246"><a href="#cb38-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-247"><a href="#cb38-247" aria-hidden="true" tabindex="-1"></a><span class="in">`varIdent(form = ~ 1 | year0)`</span> is the piece that matters. It asks for a separate residual variance at each value of <span class="in">`year0`</span> rather than one shared value.</span>
+<span id="cb38-248"><a href="#cb38-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-249"><a href="#cb38-249" aria-hidden="true" tabindex="-1"></a>Here is the assumption being relaxed, in plain terms. The standard model assumes measurements are equally noisy at every occasion: a third grader's score sits as close to their predicted trajectory as a sixth grader's does. That is often false. Scores tend to spread out as children develop, tests differ in difficulty and reliability across grades, and floor or ceiling effects can compress the variance at one end of the range.</span>
+<span id="cb38-250"><a href="#cb38-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-251"><a href="#cb38-251" aria-hidden="true" tabindex="-1"></a>The output reports variance function parameters, which are multipliers relative to the first occasion. Values above 1 mean more variability at that year than at baseline; below 1, less. A clear trend upward across years is the signature of a construct that is still developing.</span>
+<span id="cb38-252"><a href="#cb38-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-253"><a href="#cb38-253" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb38-254"><a href="#cb38-254" aria-hidden="true" tabindex="-1"></a><span class="fu">## Comparing across packages</span></span>
+<span id="cb38-255"><a href="#cb38-255" aria-hidden="true" tabindex="-1"></a><span class="in">`lme4`</span> and <span class="in">`nlme`</span> compute likelihoods slightly differently, so small numerical differences between an <span class="in">`lmer()`</span> and an <span class="in">`lme()`</span> fit of the same model are expected and do not indicate an error.</span>
+<span id="cb38-256"><a href="#cb38-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-257"><a href="#cb38-257" aria-hidden="true" tabindex="-1"></a>Also note that loading <span class="in">`nlme`</span> after <span class="in">`lme4`</span> masks a few function names in both directions. If something misbehaves after this point, restart R and load only what that section needs.</span>
+<span id="cb38-258"><a href="#cb38-258" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

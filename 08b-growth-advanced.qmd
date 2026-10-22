@@ -108,7 +108,7 @@ Building the polynomial terms from `year0` rather than `year` matters. Squaring 
 ### Now, run a GROWTH null model for math scores (with year included)
 
 ```{r}
-model.null.growth <- lmer(math ~ year0 + (1|childid), data = egmerged.clean)
+model.null.growth <- lmer(math ~ year0 + (1|childid), REML = FALSE, data = egmerged.clean)
 
 summary(model.null.growth)
 ```
@@ -123,7 +123,7 @@ null.growth.icc
 ### Add nonlinear growth terms (square)
 
 ```{r}
-model.square <- lmer(math ~ year0 + year_sq + (1|childid), data = egmerged.clean)
+model.square <- lmer(math ~ year0 + year_sq + (1|childid), REML = FALSE, data = egmerged.clean)
 
 summary(model.square)
 ```
@@ -135,7 +135,7 @@ Be careful with the language here. Deceleration does *not* mean scores decline. 
 ### Add nonlinear growth terms (cubic)
 
 ```{r}
-model.cube <- lmer(math ~ year0 + year_cube + (1|childid), data = egmerged.clean)
+model.cube <- lmer(math ~ year0 + year_cube + (1|childid), REML = FALSE, data = egmerged.clean)
 
 summary(model.cube)
 ```
@@ -150,18 +150,11 @@ summary(model.both)
 
 A cubic term allows one more change of direction: growth that decelerates and then picks back up, or the reverse. Each additional polynomial term buys flexibility and costs a degree of freedom, and beyond cubic the terms rarely correspond to anything you can describe substantively.
 
-### Should we keep that cubic term? Use `anova` to test
+### Which of these models fits our data the best? Use `anova` to test
 
 ```{r}
-anova(model.square, model.both)
+anova(model.null.growth, model.square, model.cube, model.both)
 ```
-
-::: {.callout-warning}
-## Estimator matters for this comparison
-`anova()` on `lmer` objects compares models by likelihood ratio test, and that comparison is only valid when both models were fit with maximum likelihood, since they differ in their fixed effects.
-
-`model.both` was fit with `REML = FALSE`, but `model.square` above was not, so it used the REML default. R handles this by silently refitting both with ML before comparing, and it will usually print a message saying so. The result is correct, but it is better to set `REML = FALSE` on every model you intend to compare so that nothing happens behind your back.
-:::
 
 ### Same thing, PLUS adding a random slope for year0
 

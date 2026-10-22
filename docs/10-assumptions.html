@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.19">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
 <title>12&nbsp; Checking Assumptions for MLMs – Applied Multilevel Modeling in R</title>
@@ -10,10 +10,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -73,10 +76,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0f3a71d5963b834a2d5774f6f36c66af.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-a09481bce8a2314b82ccc09e3e79ae8c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -891,7 +894,7 @@ Figure&nbsp;12.4: Cook’s distance by fitted value, labelled by state.
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/kollerma/robustlmm">robustlmm</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">model.robust</span> <span class="op">&lt;-</span> <span class="fu">rlmer</span><span class="op">(</span><span class="va">unemp</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_sq</span> <span class="op">+</span> <span class="va">year_cube</span> <span class="op">+</span> <span class="va">gsp</span> <span class="op">+</span> <span class="va">private</span> <span class="op">+</span> <span class="va">pub_cap_1000</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">state</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">prod.clean</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="va">model.robust</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/robustlmm/man/rlmer.html">rlmer</a></span><span class="op">(</span><span class="va">unemp</span> <span class="op">~</span> <span class="va">year0</span> <span class="op">+</span> <span class="va">year_sq</span> <span class="op">+</span> <span class="va">year_cube</span> <span class="op">+</span> <span class="va">gsp</span> <span class="op">+</span> <span class="va">private</span> <span class="op">+</span> <span class="va">pub_cap_1000</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">state</span><span class="op">)</span>, REML <span class="op">=</span> <span class="cn">FALSE</span>, data <span class="op">=</span> <span class="va">prod.clean</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Some predictor variables are on very different scales: consider rescaling. 
 You may also use (g)lmerControl(autoscale = TRUE) to improve numerical stability.</code></pre>
@@ -951,7 +954,7 @@ Rho functions used for fitting:
     vcp: smoothed Huber, Proposal 2 (k = 1.345, s = 10) </code></pre>
 </div>
 </div>
-<p><code>rlmer()</code> from <code>robustlmm</code> fits the same model but downweights observations with large residuals rather than letting them exert full influence. If the estimates barely move relative to <code>model.5</code>, outliers were not driving your results.</p>
+<p><code><a href="https://rdrr.io/pkg/robustlmm/man/rlmer.html">rlmer()</a></code> from <code>robustlmm</code> fits the same model but downweights observations with large residuals rather than letting them exert full influence. If the estimates barely move relative to <code>model.5</code>, outliers were not driving your results.</p>
 <p>This model can take a while to fit, since it works iteratively.</p>
 </section><section id="step-5-re-run-model-with-outliers-removed-cooks-distance-.10" class="level2" data-number="12.10"><h2 data-number="12.10" class="anchored" data-anchor-id="step-5-re-run-model-with-outliers-removed-cooks-distance-.10">
 <span class="header-section-number">12.10</span> Step 5: re-run model with outliers removed (Cook’s distance &gt; .10)</h2>
@@ -1265,16 +1268,16 @@ You may also use (g)lmerControl(autoscale = TRUE) to improve numerical stability
     }
     function toggleCodeHandler(show) {
       return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
           if (show) {
             details.open = true;
           } else {
             details.removeAttribute("open");
           }
         }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
         const fromCls = show ? "hidden" : "unhidden";
         const toCls = show ? "unhidden" : "hidden";
         for (let i=0; i<cellCodeDivs.length; i++) {

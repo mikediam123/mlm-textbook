@@ -259,11 +259,11 @@ This asks whether the association between household mold and asthma differs from
 Here, we see that both AIC and BIC went up, which is not a good sign. We probably don't need the random slopes.
 
 ```{r}
-model.6.aic <- 3045.1
-model.6.bic <- 3081.8
+model.6.aic <- 3079.8
+model.6.bic <- 3116.5
 
-model.5.aic <- 3042.7
-model.5.bic <- 3073.2
+model.5.aic <- 3077.4
+model.5.bic <- 3107.9
 
 model.6.aic - model.5.aic
 

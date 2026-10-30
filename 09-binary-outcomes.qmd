@@ -254,7 +254,7 @@ summary(model.6)
 
 This asks whether the association between household mold and asthma differs from state to state, which is plausible: climate, housing stock, and building codes all vary.
 
-### Should we keep that random slope? `rand` won't work with GLMMs, but we can compare AIC and BIC
+### Should we keep that random slope? `ranova` won't work with GLMMs, but we can compare AIC and BIC
 
 Here, we see that both AIC and BIC went up, which is not a good sign. We probably don't need the random slopes.
 

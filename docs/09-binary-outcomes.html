@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.19">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="An online companion to Dr.&nbsp;Broda’s Multilevel Modeling course (EDUS 664) at Virginia Commonwealth University. Each chapter works through the R code for one course module.">
 <title>11&nbsp; Binary and Generalized Linear Mixed Models – Applied Multilevel Modeling in R</title>
@@ -10,10 +10,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -73,10 +76,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0f3a71d5963b834a2d5774f6f36c66af.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-a09481bce8a2314b82ccc09e3e79ae8c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -353,7 +356,7 @@ window.Quarto = {
   <li><a href="#now-add-a-third-l1-predictor-physactiv" id="toc-now-add-a-third-l1-predictor-physactiv" class="nav-link" data-scroll-target="#now-add-a-third-l1-predictor-physactiv"><span class="header-section-number">11.3.4</span> Now add a third L1 predictor, <code>physactiv</code></a></li>
   <li><a href="#how-about-a-mold-by-smoke_house-interaction" id="toc-how-about-a-mold-by-smoke_house-interaction" class="nav-link" data-scroll-target="#how-about-a-mold-by-smoke_house-interaction"><span class="header-section-number">11.3.5</span> How about a <code>mold</code> by <code>smoke_house</code> interaction?</a></li>
   <li><a href="#same-thing-plus-adding-a-random-slope-for-mold" id="toc-same-thing-plus-adding-a-random-slope-for-mold" class="nav-link" data-scroll-target="#same-thing-plus-adding-a-random-slope-for-mold"><span class="header-section-number">11.3.6</span> Same thing, PLUS adding a random slope for <code>mold</code></a></li>
-  <li><a href="#should-we-keep-that-random-slope-rand-wont-work-with-glmms-but-we-can-compare-aic-and-bic" id="toc-should-we-keep-that-random-slope-rand-wont-work-with-glmms-but-we-can-compare-aic-and-bic" class="nav-link" data-scroll-target="#should-we-keep-that-random-slope-rand-wont-work-with-glmms-but-we-can-compare-aic-and-bic"><span class="header-section-number">11.3.7</span> Should we keep that random slope? <code>rand</code> won’t work with GLMMs, but we can compare AIC and BIC</a></li>
+  <li><a href="#should-we-keep-that-random-slope-ranova-wont-work-with-glmms-but-we-can-compare-aic-and-bic" id="toc-should-we-keep-that-random-slope-ranova-wont-work-with-glmms-but-we-can-compare-aic-and-bic" class="nav-link" data-scroll-target="#should-we-keep-that-random-slope-ranova-wont-work-with-glmms-but-we-can-compare-aic-and-bic"><span class="header-section-number">11.3.7</span> Should we keep that random slope? <code>ranova</code> won’t work with GLMMs, but we can compare AIC and BIC</a></li>
   </ul>
 </li>
   <li><a href="#using-modelsummary-and-broom.mixed-to-organize-your-results" id="toc-using-modelsummary-and-broom.mixed-to-organize-your-results" class="nav-link" data-scroll-target="#using-modelsummary-and-broom.mixed-to-organize-your-results"><span class="header-section-number">11.4</span> Using <code>modelsummary</code> and <code>broom.mixed</code> to organize your results</a></li>
@@ -405,9 +408,9 @@ window.Quarto = {
 <section id="load-in-the-data" class="level3" data-number="11.2.1"><h3 data-number="11.2.1" class="anchored" data-anchor-id="load-in-the-data">
 <span class="header-section-number">11.2.1</span> Load in the data</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nsch</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"nsch_2018_topical.dta"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nsch</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/haven/man/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"nsch_2018_topical.dta"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">nsch</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/pillar/man/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">nsch</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 30,530
 Columns: 442
@@ -860,17 +863,17 @@ $ fwc                &lt;dbl+lbl&gt;  6132.6177, 12203.8996,  3124.5496,  2935.6
 <span class="header-section-number">11.2.2</span> The <code>select</code> function is really useful, especially with really big datasets</h3>
 <p>First, we narrow down the data by selecting only the variables we need. Then, we use the <code>as_factor</code> function to convert all variables to factors ahead of time.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nsch.2</span> <span class="op">&lt;-</span> <span class="va">nsch</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">.</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nsch.2</span> <span class="op">&lt;-</span> <span class="va">nsch</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html">select</a></span><span class="op">(</span><span class="va">.</span>,</span>
 <span>         <span class="va">fipsst</span>,</span>
 <span>         <span class="va">hhid</span>,</span>
 <span>         <span class="va">k2q40a</span>,</span>
 <span>         <span class="va">k9q41</span>,</span>
 <span>         <span class="va">mold</span>,</span>
-<span>         <span class="va">physactiv</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>         <span class="va">physactiv</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/forcats/man/as_factor.html">as_factor</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">nsch.2</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/pillar/man/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">nsch.2</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 30,530
 Columns: 6
@@ -882,7 +885,7 @@ $ mold      &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, No, No, 
 $ physactiv &lt;fct&gt; Not in universe, 1 - 3 days, 4 - 6 days, Not in universe, 4 …</code></pre>
 </div>
 </div>
-<p>Two things worth noting. Survey variables often carry uninformative names like <code>k2q40a</code>, which is why the codebook is essential and why we rename them shortly. And applying <code><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor()</a></code> to the whole data frame at once converts every labelled variable using the labels that came with the file, which saves doing it one at a time.</p>
+<p>Two things worth noting. Survey variables often carry uninformative names like <code>k2q40a</code>, which is why the codebook is essential and why we rename them shortly. And applying <code><a href="https://rdrr.io/pkg/forcats/man/as_factor.html">as_factor()</a></code> to the whole data frame at once converts every labelled variable using the labels that came with the file, which saves doing it one at a time.</p>
 <p><code>fipsst</code> is the state FIPS code, and it is our clustering variable. <code>hhid</code> identifies households.</p>
 </section><section id="the-table-function-is-a-great-way-to-figure-out-how-variables-are-labelled" class="level3" data-number="11.2.3"><h3 data-number="11.2.3" class="anchored" data-anchor-id="the-table-function-is-a-great-way-to-figure-out-how-variables-are-labelled">
 <span class="header-section-number">11.2.3</span> The <code>table</code> function is a great way to figure out how variables are labelled</h3>
@@ -934,26 +937,26 @@ $ physactiv &lt;fct&gt; Not in universe, 1 - 3 days, 4 - 6 days, Not in universe
 </section><section id="now-we-can-use-filter-to-only-keep-observations-that-have-valid-categories" class="level3" data-number="11.2.4"><h3 data-number="11.2.4" class="anchored" data-anchor-id="now-we-can-use-filter-to-only-keep-observations-that-have-valid-categories">
 <span class="header-section-number">11.2.4</span> Now, we can use <code>filter</code> to only keep observations that have valid categories</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nsch.2.clean</span> <span class="op">&lt;-</span> <span class="va">nsch.2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">k2q40a</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span></span>
-<span>                  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No valid response"</span>, <span class="st">"Suppressed for confidentiality"</span>, <span class="st">"Not in universe"</span>, <span class="st">"Logical skip"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">k9q41</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span></span>
-<span>                  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No valid response"</span>, <span class="st">"Suppressed for confidentiality"</span>, <span class="st">"Not in universe"</span>, <span class="st">"Logical skip"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">physactiv</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span></span>
-<span>                  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No valid response"</span>, <span class="st">"Suppressed for confidentiality"</span>, <span class="st">"Not in universe"</span>, <span class="st">"Logical skip"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">mold</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span></span>
-<span>                  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No valid response"</span>, <span class="st">"Suppressed for confidentiality"</span>, <span class="st">"Not in universe"</span>, <span class="st">"Logical skip"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="va">.</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nsch.2.clean</span> <span class="op">&lt;-</span> <span class="va">nsch.2</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">k2q40a</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span></span>
+<span>                  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No valid response"</span>, <span class="st">"Suppressed for confidentiality"</span>, <span class="st">"Not in universe"</span>, <span class="st">"Logical skip"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">k9q41</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span></span>
+<span>                  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No valid response"</span>, <span class="st">"Suppressed for confidentiality"</span>, <span class="st">"Not in universe"</span>, <span class="st">"Logical skip"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">physactiv</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span></span>
+<span>                  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No valid response"</span>, <span class="st">"Suppressed for confidentiality"</span>, <span class="st">"Not in universe"</span>, <span class="st">"Logical skip"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">mold</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span></span>
+<span>                  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No valid response"</span>, <span class="st">"Suppressed for confidentiality"</span>, <span class="st">"Not in universe"</span>, <span class="st">"Logical skip"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/rename.html">rename</a></span><span class="op">(</span><span class="va">.</span>,</span>
 <span>        asthma <span class="op">=</span> <span class="va">k2q40a</span>,</span>
-<span>        smoke_house <span class="op">=</span> <span class="va">k9q41</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
+<span>        smoke_house <span class="op">=</span> <span class="va">k9q41</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span><span class="op">(</span><span class="va">.</span>,</span>
 <span>         asthma.num <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">asthma</span><span class="op">)</span>,</span>
-<span>         asthma.recode <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html">case_when</a></span><span class="op">(</span></span>
+<span>         asthma.recode <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/case-and-replace-when.html">case_when</a></span><span class="op">(</span></span>
 <span>           <span class="va">asthma.num</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">~</span> <span class="fl">0</span>,</span>
 <span>           <span class="va">asthma.num</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">~</span> <span class="fl">1</span></span>
 <span>         <span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">nsch.2.clean</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/pillar/man/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">nsch.2.clean</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 3,346
 Columns: 8
@@ -967,8 +970,8 @@ $ asthma.num    &lt;dbl&gt; 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2
 $ asthma.recode &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,…</code></pre>
 </div>
 </div>
-<p>Three operations chained together. The <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> calls drop rows where any of our four variables carries a non-response code. The <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> gives the two cryptic variables readable names. The <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> builds the outcome.</p>
-<p>That last step deserves unpacking, because it is doing something specific. <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html">glmer()</a></code> needs a 0/1 numeric outcome, but our factor has levels in the order “Yes”, “No”, which <code><a href="https://rdrr.io/r/base/numeric.html">as.numeric()</a></code> turns into 1 and 2. So <code><a href="https://dplyr.tidyverse.org/reference/case-and-replace-when.html">case_when()</a></code> maps 1 to 1 and 2 to 0, giving us the 0/1 coding the model requires with 1 meaning the child has asthma.</p>
+<p>Three operations chained together. The <code><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter()</a></code> calls drop rows where any of our four variables carries a non-response code. The <code><a href="https://rdrr.io/pkg/dplyr/man/rename.html">rename()</a></code> gives the two cryptic variables readable names. The <code><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate()</a></code> builds the outcome.</p>
+<p>That last step deserves unpacking, because it is doing something specific. <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html">glmer()</a></code> needs a 0/1 numeric outcome, but our factor has levels in the order “Yes”, “No”, which <code><a href="https://rdrr.io/r/base/numeric.html">as.numeric()</a></code> turns into 1 and 2. So <code><a href="https://rdrr.io/pkg/dplyr/man/case-and-replace-when.html">case_when()</a></code> maps 1 to 1 and 2 to 0, giving us the 0/1 coding the model requires with 1 meaning the child has asthma.</p>
 <p>Always verify a recode rather than assuming it:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">nsch.2.clean</span><span class="op">$</span><span class="va">asthma</span>, <span class="va">nsch.2.clean</span><span class="op">$</span><span class="va">asthma.recode</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1390,8 +1393,8 @@ boundary (singular) fit: see help('isSingular')</code></pre>
 </div>
 </div>
 <p>This asks whether the association between household mold and asthma differs from state to state, which is plausible: climate, housing stock, and building codes all vary.</p>
-</section><section id="should-we-keep-that-random-slope-rand-wont-work-with-glmms-but-we-can-compare-aic-and-bic" class="level3" data-number="11.3.7"><h3 data-number="11.3.7" class="anchored" data-anchor-id="should-we-keep-that-random-slope-rand-wont-work-with-glmms-but-we-can-compare-aic-and-bic">
-<span class="header-section-number">11.3.7</span> Should we keep that random slope? <code>rand</code> won’t work with GLMMs, but we can compare AIC and BIC</h3>
+</section><section id="should-we-keep-that-random-slope-ranova-wont-work-with-glmms-but-we-can-compare-aic-and-bic" class="level3" data-number="11.3.7"><h3 data-number="11.3.7" class="anchored" data-anchor-id="should-we-keep-that-random-slope-ranova-wont-work-with-glmms-but-we-can-compare-aic-and-bic">
+<span class="header-section-number">11.3.7</span> Should we keep that random slope? <code>ranova</code> won’t work with GLMMs, but we can compare AIC and BIC</h3>
 <p>Here, we see that both AIC and BIC went up, which is not a good sign. We probably don’t need the random slopes.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.6.aic</span> <span class="op">&lt;-</span> <span class="fl">3045.1</span></span>
@@ -1434,7 +1437,7 @@ boundary (singular) fit: see help('isSingular')</code></pre>
 <span></span>
 <span><span class="va">models1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">model.null</span>, <span class="va">model.2</span>, <span class="va">model.3</span>, <span class="va">model.4</span>, <span class="va">model.5</span>, <span class="va">model.6</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://modelsummary.com/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models1</span>, output <span class="op">=</span> <span class="st">"markdown"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/modelsummary/man/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models1</span>, output <span class="op">=</span> <span class="st">"markdown"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -1785,16 +1788,16 @@ boundary (singular) fit: see help('isSingular')</code></pre>
     }
     function toggleCodeHandler(show) {
       return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
           if (show) {
             details.open = true;
           } else {
             details.removeAttribute("open");
           }
         }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
         const fromCls = show ? "hidden" : "unhidden";
         const toCls = show ? "unhidden" : "hidden";
         for (let i=0; i<cellCodeDivs.length; i++) {
@@ -2410,7 +2413,7 @@ boundary (singular) fit: see help('isSingular')</code></pre>
 <span id="cb54-294"><a href="#cb54-294" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb54-295"><a href="#cb54-295" aria-hidden="true" tabindex="-1"></a>This asks whether the association between household mold and asthma differs from state to state, which is plausible: climate, housing stock, and building codes all vary.</span>
 <span id="cb54-296"><a href="#cb54-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-297"><a href="#cb54-297" aria-hidden="true" tabindex="-1"></a><span class="fu">### Should we keep that random slope? `rand` won't work with GLMMs, but we can compare AIC and BIC</span></span>
+<span id="cb54-297"><a href="#cb54-297" aria-hidden="true" tabindex="-1"></a><span class="fu">### Should we keep that random slope? `ranova` won't work with GLMMs, but we can compare AIC and BIC</span></span>
 <span id="cb54-298"><a href="#cb54-298" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb54-299"><a href="#cb54-299" aria-hidden="true" tabindex="-1"></a>Here, we see that both AIC and BIC went up, which is not a good sign. We probably don't need the random slopes.</span>
 <span id="cb54-300"><a href="#cb54-300" aria-hidden="true" tabindex="-1"></a></span>

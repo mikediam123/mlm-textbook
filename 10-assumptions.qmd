@@ -1,13 +1,8 @@
 # Checking Assumptions for MLMs
 
-**Data for this chapter:** `productivity.dta`
+**Data for this chapter:** `projectSTAR.dta`
 
-::: {.callout-note}
-## Data file needed
-Copy `productivity.dta` into this project folder before rendering.
-:::
-
-This week, we will use the `productivity` dataset from Stata, developed by Dr. Alicia Munnell and published by the Federal Reserve Bank of Boston (1990). It tracks US states over time, so observations are years nested within states.
+This week, we return to the kindergarten data from Project STAR, the Tennessee Class Size Experiment, which you first met in Chapter 7. Using a dataset you already know means the only new thing this week is the diagnostics.
 
 Diagnostics are not a pass-fail checklist. They are evidence you weigh, and the useful question is never "was an assumption violated" but "is this violation bad enough to change what I conclude." This chapter runs the standard checks and then does the thing that actually settles the question: refits the model under different assumptions and sees whether the answer moves.
 
@@ -19,110 +14,84 @@ Diagnostics are not a pass-fail checklist. They are evidence you weigh, and the 
 
 suppressPackageStartupMessages(library(tidyverse))
 library(lme4)
-library(Hmisc)
+suppressPackageStartupMessages(library(lmerTest))
 ```
+
+`lmerTest` adds *p*-values to `summary()` output. We need them here, because the end of this chapter asks whether a result keeps its significance when the model is refit under different assumptions.
 
 ## Part 1: loading in the data, and then recoding variables
 
 ### Load in the data
 
 ```{r}
-productivity <- haven::read_dta("productivity.dta")
-
-glimpse(productivity)
+projectSTAR <- haven::read_dta("projectSTAR.dta")
 ```
 
-### The `describe` function from `Hmisc` is a nice codebook
+You saw the full variable list in Chapter 7, so we go straight to cleaning.
+
+### Create a clean dataset ready for modeling
 
 ```{r}
-Hmisc::describe(productivity)
-```
-
-## A little quick cleaning
-
-Convert region to a factor variable, rescale public capital stock, "zero out" year, and create nonlinear terms.
-
-```{r}
-prod.clean <- productivity %>%
+star.clean <- projectSTAR %>%
   mutate(.,
-         region.fac = as_factor(region),
-         year0 = year - 1970,
-         year_sq = year0^2,
-         year_cube = year0^3,
-         pub_cap_1000 = public/1000)
+         classid = gktchid,
+         read = gktreadss,
+         classtype = relevel(as_factor(gkclasstype), ref = "REGULAR CLASS"),
+         frl = if_else(gkfreelunch == 1, 1, 0),
+         years_exp = gktyears) %>%
+  select(., classid, read, classtype, frl, years_exp) %>%
+  drop_na()
 
-glimpse(prod.clean)
+glimpse(star.clean)
 ```
 
-Two of these deserve a note.
+Three of these deserve a note.
 
-Subtracting 1970 from `year` puts the intercept at the start of the observation window rather than at year zero of the common era, which is both meaningless and thousands of units away from any data we have. Polynomial terms built from the recentered variable are also far less collinear with each other than they would be otherwise.
+`classtype` has three levels: small class, regular class, and regular class with a full-time aide. By default R would use the first level, small class, as the reference category. `relevel()` makes regular class the reference instead, so the coefficient for small class *is* the class-size effect: how much higher small-class kindergartners scored than comparable children in regular classes.
 
-Dividing public capital by 1,000 is rescaling, and it changes nothing about the model's fit. What it changes is readability: a coefficient expressed per thousand dollars is easier to report than one carrying several leading zeros. Rescaling a predictor is always safe. Rescaling only *some* predictors and forgetting which is where people get into trouble, so a name like `pub_cap_1000` that records the units is worth the extra characters.
+`gkfreelunch` is coded 1 for free lunch and 2 for non-free lunch, the 1/2 coding Chapter 7 warned about. `if_else()` turns it into a 0/1 indicator where 1 means the child received free lunch, so its coefficient reads directly as the free-lunch gap.
 
-## Part 2: find your "final" or preferred model
-
-### Start with a null growth model since this is longitudinal data
+`drop_na()` keeps only children with complete data on every variable in the model. `lmer()` would drop incomplete rows on its own, but doing it here means `star.clean` has exactly the rows the model uses. That matters later, when we remove whole classrooms and refit.
 
 ```{r}
-model.null.growth <- lmer(unemp ~ year0 + (1|state), REML = FALSE, data = prod.clean)
-
-summary(model.null.growth)
+nrow(star.clean); n_distinct(star.clean$classid)
 ```
 
-The outcome is state unemployment rate, and the clustering variable is state. This is the same structure as the growth models from Module 8, with states in place of children and years in place of grades.
+That leaves 5,751 kindergartners in 324 classrooms.
 
-### Add in quadratic effects
+## Part 2: the model under examination
+
+Reading scores are the outcome, as they were in Chapter 7. The predictors are class type and teacher experience at the classroom level, and free lunch status at the student level.
 
 ```{r}
-model.2 <- lmer(unemp ~ year0 + year_sq + (1|state), REML = FALSE, data = prod.clean)
+model.read <- lmer(read ~ classtype + frl + years_exp + (1|classid), REML = FALSE, data = star.clean)
 
-summary(model.2)
+summary(model.read)
 ```
 
-### Add in cubic effects
+Small-class kindergartners scored about 5.8 points higher than children in regular classes (*p* = .010). Classes with an aide were no different from regular classes, children receiving free lunch scored about 15.7 points lower, and each additional year of teacher experience was worth about half a point.
 
-```{r}
-model.3 <- lmer(unemp ~ year0 + year_cube + (1|state), REML = FALSE, data = prod.clean)
-
-summary(model.3)
-```
-
-### Both quadratic and cubic effects
-
-```{r}
-model.4 <- lmer(unemp ~ year0 + year_sq + year_cube + (1|state), REML = FALSE, data = prod.clean)
-
-summary(model.4)
-```
-
-Unemployment over the 1970s and 1980s went through recessions and recoveries, so a straight line is unlikely to describe it well. The polynomial terms give the trajectory room to bend more than once.
-
-### Now for some more predictors
-
-```{r}
-model.5 <- lmer(unemp ~ year0 + year_sq + year_cube + gsp + private + pub_cap_1000 + (1|state), REML = FALSE, data = prod.clean)
-
-summary(model.5)
-```
+::: {.callout-note}
+## Where did the schools go?
+Chapter 7 fit these data as a three-level model, with classrooms nested in schools. Here we use two levels, children within classrooms, so the diagnostics have one clustering variable to work with. Everything in this chapter extends to three levels, with one more set of random effects to check.
+:::
 
 This is our "final" model, and everything that follows examines it rather than building further.
 
 ## Use the `augment` function from the `broom.mixed` package
 
-This gets predictions, residuals, Cook's distances, and more.
+This gets predictions, residuals, and more.
 
 ```{r}
 #| message: false
 
 library(broom.mixed)
 
-diagnostics <- augment(model.5)
+diagnostics <- augment(model.read) %>%
+  mutate(.std_resid = as.numeric(scale(.resid)))
 ```
 
-`augment()` returns the original data plus a set of new columns whose names begin with a dot: `.fitted`, `.resid`, `.cooksd`, and others. Everything in this chapter works from that data frame.
-
-One thing worth knowing: `diagnostics` contains one row per observation *the model actually used*. If any rows were dropped for missing data, this frame is smaller than `prod.clean`. That is a feature, since it means residuals and fitted values always line up, but it does mean you should use `diagnostics` rather than the original data for anything downstream.
+`augment()` returns the data the model used plus a set of new columns whose names begin with a dot: `.fitted`, `.resid`, and others. The `mutate()` line adds one more, `.std_resid`, which is the residual standardized to a mean of zero and a standard deviation of one. Raw residuals are in the units of the outcome (reading scale score points here), so a residual of 2.5 means something different in every dataset. A standardized residual of 2.5 means the same thing everywhere: two and a half standard deviations from where the model expected.
 
 ## Step 1: assess normality of residuals
 
@@ -130,144 +99,238 @@ One thing worth knowing: `diagnostics` contains one row per observation *the mod
 
 ```{r}
 #| label: fig-resid-hist
-#| fig-cap: "Histogram of residuals with reference lines at ±2.5."
+#| fig-cap: "Histogram of standardized residuals with reference lines at ±2.5."
 
-ggplot(data = diagnostics, mapping = aes(x = .resid)) +
+ggplot(data = diagnostics, mapping = aes(x = .std_resid)) +
   geom_histogram(binwidth = .25) + theme_classic() +
-  labs(title = "Histogram of Residuals for State Unemployment Model",
-                      x = "Residual Value") +
+  labs(title = "Histogram of Standardized Residuals for Kindergarten Reading Model",
+                      x = "Standardized Residual") +
   geom_vline(xintercept = c(-2.5, 2.5), linetype = "dotted")
 ```
 
-The dotted reference lines mark ±2.5, a rough boundary beyond which residuals are worth a closer look. What you are checking for is severe skew, heavy tails, or obvious multimodality, not perfect symmetry.
+The dotted reference lines mark ±2.5 standard deviations, a rough boundary beyond which residuals are worth a closer look. What you are checking for is severe skew, heavy tails, or obvious multimodality, not perfect symmetry.
+
+This histogram is clearly right-skewed. The left tail stops at about −4, while the right tail stretches past +7. A small number of children read far above what the model predicts, and nobody reads correspondingly far below it.
+
+```{r}
+sum(abs(diagnostics$.std_resid) > 2.5)
+max(diagnostics$read)
+diagnostics %>% arrange(desc(.std_resid)) %>% select(read, .fitted, .std_resid) %>% head(5)
+```
+
+137 children, about 2.4%, fall outside ±2.5, against a little over 1% expected under normality, and nearly all of them are in the right tail. The largest residuals belong to children who scored 627, the highest score in the data. These are not data errors. They are kindergartners who were already strong readers, and no model built on class type, free lunch, and teacher experience is going to predict them.
 
 ### Statistically, with the Shapiro-Wilk test
 
+`shapiro.test()` accepts between 3 and 5,000 observations and errors outside that range. We have 5,751, so we test a random sample of 5,000. `set.seed()` makes the sample, and therefore the result, reproducible.
+
 ```{r}
-shapiro.test(diagnostics$.resid)
-```
-
-Expect this to be significant, and do not make much of it. Shapiro-Wilk detects arbitrarily small departures from normality once the sample is reasonably large, and with several hundred observations it will reject for essentially any real dataset.
-
-The histogram carries more information than the test. It is also worth remembering what this assumption buys: normality of residuals matters mainly for small-sample inference, and at these sample sizes the central limit theorem does most of the work regardless.
-
-::: {.callout-note}
-## A size limit on this test
-`shapiro.test()` accepts between 3 and 5,000 observations and errors outside that range. If you apply it to a larger model, sample first:
-
-```r
 set.seed(664)
 shapiro.test(sample(diagnostics$.resid, 5000))
 ```
-:::
 
-## Step 2: use a residuals vs. fitted (RVF) plot to assess homoskedasticity of errors
+Expect this to be significant, and do not make much of it. Shapiro-Wilk detects arbitrarily small departures from normality once the sample is reasonably large, and with thousands of observations it will reject for essentially any real dataset. Here the histogram already told us the skew is real, so the test adds nothing.
+
+The histogram carries more information than the test. It is also worth remembering what this assumption buys: normality of residuals matters mainly for small-sample inference, and at these sample sizes the central limit theorem does most of the work regardless.
+
+## Step 2: use a residuals vs. fitted (RVF) plot to assess linearity and homoskedasticity
 
 ### Basic RVF plot, without groups
 
 ```{r}
 #| label: fig-rvf
 #| fig-cap: "Residuals versus fitted values."
+#| message: false
 
 ggplot(data = diagnostics, mapping = aes(x = .fitted, y = .resid)) +
-  geom_point() + labs(title = "RVF Plot for State Unemployment Model",
-                      x = "Predicted Value, % Unemployment",
+  geom_point(alpha = .3) + geom_smooth() +
+  labs(title = "RVF Plot for Kindergarten Reading Model",
+                      x = "Predicted Reading Score",
                       y = "Residual Value") + theme_classic()
 ```
 
-Read this plot for shape rather than for scatter. A fan or funnel means the residual variance depends on the fitted value, which is heteroskedasticity. A curve means the relationship is not linear in the predictors as specified. An even, shapeless cloud is what you want.
+Read this plot for shape rather than for scatter. A fan or funnel means the residual variance depends on the fitted value, which is heteroskedasticity. A curve in the smoothed line means the relationship is not linear in the predictors as specified. An even, shapeless cloud around a flat line is what you want.
 
-Be specific in your write-up about *where* in the fitted range any problem appears. A violation confined to a sparse tail is a different matter from one across the whole range.
-
-### Same thing, but with added color by year0
+Be specific in your write-up about *where* in the fitted range any problem appears. A violation confined to a sparse tail is a different matter from one across the whole range. Here the cloud widens steadily from left to right, and the smoothed line drifts upward at the high end. Splitting the fitted values into quarters makes that concrete:
 
 ```{r}
-#| label: fig-rvf-year
-#| fig-cap: "The same plot, colored by year."
-
-ggplot(data = diagnostics, mapping = aes(x = .fitted, y = .resid, color = year0)) +
-  geom_point() + labs(title = "RVF Plot for State Unemployment Model, by Year",
-                      x = "Predicted Value, % Unemployment",
-                      y = "Residual Value") + theme_classic()
+diagnostics %>%
+  mutate(fitted_quarter = ntile(.fitted, 4)) %>%
+  group_by(fitted_quarter) %>%
+  summarise(n = n(), mean_resid = mean(.resid), resid_sd = sd(.resid))
 ```
 
-Adding color turns a general diagnostic into a specific one. If residuals cluster by year, with all the dark points high and the light ones low, the model is systematically missing something about time. That is far more actionable than knowing the residuals are merely uneven, and it is the kind of pattern longitudinal data produces routinely.
+The residual standard deviation nearly doubles, from about 18 points in the lowest quarter of predicted scores to about 32 in the highest. That is a real funnel, and it spans the whole fitted range rather than a sparse corner of it. The top quarter's average residual is also about +3, which is the right skew from Step 1 showing up where predicted scores are highest. Heteroskedasticity does not bias the coefficients, but it does make the model-based standard errors untrustworthy, which is exactly what Step 4 addresses.
 
-## Step 3: use Cook's distance to identify outliers
+### Same thing, but with added color by free lunch status
+
+```{r}
+#| label: fig-rvf-frl
+#| fig-cap: "The same plot, colored by free lunch status."
+
+ggplot(data = diagnostics, mapping = aes(x = .fitted, y = .resid, color = factor(frl))) +
+  geom_point(alpha = .3) +
+  labs(title = "RVF Plot for Kindergarten Reading Model, by Free Lunch Status",
+                      x = "Predicted Reading Score",
+                      y = "Residual Value",
+                      color = "Free lunch") + theme_classic()
+```
+
+Adding color turns a general diagnostic into a specific one. Children not receiving free lunch have higher predicted scores, so they sit toward the right of the plot, and they are also where most of the spread is.
+
+```{r}
+diagnostics %>%
+  group_by(frl) %>%
+  summarise(mean_fitted = mean(.fitted), resid_sd = sd(.resid))
+```
+
+The residual standard deviation is about 29 points for children not receiving free lunch and about 22 for those who are. Part of the funnel, then, is that reading skill varies more among more advantaged kindergartners. That is far more actionable than knowing the residuals are merely uneven, and it is a substantive finding in its own right.
+
+## Step 3: use Cook's distance to identify influential classrooms
+
+Cook's distance asks how much the model's coefficients would change if a piece of the data were removed. In a multilevel model, the natural piece to remove is a whole cluster. Our model estimates one intercept per classroom, and the question a skeptical reader asks is whether one or two unusual *classrooms* are steering the results, not whether one particular child is.
+
+The `influence.ME` package answers this directly. It refits the model once for every classroom, leaving that classroom out each time, and records how far the fixed effects move.
+
+```{r}
+#| message: false
+#| warning: false
+
+library(influence.ME)
+
+infl <- influence(model.read, group = "classid")
+
+class_cooks <- tibble(classid = rownames(cooks.distance(infl)),
+                      cooks_d = cooks.distance(infl)[, 1])
+```
+
+With 324 classrooms this is 324 model fits, so expect it to take a minute or so.
 
 ```{r}
 #| label: fig-cooks
-#| fig-cap: "Cook's distance by fitted value, labelled by state."
+#| fig-cap: "Cook's distance for each classroom, sorted, with the 4/J reference line."
 
-ggplot(data = diagnostics, mapping = aes(x = .fitted, y = .cooksd, label = state)) +
-  geom_point() + geom_text(nudge_x = .25) + theme_classic() +
-  labs(title = "Cook's Distance Plot for State Unemployment Model",
-                      x = "Predicted Value, % Unemployment",
-                      y = "Cook's Distance") +
-  geom_hline(yintercept = 4/816, linetype = "dotted")
+n_classes <- n_distinct(star.clean$classid)
+
+ggplot(data = class_cooks, mapping = aes(x = rank(cooks_d), y = cooks_d)) +
+  geom_point() + theme_classic() +
+  geom_hline(yintercept = 4/n_classes, linetype = "dotted") +
+  labs(title = "Cook's Distance by Classroom",
+       x = "Classrooms, sorted by Cook's distance", y = "Cook's Distance")
 ```
 
-Labelling the points is what makes this plot useful rather than decorative. An unlabelled outlier is a puzzle; a labelled one is a case you can go look at.
+The reference line is the conventional cutoff, 4/*J*, where *J* is the number of clusters: here 4/324 = .012. It is a flag, not a verdict.
 
-The reference line at 4/816 is the conventional 4/n cutoff, where 816 is the number of observations. It is a flag, not a verdict.
+```{r}
+class_cooks %>%
+  filter(cooks_d > 4/n_classes) %>%
+  arrange(desc(cooks_d))
+```
 
-When a case is flagged, look at it before doing anything. An observation with an impossible value is a data error and should be fixed or removed. An observation that is simply unusual, a state with a genuinely severe recession, is data. Deleting inconvenient observations because a statistic flagged them is not a diagnostic procedure; it is a way of guaranteeing the result you already wanted.
+Fourteen classrooms cross the line, and one is in a category of its own: classroom 24478001, with a Cook's distance of .081, more than twice the next largest. Before doing anything about it, look at it.
 
-## Step 4: re-run model with robust standard errors
+```{r}
+star.clean %>%
+  group_by(classid) %>%
+  summarise(n = n(), mean_read = mean(read), prop_frl = mean(frl),
+            years_exp = first(years_exp), classtype = first(classtype)) %>%
+  filter(classid == 24478001)
+
+star.clean %>%
+  summarise(mean_read = mean(read), prop_frl = mean(frl), mean_years_exp = mean(years_exp))
+```
+
+This is the highest-scoring classroom in the study, with an average of 494 against an overall mean of about 437. Nearly every child in it received free lunch, and its teacher had 24 years of experience, close to the maximum in the data. That combination is why it has so much influence. The model expects a classroom of mostly free-lunch children to score *below* average, so this classroom pulls hard on the free-lunch coefficient, and its very experienced teacher pulls on the experience slope as well.
+
+It is not a data error. It is a remarkable classroom, and arguably the most interesting one in the dataset.
+
+That is the general lesson. When a case is flagged, look at it before doing anything. A cluster with an impossible value is a data error and should be fixed or removed. A cluster that is simply unusual is data. Deleting inconvenient observations because a statistic flagged them is not a diagnostic procedure; it is a way of guaranteeing the result you already wanted. What we do instead, in Step 5, is refit without the flagged classrooms *as a check*, and see whether anything important changes.
+
+::: {.callout-warning}
+## Why not observation-level Cook's distance with 4/n?
+
+`augment()` also returns a `.cooksd` column, one value per child, and in ordinary regression the usual cutoff for it is 4/*n*. That cutoff does not carry over to `lmer` models. The leverage values behind `.cooksd` include each child's pull on their own classroom's random intercept, so they run far larger than in OLS, and so do the Cook's distances. Applied to this model, 4/5,751 flags almost three-quarters of all children:
+
+```{r}
+mean(diagnostics$.cooksd > 4/nrow(diagnostics))
+```
+
+A "flag" that catches most of the data has stopped flagging anything. Cluster-level Cook's distance with 4/*J* avoids the problem and asks the more useful question anyway.
+:::
+
+## Step 4: re-run the model with cluster-robust standard errors
+
+The funnel in Step 2 tells us the model-based standard errors may be too optimistic. Cluster-robust standard errors estimate the uncertainty from the data's actual spread within and between classrooms, without assuming the residual variance is constant. The `clubSandwich` package computes them, and its CR2 version includes a small-sample correction.
 
 ```{r}
 #| message: false
 
-library(robustlmm)
+library(clubSandwich)
 
-model.robust <- rlmer(unemp ~ year0 + year_sq + year_cube + gsp + private + pub_cap_1000 + (1|state), REML = FALSE, data = prod.clean)
-
-summary(model.robust)
+coef_test(model.read, vcov = "CR2")
 ```
 
-`rlmer()` from `robustlmm` fits the same model but downweights observations with large residuals rather than letting them exert full influence. If the estimates barely move relative to `model.5`, outliers were not driving your results.
+The coefficients are identical to `model.read`; only the standard errors, degrees of freedom, and *p*-values change. Compare them with the `summary(model.read)` output above. Here the changes are small. The small-class standard error goes from 2.24 to 2.31, and its *p*-value from .010 to .013. Every coefficient that was significant under the model-based standard errors is still significant. With 324 classrooms, the model-based standard errors were already close to right, despite the funnel.
 
-This model can take a while to fit, since it works iteratively.
-
-## Step 5: re-run model with outliers removed (Cook's distance > .10)
+## Step 5: re-run the model with the influential classrooms removed
 
 ```{r}
-prod.trimmed <- diagnostics %>%
-  filter(., .cooksd < .10)
+flagged_classes <- class_cooks %>%
+  filter(cooks_d > 4/n_classes) %>%
+  pull(classid)
 
-model.trimmed <- lmer(unemp ~ year0 + year_sq + year_cube + gsp + private + pub_cap_1000 + (1|state), REML = FALSE, data = prod.trimmed)
+star.trimmed <- star.clean %>%
+  filter(!classid %in% flagged_classes)
+
+model.trimmed <- lmer(read ~ classtype + frl + years_exp + (1|classid), REML = FALSE, data = star.trimmed)
 
 summary(model.trimmed)
 ```
 
-Note that the filtering happens on `diagnostics`, not on `prod.clean`. That works because `augment()` kept all the original columns alongside the new diagnostic ones, so the trimmed frame still has everything the model formula needs.
+Because we are removing whole classrooms, the filtering happens on `star.clean`.
 
 ```{r}
-nrow(diagnostics); nrow(prod.trimmed)
+nrow(star.clean); nrow(star.trimmed)
+n_distinct(star.clean$classid); n_distinct(star.trimmed$classid)
 ```
 
-Reporting how many observations came out is not optional. A reader needs to know whether the robustness check dropped three cases or three hundred.
+Reporting how much data came out is not optional. A reader needs to know whether the robustness check dropped three cases or three hundred. Here it is 14 of 324 classrooms, 259 of 5,751 children.
 
-## Step 6: compare original "final" model, robust model, and trimmed model
+## Step 6: compare the original model, the cluster-robust version, and the trimmed model
 
-This is the sensitivity analysis.
+This is the sensitivity analysis. To see all three side by side, we pull the fixed effects from each into one data frame, then spread them into columns.
 
 ```{r}
-#| message: false
+compare <- bind_rows(
+  tidy(model.read, effects = "fixed") %>%
+    transmute(term, estimate, std.error, p.value, model = "Original"),
+  coef_test(model.read, vcov = "CR2") %>%
+    as_tibble() %>%
+    transmute(term = Coef, estimate = beta, std.error = SE, p.value = p_Satt,
+              model = "Cluster-robust SEs"),
+  tidy(model.trimmed, effects = "fixed") %>%
+    transmute(term, estimate, std.error, p.value, model = "Influential classrooms removed")
+) %>%
+  mutate(cell = paste0(sprintf("%.2f", estimate), " (", sprintf("%.2f", std.error), ")",
+                       if_else(p.value < .05, "*", ""))) %>%
+  select(term, model, cell) %>%
+  pivot_wider(names_from = model, values_from = cell)
 
-library(modelsummary)
-
-models <- list(model.5, model.trimmed)
-
-modelsummary(models, output = "markdown")
+knitr::kable(compare, caption = "Estimate (SE); * p < .05")
 ```
+
+`tidy()` and `coef_test()` return their results with different column names, so the `transmute()` lines rename them to match before stacking. The rest is formatting.
 
 This is the part that actually settles the question. Rather than arguing about whether assumptions hold, refit under different assumptions and compare.
 
-Read across the columns for the coefficient you care about most. If it holds steady in magnitude, direction, and significance, you have an answer to the reviewer worried about your residuals: the conclusion does not depend on the assumption in question. That is a much stronger response than asserting the assumption was met.
+Read across the columns for the coefficient you care about most, which here is the small-class effect. It is 5.80 in the original model, the same with cluster-robust standard errors, and 5.63 with the 14 influential classrooms removed. It is significant in all three. The free-lunch gap and the teacher experience slope behave the same way. When a coefficient holds steady in magnitude, direction, and significance like this, you have an answer to the reviewer worried about your residuals: the conclusion does not depend on the assumption in question. That is a much stronger response than asserting the assumption was met.
 
 ## Writing it up
 
 A sensitivity analysis paragraph belongs in nearly every quantitative paper, and it has a predictable shape. State which diagnostics you examined. Report what they showed, honestly, including the parts that looked imperfect. Describe the robustness checks you ran. Then state whether your substantive conclusion held.
 
-The version that reads as defensive says the assumptions were met and moves on. The version that reads as competent concedes that residuals showed mild skew and a handful of state-years exceeded the conventional Cook's distance threshold, then reports that the coefficients changed negligibly under robust estimation and with those cases excluded. The second is more honest and considerably more persuasive.
+The version that reads as defensive says the assumptions were met and moves on. The version that reads as competent concedes that the residuals were right-skewed and grew more variable at higher predicted scores, and that 14 classrooms exceeded the conventional cluster-level Cook's distance threshold. It then reports that the small-class effect was essentially unchanged with cluster-robust standard errors (*b* = 5.80, *p* = .013) and with those classrooms excluded (*b* = 5.63, *p* = .005). The second is more honest and considerably more persuasive.
+
+## A note on your content review
+
+Your Module 10 content review uses the same Project STAR data, but asks about math rather than reading, with a different set of predictors. The steps are the same: standardized residuals and a histogram, Shapiro-Wilk with a sense of proportion, an RVF plot, Cook's distance at the classroom level with the 4/*J* cutoff, cluster-robust standard errors with `clubSandwich`, a trimmed model, and one table that puts all three side by side. The answer, though, is yours to find. Do not assume your robustness checks will come out as cleanly as these did.

@@ -4,6 +4,31 @@ A record of how the Quarto book differs from the original bookdown project and f
 
 ---
 
+## 2026-11-08 — Chapter 10: moved to Project STAR; cluster-level Cook's distance and cluster-robust SEs
+
+**Changed:** Chapter 10 (`10-assumptions.qmd`) now uses `projectSTAR.dta` instead of `productivity.dta`. The model is kindergarten reading (`gktreadss`) on class type (Regular as the reference), a 0/1 free-lunch indicator, and teacher experience, with children clustered in classrooms: `read ~ classtype + frl + years_exp + (1|classid)`, ML. The five-model polynomial growth sequence and `Hmisc::describe()` are gone; the model comes straight from Chapter 7's variables.
+
+**Why:** Students already know STAR from Chapter 7, so the week's only new material is the diagnostics. The Module 10 content review also uses STAR, but models math with different predictors, so the chapter does not repeat the assignment's model. The productivity data had no state names, so the "go look at the flagged case" step had nothing to look at.
+
+**Method changes, beyond the data swap:**
+
+- **Cook's distance is now computed per classroom** with `influence.ME` (`influence(model, group = "classid")`, then `cooks.distance()`), with a 4/*J* cutoff. The old version plotted `augment()`'s observation-level `.cooksd` against 4/*n*, which does not work for `lmer`. Its leverage includes each observation's pull on its own random intercept, so the 4/*n* line flagged 44% of the productivity rows and flags 74% of the STAR children. The old chapter drew 4/*n* and then trimmed at .10, a different cutoff. A callout now explains why 4/*n* is not used.
+- **"Robust standard errors" are now actual cluster-robust SEs** (`clubSandwich::coef_test(model, vcov = "CR2")`). The old step used `robustlmm::rlmer()`, which is robust *estimation*, not robust SEs, and was not in the book's install list. `clubSandwich` was.
+- **The comparison table now includes all three models.** The old Step 6 said it compared three but only showed two. The new table is built with `broom.mixed::tidy()` + `coef_test()` + `pivot_wider()` and printed with `knitr::kable()`, because `modelsummary()` cannot take the CR2 result from `coef_test()` directly.
+- The histogram now uses standardized residuals. The ±2.5 lines were previously drawn on raw residuals, where they had no fixed meaning.
+- `lmerTest` is loaded in setup, since the chapter talks about significance holding up.
+- Shapiro-Wilk is now run on a random sample of 5,000 (n = 5,751), so the sampling callout is put into practice instead of being a side note.
+- The second RVF plot is colored by free-lunch status instead of year.
+- Added "A note on your content review," as in Chapters 4–6.
+
+**What the data produce (lme4, ML; n = 5,751 children, 324 classrooms):** small class *b* = 5.80 (SE 2.24, *p* = .010); aide *b* = 0.77 (*p* = .74); free lunch *b* = −15.66; experience *b* = 0.48. Standardized residuals range from about −3.9 to 7.2, with 137 beyond ±2.5; the largest belong to children at the score maximum, 627. Shapiro-Wilk on 5,000 sampled residuals: W = .913. The residual SD rises from 17.8 to 32.3 across fitted-value quarters, and is 28.9 (no free lunch) vs. 21.5 (free lunch). Classroom Cook's D: 14 of 324 exceed 4/324 = .012. Classroom 24478001 stands out at .081 (next highest .031): the highest-scoring classroom (mean 494 vs. 437), 95% free lunch, 24-year teacher. CR2: small class SE 2.31, *p* = .013. Trimmed (310 classrooms, 5,492 children): small class *b* = 5.63, *p* = .005. All conclusions hold.
+
+**Verified:** rendered end to end, and each number in the prose was checked against the output. `influence.ME` could not be installed in the environment used for verification. Its classroom Cook's distances were reproduced with an equivalent leave-one-classroom-out computation using the full-model fixed-effect covariance, which is the formula `cooks.distance.estex()` uses. Confirm the flagged list on the first local render.
+
+**Also updated:** `README.md` (chapter table, data list, dataset-pattern note) and `SETUP.md` (data list). `productivity.dta` is no longer used by any chapter.
+
+---
+
 ## 2026-10-02 — Chapter 6: moved from Best in Class to the Army data (`lq2002.csv`)
 
 **Changed:** Chapter 6 (`06-fit-effect-sizes.qmd`) now uses `lq2002.csv` instead of `expanded_strs_no_miss.csv`. The code and the order of topics are unchanged: null and conditional models, PRV and multilevel R², the `performance` cross-check, predicted values for a non-technical audience, random slope comparison with AIC, BIC and the LRT, the over-specified random effects model, and a `modelsummary()` table. Only the variables and the interpretation changed.

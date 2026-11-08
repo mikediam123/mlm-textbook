@@ -23,20 +23,19 @@ Every chapter except 6 follows the corresponding demonstration handout in `Video
 | 8a | Intro to Growth Models | `egmerged.dta` | `MLM_Module_8_Handout_Part_1.Rmd` |
 | 8b | Advanced Growth Models | `egmerged.dta` | `MLM_Module_8_Handout_Part_2.Rmd` |
 | 9 | Binary and Generalized Linear Mixed Models | `nsch_2018_topical.dta` | `MLM_Module_9_Handout.Rmd` |
-| 10 | Checking Assumptions for MLMs | `productivity.dta` | `MLM_Module_10_Handout.Rmd` |
+| 10 | Checking Assumptions for MLMs | `projectSTAR.dta` | `MLM_Module_10_Handout.Rmd` (moved off `productivity.dta`) |
 | 11 | Cross-Classified Linear Mixed Models | `scotland.dta` | `MLM_Module_11_Handout.Rmd` |
 
 Module 8 is split into two chapters, matching the two handouts and the two content reviews.
 
-Chapters and content reviews often use different datasets. That is by design: the demonstration teaches the mechanics on one dataset, and the assignment applies them to another. Chapter 6 follows the same pattern: it uses the Army data (`lq2002.csv`), while the Module 6 content review uses `expanded_strs_simulated.csv`.
+Chapters and content reviews often use different datasets. That is by design: the demonstration teaches the mechanics on one dataset, and the assignment applies them to another. Chapter 6 follows the same pattern: it uses the Army data (`lq2002.csv`), while the Module 6 content review uses `expanded_strs_simulated.csv`. Chapter 10 is the exception: it and the Module 10 content review both use Project STAR, but with different outcomes and predictors (reading in the chapter, math in the review).
 
 ## Data files
 
-Most datasets are already in this folder. Three still need to be copied in before the book will render:
+Most datasets are already in this folder. Two still need to be copied in before the book will render:
 
 - `egmerged.dta` (chapters 8a and 8b)
 - `nsch_2018_topical.dta` (chapter 9)
-- `productivity.dta` (chapter 10)
 
 See `SETUP.md`.
 

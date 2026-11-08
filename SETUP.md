@@ -26,7 +26,6 @@ Copy these into the project folder, alongside the `.qmd` files:
 
 - `egmerged.dta` (chapters 8a and 8b)
 - `nsch_2018_topical.dta` (chapter 9)
-- `productivity.dta` (chapter 10)
 
 The others are already in place: `descriptive_gss.dta`, `food.csv`, `hsbmerged.csv`, `lq2002.csv`, `projectSTAR.dta`, and `scotland.dta`.
 

@@ -4,6 +4,26 @@ A record of how the Quarto book differs from the original bookdown project and f
 
 ---
 
+## 2026-11-15 — Chapter 11: `dadocc` is student-level; school mean added; interaction now school × neighborhood
+
+**Found:** `dadocc` is each student's own father's occupation (seven Hope-Goldthorpe categories, centered), not a school mean. Every school has 5–7 different values, and most of its variance is within schools (residual SD 10.7 vs. school SD 2.4). The chapter's label ("School Mean of Dad's Occupation"), the "17 distinct points" histogram note, the "watch the school variance" commentary on `model.2`, and the school × neighborhood framing of `deprive:dadocc` were all built on the wrong level. Adding the raw `dadocc` actually lowers all three variance components.
+
+**Changed:**
+
+- `dadocc` is relabelled as student-level. A new "Data Management Tip of the Week" builds `dadocc_sch`, the school mean, with `group_by(schid)` + `mutate()` + `ungroup()`, and checks that it has 17 values. This follows Chapter 7's free-lunch aggregation.
+- `model.2` (school-level predictor) now uses `dadocc_sch`. The school variance falls from .074 to .006 while the neighborhood variance barely moves (.141 to .135), so the original "watch the school variance" point is now true. The `model.3` commentary now gives its numbers: neighborhood .141 to .061, school .074 to .038.
+- `model.4` and `model.5` include both `dadocc` and `dadocc_sch`, with a paragraph on the within-school vs. compositional comparison (cf. `TSIG`/`GTSIG`).
+- `model.6`'s interaction is now `deprive:dadocc_sch`, a true neighborhood × school interaction (*b* = −.025, *p* = .048). It was `deprive:dadocc`, which is really neighborhood × family. The `ggeffects` plot uses `dadocc_sch [-4, 0, 4]`, and its reading was rewritten from the actual predictions (about 0.8 vs. 0.2 at deprivation −1; lines meet near 2). The old text quoted 1.5 vs. 0.3, which did not match the old model either. The text adds cautions about the marginal *p*-value and the sparse data at high deprivation (<2% of students above 2).
+- `lmerTest::rand()` → `ranova()`, and `lmerTest` is now loaded in setup. Neither random slope is supported (*p* = .43 schools, *p* = .97 neighborhoods).
+- The `dadocc` histogram's x-axis label is fixed (it read "Standardized Educational Attainment Score").
+- Added "A note on your content review."
+
+**Not changed:** the hand-typed ICCs (book style, and they match the output); `Hmisc` labelling; the Leckie citation year (the chapter says 2009, the content review says 2013, so pick one).
+
+**Verified:** rendered end to end and checked every number in the prose against the output. The final `modelsummary()` chunk could not be run in the verification environment.
+
+---
+
 ## 2026-11-08 — Chapter 10: moved to Project STAR; cluster-level Cook's distance and cluster-robust SEs
 
 **Changed:** Chapter 10 (`10-assumptions.qmd`) now uses `projectSTAR.dta` instead of `productivity.dta`. The model is kindergarten reading (`gktreadss`) on class type (Regular as the reference), a 0/1 free-lunch indicator, and teacher experience, with children clustered in classrooms: `read ~ classtype + frl + years_exp + (1|classid)`, ML. The five-model polynomial growth sequence and `Hmisc::describe()` are gone; the model comes straight from Chapter 7's variables.

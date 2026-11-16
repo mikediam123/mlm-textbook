@@ -14,6 +14,7 @@ Everything so far has assumed a strict hierarchy: each student belongs to one cl
 
 suppressPackageStartupMessages(library(tidyverse))
 library(lme4)
+suppressPackageStartupMessages(library(lmerTest))
 library(Hmisc)
 ```
 
@@ -43,7 +44,7 @@ label(scotland$schid)="School ID"
 label(scotland$attain)="Student Measure of Educational Attainment"
 label(scotland$p7vrq)="Primary 7 Verbal Reasoning Quotient"
 label(scotland$p7read)="Primary 7 Reading Test Scores"
-label(scotland$dadocc)="School Mean of Dad's Occupation Score on Hope-Goldthorpe Scale"
+label(scotland$dadocc)="Dad's Occupation Score on Hope-Goldthorpe Scale (centered)"
 label(scotland$dadunemp)="Dad Currently Unemployed"
 label(scotland$daded)="Dad School After Age 15"
 label(scotland$momed)="Mom School After Age 15"
@@ -53,7 +54,7 @@ label(scotland$deprive)="Neighborhood Deprivation Score (Poverty, Health, and Ho
 
 Labelling every variable at the start is a small investment that pays off repeatedly. Six months from now, `p7vrq` will mean nothing to you, and the label will.
 
-Note one label in particular: `dadocc` is described as a *school mean*, not an individual measure. That makes it a level-2 variable, and it explains why it enters the models later as a school-level predictor. Reading labels carefully is how you avoid modeling a group characteristic as though it were an individual one.
+Note one variable in particular: `dadocc` is each student's *own* father's occupation, scored on the Hope-Goldthorpe scale and centered. It is a student-level variable. That matters below, because the dataset has no school-level predictor of its own, so we will build one by aggregating `dadocc` up to the school, just as we aggregated free lunch status in Chapter 7. Knowing which level a variable lives at is how you avoid modeling an individual characteristic as though it were a group one, or the reverse.
 
 ```{r}
 scot.clean <- scotland %>%
@@ -72,6 +73,21 @@ glimpse(scot.clean)
 ```
 
 Two steps again: `as_factor()` converts to a factor, then assigning to `levels()` renames the categories. The names are applied in the order R already has the levels, so this assumes 0 comes first. Worth verifying with `table()` on any variable where you are unsure, since reversed labels would silently flip the sign of every associated coefficient.
+
+### Data Management Tip of the Week: aggregate a student variable up to the school
+
+```{r}
+scot.clean <- scot.clean %>%
+  group_by(schid) %>%
+  mutate(dadocc_sch = mean(dadocc)) %>%
+  ungroup()
+
+label(scot.clean$dadocc_sch) = "School Mean of Dad's Occupation Score"
+
+n_distinct(scot.clean$dadocc_sch)
+```
+
+`dadocc_sch` is the average father's occupation score among the students in each school, a measure of the school's socioeconomic composition. It has exactly one value per school, 17 in all, which is how you can confirm the aggregation worked. Having both versions in the data lets us ask two different questions later: whether a child's *own* family background predicts attainment, and whether the background of the *other children in their school* does too.
 
 ```{r}
 describe(scot.clean)
@@ -94,12 +110,12 @@ ggplot(data = scot.clean, mapping = aes(x = attain)) +
 
 ```{r}
 #| label: fig-dadocc
-#| fig-cap: "Distribution of school-mean father's occupation scores."
+#| fig-cap: "Distribution of father's occupation scores."
 
 ggplot(data = scot.clean, mapping = aes(x = dadocc)) +
   geom_histogram(bins = 30) +
-  labs(title = "Distribution of (School Mean) of Dad's Occupation Scores",
-       x = "Standardized Educational Attainment Score") +
+  labs(title = "Distribution of Dad's Occupation Scores",
+       x = "Dad's Occupation Score (Hope-Goldthorpe, centered)") +
   theme_minimal()
 ```
 
@@ -114,7 +130,7 @@ ggplot(data = scot.clean, mapping = aes(x = deprive)) +
   theme_minimal()
 ```
 
-Because `dadocc` is a school mean, its histogram has one value repeated for every student in a school. With 17 schools, that means the distribution really contains 17 distinct points, however many bars appear. `deprive` behaves similarly at the neighborhood level, though with 500-plus neighborhoods it looks much more continuous.
+`dadocc` takes only seven distinct values, one for each occupational category on the Hope-Goldthorpe scale, so its histogram is a set of separated bars rather than a smooth distribution. `deprive` is different: it is a neighborhood-level variable, so every student in a neighborhood shares the same value. With more than 500 neighborhoods, it looks nearly continuous.
 
 ## Part two: modeling
 
@@ -195,15 +211,15 @@ model.1 <- lmer(attain ~ male.fac + (1|schid) + (1|neighid), REML = FALSE, data 
 summary(model.1)
 ```
 
-### L1 plus school-level predictor only (`dadocc`)
+### L1 plus school-level predictor only (`dadocc_sch`)
 
 ```{r}
-model.2 <- lmer(attain ~ male.fac + dadocc + (1|schid) + (1|neighid), REML = FALSE, data = scot.clean)
+model.2 <- lmer(attain ~ male.fac + dadocc_sch + (1|schid) + (1|neighid), REML = FALSE, data = scot.clean)
 
 summary(model.2)
 ```
 
-Watch the *school* variance here rather than the neighborhood variance. A school-level predictor should explain between-school differences, so that is where the movement belongs.
+Watch the *school* variance here rather than the neighborhood variance. A school-level predictor should explain between-school differences, so that is where the movement belongs. And it does: the school variance falls from about .074 in `model.1` to about .006, while the neighborhood variance barely moves. School composition accounts for nearly all of the between-school differences in attainment.
 
 ### L1 plus neighborhood-level predictors only (`deprive`)
 
@@ -213,45 +229,49 @@ model.3 <- lmer(attain ~ male.fac + deprive + (1|schid) + (1|neighid), REML = FA
 summary(model.3)
 ```
 
-And now the mirror image: a neighborhood-level predictor should move the neighborhood variance. Fitting these two separately makes it easy to see which component each predictor is accounting for.
+And now the mirror image: a neighborhood-level predictor should move the neighborhood variance, and it does, falling from about .141 to .061. The school variance drops too, from .074 to .038. That is a reminder that the two factors are crossed rather than independent: schools that draw from more deprived neighborhoods have lower averages partly *because* of those neighborhoods. Fitting these two separately makes it easy to see which component each predictor is accounting for.
 
 On the deprivation coefficient, a word of caution that applies well beyond these data. Families are not randomly assigned to neighborhoods, and families in more deprived areas differ from others in many ways, some measured here and most not. The coefficient describes an association. It does not establish that moving a child to a less deprived neighborhood would raise their attainment.
 
-### L1 plus both school and neighborhood predictors
+### L1 plus both school and neighborhood predictors, and the student-level version of `dadocc`
 
 ```{r}
-model.4 <- lmer(attain ~ male.fac + deprive + dadocc + (1|schid) + (1|neighid), REML = FALSE, data = scot.clean)
+model.4 <- lmer(attain ~ male.fac + deprive + dadocc + dadocc_sch + (1|schid) + (1|neighid), REML = FALSE, data = scot.clean)
 
 summary(model.4)
 ```
 
+With both `dadocc` and `dadocc_sch` in the model, the two coefficients answer different questions. The `dadocc` coefficient compares two children in the same school whose fathers' occupations differ. The `dadocc_sch` coefficient compares two children with the same family background who attend schools with different compositions. Both are positive and significant, so a child's attainment is associated with their own family's background *and*, over and above that, with the background of their schoolmates. This is the same individual-versus-aggregate logic as `TSIG` and `GTSIG` in Chapters 4 and 5.
+
 ### Test random effects for `male.fac` at neighborhood level and at school level
 
 ```{r}
-model.5 <- lmer(attain ~ male.fac + deprive + dadocc + (male.fac|schid) + (male.fac|neighid), REML = FALSE, data = scot.clean)
+model.5 <- lmer(attain ~ male.fac + deprive + dadocc + dadocc_sch + (male.fac|schid) + (male.fac|neighid), REML = FALSE, data = scot.clean)
 
 summary(model.5)
 ```
 
 ```{r}
-lmerTest::rand(model.5)
+ranova(model.5)
 ```
 
-This asks whether the gender gap in attainment differs across schools, across neighborhoods, or both. `rand()` tests each random term separately, so the two can come out differently.
+This asks whether the gender gap in attainment differs across schools, across neighborhoods, or both. `ranova()` tests each random slope separately, so the two can come out differently. Here neither comes close (*p* = .43 for schools, *p* = .97 for neighborhoods), and both versions have higher AIC than the model without them. The gender gap looks about the same everywhere.
 
-Expect trouble here, and read it as information. Estimating a slope variance across 17 schools is asking a great deal of very little data, so a singular fit or a boundary estimate would not be surprising. The neighborhood version rests on far more units and is on firmer ground.
+Expect trouble with models like this, and read it as information. Estimating a slope variance across 17 schools is asking a great deal of very little data, so a convergence warning, a singular fit, or a boundary estimate would not be surprising. The neighborhood version rests on far more units and is on firmer ground.
 
 ### Finally, test a model with school-neighborhood interaction
 
 ```{r}
-model.6 <- lmer(attain ~ male.fac + deprive + dadocc + deprive:dadocc + (1|schid) + (1|neighid), REML = FALSE, data = scot.clean)
+model.6 <- lmer(attain ~ male.fac + deprive + dadocc + dadocc_sch + deprive:dadocc_sch + (1|schid) + (1|neighid), REML = FALSE, data = scot.clean)
 
 summary(model.6)
 ```
 
 This interaction is unusual and worth stating carefully. It crosses a *neighborhood*-level variable with a *school*-level variable, asking whether the effect of neighborhood deprivation depends on the socioeconomic composition of the school a child attends. Does attending a more advantaged school buffer the association between a deprived neighborhood and attainment? That is a genuinely interesting policy question, and it is only askable in a cross-classified framework.
 
-### Use `ggeffects` to visualize the interaction between `deprive` and `dadocc`
+The interaction is significant, but only just (*b* = −.025, *p* = .048), and the school half of it rests on 17 schools. Treat it as suggestive.
+
+### Use `ggeffects` to visualize the interaction between `deprive` and `dadocc_sch`
 
 Interpreting a significant cross-level interaction from a coefficient alone is hard, especially one that crosses two different level-2 variables. The `ggeffects` package turns the model into predicted attainment scores you can plot directly.
 
@@ -262,10 +282,14 @@ Interpreting a significant cross-level interaction from a coefficient alone is h
 
 library(ggeffects)
 
-plot(ggpredict(model.6, terms = c("deprive", "dadocc [-15, 0, 15]")))
+plot(ggpredict(model.6, terms = c("deprive", "dadocc_sch [-4, 0, 4]")))
 ```
 
-Read this the same way you would read the predicted-value plots elsewhere in this book: the vertical axis is predicted `attain`, not a coefficient, and each line traces predicted attainment across `deprive` at one fixed level of `dadocc` (a low-, average-, and high-occupation school). If the three lines were parallel, the deprivation-attainment relationship would not depend on school composition, and the buffering hypothesis would be off the table either way. That is not what happens here — but the pattern is not the buffering story either. At low deprivation, school composition matters a great deal: a child from the least-deprived neighborhoods scores noticeably higher in a high-`dadocc` school (predicted attainment around 1.5) than in a low-`dadocc` school (around 0.3). That gap nearly disappears at high deprivation — among the most deprived neighborhoods, all three lines converge to roughly the same low predicted attainment, regardless of which school a child attends. In other words, a more advantaged school's benefit is concentrated among children who are already from less-deprived neighborhoods; it does little to offset the disadvantage facing children from the most deprived ones. That is closer to a *differential-benefit* pattern than a buffering one, and it is worth sitting with rather than assuming the more comfortable story.
+Read this the same way you would read the predicted-value plots elsewhere in this book: the vertical axis is predicted `attain`, not a coefficient, and each line traces predicted attainment across `deprive` at one fixed level of `dadocc_sch`. The values −4, 0, and 4 are a low-, average-, and high-composition school; most of the 17 schools fall between them. If the three lines were parallel, the deprivation-attainment relationship would not depend on school composition, and the buffering hypothesis would be off the table either way.
+
+That is not what happens here, but the pattern is not the buffering story either. At low deprivation, school composition matters: at a deprivation score of −1, close to the least-deprived neighborhoods in the data, a child has a predicted attainment of about 0.8 in a high-composition school and about 0.2 in a low-composition one. (`ggpredict()` extends the lines to −2 for a round axis, a little beyond the data.) Toward the more deprived neighborhoods that gap closes. The lines meet at a deprivation score of about 2, and from there on the confidence bands overlap almost completely. In other words, a more advantaged school's benefit is concentrated among children who are already from less-deprived neighborhoods; it does little to offset the disadvantage facing children from the most deprived ones. That is closer to a *differential-benefit* pattern than a buffering one, and it is worth sitting with rather than assuming the more comfortable story.
+
+Two cautions keep this in proportion. The interaction is only marginally significant, and very few students live in the most deprived neighborhoods (fewer than 2% have `deprive` above 2), so the right-hand side of the plot is where the model has the least data.
 
 ## Comparing the models
 
@@ -291,3 +315,7 @@ This asymmetry should shape how you write up the results. Report both variances,
 Cross-classification is more common than it looks once you start watching for it. Students crossed with teachers across multiple years. Patients crossed with hospitals and with surgeons who operate at several hospitals. Employees crossed with firms and with occupations. Survey respondents crossed with interviewers and with geographic areas.
 
 The diagnostic question is simple. Does every unit in group A belong to exactly one unit in group B? If yes, the structure is nested. If units in A spread across multiple units in B, it is crossed, and modeling it as nested will misattribute variance between the two.
+
+## A note on your content review
+
+Your Module 11 content review uses these same Scotland data, but with primary 7 reading scores (`p7read`) as the outcome and a different set of student-level predictors. The steps are the same: separate and combined null models, a comparison of how the variance components shift, then predictors at the student, school, and neighborhood levels. You will need to build `dadocc_sch` yourself, exactly as above. What changes is the substance of the question, not the code.
